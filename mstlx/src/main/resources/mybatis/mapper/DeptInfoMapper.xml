@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mstdemo.mst.mapper.DeptInfoMapper">
+<!--    有自增主键的获取方法-->
+<!--    <insert id="addDept" useGeneratedKeys="true" keyProperty="deptId" parameterType="com.mstdemo.mst.bean.DeptInfo" >-->
+<!--        INSERT INTO dept_info-->
+<!--         (dept_name,sort) VALUES(#{deptName},#{sort});-->
+<!--    </insert>-->
+
+<!--    无自增主键的获取的方法-->
+    <insert id="addDept"  parameterType="com.mstdemo.mst.bean.DeptInfo" >
+        <selectKey resultType="java.lang.Short" order="AFTER" keyProperty="id">
+        SELECT LAST_INSERT_ID() AS deptId
+        </selectKey>
+        INSERT INTO dept_info
+            (dept_name,sort) VALUES(#{deptName},#{sort});
+    </insert>
+
+</mapper>
