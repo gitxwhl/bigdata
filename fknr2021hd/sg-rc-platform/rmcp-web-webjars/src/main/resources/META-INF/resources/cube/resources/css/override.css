@@ -1,0 +1,14 @@
+.table th,
+.table td {
+    border-top: 1px solid #199ED8;
+}
+.table th {
+    font-weight: normal;
+}
+.table-bordered {
+    border: 1px solid #199ED8;
+}
+.table-bordered th,
+.table-bordered td {
+    border-left: 1px solid #199ED8;
+}

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.raysdata.riskmanagementserver.dao.RiskGridWarnDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.raysdata.riskmanagementserver.bean.SrpRiskEventewarning">
+<!--        <result column="id" property="id" />-->
+<!--        <result column="model_table_name" property="modelTableName" />-->
+<!--        <result column="model_table" property="modelTable" />-->
+<!--        <result column="model_field" property="modelField" />-->
+<!--        <result column="model_field_name" property="modelFieldName" />-->
+<!--        <result column="model_field_hump" property="modelFieldHump" />-->
+<!--        <result column="model_table_hump" property="modelTableHump" />-->
+<!--        <result column="is_valid" property="isValid" />-->
+    </resultMap>
+
+    <sql id="sql_where">
+        <if test="warninglevel !=null and warninglevel != ''">
+            AND WARNINGLEVEL = #{warninglevel}
+        </if>
+    </sql>
+    <sql id="sql_where_run">
+        <if test="dateType ==1">
+            AND a.WARNBEGINTIME like CONCAT('%', DATE(CURDATE()),'%')
+        </if>
+        <if test="dateType ==2">
+            AND DATE_FORMAT( a.WARNBEGINTIME, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+        </if>
+        <if test="dateType ==3">
+             AND YEAR(a.WARNBEGINTIME) = YEAR(NOW())
+        </if>
+    </sql>
+
+    <sql id="sql_where_page">
+        <if test="srpRiskGridwannoticeVo.title !=null and srpRiskGridwannoticeVo.title !=''">
+            and selw.TITLE like CONCAT('%', #{srpRiskGridwannoticeVo.title}, '%')
+        </if>
+        <if test="srpRiskGridwannoticeVo.warningLevel !=null and srpRiskGridwannoticeVo.warningLevel !=''">
+            and selw.WARNINGLEVEL = #{srpRiskGridwannoticeVo.warningLevel}
+        </if>
+        <if test="srpRiskGridwannoticeVo.warnStatus !=null and srpRiskGridwannoticeVo.warnStatus !=''">
+            and selw.WARNSTATUS = #{srpRiskGridwannoticeVo.warnStatus}
+        </if>
+        <if test="srpRiskGridwannoticeVo.warnNum !=null and srpRiskGridwannoticeVo.warnNum !=''">
+            and selw.WARNNUM like CONCAT('%', #{srpRiskGridwannoticeVo.warnNum}, '%')
+        </if>
+        <if test="srpRiskGridwannoticeVo.publishOrg !=null and srpRiskGridwannoticeVo.publishOrg !=''">
+            and selw.PUBLISH_ORG like CONCAT('%', #{srpRiskGridwannoticeVo.publishOrg}, '%')
+        </if>
+
+        <if test="srpRiskGridwannoticeVo.startTime !=null and srpRiskGridwannoticeVo.startTime !='' and srpRiskGridwannoticeVo.endTime !=null and srpRiskGridwannoticeVo.endTime !=''">
+            and selw.WARNBEGINTIME BETWEEN STR_TO_DATE(#{srpRiskGridwannoticeVo.startTime}, '%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#{srpRiskGridwannoticeVo.endTime}, '%Y-%m-%d %H:%i:%s')
+        </if>
+    </sql>
+
+
+    <select id="getSrpriskgridwarncnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        srst.column_type_name DATAREPORT_ORG,
+        srst.column_type_code DATAREPORT_ORG_ID,
+        count( srg.DATAREPORT_ORG_ID ) AS GRIDWARN_CNT
+        FROM
+        srp_risk_sys_tab srst
+        LEFT JOIN ( SELECT DATAREPORT_ORG_ID FROM srp_risk_gridwarnnotice WHERE to_days( WARNBEGINTIME ) = to_days( now( ) ) AND WARNINGLEVEL != '09'  <include refid="sql_where"/>
+             ) srg ON srst.column_type_code = srg.DATAREPORT_ORG_ID
+        WHERE
+        srst.column_code = 'DATAREPORT_ORG'
+        GROUP BY
+        srst.column_type_name
+        ORDER BY
+        srst.column_type_code + 0
+    </select>
+    <select id="getSrpriskgridwarnlevelcnt"  resultType="java.util.Map">
+        SELECT
+            count( 1 ) AS WARNINGLEVEL,
+            count( CASE WHEN WARNINGLEVEL = '01' THEN 1 ELSE NULL END ) AS WARNINGLEVEL1,
+            count( CASE WHEN WARNINGLEVEL = '02' THEN 1 ELSE NULL END ) AS WARNINGLEVEL2,
+            count( CASE WHEN WARNINGLEVEL = '03' THEN 1 ELSE NULL END ) AS WARNINGLEVEL3,
+            count( CASE WHEN WARNINGLEVEL = '04' THEN 1 ELSE NULL END ) AS WARNINGLEVEL4,
+            count( CASE WHEN WARNINGLEVEL = '05' THEN 1 ELSE NULL END ) AS WARNINGLEVEL5,
+            count( CASE WHEN WARNINGLEVEL = '06' THEN 1 ELSE NULL END ) AS WARNINGLEVEL6,
+            count( CASE WHEN WARNINGLEVEL = '07' THEN 1 ELSE NULL END ) AS WARNINGLEVEL7,
+            count( CASE WHEN WARNINGLEVEL = '08' THEN 1 ELSE NULL END ) AS WARNINGLEVEL8
+        FROM
+            srp_risk_gridwarnnotice a
+        WHERE
+            a.WARNINGLEVEL != '09'
+	        <include refid="sql_where_run"/>
+    </select>
+    <select id="getSrpriskgridwarnworkcnt"  resultType="java.util.Map">
+        SELECT
+            count( 1 ) WORK_PLAN_WARN_CNT
+        FROM
+            srp_risk_gridwarnnotice a,
+            srp_risk_gridwarntoworkplan b,
+            SRP_WORK_WORKPLANDAYS c
+        WHERE
+            a.GRIDWARNNOTICE_ID = b.GRIDWARNNOTICE_ID
+          AND b.WORK_PLAN_ID = c.WORK_PLAN_ID
+        <include refid="sql_where_run"/>
+    </select>
+
+
+
+    <select id="getSrpriskgridwarnlistcnt" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count( 1 ) CNT
+        FROM
+            srp_risk_gridwarnnotice selw
+        WHERE
+            1 = 1
+          <include refid="sql_where_page"/>
+    </select>
+    <select id="getSrpriskgridwarnlist" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        selw.GRIDWARNNOTICE_ID,
+        selw.WARNNUM,
+        selw.TITLE,
+        selc.column_type_name AS WARNINGLEVEL,
+        selw.WARNBEGINTIME,
+        selw.PUBLISH_ORG,
+        srst.column_type_name AS WARNSTATUS
+        FROM
+        ( SELECT GRIDWARNNOTICE_ID, WARNNUM, TITLE, WARNBEGINTIME, PUBLISH_ORG, WARNSTATUS, WARNINGLEVEL FROM srp_risk_gridwarnnotice ) selw
+        LEFT JOIN ( SELECT column_type_code, column_type_name FROM srp_risk_sys_tab WHERE column_code = 'GRIDWARNLEVEL' ) selc ON selw.WARNINGLEVEL = selc.column_type_code
+        LEFT JOIN ( SELECT column_type_code, column_type_name FROM srp_risk_sys_tab WHERE column_code = 'WARNSTATUS' ) srst ON selw.WARNSTATUS = srst.column_type_code
+        WHERE
+        1 = 1
+        <include refid="sql_where_page"/>
+        LIMIT  #{srpRiskGridwannoticeVo.size} OFFSET #{srpRiskGridwannoticeVo.offset}
+    </select>
+    <select id="getSrpriskgridwarninfo" parameterType="java.lang.String" resultType="java.util.Map">
+        select
+            selw.TITLE,
+            selw.WARNNUM,
+            selc.column_type_name AS WARNINGLEVEL,
+            selw.WARNBEGINTIME,
+            selw.WARNENDTIME,
+            selw.PUBLISH_ORG,
+            selw.PUBLISH_STAFF,
+            srst.column_type_name AS WARNSTATUS,
+            selw.ANNEX
+        from srp_risk_gridwarnnotice selw
+                 LEFT JOIN ( SELECT column_type_code, column_type_name FROM srp_risk_sys_tab WHERE column_code = 'GRIDWARNLEVEL' ) selc ON selw.WARNINGLEVEL = selc.column_type_code
+                 LEFT JOIN ( SELECT column_type_code, column_type_name FROM srp_risk_sys_tab WHERE column_code = 'WARNSTATUS') srst ON selw.WARNSTATUS = srst.column_type_code
+        where GRIDWARNNOTICE_ID = #{gridWarnNoticeId}
+
+    </select>
+    <select id="getSrpriskgridwarnfeedbackinfo" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            ANNEX AS WARNFEEDBACK
+        FROM
+           srp_risk_gridwarnfeedback
+        WHERE
+            GRIDWARNNOTICE_ID = #{gridWarnNoticeId}
+    </select>
+    <select id="getSrpriskgridwarnreportinfo" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            ANNEX AS WARNREPORT
+        FROM
+            srp_risk_gridwarnreport
+        WHERE
+            GRIDWARNNOTICE_ID = #{gridWarnNoticeId}
+
+
+    </select>
+    <select id="getSrpriskgridwarnforminfo" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            ANNEX AS WARNINFORM
+        FROM
+           srp_risk_gridwarninform
+        WHERE
+            GRIDWARNNOTICE_ID = #{gridWarnNoticeId}
+
+
+    </select>
+    <select id="getSrpriskgridwarnrelinfo" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            WARNREL,
+            WARNREMOVE_STAFF,
+            PHONENUMBER,
+            REMOVEDATE
+        FROM
+             srp_risk_gridwarnrelinfo
+        WHERE
+            GRIDWARNNOTICE_ID = #{gridWarnNoticeId}
+    </select>
+</mapper>

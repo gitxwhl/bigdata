@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="AnalysisDetailzyxc" desc="统计分析作业现场数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,COUNT(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            WHERE DS_UNIT_ID in (${filter}) AND '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')>= '${startDate}'
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodayDetailzyxc" desc="统计分析今日作业现场数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,COUNT(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            WHERE DS_UNIT_ID in (${filter}) AND '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+    <sql id="AnalysisDetailsgrs" desc="统计分析施工人数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,sum(WORK_NUM) peccancyCount
+            FROM wp_work_plan_day
+            where DS_UNIT_ID in (${filter}) AND '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d') AND
+            DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')
+            >= '${startDate}'
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodayDetailSgrs" desc="统计分析今日施工人数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,sum(WORK_NUM) peccancyCount
+            FROM wp_work_plan_day
+            where DS_UNIT_ID in (${filter}) AND '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+    <sql id="AnalysisDetailgfxxcs" desc="统计分析高风险现场数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where DS_UNIT_ID in (${filter}) AND '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')>= '${startDate}' AND ZYAQ_RISK='1'
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodayDetailGfxxcs" desc="统计分析今日高风险现场数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where DS_UNIT_ID in (${filter}) AND '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d') AND ZYAQ_RISK='1'
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+    <sql id="AnalysisDetaillsjhs" desc="统计分析临时计划数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where DS_UNIT_ID in (${filter}) AND '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')>= '${startDate}' AND PLAN_TYPE='4'
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodayDetailLsjhs" desc="统计分析今日临时计划数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where DS_UNIT_ID in (${filter}) AND '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d') AND PLAN_TYPE='4'
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+    <sql id="AnalysisDetailqxjhs" desc="统计分析抢修计划数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_qx
+            where XJ_UNIT_ID in (${filter}) AND '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')>= '${startDate}'
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodayDetailQxjhs" desc="统计分析今日抢修计划数详细数据">
+        <mysql>
+            SELECT ZYGLBM_TYPE type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_qx
+            where XJ_UNIT_ID in (${filter}) AND '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')
+            GROUP BY ZYGLBM_TYPE
+        </mysql>
+    </sql>
+</sqls>

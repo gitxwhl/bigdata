@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.raysdata.riskmanagementserver.dao.OpLogInfoMapper">
+    <resultMap id="findUserMap" type="com.raysdata.riskmanagementserver.bean.PtUaUser">
+        <result column="USER_ID" property="userId" />
+        <result column="USER_BASEORGUNITID" property="userBaseorgunitid" />
+        <result column="USER_NAME" property="userName" />
+        <result column="user_pwd" property="userPwd" />
+        <result column="USER_FULLNAME" property="userFullname" />
+        <result column="USER_STATUS" property="userStatus" />
+        <result column="USER_NUMBER" property="userNumber" />
+        <result column="USER_TYPE" property="userType" />
+        <result column="USER_NETTYPE" property="userNettype" />
+        <result column="USER_BIRTH" property="userBirth" />
+        <result column="USER_SEX" property="userSex" />
+        <result column="USER_CARD" property="userCard" />
+        <result column="USER_PHONE" property="userPhone" />
+        <result column="USER_EMAIL" property="userEmail" />
+        <result column="USER_UNLOCKTIME" property="userUnlocktime" />
+        <result column="USER_IP" property="userIp" />
+        <result column="USER_STIME" property="userStime" />
+        <result column="USER_ETIME" property="userEtime" />
+        <result column="USER_CTIME" property="userCtime" />
+        <result column="USER_MTIME" property="userMtime" />
+        <result column="USER_PMTIME" property="userPmtime" />
+        <result column="USER_LTIME" property="userLtime" />
+        <result column="USER_EXT" property="userExt" />
+        <result column="USER_IMAGE" property="userImage" />
+        <result column="USER_SOURCE" property="userSource" />
+        <result column="USER_THREEPASSWORD" property="userThreepassword" />
+        <result column="USER_MAC" property="userMac" />
+    </resultMap>
+
+<select id="findUser"  resultMap="findUserMap">
+    SELECT
+        USER_ID,
+        USER_BASEORGUNITID,
+        USER_NAME,
+        user_pwd,
+        USER_FULLNAME,
+        USER_STATUS,
+        USER_NUMBER,
+        USER_TYPE,
+        USER_NETTYPE,
+        USER_BIRTH,
+        USER_SEX,
+        USER_CARD,
+        USER_PHONE,
+        USER_EMAIL,
+        USER_UNLOCKTIME,
+        USER_IP,
+        USER_STIME,
+        USER_ETIME,
+        USER_CTIME,
+        USER_MTIME,
+        USER_PMTIME,
+        USER_LTIME,
+        USER_EXT,
+        USER_IMAGE,
+        USER_SOURCE,
+        USER_THREEPASSWORD,
+        USER_MAC
+    FROM pt_ua_user
+    WHERE
+        USER_ID =#{useId}
+</select>
+
+    <insert id="saveOpLogInfo" parameterType="com.raysdata.riskmanagementserver.bean.OpLogInfo">
+        INSERT INTO op_log_info (
+            ID,
+            USER_ID,
+            BUSINESS_CODE,
+            OP_TIME,
+            USER_IP,
+            REQUEST_TYPE_ID,
+            OP_RESULT,
+            CONTEXT,
+            TRANSACTION_BEGIN_DATE,
+            TRANSACTION_END_DATE,
+            ACTION_TYPE,
+            ACTION_LEVEL,
+            OPT_TYPE,
+            CREATE_TIME,
+            UPDATE_TIME,
+            LOG_TYPE
+        )
+        VALUES
+            (#{opLogInfo.id},#{opLogInfo.userId},#{opLogInfo.businessCode},#{opLogInfo.opTime},#{opLogInfo.userIp},#{opLogInfo.requestTypeId},#{opLogInfo.opResult},#{opLogInfo.context},#{opLogInfo.transactionBeginDate},#{opLogInfo.transactionEndDate},#{opLogInfo.actionType},#{opLogInfo.actionLevel},#{opLogInfo.optType},#{opLogInfo.createTime},#{opLogInfo.updateTime},#{opLogInfo.logType})
+    </insert>
+    <insert id="saveRequestTypeToOption" parameterType="com.raysdata.riskmanagementserver.bean.RequestTypeToOption">
+
+        INSERT INTO request_type_to_option ( REQUEST_TYPE_ID, OPT_TYPE, CREATE_TIME, UPDATE_TIME )
+        VALUES
+            (#{requestTypeToOption.requestTypeId},#{requestTypeToOption.optType},#{requestTypeToOption.createTime},#{requestTypeToOption.updateTime})
+    </insert>
+
+    <insert id="saveRequestTypeInfo" parameterType="com.raysdata.riskmanagementserver.bean.RequestTypeInfo">
+        INSERT INTO request_type_info ( REQUEST_TYPE_ID, REQUEST_DESC, IS_LOG, CREATE_TIME,UPDATE_TIME )
+        VALUES
+        (#{requestTypeInfo.requestTypeId},#{requestTypeInfo.requestDesc},#{requestTypeInfo.isLog},#{requestTypeInfo.createTime},#{requestTypeInfo.updateTime})
+    </insert>
+
+</mapper>

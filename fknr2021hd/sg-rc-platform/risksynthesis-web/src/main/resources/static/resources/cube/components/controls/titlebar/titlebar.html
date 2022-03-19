@@ -1,0 +1,25 @@
+<div class="cube accordion titlebar" data-bind="style:{width:width(),marginBottom:marginBottom()}">
+    <div data-bind="attr:{'class':'accordion-group '+(typeof(type())!='undefined'?type():'default')}" >
+        <div class="accordion-heading" data-bind="style:{padding:1,background:bgcolor(),height:height()}">
+        	<span data-bind="attr:{'class':'icon-'+(typeof(icon())!='undefined'?icon():'default')}"></span>
+            <span class="accordion-toggle" data-bind="visible:visible,text:title,style:{height:height(),lineHeight:height()}"></span>
+	        <div class="custombtns" data-bind="style:{height:height(),lineHeight:height()}">
+			<!-- ko foreach: customBtns -->
+				<div  data-bind="attr:{'class':'panelBtns btn'}, 
+				style:{
+				color:typeof(btnColor)!='undefined'?btnColor:null,
+				width:typeof(btnWidth)!='undefined'?btnWidth:'auto',
+				height:typeof(btnHeight)!='undefined'?btnHeight:'auto',
+				backgroundImage:typeof(backgroundImage)!='undefined'?backgroundImage:null,
+				backgroundColor:typeof(backgroundColor)!='undefined'?backgroundColor:null,
+				}, 
+				visible: typeof(visible)!='undefined'?visible:true, click: $parent.customClick, clickBubble: false">
+				<span data-bind="attr:{'class':'icon-'+(typeof(btnIcon)!='undefined'?btnIcon:'default')}"></span>
+				<span data-bind="text:text"></span>
+				</div>
+	        <!-- /ko -->
+			</div>
+        </div>
+        
+    </div>
+</div>

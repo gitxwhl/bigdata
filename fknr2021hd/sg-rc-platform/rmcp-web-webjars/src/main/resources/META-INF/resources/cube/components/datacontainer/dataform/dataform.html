@@ -1,0 +1,154 @@
+<form class="cube row-fluid form-horizontal" data-bind="attr:{style:style},css:{inline:cols()>1}">
+   <!-- ko foreach: { data: fields, as: 'items' }-->
+  	  <!-- ko if: cube.isArray(items) && typeof(items[0].isGroupInfo) != "undefined" -->
+	  <div class="group-header" data-bind="click: $parent.expandGroup">
+	  		<!-- ko if: typeof(items[0].icon) != "undefined" -->
+				<span  data-bind='attr:{"class":"icon icon-"+items[0].icon}'></span>
+			<!-- /ko -->
+	  		<span data-bind="text:items[0].caption"></span>
+	  		<span data-bind="attr:{'class': items[0].expanded() ? 'caret':'caret notexpanded'}"></span>
+	  </div>
+	  <div class="group-body" data-bind="visible:items[0].expanded()">
+	  	<!-- ko foreach: { data: items }-->
+	  	<!-- ko if: typeof(isGroupInfo) == "undefined" -->
+		  	<!-- ko if: typeof(isLine) != "undefined" && (typeof(visible) == "undefined" || visible) -->
+		  		<div class="splitLine">
+		  			<!-- ko if: typeof(icon) != "undefined" -->
+						<span  data-bind='attr:{"class":"icon icon-"+icon}'></span>
+					<!-- /ko -->
+					<!-- ko if: typeof(caption) != "undefined" -->
+						<span data-bind="text:caption"></span>
+					<!-- /ko -->
+		  		</div>
+		  	<!-- /ko -->
+		  	<!-- ko if: typeof(isLine) == "undefined" -->
+		  	<div data-bind="visible:typeof(visible)=='undefined'?true:visible,attr: {'class':'control-group '+validStatus()+' span'+(typeof(colspan)!='undefined'?colspan*(12/$parents[1].cols()):12/$parents[1].cols())}">
+			    <label class="control-label" data-bind="style:{width:typeof(captionWidth)!='undefined'?captionWidth:null}">
+			    	<!-- ko if: typeof(nullable)=='function'?!nullable():nullable==false -->
+			    	<span class="required">*</span>
+			    	<!-- /ko -->
+			    	<span data-bind='text:caption'></span>
+			    	<!-- ko if: $parents[1].separator != '' &&  (typeof(showSeparator) == 'undefined' || showSeparator == true)-->
+					 <span data-bind='text:$parents[1].separator'></span>
+					<!-- /ko -->
+			    </label>
+			    <div class="controls controls-row" data-bind="css:{'controls-file':editorType == 'FileEditor', 'controls-rich':editorType == 'RichEditor', 'controls-multiline': (editorType == 'TextEditor' && typeof(textMode) != 'undefined' && textMode == 'multiline')},
+			    	style:{marginLeft:typeof(captionWidth)!='undefined'?(parseInt(captionWidth)+10)+'px':null}">
+			         <!-- ko if: typeof(renderEditor) != "undefined" -->
+			         	<span class="uneditable-input labelEditor" data-bind="css:{autowrap: typeof(labelAutowrap)!='undefined'?labelAutowrap:null},html:$parents[1].renderEditor($data, $parents[1].data[name]),
+			         		click: typeof(onClick)!='undefined'?function(){onClick($parents[1].data[name])}:null"></span>
+			         <!-- /ko -->
+			        <!-- ko if: editorType == "DateTimeEditor" && typeof(renderEditor) == "undefined"-->
+						<div class="textInpCom" data-bind="attr:{id: name}, component: { name: 'datetimeeditor', params: $parents[1].getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: editorType == "FileEditor" && typeof(renderEditor) == "undefined" -->
+					      <div class="textInpCom form-fileeditor" data-bind="attr:{id: name}, component: { name: 'fileeditor', params: $parents[1].getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: editorType == "RichEditor" && typeof(renderEditor) == "undefined" -->
+					      <div class="textInpCom" data-bind="attr:{id: name}, component: { name: 'richeditor', params: $parents[1].getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: editorType == "GridEditor" && typeof(renderEditor) == "undefined" -->
+					      <div class="textInpCom" data-bind="attr:{id: name}, component: { name: 'datagrid', params: $parents[1].getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor" && editorType != "RichEditor" && typeof(renderEditor) == "undefined" -->
+							<div  class="textInpCom" data-bind="attr:{id: name}, component: { name: 'commoneditor', params: $parents[1].getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: typeof(tips)!='undefined' && tips !=null && (typeof(validHint)=='undefined' || validHint() =="")-->
+			         <span class="help-inline" data-bind="text:tips"></span>
+			         <!-- /ko -->
+			         <!-- ko if: ($parents[1].validHintType()=="inline"||(typeof(validHintType)!="undefined" && validHintType == "inline")) && typeof(validHint)!='undefined' && validHint() !="" -->
+			         <span class="help-inline" data-bind="text:validHint()"></span>
+			         <!-- /ko -->
+			    </div>
+		     </div>
+		     <!-- /ko -->
+		 <!-- /ko -->
+		 <!-- /ko -->
+		 <div style="clear: both;"></div>
+	  </div>
+	  <div data-bind="css:{'group-body-last':$index()==$parent.fields().length-1}"></div>
+	  <!-- /ko -->
+	  <!-- ko ifnot: cube.isArray(items) -->
+	  	<!-- ko if: typeof(isGroupInfo) == "undefined" -->
+		  	<!-- ko if: typeof(isLine) != "undefined" && (typeof(visible) == "undefined" || visible) -->
+	  		<div class="splitLine">
+	  			<!-- ko if: typeof(icon) != "undefined" -->
+					<span  data-bind='attr:{"class":"icon icon-"+icon}'></span>
+				<!-- /ko -->
+				<!-- ko if: typeof(caption) != "undefined" -->
+					<span data-bind="text:caption"></span>
+				<!-- /ko -->
+	  		</div>
+		  	<!-- /ko -->
+		  	<!-- ko if: typeof(isLine) == "undefined" -->
+	  		<div data-bind="visible:typeof(visible)=='undefined'?true:visible,attr: {'class':'control-group '+validStatus()+' span'+(typeof(colspan)!='undefined'?colspan*(12/$parent.cols()):12/$parent.cols())}">
+			    <label class="control-label" data-bind="style:{width:typeof(captionWidth)!='undefined'?captionWidth:null}">
+			    	<!-- ko if: typeof(nullable)=='function'?!nullable():nullable==false -->
+			    	<span class="required">*</span>
+			    	<!-- /ko -->
+			    	<span data-bind='text:caption'></span>
+			    	<!-- ko if: $parent.separator != '' &&  (typeof(showSeparator) == 'undefined' || showSeparator == true)-->
+					 <span data-bind='text:$parent.separator'></span>
+					<!-- /ko -->
+			    </label>
+			    <div class="controls controls-row" data-bind="css:{'controls-file':editorType == 'FileEditor','controls-rich':editorType == 'RichEditor','controls-multiline': (editorType == 'TextEditor' && typeof(textMode) != 'undefined' && textMode == 'multiline')},
+			    	style:{marginLeft:typeof(captionWidth)!='undefined'?(parseInt(captionWidth)+10)+'px':null}">
+			         <!-- ko if: typeof(renderEditor) != "undefined" -->
+			         	<span class="uneditable-input labelEditor" data-bind="css:{autowrap: typeof(labelAutowrap)!='undefined'?labelAutowrap:null},html:$parent.renderEditor($data, $parent.data[name]),
+			         		click: typeof(onClick)!='undefined'?function(){onClick($parent.data[name])}:null"></span>
+			         <!-- /ko -->
+			         <!-- ko if: editorType == "DateTimeEditor" && typeof(renderEditor) == "undefined"-->
+						<div class="textInpCom" data-bind="attr:{id: name}, component: { name: 'datetimeeditor', params: $parent.getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: editorType == "FileEditor" && typeof(renderEditor) == "undefined" -->
+					      <div class="textInpCom form-fileeditor" data-bind="attr:{id: name}, component: { name: 'fileeditor', params: $parent.getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: editorType == "RichEditor" && typeof(renderEditor) == "undefined" -->
+					      <div class="textInpCom" data-bind="attr:{id: name}, component: { name: 'richeditor', params: $parent.getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: editorType == "GridEditor" && typeof(renderEditor) == "undefined" -->
+					      <div class="textInpCom" data-bind="attr:{id: name}, component: { name: 'datagrid', params: $parent.getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor" && editorType != "RichEditor" && typeof(renderEditor) == "undefined" -->
+						  <div  class="textInpCom" data-bind="attr:{id: name}, component: { name: 'commoneditor', params: $parent.getEditorParam($data) }"></div>
+			         <!-- /ko -->
+			         <!-- ko if: typeof(tips)!='undefined' && tips !=null && (typeof(validHint)=='undefined' || validHint() =="")-->
+			         <span class="help-inline" data-bind="text:tips"></span>
+			         <!-- /ko -->
+			         <!-- ko if: ($parent.validHintType()=="inline"||(typeof(validHintType)!="undefined" && validHintType == "inline")) && typeof(validHint)!='undefined' && validHint() !="" -->
+			         <span class="help-inline" data-bind="text:validHint()"></span>
+			         <!-- /ko -->
+			    </div>
+		     </div>
+		     <!-- /ko -->
+	     <!-- /ko -->
+	  <!-- /ko -->
+  <!-- /ko -->
+  <!-- ko if: displaySubmitButton() || displaySaveButton() || displayResetButton() || customBtns().length > 0 -->
+  <div class="control-group span12" style="display: block;">
+    <div class="controls" data-bind="style:{textAlign:buttonAlign}">
+      <!-- ko if: displaySaveButton -->
+      <input type="button" class="btn btn-primary" data-bind="click:submitForm,value:cube.msg('SAVE')"></input>
+      <!-- /ko -->
+      <!-- ko if: displaySubmitButton -->
+      <input type="button" class="btn btn-primary" data-bind="click:submitForm,value:cube.msg('SUBMIT')"></input>
+      <!-- /ko -->
+      <!-- ko if: displayResetButton -->
+      <input type="button" class="btn btn-success" data-bind="click:reset,value:cube.msg('RESET')"></input>
+      <!-- /ko -->
+      <!-- ko foreach: customBtns -->
+		<button data-bind="text:text, attr:{'class': 'btn btn-'+(typeof(type)!='undefined'?type:'')}, visible: typeof(visible)!='undefined'?visible:true, event:{click: function(){$parent.customBtnClick(click, typeof(valid)!='undefined'?valid:false)}}, clickBubble: false"></button>
+      <!-- /ko -->
+    </div>
+  </div>
+  <!-- /ko -->
+   <!-- ko if: isShowLoading-->
+	<div class="cube modal-backdrop fade loading in loading-data">
+		<div style="position: absolute; top: 50%; left: 50%">
+			<div style="position: relative; top: -50%; left: -50%; color: #ccc;">
+				<img alt="加载中" data-bind="attr:{src: cube.cubepath('$/images/window_loading.gif')}">
+			</div>
+		</div>
+	</div>
+	<!-- /ko -->
+</form>

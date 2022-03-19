@@ -1,0 +1,407 @@
+<style>
+    .centre{
+        width:46%;
+        height:99%;
+        background:inherit;
+        background-color:rgba(0, 32, 96, 1);
+        box-sizing:border-box;
+        border-width:5px;
+        border-style:solid;
+        border-color:rgba(16, 77, 116, 1);
+        border-radius:0px;
+        -moz-box-shadow:none;
+        -webkit-box-shadow:none;
+        box-shadow:none;
+    }
+    .selects {
+        background: #01255C;
+        /*color: white;*/
+        width: calc(100% - 20px);
+        /*margin-left: 10px;*/
+        border: 1px solid #044B8B;
+        color: white;
+        font-size: 16px;
+        margin-top:100px;
+        /*margin-left: 190px;*/
+    }
+
+    .right_top{
+        width:100%;
+        height:25%;
+        background:inherit;
+        background-color:rgba(0, 32, 96, 1);
+        box-sizing:border-box;
+        border-width:5px;
+        border-style:solid;
+        border-color:rgba(16, 77, 116, 1);
+        border-radius:0px;
+        -moz-box-shadow:none;
+        -webkit-box-shadow:none;
+        box-shadow:none;
+        margin-left: 10px;
+    }
+    .day{
+        display: inline-block;
+        width: 45px;
+        height: 25px;
+        background: url("./resources/images/gridOperation/u1132.png") no-repeat;
+        background-size: 45px 25px;
+    }
+    .today {
+        display: inline-block;
+        width: 45px;
+        height: 25px;
+        background: url("./resources/images/gridOperation/u1134.png") no-repeat;
+        background-size: 45px 25px;
+    }
+    .right_bottom{
+        width:100%;
+        height:73%;
+        background:inherit;
+        background-color:rgba(0, 32, 96, 1);
+        box-sizing:border-box;
+        border-width:5px;
+        border-style:solid;
+        border-color:rgba(16, 77, 116, 1);
+        border-radius:0px;
+        -moz-box-shadow:none;
+        -webkit-box-shadow:none;
+        box-shadow:none;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+    .grid_number{
+        width:24%;
+        height:85%;
+        background:inherit;
+        background-color:rgba(0, 32, 97, 1);
+        box-sizing:border-box;
+        border-width:4px;
+        border-style:solid;
+        border-color:rgba(16, 77, 116, 1);
+        border-radius:0px;
+        -moz-box-shadow:none;
+        -webkit-box-shadow:none;
+        box-shadow:none;
+        font-size:9px;
+        color:#FFFFFF;
+        display: flex;
+        align-items: center;
+    }
+    .grade{
+        width:18%;
+        height:85%;
+        background:inherit;
+        background-color:rgba(0, 32, 97, 1);
+        box-sizing:border-box;
+        border-width:4px;
+        border-style:solid;
+        border-color:rgba(16, 77, 116, 1);
+        border-radius:0px;
+        -moz-box-shadow:none;
+        -webkit-box-shadow:none;
+        box-shadow:none;
+        font-size:9px;
+        color:#FFFFFF;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+    }
+    .picture{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/u439.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top: 20px; */
+        margin-left: 20px;
+    }
+    .pictures{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/u665.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top: 20px; */
+        margin-left: 20px;
+    }
+    .stair{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/1.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top:30px; */
+        margin-left:10px;
+    }
+    .secondlevel{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/2.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top:30px; */
+        margin-left:10px;
+
+    }
+    .threelevel{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/3.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top:30px; */
+        margin-left:10px;
+    }
+    .fourlevel{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/4.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top:30px; */
+        margin-left:10px;
+    }
+    .fivelevel{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/5.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top:30px; */
+        margin-left:10px;
+    }
+    .sixlevel{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/6.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top:30px; */
+        margin-left:10px;
+    }
+    .sevenlevel{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/7.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top:30px; */
+        margin-left:10px;
+    }
+    .eightlevel{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/gridOperation/8.png") no-repeat;
+        background-size: 44px 41px;
+        /* margin-top:30px; */
+        margin-left:10px;
+    }
+
+    .select{
+        background: #01255C;
+        width: 161px;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+    .input-append input {
+        background: transparent;
+        width: 111px;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+    .input-append .btn {
+        background: transparent;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+</style>
+<div style="width: 100%;height: 100%;">
+    <loading params="isShow: isShow,content: content"></loading>
+    <div style="display: flex;margin-top: 10px;margin-left: 10px;width: 100%;height: 100%;">
+        <div class="centre">
+            <div style="height: calc(100% - 120px);">
+                <div style="font-size: 20px;margin-left:350px;margin-top: 15px">电网运行风险预警情况(次)</div>
+                <div style="display: flex;margin-left: 100px">
+                    <div style="width: 25%;">
+                        <select class="select selects" data-bind="
+                                options: warningSituation,
+                                optionsText: 'text',
+                                optionsValue:'text',
+                                optionsValue:'id',
+                                value:warning,
+                                 event: { change: eventChange}
+                            ">
+                        </select>
+                    </div>
+                </div>
+                <div id="china_map" style="height: 90%;"></div>
+                <!-- <chart params="
+                        height:'100%',
+                        option:option">
+                </chart> -->
+            </div>
+        </div>
+        <div style="width:53%">
+         <div class="right_top">
+             <div style="margin-left:84%;padding-top: 10px;height: 10%;">
+            <span class=" distance day hand"
+                  style="font-size: 14px;color: white;text-align: center;line-height: 25px;"data-bind="click:day">日</span>
+                 <span class="today distance month hand" style="font-size: 14px;color: white;text-align: center;line-height: 25px;" data-bind="click:month">月</span>
+                 <span class="today distance year hand" style="font-size: 14px;color: white;text-align: center;line-height: 25px;" data-bind="click:year">年</span>
+             </div>
+             <div style="margin-top: 10px;margin-left: 12px;display: flex;height: 40%;">
+                 <div class="grid_number">
+                 <div class="picture"></div>
+                 <div class="content">
+                     <p style="margin-left: 60px;font-size: 30px"data-bind="text:WARNINGLEVEL"></p>
+                     <p style="margin-left: 47px;font-size: 14px;margin-top: 10px">电网风险总数(次)</p>
+                 </div>
+                 </div>
+                 <div class="grade">
+                     <div class="stair"></div>
+                     <div>
+                         <p style="margin-left: 30px;font-size: 30px"data-bind="text:WARNINGLEVEL1">0</p>
+                         <p style="margin-left:13px;font-size: 14px;margin-top: 10px">一级风险(次)</p>
+                     </div>
+
+                 </div>
+                 <div class="grade">
+                 <div class=" secondlevel"></div>
+                 <div>
+                     <p style="margin-left: 30px;font-size: 30px"data-bind="text:WARNINGLEVEL2">0</p>
+                     <p style="margin-left:13px;font-size: 14px;margin-top: 10px">二级风险(次)</p>
+                 </div>
+                 </div>
+                 <div class="grade">
+                 <div class="threelevel"></div>
+                 <div>
+                     <p style="margin-left: 15px;font-size: 30px"data-bind="text:WARNINGLEVEL3">5</p>
+                     <p style="margin-left:13px;font-size: 14px;margin-top: 10px">三级风险(次)</p>
+                 </div>
+                 </div>
+                 <div class="grade">
+                 <div class="fourlevel"></div>
+                 <div>
+                     <p style="margin-left: 15px;font-size: 30px"data-bind="text:WARNINGLEVEL4">10</p>
+                     <p style="margin-left:13px;font-size: 14px;margin-top: 10px">四级风险(次)</p>
+                 </div>
+                 </div>
+             </div>
+             <div style="margin-top: 20px;margin-left: 12px;display: flex;height: 40%;">
+                 <div class="grid_number">
+                     <div class="pictures"></div>
+                     <div class="content">
+                         <p style="margin-left: 65px;font-size: 30px"data-bind="text:WORK_PLAN_WARN_CNT">228</p>
+                         <p style="margin-left: 33px;font-size: 14px;margin-top: 10px">关联的作业总数(次)</p>
+                     </div>
+                 </div>
+                 <div class="grade">
+                     <div class="fivelevel"></div>
+                     <div>
+                         <p style="margin-left: 15px;font-size: 30px"data-bind="text:WARNINGLEVEL5">25</p>
+                         <p style="margin-left:13px;font-size: 14px;margin-top: 10px">五级风险(次)</p>
+                     </div>
+                 </div>
+                 <div class="grade">
+                     <div class="sixlevel"></div>
+                     <div>
+                         <p style="margin-left: 15px;font-size: 30px"data-bind="text:WARNINGLEVEL6">30</p>
+                         <p style="margin-left:13px;font-size: 14px;margin-top: 10px">六级风险(次)</p>
+                     </div>
+                 </div>
+                 <div class="grade">
+                     <div class="sevenlevel"></div>
+                     <div>
+                         <p style="margin-left: 15px;font-size: 30px"data-bind="text:WARNINGLEVEL7">70</p>
+                         <p style="margin-left:13px;font-size: 14px;margin-top: 10px">七级风险(次)</p>
+                     </div>
+                 </div>
+                 <div class="grade">
+                     <div class="eightlevel"></div>
+                     <div>
+                         <p style="margin-left:15px;font-size: 30px"data-bind="text:WARNINGLEVEL8">88</p>
+                         <p style="margin-left:13px;font-size: 14px;margin-top: 10px">八级风险(次)</p>
+                     </div>
+                 </div>
+             </div>
+         </div>
+            <div class="right_bottom">
+               <div style="display: flex;margin-bottom: 20px;margin-top: 10px">
+                   <p style="font-size: 18px;color: white;margin: 5px 60px 20px 25px">标题</p>
+                   <p><input type="text" autocomplete="off" id="ipt1" data-bind="value:Name, event: { input: iptChange}" style="border:1px solid #0b7cb8;background-color:#01255C;color: white;width: 150px;margin-top: 0px;margin-left: 0px;"></p>
+                   <p style="font-size: 18px;color: white;margin: 5px 20px 20px 30px">预警等级</p>
+                   <p><select class="select w-100" data-bind="
+                                                         options: riskGrade,
+                                                         optionsText: 'text',
+                                                         optionsValue:'id',
+                                                         value: Grade,
+                                                      ">
+                   </select></p>
+                   <p style="font-size: 18px;color: white;margin: 5px 20px 20px 50px">预警状态</p>
+                   <p><select class="select w-100" data-bind="
+                                                         options: warningState,
+                                                         optionsText: 'text',
+                                                         optionsValue:'id',
+                                                         value: State,
+                                                      ">
+                   </select></p>
+               </div>
+                <div style="display: flex;margin-bottom: 20px;margin-top: 30px">
+                    <p style="font-size: 18px;color: white;margin: 0px 60px 20px 22px">预警编号</p>
+                    <p><input type="text" autocomplete="off" id="ipt2" data-bind="value:number, event: { input: iptChange2}" style="border:1px solid #0b7cb8;background-color:#01255C;color: white;width: 150px;margin-top: -3px;margin-left: -35px;"></p>
+                    <p style="font-size: 18px;color: white;margin: 0px 60px 20px 30px">发布单位</p>
+                    <p><input type="text" autocomplete="off" id="ipt3" data-bind="value:Unit, event: { input: iptChange3}" style="border:1px solid #0b7cb8;background-color:#01255C;color: white;width: 150px;margin-top: -3px;margin-left: -35px;"></p>
+<!--                    <p><select class="select w-100" data-bind="-->
+<!--                                                         options: releaseUnit,-->
+<!--                                                         optionsText: 'text',-->
+<!--                                                         optionsValue:'id',-->
+<!--                                                         value: Unit,-->
+<!--                                                      ">-->
+<!--                    </select></p>-->
+                    <div class="know-btn cur-p" data-bind="click: search" style="background-color:#169bd5;display:inline-block;color:white;width: 80px;line-height:30px;height: 30px;text-align: center;font-size: 16px;margin:0px 0px 10px 45px" >查询</div>
+                </div>
+<!--                <div style="display: flex;margin-bottom: 20px;margin-top: 10px">-->
+<!--                    <div>-->
+<!--                        <span style="font-size: 18px;color: white;margin: 20px -4px 20px 9px">预警计划时间:</span>-->
+<!--                                        <input type="text" data-bind="value:Name" style="border:1px solid #0b7cb8;background-color:#05204e;color: white;width:150px">-->
+<!--                        <datetimeeditor  params="showTimePicker: true,width:'162px',showDayPicker: true, format: ' yyyy-MM-dd HH:mm:ss', value: time"  > </datetimeeditor>-->
+
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <span style="font-size: 18px;color: white;">至:</span>-->
+<!--                        <datetimeeditor  params="showTimePicker: true,width:'162px',showDayPicker: true, format: 'yyyy-MM-dd HH:mm:ss', value: endTime"  > </datetimeeditor>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                </div>-->
+                <div style="width: 98%;margin-left:10px;margin-top: 20px">
+                    <datagrid id="instanceTable" params="
+                            style: style,
+                            items: items,
+                            columns: columns,
+                            isShowRowNumber: isShowRowNumber,
+                            isShowCheckBox: isShowCheckBox,
+                            isShowBorder: isShowBorder,
+                            isShowStripe: isShowStripe,
+                            isShowHover: isShowHover,
+                            isShowCondense: isShowCondense,
+                            isAllowEdit: isAllowEdit,
+                            isAllowDelete: isAllowDelete,
+                            isAllowOperations: isAllowOperations,
+                            isAllowShift: isAllowShift,
+                            isAllowAppend: isAllowAppend,
+                            isAllowSort: isAllowSort,
+                            isAllowPaging: isAllowPaging,
+                            pageSize: pageSize,
+                            rowNumberWidth:'4%',
+                            checkboxWidth:'4%',
+                            primaryKey: primaryKey
+                            "></datagrid>
+                </div>
+                <pagenavibar style="float: right;color: white;margin-right: 44px" params="
+                        size: size,
+                        showArrow: showArrow,
+                        showTotal: showTotal,
+                        showGoto: showGoto,
+                        count: count,
+                        showAllPage: showAllPage,
+                        pageTotalCount: pageTotalCount,
+                        pageIndex: pageIndex,
+                        pageVisibleCount: pageVisibleCount,
+                        onPageIndexChanged: onPageIndexChanged"></pagenavibar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

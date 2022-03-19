@@ -1,0 +1,81 @@
+<div>
+    <div style="display: flex;margin-bottom: 20px;margin-top:20px">
+        <div style="margin-left: 30px">
+            <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">企业名称:</span>
+            <input type="text" data-bind="value:name"
+                style="border:1px solid #0b7cb8;background-color:transparent;color: white;width: 200px">
+        </div>
+        <div>
+            <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">省份：</span>
+            <select class="select" data-bind="
+                                                 options: issueContent,
+                                                 optionsText: 'text',
+                                                 optionsValue:'text',
+                                                 optionsValue:'id',
+                                                 value: issue,
+                                              ">
+            </select>
+        </div>
+        <div>
+            <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">发布日期:</span>
+            <datetimeeditor params="
+                showTimePicker: true,
+                width:'160px',
+                showDayPicker: true,
+                format: 'yyyy-MM-dd HH:mm:ss',
+                value: startTime">
+            </datetimeeditor>
+        </div>
+        <div>
+            <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">至</span>
+            <datetimeeditor params="
+                showTimePicker: true,
+                width:'160px',
+                showDayPicker: true,
+                format: 'yyyy-MM-dd HH:mm:ss',
+                value:endTime">
+            </datetimeeditor>
+        </div>
+        <div class="know-btn cur-p" data-bind="click: query"
+            style="background-color:#169bd5;display:inline-block;color:white;width: 80px;line-height:30px;height: 30px;text-align: center;font-size: 16px;margin:0px 0px 10px 15px">
+            查询</div>
+    </div>
+    <div style="width:calc(100% - 60px);margin-left:30px;margin-top: 20px;">
+        <datagrid id="instanceTable" params="
+                    style: style,
+                    items: negativeContent,
+                    columns: negativeMeter,
+                    isShowRowNumber: true,
+                    isShowCheckBox: false,
+                    isShowBorder: true,
+                    isShowHover: true,
+                    isShowCondense: false,
+                    isAllowEdit: false,
+                    isAllowDelete: false,
+                    isAllowOperations: true,
+                    isAllowShift: false,
+                    isAllowAppend: false,
+                    isAllowSort: false,
+                    isAllowPaging: false,
+                    isShowLoading:'true',
+                    customOperations:customOperations,
+                    operationsColumnWidth: '60px',
+                    operationsColumnAlign: 'center',
+                    pageSize: 10,
+                    primaryKey:'siteinfo_id'
+                    "></datagrid>
+        <pagenavibar style="float: right;color: white;margin-right:30px" params="
+                size: size,
+                showArrow: showArrow,
+                showTotal: showTotal,
+                showGoto: showGoto,
+                count: count,
+                showAllPage: showAllPage,
+                pageTotalCount: pageTotalCount,
+                pageIndex: pageIndex,
+                pageVisibleCount: pageVisibleCount,
+                onPageIndexChanged: onPageIndexChanged">
+
+        </pagenavibar>
+    </div>
+</div>

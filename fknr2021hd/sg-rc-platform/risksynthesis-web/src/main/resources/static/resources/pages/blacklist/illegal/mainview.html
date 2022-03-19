@@ -1,0 +1,64 @@
+<style>
+        .lines {
+                width: 1600px;
+                height: 2px;
+                background: url("./resources/images/u1730.png") no-repeat;
+                background-size: 1600px 2px;
+                margin: 20px auto;
+        }
+
+        .close {
+                width: 18px;
+                height: 18px;
+                background: url("./resources/images/u1732.png") no-repeat;
+                background-size: 18px 18px;
+        }
+</style>
+<div>
+        <div style="display: flex;margin-top: 50px;justify-content: space-around">
+                <p style="font-size: 20px;color: white">违章查看</p>
+                <i class="icon-remove cur-p" style="color: #00E5FF; font-size: 26px;position: absolute; right: 90px;"
+                        data-bind="click: function(){refresh()}"></i>
+        </div>
+        <p class="lines"></p>
+        <p style="font-size: 18px;color: white;margin-left: 100px;margin-top:50px">违章单位</p>
+        <div style="display: flex">
+                <p style="width: 400px; font-size: 16px;color: white;margin-left: 120px;margin-top: 30px">违章单位:<span
+                                data-bind="text:ViolationUnit"></span></p>
+                <p style="width: 400px;font-size: 16px;color: white;margin-left:600px;margin-top: 30px" ;>违章时间:<span
+                                data-bind="text:ViolationTime"></span></p>
+        </div>
+        <div style="display: flex">
+                <p style="width: 400px;font-size: 16px;color: white;margin-left: 120px;margin-top: 30px">单位性质:<span
+                                data-bind="text:natureUnit"></span></p>
+                <p style="width: 400px;font-size: 16px;color: white;margin-left:600px;margin-top: 30px" ;>违章级别:<span
+                                data-bind="text:ViolationGrade"></span></p>
+        </div>
+        <div style="display: flex">
+                <p style="width: 400px;font-size: 16px;color: white;margin-left: 120px;margin-top: 30px">巡检单位:<span
+                                data-bind="text:InspectionUnit"></span></p>
+                <!-- <p style="width: 400px;font-size: 16px;color: white;margin-left:600px;margin-top: 30px" ;>停工状态:<span
+                data-bind="text:ISshutdown"></span></p> -->
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 100px;margin-top:50px">违章详细信息</p>
+        <p style="width: 400px; font-size: 16px;color: white;margin-left: 120px;margin-top: 30px">违章人员:<span
+                        data-bind="text:ViolationPersonnel"></span></p>
+        <p style="width: 400px;font-size: 16px;color: white;margin-left:120px;margin-top: 30px" ;>违章性质:<span
+                        data-bind="text:ViolationNature"></span></p>
+        <p style="font-size: 16px;color: white;margin-left:120px;margin-top: 30px" ;>
+                <span>违章内容：</span>
+                <span data-bind="text:ViolationContents"></span></p>
+        <p style="width: 400px;font-size: 16px;color: white;margin-left:120px;margin-top: 30px" ;>违章地点:<span
+                        data-bind="text:ViolationPlace"></span></p>
+        <div style="width: 400px;font-size: 16px;color: white;margin-left:120px;margin-top: 30px;">违章证据：
+                <p style="font-size: 16px;color: white;margin-left:80px;margin-top: 30px">整改前:</p>
+                <p style="font-size: 16px;color: white;margin-left:80px;margin-top: 30px">整改后:</p>
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 100px;margin-top:30px">处罚情况</p>
+        <p style="font-size: 16px;color: white;margin-left: 140px;margin-top:30px">处罚内容：<span style="margin-left: 20px"
+                        data-bind="text:penalizeContent"></span></p>
+        <p style="font-size: 18px;color: white;margin-left: 100px;margin-top:30px">积分情况</p>
+        <div style="font-size: 16px;color: white;margin-left: 140px;margin-top:30px">积分详情：总分20分<p
+                        style="margin-left:70px" data-bind="text:IntegralDetails"></p>
+        </div>
+</div>

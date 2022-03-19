@@ -1,0 +1,12 @@
+<div class="cube popover" data-bind='attr:{"class": "popover "+popoverDirection()+" "+ msgType()}, 
+	style:{display: isShowDialog()?"block":"none",zIndex: zIndex(),left:left(),right:right(),top:top(),bottom:bottom()}'>
+	<div class="arrow" data-bind='style:{left:arrowLeft()}'></div>
+	<!-- ko if: title()!="" -->
+		<h3 class="popover-title" data-bind='text: title'></h3>
+		<!-- ko if: isShowCloseBtn -->
+		<button type="button" class="close" data-bind="attr:{title: cube.msg('CLOSE')},event:{mousedown: closeDialog}, mousedownBubble:false">×</button>
+		<!-- /ko -->
+	<!-- /ko -->
+	<div class="popover-content" data-bind='html: content'>
+	</div>
+</div>

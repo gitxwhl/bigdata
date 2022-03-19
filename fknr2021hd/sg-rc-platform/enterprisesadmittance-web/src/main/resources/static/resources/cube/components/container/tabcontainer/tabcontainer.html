@@ -1,0 +1,154 @@
+<!-- ko if: tabLayout() == "top" -->
+	<div class="tabsheader" data-bind="css:{'tabLineFeed': isTabLineFeed()}">
+		<!-- ko if: _showBtn -->
+		<span class="prev icon-chevron-left" data-bind="click: function(){prev($element)}"></span>
+		<!-- /ko -->
+		<div class="scrollborder" data-bind="event:{contextmenu:function(event){event.preventDefault}}">
+			<div class="scroll">
+				<ul class="cube nav nav-tabs" data-bind="foreach: tabContents, css:{'tab': type() == 'tab'}">
+					<li data-bind="css:{'active':  $parent.selectedTabRoute() == route , 'isLocked': (typeof(isLocked)!='undefined' && isLocked() == true)}, event:{contextmenu:function(data, event){$parent.showTabCloseDialog($index,data, event)}}">
+						<!-- ko if: isLocked -->
+						<span class="lockedIcon icon-lock"></span>
+						<!-- /ko -->
+						<a href="#" data-bind="click: $parent.showTabContent, text: title,attr:{href: route}"></a>
+						<span class="icon-remove" data-bind="click: $parent.hiddenTab"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- ko if: _showBtn -->
+		<span class="next icon-chevron-right" data-bind="click: function(){next($element)}"></span>
+		<!-- /ko -->
+	</div>
+
+	<!-- ko ifnot: reusable -->
+		<!-- ko if: selectedTab() && typeof(selectedTab().content)!="undefined" -->
+			<div class="cube tab-content" data-bind="html: selectedTab().content"></div>
+		<!-- /ko -->
+		<!-- ko if: selectedTab() && typeof(selectedTab().content)=="undefined" && typeof(selectedTab().templateOptions)!="undefined"-->
+			<!-- ko if: selectedTab().isOut -->
+				<!-- ko if: selectedTab().templateOptions.type == "ajax" -->
+					<div class="cube tab-content" data-bind="html: ajaxHtml"></div>
+				<!-- /ko --> 
+				<!-- ko if: selectedTab().templateOptions.type == "iframe" -->
+					<div class="cube tab-content">
+						<iframe name="iframe_tab" style="width:100%;" frameborder=0 data-bind="event:{load: iframeLoad},style:{height:selectedTab().templateOptions.iframeHeight},attr:{src:selectedTab().templateOptions.name}"></iframe>
+					</div>
+				<!-- /ko --> 
+			<!-- /ko --> 
+			<!-- ko ifnot: selectedTab().isOut -->
+				<div class="cube tab-content" data-bind="component: selectedTab().templateOptions"></div>
+			<!-- /ko -->
+		<!-- /ko -->
+	<!-- /ko -->
+	<!-- ko if: reusable -->
+		<!-- ko foreach: { data: tabContents, as: 'item' }-->
+			<div data-bind="visible: $parent.selectedTab() == item">
+				<!-- ko if: typeof(item.content)!="undefined" -->
+					<div class="cube tab-content" data-bind="html: item.content"></div>
+				<!-- /ko -->
+				<!-- ko if: typeof(item.content)=="undefined" && typeof(item.templateOptions)!="undefined"-->
+					<!-- ko if: item.isOut -->
+						<!-- ko if: item.templateOptions.type == "ajax" -->
+							<div class="cube tab-content" data-bind="html: item.ajaxHtml"></div>
+						<!-- /ko --> 
+						<!-- ko if: item.templateOptions.type == "iframe" -->
+							<div class="cube tab-content">
+								<iframe name="iframe_tab" style="width:100%;" frameborder=0 data-bind="event:{load: $parent.iframeLoad},style:{height:item.templateOptions.iframeHeight},attr:{src:item.templateOptions.name}"></iframe>
+							</div>
+						<!-- /ko --> 
+					<!-- /ko --> 
+					<!-- ko ifnot: item.isOut -->
+						<div class="cube tab-content" data-bind="component: item.templateOptions"></div>
+					<!-- /ko -->
+				<!-- /ko -->
+			</div>
+		<!-- /ko -->
+	<!-- /ko -->
+<!-- /ko -->
+
+<!-- ko if: tabLayout() == "main" -->
+	<div class="tabsheader-left">
+		<!-- ko if: _showBtn -->
+		<span class="prev-left icon-chevron-up" data-bind="click: function(){prevLeft($element)}"></span>
+		<!-- /ko -->
+		<div class="scrollborder-left">
+			<div class="scroll-left" data-bind="style:{ height: tabLeftHeight()}">
+				<ul class="cube nav nav-tabs-left" data-bind="foreach: tabContents, css:{'tab': type() == 'tab'}">
+					<li data-bind="css:{'active':  $parent.selectedTabRoute() == route} ">
+						<a href="#" data-bind="click: $parent.showTabContent, text: title,attr:{href: route}"></a>
+						<span class="icon-remove" data-bind="click: $parent.hiddenTab"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- ko if: _showBtn -->
+		<span class="next-left icon-chevron-down" data-bind="click: function(){nextLeft($element)}"></span>
+		<!-- /ko -->
+	</div>
+	
+	<!-- ko ifnot: reusable -->
+		<!-- ko if: selectedTab() && typeof(selectedTab().content)!="undefined" -->
+		<div class="cube tab-content-left" data-bind="html: selectedTab().content,style:{ height: tabLeftHeight()}"></div>
+		<!-- /ko -->
+		<!-- ko if: selectedTab() && typeof(selectedTab().content)=="undefined" && typeof(selectedTab().templateOptions)!="undefined"-->
+			<!-- ko if: selectedTab().isOut -->
+				<!-- ko if: selectedTab().templateOptions.type == "ajax" -->
+					<div class="cube tab-content" data-bind="html: ajaxHtml, style:{ height: tabLeftHeight()}"></div>
+				<!-- /ko --> 
+				<!-- ko if: selectedTab().templateOptions.type == "iframe" -->
+					<div class="cube tab-content" data-bind="style:{ height: tabLeftHeight()}">
+						<iframe name="iframe_tab" style="width:100%;" frameborder=0 data-bind="event:{load: iframeLoad},style:{height:selectedTab().templateOptions.iframeHeight}, attr:{src:selectedTab().templateOptions.name}"></iframe>
+					</div>
+				<!-- /ko --> 
+			<!-- /ko --> 
+			<!-- ko ifnot: selectedTab().isOut -->
+				<div class="cube tab-content-left" data-bind="component: selectedTab().templateOptions,style:{ height: tabLeftHeight()}"></div>
+			<!-- /ko -->
+		<!-- /ko -->
+	<!-- /ko -->
+	<!-- ko if: reusable -->
+		<!-- ko foreach: { data: tabContents, as: 'item' }-->
+			<div data-bind="visible: $parent.selectedTab() == item">
+				<!-- ko if: typeof(item.content)!="undefined" -->
+				<div class="cube tab-content-left" data-bind="html: item.content,style:{ height: $parent.tabLeftHeight()}"></div>
+				<!-- /ko -->
+				<!-- ko if: typeof(item.content)=="undefined" && typeof(item.templateOptions)!="undefined"-->
+					<!-- ko if: item.isOut -->
+						<!-- ko if: item.templateOptions.type == "ajax" -->
+							<div class="cube tab-content" data-bind="html: item.ajaxHtml, style:{ height: $parent.tabLeftHeight()}"></div>
+						<!-- /ko --> 
+						<!-- ko if: item.templateOptions.type == "iframe" -->
+							<div class="cube tab-content" data-bind="style:{ height: $parent.tabLeftHeight()}">
+								<iframe name="iframe_tab" style="width:100%;" frameborder=0 data-bind="event:{load: $parent.iframeLoad},style:{height:item.templateOptions.iframeHeight}, attr:{src:item.templateOptions.name}"></iframe>
+							</div>
+						<!-- /ko --> 
+					<!-- /ko --> 
+					<!-- ko ifnot: item.isOut -->
+						<div class="cube tab-content-left" data-bind="component: item.templateOptions,style:{ height: $parent.tabLeftHeight()}"></div>
+					<!-- /ko -->
+				<!-- /ko -->
+			</div>
+		<!-- /ko -->
+	<!-- /ko -->
+<!-- /ko -->
+
+<ul class="tabCloseDialog dropdown-menu" data-bind="style:{display: isShowCloseTab()?'block':'none'},
+       hasFocus: closeTabFocus,
+     		event:{mouseover: mouseoverPopoverDialog, mousedown: mousedownInnerPopoverDialog, mouseleave: hiddenPopoverDialog}">
+	<li>
+		<a href="#" data-bind="text: _tabLockedText(),click: tabLockedThis"></a>
+	</li>
+	<li>
+		<a href="#" data-bind="text: cube.msg('CLOSE'),click: tabCloseThis"></a>
+	</li>
+	<li>
+		<a href="#" data-bind="text: cube.msg('CLOSEOTHERS'),click: tabCloseOthers"></a>
+	</li>
+	<li>
+		<a href="#" data-bind="text: cube.msg('CLOSEALL'),click: tabCloseAll"></a> 
+	</li>
+	<li>
+		<a href="#" data-bind="text: cube.msg('CANCEL'),click:tabCancelClose"></a> 
+	</li>
+</ul>

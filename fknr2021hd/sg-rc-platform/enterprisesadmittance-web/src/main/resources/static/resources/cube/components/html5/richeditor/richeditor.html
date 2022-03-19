@@ -1,0 +1,84 @@
+<div class="cube richeditor-container" data-bind='attr:{style: style},css:{readonly: readOnly}'>
+	<div class="btn-toolbar" data-bind='foreach: cmdLists'>
+	  <!-- ko if:type=='list' -->
+      <div class="btn-group" data-bind="css:{'open': isShowOptions},
+      					event:{mouseover: $parent.showOptions, mouseout: $parent.hiddenOptions}">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" data-bind="attr:{title: desc,disabled: $parent.isCodeMode},event:{mouseover: $parent.getEditorSelection}">
+        	<!-- ko if: cmdKey=="FontName" -->
+	        	<!-- ko if: $parent.fontName() != null -->
+	        	<i data-bind="text: $parent.fontName"></i>
+	        	<!-- /ko -->
+	        	<!-- ko if: $parent.fontName() == null -->
+	        	<i data-bind="attr:{'class': icon}"></i>
+	        	<!-- /ko -->
+        	<!-- /ko -->
+        	
+        	<!-- ko if: cmdKey=="FontSize" -->
+	        	<!-- ko if: $parent.fontSize() != null -->
+	        	<i data-bind="text: $parent.fontSize"></i>
+	        	<!-- /ko -->
+	        	<!-- ko if: $parent.fontSize() == null -->
+	        	<i data-bind="attr:{'class': icon}"></i>
+	        	<!-- /ko -->
+        	<!-- /ko -->
+        	
+        	<b class="caret"></b></a>
+			<ul class="dropdown-menu" style="margin-top: 0px;max-height: 150px;overflow: auto;" data-bind="foreach: options">
+				<li>
+					<!-- ko if: $parent.cmdKey=="FontName" -->
+					<a data-bind="style:{'font-family': name}, text: name, click: $parents[1].execCommand"></a>
+					<!-- /ko -->
+					
+					<!-- ko if: $parent.cmdKey=="FontSize" -->
+					<a data-bind="click: $parents[1].execCommand">
+						<font data-bind="attr:{size: value}, text: name"></font>
+					</a>
+					
+					<!-- /ko -->
+				</li>
+			</ul>
+		
+		</div>
+		<!-- /ko -->
+		
+		<!-- ko if:type=='group' -->
+		<div class="btn-group" data-bind='foreach: items'>
+			<!-- ko if: type=='single' -->
+				<!-- ko if: (cmdKey == "CUBE_CODE" && $parents[1].isShowCodeBtn()) || cmdKey != "CUBE_CODE" -->
+		        <a data-bind="click: $parents[1].execCommand,event:{mouseover: $parents[1].getEditorSelection},attr:{title: desc,disabled: cmdKey!='CUBE_CODE'&&$parents[1].isCodeMode}" class="btn">
+		        	<i data-bind="attr:{'class': icon}"></i>
+		        </a>
+		        <!-- /ko -->
+	        <!-- /ko -->
+	        <!-- ko if: type=='complex' -->
+		        <a class="btn dropdown-toggle" 
+		        	data-bind='click: $parents[1].showOptions,event:{mouseover: $parents[1].getEditorSelection},attr:{title: desc,disabled: $parents[1].isCodeMode}' data-toggle="dropdown">
+		        		<!-- <span data-bind='style:{"color": options.editorType=="color"?value:"#000"}'> -->
+		        		<i data-bind="attr:{'class': icon}"></i>
+		        		<!--</span> -->
+		        </a>
+			    <div class="dropdown-menu input-append" data-bind="style:{'display': isShowOptions()?'block':'none'}">
+				    <!-- ko if: options.editorType=='text' -->
+				    	<input style='width:45%' type="text" data-bind="textInput: value" />
+				    <!-- /ko -->
+				    <!-- ko if: options.editorType=='file' -->
+				    	<input type="file" data-bind='event: { change: function() {value($element.files[0]); }} ' data-role="magic-overlay" data-target="#pictureBtn">
+				    <!-- /ko -->
+				    <!-- ko if: options.editorType=='color' -->
+				    	<input type="color" data-bind='event: { change: function() {value($element.value) }} ' data-role="magic-overlay" data-target="#pictureBtn">
+				    <!-- /ko -->
+				    <button class="btn" type="button" data-bind='text:cube.msg("CONFIRM"),click: $parents[1].execCommand'>确定</button>
+	        	</div>
+	        <!-- /ko -->
+      	</div>
+		<!-- /ko -->
+		
+      </div>
+	
+	<!-- ko ifnot:isCodeMode -->
+    	<div class="richeditor" data-bind="style:{height: textareaHeight},attr:{contenteditable: readOnly()?false:true}, editableHtml: value, event: {blur: _valid, click: _click}"></div>
+    <!-- /ko -->
+    <!-- ko if:isCodeMode -->
+    	<textarea style='width:100%;' class="richeditor" data-bind="style:{height: textareaHeight},textInput: value, event: {blur: _valid}"></textarea>
+    <!-- /ko -->
+  </div>

@@ -1,0 +1,201 @@
+<div class="cube grid treegrid" data-bind="attr:{style:style},style:{height:height,  'max-height':(maxHeight()!='auto' && height() == 'auto')?maxHeight:'none'},css:{hasScroll:items()!=null&&items().length == 0,autowrap: isAllowAutowrap}">
+	<div class="tableHeader">
+	<table class="table" data-bind='css:{
+		"table-bordered": isShowBorder,
+		"table-striped": isShowStripe,
+		"table-hover": isShowHover,
+		"table-condensed": isShowCondense
+		}'>
+         <thead>
+           <tr>
+             <!-- ko ifnot: isAllowSort -->
+             	<!-- ko if: markColumn() != null -->
+          		<th data-bind="style:{width: typeof(markColumn().width)!='undefined'?markColumn().width:'30px'}, text:  markColumn().caption"></th>
+         		<!-- /ko -->
+         		  
+         		<!-- ko if: isShowCheckBox -->
+          		<th width="30px">
+          			<!-- ko ifnot: isRadio -->
+          			<input type="checkbox" data-bind="checked: _selectedAll">
+          			<!-- /ko -->
+          		</th>
+         		<!-- /ko -->
+         		<!-- ko if: isShowRowNumber -->
+          		<th data-bind='style:{width:rowNumberWidth()}'>
+          			<!-- ko if: rowNumberColumnName() == null -->
+          				<!--ko text: cube.msg('ROWNUM')--><!--/ko-->
+          			<!-- /ko -->
+          			<!-- ko if: rowNumberColumnName() != null -->
+          				<!--ko text: rowNumberColumnName--><!--/ko-->
+          			<!-- /ko -->
+          		</th>
+         		  <!-- /ko -->
+              <!-- ko foreach: columns -->
+              	<!-- ko if:((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+              	<th data-bind="style:{width: typeof(width)!='undefined'?width:$parent.columnDefaultWidth()}, text: caption, event:{mousemove: function(data, event){$parent.mousemove($element,event)}, mousedown: function(data,event){$parent.mousedown($element,data,event,$index())},mouseup:$parent.mouseup}"></th>
+              	 <!-- /ko -->
+              <!-- /ko -->
+             <!-- /ko -->
+             <!-- ko if: isAllowSort -->
+             	<!-- ko if: markColumn() != null -->
+          		<th data-bind="style:{width: typeof(markColumn().width)!='undefined'?markColumn().width:'30px'}, text:  markColumn().caption"></th>
+         		<!-- /ko -->
+         		<!-- ko if: isShowCheckBox -->
+          		<th width="30px">
+          			<!-- ko ifnot: isRadio -->
+          			<input type="checkbox" data-bind="checked: _selectedAll">
+          			<!-- /ko -->
+          		</th>
+         		<!-- /ko -->
+         		<!-- ko if: isShowRowNumber -->
+          		<th data-bind='style:{width:rowNumberWidth()}'>
+          			<!-- ko if: rowNumberColumnName() == null -->
+          				<!--ko text: cube.msg('ROWNUM')--><!--/ko-->
+          			<!-- /ko -->
+          			<!-- ko if: rowNumberColumnName() != null -->
+          				<!--ko text: rowNumberColumnName--><!--/ko-->
+          			<!-- /ko -->
+          		</th>
+         		  <!-- /ko -->
+              <!-- ko foreach: columns -->
+              	<!-- ko if:((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+              	<th  class="sort"  data-bind="style:{width: typeof(width)!='undefined'?width:$parent.columnDefaultWidth()}, event:{mousemove: function(data, event){$parent.mousemove($element,event)}, mousedown: function(data,event){$parent.mousedown($element,data,event,$index())},mouseup:$parent.mouseup}">
+              		<div data-bind="attr:{title: cube.msg('SORTING')}, click:$parent.sortGrid,mousedownBubble: false">
+               		<!-- ko if: $parent.sortName()== name -->
+               			<span data-bind='attr:{"class": $parent.sortType()==1?"icon-arrow-up":"icon-arrow-down"}'></span>
+               		<!-- /ko -->
+               		<span data-bind='text: caption'></span>
+              		</div>
+              	</th>
+              	 <!-- /ko -->
+              <!-- /ko -->
+             <!-- /ko -->
+             <!-- ko if: isShowTempColumn -->
+             <th data-bind="event:{mousemove: function(data, event){mousemove($element,event)}, mousedown: function(data,event){mousedown($element,null,event,-1)},mouseup:mouseup}"></th>
+             <!-- /ko -->
+             <th data-bind="'visible': (isAllowOperations() || _hasVScroll()),style:{width:_headerOperationsColumnWidth,padding:(!isAllowOperations()&&!isShowCondense()?'5px':null)}">
+             	<!-- ko if: isAllowOperations -->
+             		<!--ko text: cube.msg('OPERATIONS')--><!--/ko-->
+             	<!-- /ko -->
+             </th>
+           </tr>
+         </thead>
+       </table>
+    </div>
+    <div class="tableBody" data-bind="style:{height: _bodyHeight,  'max-height':(maxHeight()!='auto' && height() == 'auto')?_bodyMaxHeight:'none'},css:{hasvscroll:_hasVScroll}">
+	<table class="table" data-bind='css:{
+		"table-bordered": isShowBorder,
+		"table-striped": isShowStripe,
+		"table-hover": isShowHover,
+		"table-condensed": isShowCondense
+		}'>
+              <tbody>
+              	<!-- ko foreach: { data: items, as: 'item' }-->
+              	<!-- ko if: item!=null -->
+                 	<!-- ko component:{name: "treegriditem", params:{item: item, grid: $parent}} --><!-- /ko -->
+                <!-- /ko -->
+                <!-- /ko -->
+                
+                <!-- ko if:isAllowAppend -->
+               	<tr>
+               		<!-- ko if: markColumn() != null -->
+	          		<td style="text-align:center" data-bind="style:{width: typeof(markColumn().width)!='undefined'?markColumn().width:'30px'}"></td>
+	         	    <!-- /ko -->
+           			<!-- ko if: isShowCheckBox -->
+              			<td width="30px"></td>
+              		<!-- /ko -->
+              		<!-- ko if: isShowRowNumber -->
+            			<td data-bind='style:{width:rowNumberWidth()}'></td>
+           			<!-- /ko -->
+               		<!-- ko foreach: appendColumns -->
+               		<!-- ko if:((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+               		<td data-bind="style:{width: typeof(width)!='undefined'?width:$parent.columnDefaultWidth(),overflow:'visible'}">
+               			<div data-bind="attr: {'class':'control-group '+validStatus(),title:validHint()}">
+               			<!-- ko if: editorType == "DateTimeEditor" -->
+						<div data-bind="component: { name: 'datetimeeditor', params: $parent.getEditorParam($data) }"></div>
+				         <!-- /ko -->
+				         <!-- ko if: editorType == "FileEditor" -->
+					      <div data-bind="component: { name: 'fileeditor', params:  $parent.getEditorParam($data)}"></div>
+			            <!-- /ko -->
+				         <!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor" -->
+						<div data-bind="component: { name: 'commoneditor', params:  $parent.getEditorParam($data)}"></div>
+						 <!-- /ko -->
+						 </div>
+                  	</td>
+                  	<!-- /ko -->
+                  	<!-- /ko -->
+                  	 <!-- ko if: isShowTempColumn -->
+		             <td></td>
+		             <!-- /ko -->
+                  	<td data-bind="'visible': isAllowOperations,style:{width:operationsColumnWidth,textAlign:operationsColumnAlign}">
+                  		<a href="" data-bind='css:{"icon-save":!isShowEditBtnText()},text: isShowEditBtnText()?cube.msg("SAVE"):"", attr:{title: cube.msg("SAVE")},visible: isShowSave, click: saveAppend'></a>
+                  		<a href="" data-bind='css:{"icon-plus":!isShowEditBtnText()},text: isShowEditBtnText()?cube.msg("ADD"):"", attr:{title: cube.msg("ADD")},visible: isShowAdd, click: appendItem'></a>
+                  		<!-- ko foreach: customOperations -->
+	                    	 <!-- ko if: typeof(icon)!='undefined' -->
+	                    	<a href="" data-bind="attr:{title: caption, 'class':icon}, click: $parent.appendCustomClick, clickBubble: false"></a>
+	                    	<!-- /ko -->
+	                    	<!-- ko if: typeof(icon)=='undefined' -->
+	                    	<a href="" data-bind="text:caption,attr:{title: caption}, click: $parent.appendCustomClick, clickBubble: false"></a>
+	                    	<!-- /ko -->
+	                    <!-- /ko -->
+                  	</td>
+               	</tr>
+               	
+               	
+                <!-- /ko -->
+                
+              </tbody>
+            </table>
+        </div>
+        <!-- ko if: watermarkOptions()!=null -->
+        <div class="watermark" data-bind="style:{
+       	 		opacity: watermarkOptions().alpha,
+       	 		color: watermarkOptions().color,
+       	 		fontSize: watermarkOptions().fontSize,
+       	 		filter: 'progid:DXImageTransform.Microsoft.Alpha(opacity='+watermarkOptions().alpha*100+')'
+        	}">
+       		<!-- ko foreach: { data: watermarkRows, as: 'row' } -->
+       			<!-- ko foreach: { data: $parent.watermarkCols, as: 'col' } -->
+       				<div data-bind="style:{
+       						left: col.x+($parentContext.$index()%2==0?0:$parents[1].watermarkOptions().indent)+'px',
+       						top: row.y+'px',
+       						transform: 'rotate(-'+$parents[1].watermarkOptions().rotate+'deg)',
+       						width: $parents[1].watermarkOptions().width+'px',
+       						height: $parents[1].watermarkOptions().height+'px'
+       					}, 
+       					text: $parents[1].watermarkOptions().text"></div>
+       			<!-- /ko -->
+       		<!-- /ko -->
+        </div>
+        <!-- /ko -->
+        <!-- ko if: isShowLoading-->
+		<div class="cube modal-backdrop fade loading in loading-data">
+			<div style="position: absolute; top: 50%; left: 50%">
+				<div style="position: relative; top: -50%; left: -50%; color: #ccc;">
+					<img alt="加载中" data-bind="attr:{src: cube.cubepath('$/images/window_loading.gif')}">
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+</div>
+<!-- ko if: isAllowPaging -->
+<div class="gridpagenavibar">
+ 	<pagenavibar params="
+		size: 'middle',
+		showArrow: true,
+		isShowBtnText: isShowBtnText,
+		showTotal: true,
+		showGoto: true,
+		showAllPage: false,
+		pageTotalCount: _pageCount,
+		count: itemCount,
+		pageIndex: pageIndex,
+		pageVisibleCount: pageVisibleCount,
+		pageInfoToLeft: pageInfoToLeft,
+		blurGoto: blurGoto,
+		loadTime: loadTime,
+		isShowLoadTime: isShowLoadTime() && autoLoad(),
+		loadTimeFadeout: loadTimeFadeout,
+		onPageIndexChanged: onCurrentPageIndexChanged"></pagenavibar>
+</div>
+<!-- /ko -->

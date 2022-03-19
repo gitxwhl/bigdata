@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="getTwCount" desc="按地市统计今日作业数">
+        <mysql>
+            SELECT
+            TYPE,
+            SEPART,
+            SUM(TOTALSUM) TOTALSUM
+            FROM
+            aj_newreport
+            WHERE
+            SETYPE = '1'
+            AND SEPART = ${SEPART}
+            AND DATETIMETIME ${DATETIMETIME}
+            AND TYPE IN (${TYPE})
+            GROUP BY
+            TYPE,
+            SEPART
+        </mysql>
+    </sql>
+
+    <sql id="getkeyCountByPd" desc="重点作业数-按地市统计今日重点作业数">
+        <mysql>
+            SELECT
+            ${GROUP_BY_UNIT} tid,
+            COUNT(ID) workCount
+            FROM
+            AJ_REPORT
+            WHERE
+            ISDELETE = '0'
+            AND KEYTYPE = '1'
+            AND ${UNIT}
+            AND SEPART ${SEPART}
+            AND DATE_FORMAT(BEGIN_TIME,'%Y-%m-%d') ${BEGIN_TIME}
+            AND SETYPE = 1
+            GROUP BY
+            ${GROUP_BY_UNIT}
+        </mysql>
+    </sql>
+
+    <sql id="getDdCountByPd" desc="带电作业数-按地市统计今日带电作业数">
+        <mysql>
+            SELECT
+            ${GROUP_BY_UNIT} tid,
+            COUNT(ID) workCount
+            FROM
+            AJ_REPORT
+            WHERE
+            ISDELETE = '0'
+            AND DATE_FORMAT(BEGIN_TIME, '%Y-%m-%d') ${BEGIN_TIME}
+            AND LIVE_WORK_FLG = '1'
+            AND ${UNIT}
+            AND SEPART ${SEPART}
+            AND SETYPE = '1'
+            GROUP BY
+            ${GROUP_BY_UNIT}
+        </mysql>
+    </sql>
+
+    <sql id="getReportList" desc="带电作业数、500kv、220kv、重点作业列表">
+        <mysql>
+            SELECT
+            aj.ID,
+            aj.SECONDID,
+            aj.TID,
+            aj.VGID,
+            aj.TTID,
+            aj.PTID,
+            aj.JTID,
+            aj.TASKPOSITION,
+            aj.TASKCONTENT,
+            aj.BEGIN_TIME,
+            aj.END_TIME,
+            aj.TASKGROP,
+            aj.CPNAME,
+            aj.RGID
+            FROM
+            AJ_REPORT aj LEFT JOIN apporgunit dep ON aj.SECONDID = dep.APPORGUNIT_ID
+            WHERE
+            aj.ISDELETE = '0'
+            AND ${QUERY}
+            ORDER BY ${ORDER}
+        </mysql>
+    </sql>
+
+    <sql id="getHighVolCountByDept" desc="按地市统计500kV作业数量">
+        <mysql>
+            SELECT
+            ${GROUP_BY_UNIT} tid,
+            COUNT(ID) workCount
+            FROM
+            aj_report
+            WHERE
+            SETYPE = '1'
+            AND SEPART ${SEPART}
+            AND DATE_FORMAT(BEGIN_TIME, '%Y-%m-%d') ${BEGIN_TIME}
+            AND VGID = ${VGID}
+            AND ${UNIT}
+            AND ISDELETE = '0'
+            GROUP BY
+            ${GROUP_BY_UNIT}
+        </mysql>
+    </sql>
+
+    <sql id="getworkUnitWorkPlanMapData" desc="按单位性质统计作业人员数">
+        <mysql>
+            SELECT
+            SUM(TASKMANS) WORKCOUNT,
+            TUID code
+            FROM
+            AJ_REPORT
+            WHERE
+            ISDELETE = '0'
+            AND SETYPE= '1'
+            AND TUID IN (${TUID})
+            AND ISCHECK IN ('2','3')
+            AND SECONDID ${SECONDID}
+            AND SEPART ${SEPART}
+            AND DATE_FORMAT (BEGIN_TIME, '%Y-%m-%d') ${BEGIN_TIME}
+            GROUP BY
+            TUID,SEPART
+            ORDER BY
+            TUID ASC
+        </mysql>
+    </sql>
+
+    <sql id="getworkTypeWorkPlanMapData" desc="按作业性质获取作业数量">
+        <mysql>
+            SELECT
+            COUNT(ID) WORKCOUNT,
+            TTID code
+            FROM
+            AJ_REPORT
+            WHERE
+            DATE_FORMAT(BEGIN_TIME,'%Y-%m-%d') ${BEGIN_TIME}
+            AND SEPART ${SEPART}
+            AND SECONDID ${SECONDID}
+            AND SETYPE = '1'
+            AND TTID IN(${TTID})
+            GROUP BY
+            TTID,
+            SEPART
+        </mysql>
+    </sql>
+
+    <sql id="getWorkPlanMapDataByLevel" desc="按电压等级获取作业数量">
+        <mysql>
+            SELECT
+            COUNT(ID) WORKCOUNT,
+            VGID code
+            FROM
+            AJ_REPORT
+            WHERE
+            SEPART ${SEPART}
+            AND SECONDID ${SECONDID}
+            AND VGID IN (${VGID})
+            AND DATE_FORMAT(BEGIN_TIME,'%Y-%m-%d') ${BEGIN_TIME}
+            AND SETYPE = '1'
+            GROUP BY
+            VGID,SEPART
+        </mysql>
+    </sql>
+
+    <sql id="getYesterWorkPlanList" desc="按单位统计各种性质的作业数量">
+        <mysql>
+            SELECT
+            ROWNAME rowName,
+            max(
+            CASE
+            WHEN COLNAME = '500kV' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) dydj500kv,
+            max(
+            CASE
+            WHEN COLNAME = '220kV' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) dydj220kv,
+            max(
+            CASE
+            WHEN COLNAME = '66kV' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) dydj66kv,
+            max(
+            CASE
+            WHEN COLNAME = '10kV' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) dydj10kv,
+            max(
+            CASE
+            WHEN COLNAME = '10kV以下' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) dydjYx,
+            max(
+            CASE
+            WHEN COLNAME = '其他' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) dydjQt,
+            max(
+            CASE
+            WHEN COLNAME = '农网工程' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzNwgc,
+            max(
+            CASE
+            WHEN COLNAME = '配网工程' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzPwgc,
+            max(
+            CASE
+            WHEN COLNAME = '小型基建' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzXxjj,
+            max(
+            CASE
+            WHEN COLNAME = '大修技改' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzDxjg,
+            max(
+            CASE
+            WHEN COLNAME = '生产辅助技改大修' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzScfz,
+            max(
+            CASE
+            WHEN COLNAME = '电力监控' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzDljk,
+            max(
+            CASE
+            WHEN COLNAME = '运维检修' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzYjwx,
+            max(
+            CASE
+            WHEN COLNAME = '信息通信' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzXxtx,
+            max(
+            CASE
+            WHEN COLNAME = '集体企业客户工程' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzJtqy,
+            max(
+            CASE
+            WHEN COLNAME = '营销业扩' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzYxyk,
+            max(
+            CASE
+            WHEN COLNAME = '抢修作业' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzQxzy,
+            max(
+            CASE
+            WHEN COLNAME = '基建工程' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zyxzJjgc,
+            max(
+            CASE
+            WHEN COLNAME = '正在执行' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zxqkZzzx,
+            max(
+            CASE
+            WHEN COLNAME = '已执行' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zxqkYzx,
+            max(
+            CASE
+            WHEN COLNAME = '未开工' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zxqkWkg,
+            max(
+            CASE
+            WHEN COLNAME = '计划取消(天气原因)' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zxqkWzxTq,
+            max(
+            CASE
+            WHEN COLNAME = '计划取消(物料未到货)' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zxqkWzxWl,
+            max(
+            CASE
+            WHEN COLNAME = '计划取消(施工受阻)' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zxqkWzxSg,
+            max(
+            CASE
+            WHEN COLNAME = '计划取消(其它)' THEN
+            TOTALSUM
+            ELSE
+            0
+            END
+            ) zxqkWzxQt
+            FROM
+            aj_datetimesum
+            WHERE
+            ISDELETE = '0'
+            AND ROWNAME IN(${ROWNAME})
+            AND SEPART = ${SEPART}
+            GROUP BY
+            ROWNAME
+        </mysql>
+    </sql>
+</sqls>

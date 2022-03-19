@@ -1,0 +1,516 @@
+<div class="cube grid lockedgrid" data-bind="attr:{style:style},style:{height:height,  'max-height':(maxHeight()!='auto' && height() == 'auto')?maxHeight:'none'},css:{autowrap: isAllowAutowrap}">
+	<!-- 左侧锁定表格 -->
+	<div class="table-left">
+		<div class="tableHeader">
+		<table class="table" data-bind='css:{
+			"table-bordered": isShowBorder,
+			"table-striped": isShowStripe,
+			"table-hover": isShowHover,
+			"table-condensed": isShowCondense
+			}'>
+	         <thead>
+	           <tr>
+	             <!-- ko ifnot: isAllowSort -->
+	             	<!-- ko if: subColumns() != null -->
+	          		<th width="10px"></th>
+	         		<!-- /ko -->
+	             	<!-- ko if: markColumn() != null -->
+	          		<th data-bind="style:{width: typeof(markColumn().width)!='undefined'?markColumn().width:'30px'}, text:  markColumn().caption"></th>
+	         		<!-- /ko -->
+	         		  
+	         		<!-- ko if: isShowCheckBox -->
+	          		<th width="30px">
+	          			<!-- ko ifnot: isRadio -->
+	          			<input type="checkbox" data-bind="checked: _selectedAll">
+	          			<!-- /ko -->
+	          		</th>
+	         		<!-- /ko -->
+	         		<!-- ko if: isShowRowNumber -->
+	          		<th data-bind='style:{width:rowNumberWidth()}'>
+	          			<!-- ko if: rowNumberColumnName() == null -->
+	          				<!--ko text: cube.msg('ROWNUM')--><!--/ko-->
+	          			<!-- /ko -->
+	          			<!-- ko if: rowNumberColumnName() != null -->
+	          				<!--ko text: rowNumberColumnName--><!--/ko-->
+	          			<!-- /ko -->
+	          		</th>
+	         		  <!-- /ko -->
+	              <!-- ko foreach: lockedColumns -->
+	              	<!-- ko if:((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+	              	<th data-bind="style:{width: typeof(width)!='undefined'?width:$parent.columnDefaultWidth()}, text: caption"></th>
+	              	 <!-- /ko -->
+	              <!-- /ko -->
+	             <!-- /ko -->
+	             <!-- ko if: isAllowSort -->
+	             	<!-- ko if: subColumns() != null -->
+	          		<th width="10px"></th>
+	         		<!-- /ko -->
+	             	<!-- ko if: markColumn() != null -->
+	          		<th data-bind="style:{width: typeof(markColumn().width)!='undefined'?markColumn().width:'30px'}, text:  markColumn().caption"></th>
+	         		<!-- /ko -->
+	         		<!-- ko if: isShowCheckBox -->
+	          		<th width="30px">
+	          			<!-- ko ifnot: isRadio -->
+	          			<input type="checkbox" data-bind="checked: _selectedAll">
+	          			<!-- /ko -->
+	          		</th>
+	         		<!-- /ko -->
+	         		<!-- ko if: isShowRowNumber -->
+	          		<th data-bind='style:{width:rowNumberWidth()}'>
+	          			<!-- ko if: rowNumberColumnName() == null -->
+	          				<!--ko text: cube.msg('ROWNUM')--><!--/ko-->
+	          			<!-- /ko -->
+	          			<!-- ko if: rowNumberColumnName() != null -->
+	          				<!--ko text: rowNumberColumnName--><!--/ko-->
+	          			<!-- /ko -->
+	          		</th>
+	         		  <!-- /ko -->
+	              <!-- ko foreach: lockedColumns -->
+	              	<!-- ko if:((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+	              	<th  class="sort"  data-bind="style:{width: typeof(width)!='undefined'?width:$parent.columnDefaultWidth()}">
+	              		<div data-bind="attr:{title: cube.msg('SORTING')}, click:$parent.sortGrid,mousedownBubble: false">
+	               		<!-- ko if: $parent.sortName()== name -->
+	               			<span data-bind='attr:{"class": $parent.sortType()==1?"icon-arrow-up":"icon-arrow-down"}'></span>
+	               		<!-- /ko -->
+	               		<span data-bind='text: caption'></span>
+	              		</div>
+	              	</th>
+	              	 <!-- /ko -->
+	              <!-- /ko -->
+	             <!-- /ko -->
+	             <th></th>
+	           </tr>
+	         </thead>
+	       </table>
+	    </div>
+	    <div class="tableBody" data-bind="style:{height: _bodyHeight,  'max-height':(maxHeight()!='auto' && height() == 'auto')?_bodyMaxHeight:'none'},css:{hasvscroll:_hasVScroll}">
+		<table class="table" data-bind='css:{
+			"table-bordered": isShowBorder,
+			"table-striped": isShowStripe,
+			"table-hover": isShowHover,
+			"table-condensed": isShowCondense
+			}'>
+	              <tbody>
+	              	<!-- ko if: items().length == 0 && !_isSetHeight() -->
+                	<tr>
+                		<td></td>
+                	</tr>
+	                <!-- /ko -->
+	              	<!-- ko foreach: { data: items, as: 'item' }-->
+	              	<!-- ko if: item!=null -->
+	                <tr data-bind='css:$parent._selectedItem()==item?"info":"", event:{dblclick: function() {$parent.dblclick(item)}}'>
+	                  <!-- ko if: $parent.subColumns() != null -->
+	          		    <td width="10px" data-bind="click:$parent.openSubGrid">
+	          		    	<span data-bind="attr:{'class':($parent.subGridId() == item[$parent.primaryKey()]?'icon-caret-down':'icon-caret-right')}"></span>
+	          		    </td>
+	         		  <!-- /ko -->
+	                  <!-- ko if: $parent.markColumn() != null -->
+		          		<td class="table-markcolumn" data-bind="style:{width: typeof($parent.markColumn().width)!='undefined'?$parent.markColumn().width:'30px'}, html: $parent.renderMarkCell(item, $element) "></td>
+		         	  <!-- /ko -->
+	           		  <!-- ko if: $parent.isShowCheckBox -->
+		              		<td width="30px" class="table-checkbox">
+		              			<input name="rowCheckbox" type="checkbox" data-bind="visible: $parent.checkboxVisible(item),attr:{type:$parent.isRadio()?'radio':'checkbox',value:item[$parent.primaryKey()]},checked: $parent._selectedIds">
+		              		</td>
+	              	  <!-- /ko -->
+	              	  <!-- ko if: $parent.isShowRowNumber -->
+	            			<td class="table-rownum"  data-bind='style:{width:$parent.rowNumberWidth()}'><span data-bind=" text:($parent.isRowNumberSerial()?($parent.pageIndex()-1)*$parent.pageSize():0) + $index()+1"></span></td>
+	           		  <!-- /ko -->
+	                  <!-- ko if:($parent._selectedItem()!=item || $parent._isEdited()== false) && !$parent.isAllEdited() -->
+		                  <!-- ko foreach: {data:$parent.lockedColumns,as:'column'} -->
+		                  	<!-- ko if:((column.name == $parents[1].primaryKey() && $parents[1].isShowPrimaryKey()== true) || column.name != $parents[1].primaryKey()) && (typeof(column.visible)=='undefined' || column.visible) -->
+	                  			<td data-bind="css:{'wrapreverse':typeof(column.isAllowAutowrap)!='undefined'&&column.isAllowAutowrap!=$parents[1].isAllowAutowrap()},style:{'text-align': column.align,width: typeof(width)!='undefined'?width:$parents[1].columnDefaultWidth()},html:$parents[1].renderCell(item[column.name], $element, column, item), 
+	                  			event:{
+	                  				mouseenter:function(){$parents[1].mouseenter(item[$parents[1].primaryKey()], item[column.name], column, $element)},
+	                  				mouseleave:function(){$parents[1].mouseleave(item[$parents[1].primaryKey()], item[column.name], column, $element)},
+	                  				dblclick:function(){column.onDblClick?column.onDblClick(item[$parents[1].primaryKey()],item[column.name], column):null},
+	                  				click: function() {column.onClick?column.onClick(item[$parents[1].primaryKey()],item[column.name], column):$parents[1].setSelectedItem(item, $parentContext.$index())}
+	                  			}"></td>
+		                  	<!-- /ko -->
+		                  <!-- /ko -->
+	                  <!-- /ko -->
+	                  
+	                  <!-- ko if:($parent._isEdited()== true && $parent._selectedItem()==item) || $parent.isAllEdited() -->
+		                  <!-- ko foreach: $parent.lockedColumns -->
+		                  	<!-- ko if:((name == $parents[1].primaryKey() && $parents[1].isShowPrimaryKey()== true) || name != $parents[1].primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+		                  	<td data-bind="style:{width: typeof(width)!='undefined'?width:$parents[1].columnDefaultWidth(),overflow:'visible'}">
+		                  		<div data-bind="attr: {
+		                  				'class':'control-group '+($parents[1].isAllEdited()&&$parents[1]._editorValid().length>0?$parents[1]._editorValid()[$parentContext.$index()][name].validStatus():(typeof(validStatus)!='undefined'?validStatus():'')),
+		                  				title:($parents[1].isAllEdited()&&$parents[1]._editorValid().length>0?$parents[1]._editorValid()[$parentContext.$index()][name].validHint():(typeof(validHint)!='undefined'?validHint():''))}">
+			                  		 <!-- ko if: editorType == "DateTimeEditor" -->
+									<div data-bind="component: { name: 'datetimeeditor', params: $parents[1].getEditorParam($data, item, $parentContext.$index())}"></div>
+							         <!-- /ko -->
+							         <!-- ko if: editorType == "FileEditor" -->
+								      <div data-bind="component: { name: 'fileeditor', params: $parents[1].getEditorParam($data, item, $parentContext.$index())}"></div>
+						            <!-- /ko -->
+							        <!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor" -->
+									<div data-bind="component: { name: 'commoneditor', params:  $parents[1].getEditorParam($data, item, $parentContext.$index())}"></div>
+									 <!-- /ko -->
+								 </div>
+		                  	</td>
+		                  	<!-- /ko -->
+		                  <!-- /ko -->
+	                  <!-- /ko -->
+		             <td></td>
+	                </tr>
+	                 <!-- ko if: $parent.subColumns() != null && $parent.subGridId() == item[$parent.primaryKey()] -->
+	                 	<tr >
+	                 		<td></td>
+	                 		<td class="subgrid_td" data-bind="attr:{colSpan:$parent.columns().length + ($parent.isAllowOperations()?1:0) + ($parent.isShowCheckBox()?1:0) + + ($parent.isShowPrimaryKey()?0:-1) + 1}">
+	                 			<div data-bind='component:{name: "datagrid", params: {
+	                 				url: cube.isEmpty($parent.subUrl())?$parent.url:$parent.subUrl,
+	                 				columns: $parent.subColumns,
+	                 				args: {depid: item[$parent.primaryKey()]},
+	                 				loadMeta: false,
+	                 				isAllowPaging: false,
+	                 				isShowCondense: true,
+	                 				rowNumberColumnName:"",
+	                 				onRendered:$parent.subGridRendered
+	                 			}}'></div>
+	                 		</td>
+	                 	</tr>
+	                 <!-- /ko -->
+	                 
+	                <!-- /ko -->
+	                <!-- /ko -->
+	                
+	                <!-- ko if:isAllowAppend -->
+	               	<tr>
+	               		<!-- ko if: subColumns() != null -->
+		          		<th width="10px"></th>
+		         		<!-- /ko -->
+	               		<!-- ko if: markColumn() != null -->
+		          		<td style="text-align:center" data-bind="style:{width: typeof(markColumn().width)!='undefined'?markColumn().width:'30px'}"></td>
+		         	    <!-- /ko -->
+	           			<!-- ko if: isShowCheckBox -->
+	              			<td width="30px"></td>
+	              		<!-- /ko -->
+	              		<!-- ko if: isShowRowNumber -->
+	            			<td data-bind='style:{width:rowNumberWidth()}'></td>
+	           			<!-- /ko -->
+	               		<!-- ko foreach: appendColumns -->
+	               		<!-- ko if:((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+	               		<td data-bind="style:{width: typeof(width)!='undefined'?width:$parent.columnDefaultWidth(),overflow:'visible'}">
+	               			<div data-bind="attr: {'class':'control-group '+validStatus(),title:validHint()}">
+	               			<!-- ko if: editorType == "DateTimeEditor" -->
+							<div data-bind="component: { name: 'datetimeeditor', params: $parent.getEditorParam($data) }"></div>
+					         <!-- /ko -->
+					         <!-- ko if: editorType == "FileEditor" -->
+						      <div data-bind="component: { name: 'fileeditor', params:  $parent.getEditorParam($data)}"></div>
+				            <!-- /ko -->
+					         <!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor" -->
+							<div data-bind="component: { name: 'commoneditor', params:  $parent.getEditorParam($data)}"></div>
+							 <!-- /ko -->
+							 </div>
+	                  	</td>
+	                  	<!-- /ko -->
+	                  	<!-- /ko -->
+			            <td></td>
+	               	</tr>
+	                <!-- /ko -->
+	                
+	              </tbody>
+	            </table>
+	        </div>
+	      	<!-- ko if: _hasHScroll -->
+        	<div class="tempScroll"></div>
+        	<!-- /ko -->
+        </div>
+        <!-- 右侧表格 -->
+        <div class="table-right" data-bind="css:{hasoperations:isAllowOperations}">
+	        <div class="tableHeader">
+			<table class="table" data-bind='css:{
+			"table-bordered": isShowBorder,
+			"table-striped": isShowStripe,
+			"table-hover": isShowHover,
+			"table-condensed": isShowCondense
+			}'>
+	         <thead>
+	           <tr>
+	             <!-- ko ifnot: isAllowSort -->
+	              <!-- ko foreach: columns -->
+	              	<!-- ko if:((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+	              	<th data-bind="style:{width: typeof(width)!='undefined'?width:$parent.columnDefaultWidth()}, text: caption, event:{mousemove: function(data, event){$parent.mousemove($element,event)}, mousedown: function(data,event){$parent.mousedown($element,data,event,$index())},mouseup:$parent.mouseup}"></th>
+	              	 <!-- /ko -->
+	              <!-- /ko -->
+	             <!-- /ko -->
+	             <!-- ko if: isAllowSort -->
+	              <!-- ko foreach: columns -->
+	              	<!-- ko if: (typeof(locked)=="undefined" || locked == false) && ((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+	              	<th  class="sort"  data-bind="style:{width: typeof(width)!='undefined'?width:$parent.columnDefaultWidth()}, event:{mousemove: function(data, event){$parent.mousemove($element,event)}, mousedown: function(data,event){$parent.mousedown($element,data,event,$index())},mouseup:$parent.mouseup}">
+	              		<div data-bind="attr:{title: cube.msg('SORTING')}, click:$parent.sortGrid,mousedownBubble: false">
+	               		<!-- ko if: $parent.sortName()== name -->
+	               			<span data-bind='attr:{"class": $parent.sortType()==1?"icon-arrow-up":"icon-arrow-down"}'></span>
+	               		<!-- /ko -->
+	               		<span data-bind='text: caption'></span>
+	              		</div>
+	              	</th>
+	              	 <!-- /ko -->
+	              <!-- /ko -->
+	             <!-- /ko -->
+	             <!-- ko if: isShowTempColumn -->
+	             <th data-bind="event:{mousemove: function(data, event){mousemove($element,event)}, mousedown: function(data,event){mousedown($element,null,event,-1)},mouseup:mouseup}"></th>
+	             <!-- /ko -->
+	           </tr>
+	         </thead>
+	       </table>
+	    </div>
+	    <div class="tableBody" data-bind="style:{height: _bodyHeight,  'max-height':(maxHeight()!='auto' && height() == 'auto')?_bodyMaxHeight:'none','overflow-y':isAllowOperations()?'hidden':'auto'},css:{hasvscroll:_hasVScroll}">
+		<table class="table" data-bind='css:{
+			"table-bordered": isShowBorder,
+			"table-striped": isShowStripe,
+			"table-hover": isShowHover,
+			"table-condensed": isShowCondense
+			}, style:{width: items().length == 0?_emptyWidth():null,maxWidth: items().length == 0?_emptyWidth():null}
+			'>
+	              <tbody>
+	                <!-- ko if: items().length == 0 && !_isSetHeight() -->
+	                	<tr>
+	                		<td></td>
+	                	</tr>
+	                <!-- /ko -->
+	              	<!-- ko foreach: { data: items, as: 'item' }-->
+	              	<!-- ko if: item!=null -->
+	                <tr data-bind='css:$parent._selectedItem()==item?"info":"", event:{dblclick: function() {$parent.dblclick(item)}}'>
+	                  <!-- ko if:($parent._selectedItem()!=item || $parent._isEdited()== false) && !$parent.isAllEdited() -->
+		                  <!-- ko foreach: {data:$parent.columns,as:'column'} -->
+		                  	<!-- ko if:(typeof(locked)=="undefined" || locked == false) && ((column.name == $parents[1].primaryKey() && $parents[1].isShowPrimaryKey()== true) || column.name != $parents[1].primaryKey()) && (typeof(column.visible)=='undefined' || column.visible) -->
+	                  			<td data-bind="css:{'wrapreverse':typeof(column.isAllowAutowrap)!='undefined'&&column.isAllowAutowrap!=$parents[1].isAllowAutowrap()},style:{'text-align': column.align,width: typeof(width)!='undefined'?width:$parents[1].columnDefaultWidth()},html:$parents[1].renderCell(item[column.name], $element, column, item), 
+	                  			event:{
+	                  				mouseenter:function(){$parents[1].mouseenter(item[$parents[1].primaryKey()], item[column.name], column, $element)},
+	                  				mouseleave:function(){$parents[1].mouseleave(item[$parents[1].primaryKey()], item[column.name], column, $element)},
+	                  				dblclick:function(){column.onDblClick?column.onDblClick(item[$parents[1].primaryKey()],item[column.name], column):null},
+	                  				click: function() {column.onClick?column.onClick(item[$parents[1].primaryKey()],item[column.name], column):$parents[1].setSelectedItem(item, $parentContext.$index())}
+	                  			}"></td>
+		                  	<!-- /ko -->
+		                  <!-- /ko -->
+	                  <!-- /ko -->
+	                  
+	                  <!-- ko if:($parent._isEdited()== true && $parent._selectedItem()==item) || $parent.isAllEdited() -->
+		                  <!-- ko foreach: $parent.columns -->
+		                  	<!-- ko if:(typeof(locked)=="undefined" || locked == false) && ((name == $parents[1].primaryKey() && $parents[1].isShowPrimaryKey()== true) || name != $parents[1].primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+		                  	<td data-bind="style:{width: typeof(width)!='undefined'?width:$parents[1].columnDefaultWidth(),overflow:'visible'}">
+		                  		<div data-bind="attr: {
+		                  				'class':'control-group '+($parents[1].isAllEdited()&&$parents[1]._editorValid().length>0?$parents[1]._editorValid()[$parentContext.$index()][name].validStatus():(typeof(validStatus)!='undefined'?validStatus():'')),
+		                  				title:($parents[1].isAllEdited()&&$parents[1]._editorValid().length>0?$parents[1]._editorValid()[$parentContext.$index()][name].validHint():(typeof(validHint)!='undefined'?validHint():''))}">
+			                  		 <!-- ko if: editorType == "DateTimeEditor" -->
+									<div data-bind="component: { name: 'datetimeeditor', params: $parents[1].getEditorParam($data, item, $parentContext.$index())}"></div>
+							         <!-- /ko -->
+							         <!-- ko if: editorType == "FileEditor" -->
+								      <div data-bind="component: { name: 'fileeditor', params: $parents[1].getEditorParam($data, item, $parentContext.$index())}"></div>
+						            <!-- /ko -->
+							        <!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor" -->
+									<div data-bind="component: { name: 'commoneditor', params:  $parents[1].getEditorParam($data, item, $parentContext.$index())}"></div>
+									 <!-- /ko -->
+								 </div>
+		                  	</td>
+		                  	<!-- /ko -->
+		                  <!-- /ko -->
+	                  <!-- /ko -->
+	                  <!-- ko if: $parent.isShowTempColumn -->
+		             <td></td>
+		             <!-- /ko -->
+	                </tr>
+	                 <!-- ko if: $parent.subColumns() != null && $parent.subGridId() == item[$parent.primaryKey()] -->
+	                 	<tr >
+	                 		<td></td>
+	                 		<td class="subgrid_td" data-bind="attr:{colSpan:$parent.columns().length + ($parent.isShowPrimaryKey()?0:-1) + 1}">
+	                 			<div data-bind='component:{name: "datagrid", params: {
+	                 				url: cube.isEmpty($parent.subUrl())?$parent.url:$parent.subUrl,
+	                 				columns: $parent.subColumns,
+	                 				args: {depid: item[$parent.primaryKey()]},
+	                 				loadMeta: false,
+	                 				isAllowPaging: false,
+	                 				isShowCondense: true,
+	                 				rowNumberColumnName:"",
+	                 				onRendered:$parent.subGridRendered
+	                 			}}'></div>
+	                 		</td>
+	                 	</tr>
+	                 <!-- /ko -->
+	                 
+	                <!-- /ko -->
+	                <!-- /ko -->
+	                
+	                <!-- ko if:isAllowAppend -->
+	               	<tr>
+	               		<!-- ko if: subColumns() != null -->
+		          		<th width="10px"></th>
+		         		<!-- /ko -->
+	               		<!-- ko if: markColumn() != null -->
+		          		<td style="text-align:center" data-bind="style:{width: typeof(markColumn().width)!='undefined'?markColumn().width:'30px'}"></td>
+		         	    <!-- /ko -->
+	           			<!-- ko if: isShowCheckBox -->
+	              			<td width="30px"></td>
+	              		<!-- /ko -->
+	              		<!-- ko if: isShowRowNumber -->
+	            			<td data-bind='style:{width:rowNumberWidth()}'></td>
+	           			<!-- /ko -->
+	               		<!-- ko foreach: appendColumns -->
+	               		<!-- ko if:((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+	               		<td data-bind="style:{width: typeof(width)!='undefined'?width:$parent.columnDefaultWidth(),overflow:'visible'}">
+	               			<div data-bind="attr: {'class':'control-group '+validStatus(),title:validHint()}">
+	               			<!-- ko if: editorType == "DateTimeEditor" -->
+							<div data-bind="component: { name: 'datetimeeditor', params: $parent.getEditorParam($data) }"></div>
+					         <!-- /ko -->
+					         <!-- ko if: editorType == "FileEditor" -->
+						      <div data-bind="component: { name: 'fileeditor', params:  $parent.getEditorParam($data)}"></div>
+				            <!-- /ko -->
+					         <!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor" -->
+							<div data-bind="component: { name: 'commoneditor', params:  $parent.getEditorParam($data)}"></div>
+							 <!-- /ko -->
+							 </div>
+	                  	</td>
+	                  	<!-- /ko -->
+	                  	<!-- /ko -->
+	                  	 <!-- ko if: isShowTempColumn -->
+			             <td></td>
+			             <!-- /ko -->
+	               	</tr>
+	                <!-- /ko -->
+	                
+	              </tbody>
+	            </table>
+	        </div>
+        </div>
+        
+        <!-- 锁定操作列表格 -->
+        <!-- ko if: isAllowOperations -->
+        <div class="table-operations">
+	        <div class="tableHeader">
+			<table class="table" data-bind='css:{
+			"table-bordered": isShowBorder,
+			"table-striped": isShowStripe,
+			"table-hover": isShowHover,
+			"table-condensed": isShowCondense
+			}'>
+	         <thead>
+	           <tr>
+	             <th data-bind="'visible': (isAllowOperations() || _hasVScroll()),style:{width:_headerOperationsColumnWidth,padding:(!isAllowOperations()&&!isShowCondense()?'5px':null)}">
+	             	<!-- ko if: isAllowOperations -->
+	             		<!--ko text: cube.msg('OPERATIONS')--><!--/ko-->
+	             	<!-- /ko -->
+	             </th>
+	           </tr>
+	         </thead>
+	       </table>
+	    </div>
+	    <div class="tableBody" data-bind="style:{height: _bodyHeight,  'max-height':(maxHeight()!='auto' && height() == 'auto')?_bodyMaxHeight:'none'},css:{hasvscroll:_hasVScroll}">
+		<table class="table" data-bind='css:{
+			"table-bordered": isShowBorder,
+			"table-striped": isShowStripe,
+			"table-hover": isShowHover,
+			"table-condensed": isShowCondense
+			}'>
+	              <tbody>
+	                 <!-- ko if: items().length == 0 && !_isSetHeight() -->
+	                	<tr>
+	                		<td data-bind="style:{width:operationsColumnWidth}"></td>
+	                	</tr>
+	                <!-- /ko -->
+	              	<!-- ko foreach: { data: items, as: 'item' }-->
+	              	<!-- ko if: item!=null -->
+	                <tr data-bind='css:$parent._selectedItem()==item?"info":"", event:{dblclick: function() {$parent.dblclick(item)}}'>
+	                 <td data-bind="'visible': $parent.isAllowOperations,style:{width:$parent.operationsColumnWidth,textAlign:$parent.operationsColumnAlign}">
+		                  <!-- ko if: (!$parent._isEdited() || $parent._selectedItem() != item)-->
+		                  	<!-- ko if: !$parent.isAllEdited() -->
+		                  	<a href="" data-bind='text: $parent.isShowEditBtnText()?cube.msg("EDIT"):"", css:{"icon-edit":!$parent.isShowEditBtnText()}, attr:{title: cube.msg("EDIT")}, visible: $parent.isAllowEdit, click: function(){$parent.editItem(item,$index())}, clickBubble: false'></a>
+		                  	<!-- /ko -->
+		                  	<a href="" data-bind='text: $parent.isShowEditBtnText()?cube.msg("DELETE"):"", css:{"icon-remove":!$parent.isShowEditBtnText()}, attr:{title: cube.msg("DELETE")}, visible: $parent.isAllowDelete, click: $parent.delItem, clickBubble: false'></a>
+		                  	<a href="" data-bind='text: $parent.isShowEditBtnText()?cube.msg("MOVEUP"):"", css:{"icon-arrow-up":!$parent.isShowEditBtnText()}, attr:{title: cube.msg("MOVEUP")}, visible: $parent.isAllowShift, click: $parent.shiftupItem, clickBubble: false'></a>
+		                  	<a href="" data-bind='text: $parent.isShowEditBtnText()?cube.msg("MOVEDOWN"):"", css:{"icon-arrow-down":!$parent.isShowEditBtnText()}, attr:{title: cube.msg("MOVEDOWN")}, visible: $parent.isAllowShift, click: $parent.shiftdownItem, clickBubble: false'></a>
+		                  <!-- /ko -->
+		                  <!-- ko if: ($parent._isEdited() && $parent._selectedItem()==item) || $parent.isAllEdited() -->
+		                  	<a href="" data-bind='text: $parent.isShowEditBtnText()?cube.msg("SAVE"):"", css:{"icon-save":!$parent.isShowEditBtnText()}, attr:{title: cube.msg("SAVE")},visible: $parent.isShowSave, click: $parent.saveItem, clickBubble: false'></a>
+		                  	<!-- ko if: !$parent.isAllEdited() -->
+		                  	<a href="" data-bind='text: $parent.isShowEditBtnText()?cube.msg("CANCEL"):"", css:{"icon-share-alt":!$parent.isShowEditBtnText()}, attr:{title: cube.msg("CANCEL")}, click: $parent.cancelSaveItem, clickBubble: false'></a>
+		                  	 <!-- /ko -->
+		                  <!-- /ko -->
+		                  <!-- ko foreach: $parent.customOperations -->
+	                    	 <!-- ko if: typeof(icon)!='undefined' -->
+	                    	<a href="" data-bind="attr:{title: caption, 'class':icon}, visible: $parents[1].customOperationsVisible(item, typeof(visible)!='undefined'?visible:null), click: function(){click(item)}, clickBubble: false"></a>
+	                    	<!-- /ko -->
+	                    	<!-- ko if: typeof(icon)=='undefined' -->
+	                    	<a href="" data-bind="text:caption,attr:{title: caption}, visible: $parents[1].customOperationsVisible(item, typeof(visible)!='undefined'?visible:null), click: function(){click(item)}, clickBubble: false"></a>
+	                    	<!-- /ko -->
+	                       <!-- /ko -->
+	                  </td>
+	                </tr>
+	                <!-- /ko -->
+	                <!-- /ko -->
+	                
+	                <!-- ko if:isAllowAppend -->
+	               	<tr>
+	                  	<td data-bind="'visible': isAllowOperations,style:{width:operationsColumnWidth,textAlign:operationsColumnAlign}">
+	                  		<a href="" data-bind='css:{"icon-save":!isShowEditBtnText()},text: isShowEditBtnText()?cube.msg("SAVE"):"", attr:{title: cube.msg("SAVE")},visible: isShowSave, click: saveAppend'></a>
+	                  		<a href="" data-bind='css:{"icon-plus":!isShowEditBtnText()},text: isShowEditBtnText()?cube.msg("ADD"):"", attr:{title: cube.msg("ADD")},visible: isShowAdd, click: appendItem'></a>
+	                  		<!-- ko foreach: customOperations -->
+		                    	 <!-- ko if: typeof(icon)!='undefined' -->
+		                    	<a href="" data-bind="attr:{title: caption, 'class':icon}, click: $parent.appendCustomClick, clickBubble: false"></a>
+		                    	<!-- /ko -->
+		                    	<!-- ko if: typeof(icon)=='undefined' -->
+		                    	<a href="" data-bind="text:caption,attr:{title: caption}, click: $parent.appendCustomClick, clickBubble: false"></a>
+		                    	<!-- /ko -->
+		                    <!-- /ko -->
+	                  	</td>
+	               	</tr>
+	                <!-- /ko -->
+	              </tbody>
+	            </table>
+	        </div>
+	        <!-- ko if: _hasHScroll -->
+        	<div class="tempScroll"></div>
+        	<!-- /ko -->
+        </div>
+        <!-- /ko -->
+        <!-- ko if: watermarkOptions()!=null -->
+        <div class="watermark" data-bind="style:{
+       	 		opacity: watermarkOptions().alpha,
+       	 		color: watermarkOptions().color,
+       	 		fontSize: watermarkOptions().fontSize,
+       	 		filter: 'progid:DXImageTransform.Microsoft.Alpha(opacity='+watermarkOptions().alpha*100+')'
+        	}">
+       		<!-- ko foreach: { data: watermarkRows, as: 'row' } -->
+       			<!-- ko foreach: { data: $parent.watermarkCols, as: 'col' } -->
+       				<div data-bind="style:{
+       						left: col.x+($parentContext.$index()%2==0?0:$parents[1].watermarkOptions().indent)+'px',
+       						top: row.y+'px',
+       						transform: 'rotate(-'+$parents[1].watermarkOptions().rotate+'deg)',
+       						width: $parents[1].watermarkOptions().width+'px',
+       						height: $parents[1].watermarkOptions().height+'px'
+       					}, 
+       					text: $parents[1].watermarkOptions().text"></div>
+       			<!-- /ko -->
+       		<!-- /ko -->
+        </div>
+        <!-- /ko -->
+        <!-- ko if: isShowLoading-->
+		<div class="cube modal-backdrop fade loading in loading-data">
+			<div style="position: absolute; top: 50%; left: 50%">
+				<div style="position: relative; top: -50%; left: -50%; color: #ccc;">
+					<img alt="加载中" data-bind="attr:{src: cube.cubepath('$/images/window_loading.gif')}">
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+</div>
+<!-- ko if: isAllowPaging -->
+<div class="gridpagenavibar">
+ 	<pagenavibar params="
+		size: 'middle',
+		showArrow: true,
+		isShowBtnText: isShowBtnText,
+		showTotal: true,
+		showGoto: true,
+		showAllPage: false,
+		pageTotalCount: _pageCount,
+		count: itemCount,
+		pageIndex: pageIndex,
+		pageVisibleCount: pageVisibleCount,
+		pageInfoToLeft: pageInfoToLeft,
+		blurGoto: blurGoto,
+		loadTime: loadTime,
+		isShowLoadTime: isShowLoadTime() && autoLoad(),
+		loadTimeFadeout: loadTimeFadeout,
+		onPageIndexChanged: onCurrentPageIndexChanged"></pagenavibar>
+</div>
+<!-- /ko -->

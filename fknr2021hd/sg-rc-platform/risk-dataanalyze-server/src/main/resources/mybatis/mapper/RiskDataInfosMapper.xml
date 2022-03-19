@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.raysdata.riskdataanalyzeserver.mapper.RiskDataInfosMapper">
+    <select id="getDataCountDataInfoManage" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) cnt from datainfo_manage
+        <where>
+            <if test="null != jobName and '' != jobName">
+                AND JOBNAME like concat("%",#{jobName},"%")
+            </if>
+            <if test="null != executionDateTime and '' != executionDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) > STR_TO_DATE(#{executionDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != endDateTime and '' != endDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) &lt;= STR_TO_DATE(#{endDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != processState and '' != processState">
+                and PROCESS_STATE = #{processState}
+            </if>
+        </where>
+    </select>
+    <select id="getTableDataDataInfoManage" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        b.JOBNAME,
+        b.SERVER_IP,
+        b.DATA_TYPE,
+        a.column_type_name PROCESS_STATE,
+        b.OPERATION_INFO,
+        b.EXECUTION_DATETIME,
+        b.EXECUTION_TIME,
+        b.LOG_INFO
+        FROM
+        ( SELECT * FROM datainfo_manage
+        <where>
+            <if test="null != jobName and '' != jobName">
+                AND JOBNAME like concat("%",#{jobName},"%")
+            </if>
+            <if test="null != executionDateTime and '' != executionDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) > STR_TO_DATE(#{executionDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != endDateTime and '' != endDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) &lt;= STR_TO_DATE(#{endDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != processState and '' != processState">
+                and PROCESS_STATE = #{processState}
+            </if>
+        </where>
+        LIMIT #{offset}, #{size}
+        ) b
+        LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'PROCESS_STATE' ) a ON a.column_type_code =
+        b.PROCESS_STATE
+    </select>
+    <select id="getDataCountDataInfoPurge" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) cnt
+        from datainfo_purge
+        <where>
+            <if test="null != jobName and '' != jobName">
+                AND JOBNAME like concat("%",#{jobName},"%")
+            </if>
+            <if test="null != executionDateTime and '' != executionDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) > STR_TO_DATE(#{executionDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != endDateTime and '' != endDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) &lt;= STR_TO_DATE(#{endDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != processState and '' != processState">
+                and PROCESS_STATE = #{processState}
+            </if>
+        </where>
+    </select>
+    <select id="getTableDataDataInfoPurge" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT b.JOBNAME,
+        b.SERVER_IP,
+        b.DATA_TYPE,
+        a.column_type_name PROCESS_STATE,
+        b.OPERATION_INFO,
+        b.EXECUTION_DATETIME,
+        b.EXECUTION_TIME,
+        b.LOG_INFO
+        FROM (SELECT * FROM datainfo_purge
+        <where>
+            <if test="null != jobName and '' != jobName">
+                AND JOBNAME like concat("%",#{jobName},"%")
+            </if>
+            <if test="null != executionDateTime and '' != executionDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) > STR_TO_DATE(#{executionDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != endDateTime and '' != endDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) &lt;= STR_TO_DATE(#{endDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != processState and '' != processState">
+                and PROCESS_STATE = #{processState}
+            </if>
+        </where>
+        LIMIT #{offset}, #{size}
+        ) b
+        LEFT JOIN (SELECT * FROM srp_risk_sys_tab WHERE column_code = 'PROCESS_STATE') a
+        ON a.column_type_code = b.PROCESS_STATE
+    </select>
+
+    <select id="getDataInfoLoadListCNT" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) cnt
+        from datainfo_load
+        <where>
+            <if test="null != jobName and '' != jobName">
+                AND JOBNAME like concat("%",#{jobName},"%")
+            </if>
+            <if test="null != executionDateTime and '' != executionDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) > STR_TO_DATE(#{executionDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != endDateTime and '' != endDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) &lt;= STR_TO_DATE(#{endDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != processState and '' != processState">
+                and PROCESS_STATE = #{processState}
+            </if>
+        </where>
+    </select>
+    <select id="getDataInfoLoadList" parameterType="java.util.Map" resultType="java.util.Map">
+        select b.INSTYPE_ID,
+        b.JOBNAME,
+        b.SERVER_IP,
+        b.DATA_TYPE,
+        a.column_type_name,
+        b.OPERATION_INFO,
+        b.EXECUTION_DATETIME,
+        b.EXECUTION_TIME,
+        b.LOG_INFO
+        from (select * from datainfo_load
+        <where>
+            <if test="null != jobName and '' != jobName">
+                AND JOBNAME like concat("%",#{jobName},"%")
+            </if>
+            <if test="null != executionDateTime and '' != executionDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) > STR_TO_DATE(#{executionDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != endDateTime and '' != endDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) &lt;= STR_TO_DATE(#{endDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != processState and '' != processState">
+                and PROCESS_STATE = #{processState}
+            </if>
+        </where>
+        LIMIT #{offset}, #{size}
+        ) b
+        left JOIN (select * from srp_risk_sys_tab where column_code = 'PROCESS_STATE') a
+        on a.column_type_code = b.PROCESS_STATE
+    </select>
+    <select id="getDataInfoConversionListCNT" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) cnt
+        from datainfo_conversion
+        <where>
+            <if test="null != jobName and '' != jobName">
+                AND JOBNAME like concat("%",#{jobName},"%")
+            </if>
+            <if test="null != executionDateTime and '' != executionDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) > STR_TO_DATE(#{executionDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != endDateTime and '' != endDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) &lt;= STR_TO_DATE(#{endDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != processState and '' != processState">
+                and PROCESS_STATE = #{processState}
+            </if>
+        </where>
+    </select>
+    <select id="getDataInfoConversionList" parameterType="java.util.Map" resultType="java.util.Map">
+        select b.JOBNAME,
+        b.SERVER_IP,
+        b.DATA_TYPE,
+        a.column_type_name,
+        b.OPERATION_INFO,
+        b.EXECUTION_DATETIME,
+        b.EXECUTION_TIME,
+        b.LOG_INFO
+
+        from (select * from datainfo_conversion
+        <where>
+            <if test="null != jobName and '' != jobName">
+                AND JOBNAME like concat("%",#{jobName},"%")
+            </if>
+            <if test="null != executionDateTime and '' != executionDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) > STR_TO_DATE(#{executionDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != endDateTime and '' != endDateTime">
+                AND SUBSTRING(EXECUTION_DATETIME,1,26) &lt;= STR_TO_DATE(#{endDateTime},'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="null != processState and '' != processState">
+                and PROCESS_STATE = #{processState}
+            </if>
+        </where>
+        LIMIT #{offset}, #{size}
+        ) b
+        LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'PROCESS_STATE') a
+        on a.column_type_code = b.PROCESS_STATE
+    </select>
+</mapper>

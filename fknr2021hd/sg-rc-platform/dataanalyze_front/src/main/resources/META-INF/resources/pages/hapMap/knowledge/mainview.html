@@ -1,0 +1,60 @@
+<style>
+    .h-100p {
+        height: 100%;
+    }
+
+    .w-100p {
+        width: 100%;
+    }
+    .border {
+        border: 1px solid rgb(0,112,204);
+        box-sizing: border-box;
+        border-radius: 20px;
+    }
+
+</style>
+<div class="h-100p w-100p" style="padding: 10px 10px 10px 0;">
+    <loading params="isShow: isShow,content: content"></loading>
+    <div class="h-100p w-100p bor" style="padding: 0 20px 20px 20px;">
+        <div style="padding: 10px 0;">
+            当前位置：安全风险知识图谱 \ <span class="cur-p" data-bind="click: returnCategory">知识获取</span> \ 详情
+        </div>
+        <div class="row-public" style="height: calc(100% - 40px);">
+            <div class="h-100p border">
+                <div style="font-size: 20px; padding: 10px;">拓扑图</div>
+                <div class="h-100p w-100p" id="d3"></div>
+            </div>
+            <!-- <div class="h-100p bor col-3" style="padding: 10px;">
+                <label style="font-size: 16px; margin-bottom: 10px;">作业详情：</label>
+                <div>
+                    <span>作业计划ID：</span>
+                    <span>id0000001</span>
+                </div>
+                <div>
+                    <span>计划编号：</span>
+                    <span>888888</span>
+                </div>
+                <div>
+                    <span>计划名称：</span>
+                    <span>计划名称1</span>
+                </div>
+                <div>
+                    <span>报送单位：</span>
+                    <span>基层单位</span>
+                </div>
+                <div>
+                    <span>变电站/线路名称：</span>
+                    <span>变电站信息</span>
+                </div>
+                <div>
+                    <span>电压等级：</span>
+                    <span>110KV</span>
+                </div>
+                <div>
+                    <span>作业类型：</span>
+                    <span>配网工程</span>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

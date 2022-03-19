@@ -1,0 +1,214 @@
+<style>
+    .unit {
+        /*width: 210px;*/
+        /*height: 42px;*/
+        /*background: url("./resources/images/u2675.png") no-repeat;*/
+        /*background-size: 100%;*/
+        /*margin-left: 15px;*/
+    }
+    .select {
+        background: transparent;
+        /*width: 100px;*/
+        width: 170px;
+        border: 1px solid #0b7cb8;
+        color: #999999;
+    }
+
+    .input-append input {
+        background: transparent;
+        width: 100px;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+
+    .tableBody tr a {
+        color: #0099CC;
+        padding: 5px;
+    }
+    /*.input-append input {*/
+    /*    background: transparent;*/
+    /*    width: 100px;*/
+    /*    border: 1px solid #0b7cb8;*/
+    /*    color: white;*/
+    /*}*/
+    /*时间框点击选择样式修改*/
+    .input-append .btn {
+        background: transparent;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+    /*button.btn{*/
+    /*    background: transparent;*/
+    /*    border: 1px solid #0b7cb8;*/
+    /*    color: #999999;*/
+    /*    font-size: 14px;*/
+
+    /*}*/
+</style>
+<div data-bind="visible: isShow()">
+    <div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px">全国考试情况</p>
+        <div style="margin-top:15px;margin-left: 20px;display: flex">
+<!--            <p class="unit" style="margin-left: 20px">-->
+<!--                <span-->
+<!--                    style="display:inline-block;font-size: 16px;color: white;margin-left:10px;margin-top:12px;">考试次数:</span>-->
+<!--                <span style="font-size: 16px;color: yellow;" data-bind="text:number"></span>-->
+<!--            </p>-->
+            <p class="unit"style="margin-left: 40px">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:10px;margin-top:12px;">考试人数:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text:numberTest"></span>
+            </p>
+            <p class="unit"style="margin-left: 40px">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:10px;margin-top:12px;">考试通过人数:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text:through"></span>
+            </p>
+            <p class="unit"style="margin-left: 40px">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:10px;margin-top:12px;">考试通过率:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text:passRate"></span>
+            </p>
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:23px">各单位考试情况</p>
+        <div style="width: calc(100% - 10px); height: 520px;">
+            <chart params="
+                                  height:'520px',
+                                  width: '100%',
+                                  option:option">
+            </chart>
+        </div>
+    </div>
+    <div>
+        <div style="display: flex;margin-bottom: 20px;margin-top:20px;width: 96%;margin-left: 15px">
+
+            <div style="width: 25%;margin-left:2%">
+                <span style="font-size: 18px;color: white;margin: 20px 0px 20px 0px">省份：</span>
+                <select id="aa" class="select" data-bind="
+                                                     options: sssfOption,
+                                                     optionsText: 'text',
+                                                     optionsValue:'text',
+                                                     optionsValue:'id',
+                                                     value: sssf,
+                                                     event: {change: eventChange}
+                                                  ">
+                </select>
+<!--                <dropdowneditor  id="drop" params="-->
+<!--									items: sssfOption,-->
+<!--									selectedValue: selectedValue,isSplit: isSplit,-->
+<!--									disabled: disabled,-->
+<!--									isHrefRoute: isHrefRoute,-->
+<!--									isShowNull:false,-->
+<!--									isShowScroll：true,-->
+<!--									onSelectedChanged:eventChange-->
+<!--									"></dropdowneditor>-->
+<!--         <select name="type" id="aa" onchange="show">-->
+<!--             <option value="0">全部</option>-->
+<!--             <option value="1">北京</option>-->
+<!--             <option value="2">天津</option>-->
+<!--         </select>-->
+            </div>
+            <div style="width: 25%">
+                <span style="font-size: 18px;color: white;margin: 20px 0px 20px 0px">考场:</span>
+                <select class="select w-100" data-bind="
+                                                         options: qyxzOption,
+                                                         optionsText: 'text',
+                                                         optionsValue:'text',
+                                                         optionsValue:'id',
+                                                         value: qyxz,
+                                                      ">
+                </select>
+            </div>
+            <div style="width: 25%">
+                <span style="font-size: 18px;color: white;margin: 20px 10px 20px 0px">考试名称:</span>
+                <input type="text" data-bind="value:ksmcName"
+                    style="border:1px solid #0b7cb8;background-color:transparent;color: white;width:150px">
+            </div>
+            <div style="width: 25%">
+                <span style="font-size: 18px;color: white;margin: 20px 0px 20px 0px">考试状态：</span>
+                <select class="select" data-bind="
+                                                     options: zrztOption,
+                                                     optionsText: 'text',
+                                                     optionsValue:'text',
+                                                     optionsValue:'id',
+                                                     value: zrzt,
+                                                  ">
+                </select>
+            </div>
+
+            </div>
+        <div style="display: flex">
+            <div style="margin-left: 30px">
+                <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">发布时间:</span>
+                <datetimeeditor params="
+                    showTimePicker: true,
+                    width:'120px',
+                    showDayPicker: true,
+                    format: 'yyyy-MM-dd ',
+                    value:startTime">
+                </datetimeeditor>
+            </div>
+            <div>
+                <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">至</span>
+                <datetimeeditor
+                        params="showTimePicker: true,width:'120px',showDayPicker: true, format: 'yyyy-MM-dd ',value: endTime">
+                </datetimeeditor>
+            </div>
+            <div style="margin-left: 42%">
+            <div class="know-btn cur-p" data-bind="click:query"
+                style="background-color:#169bd5;display:inline-block;color:white;width: 80px;line-height:30px;height: 30px;text-align: center;font-size: 16px;border-radius:4px;margin:0px 10px 10px 15px">
+                查询</div>
+            <div class="know-btn cur-p"style="background-color:#169bd5;display:inline-block;color:white;width: 80px;line-height:30px;height: 30px;text-align: center;font-size: 16px;border-radius:4px;margin:0px 10px 10px 0px" data-bind="click:deleteInstance">删除</div>
+                <div class="know-btn cur-p"style="background-color:#169bd5;display:inline-block;color:white;width: 80px;line-height:30px;height: 30px;text-align: center;font-size: 16px;border-radius:4px;margin:0px 0px 10px 0px" data-bind="click:reset">重置</div>
+            </div>
+            </div>
+        <div style="padding: 0 30px;margin-top: 20px;">
+            <div style="width: 99%">
+                <datagrid id="instanceTable" params="
+                        style: style,
+                        items: blacklistContent,
+                        columns: blacklistMeter,
+                        isShowRowNumber: true,
+                        isShowCheckBox: true,
+                        isShowBorder: true,
+                        isShowHover: true,
+                        isShowCondense: false,
+                        isAllowEdit: false,
+                        isAllowDelete: false,
+                        isAllowOperations: true,
+                        isAllowShift: false,
+                        isAllowAppend: false,
+                        isAllowSort: false,
+                        isAllowPaging: false,
+                        isShowLoading:'true',
+                         onSelectedItems:onSelectedItems,
+                        customOperations:customOperations,
+                        operationsColumnWidth: '60px',
+                        operationsColumnAlign: 'center',
+                        pageSize: pageSize,
+                        primaryKey: 'id'
+                        "></datagrid>
+                <pagenavibar style="float: right;color: white;" params="
+                    size: size,
+                    showArrow: showArrow,
+                    showTotal: showTotal,
+                    showGoto: showGoto,
+                    count: count,
+                    showAllPage: showAllPage,
+                    pageTotalCount: pageTotalCount,
+                    pageIndex: pageIndex,
+                    pageVisibleCount: pageVisibleCount,
+                    onPageIndexChanged: onPageIndexChanged">
+
+                </pagenavibar>
+            </div>
+        </div>
+    </div>
+</div>
+<msgdialog params="
+                    msgType: msgType,
+                    isShowDialog: isShowDialog,
+                    title: deleteTitle,
+                    content: content,
+                    onConfirmBtnClick:confirmDelete">
+</msgdialog>

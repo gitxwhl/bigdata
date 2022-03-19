@@ -1,0 +1,547 @@
+/**
+ * 提供一个文件上传的类（不包含界面部分）。目前仅支持 HTML5。
+ */
+define([], function() {
+	
+    var FileUploader = function(){
+    	
+    	var me = this;
+   
+	    /**
+	     * 获取或设置一个字符串，表示处理上传文件的服务地址。
+	     */
+	    me.url = null;
+	    
+	    /**
+	     * 获取或设置一个 HTML5 的 File 对象。
+	     */
+	    me.file = null;
+	    
+	    /**
+	     * 获取或设置文件上传服务端需要的参数。
+	     * 该属性为一个 JSON 对象，如（{ columnNames:"name,age,gender", columnCaptions:"姓名,年龄,性别", fileName:"用户表格"}）。
+	     */
+	    me.params = null;
+	    
+	    /**
+		 * 上传文件时params参数时是否使用post方式提交，否则参数将会在url后拼接key为params的参数值
+		 * 
+		 * @default false
+		 */
+	    me.paramsByPost = false;
+	    
+	    /**
+	     * 当文件上传，进度发生改变时触发该事件。
+	     */
+	    me.onprogresschange = null;
+	    
+	    /**
+	     * 当文件上传完成时，触发该事件。
+	     */
+	    me.onprogresscomplete = null;
+	    
+	    /**
+	     * 当文件上传失败时，触发该事件。
+	     */
+	    me.onprogresserror = null;
+	    
+	    /**
+	     * 当文件上传过程中，调用{@link me.cancel}取消上传时，触发该事件。
+	     */
+	    me.oncanceled = null;  
+	    
+	    /**
+	     * 当文件上传服务端处理完毕后，触发该事件。
+	     * 
+	     * @param resultValue 一个字符串，表示服务端的返回值。
+	     */
+	    me.onuploadcomplete = null;    
+	    
+	    /**
+	     * 内部上传 XMLHttpRequest 请求。
+	     */
+	    var xhr;
+	    
+	    /**
+	     * 文件上传。
+	     */
+	    me.upload = function()
+	    {
+	    
+	    	_startUpload();
+	    
+	    	if(me.sessionId == null){
+	    		me.onprogresserror();
+	    		return;
+	    	}
+	        xhr = new XMLHttpRequest();         
+	        var upload = xhr.upload; 
+	        xhr.addEventListener("readystatechange", _xhr_readystatechange, false);
+	        xhr.addEventListener("abort", _xhr_uploadCanceled, false);
+	        xhr.addEventListener("error", _uploadError, false);
+	        xhr.addEventListener("load", _uploadSucceed, false);
+	        xhr.uploadProgress = null;
+	        upload.addEventListener("loadstart",_uploadStart,false);
+	        upload.addEventListener("loadend",_uploadEnd,false);
+	        upload.addEventListener("progress", _uploadProgress, false);
+	        if(me.sessionId && me.sessionId!=null)
+	        {
+	            me.params.sessionId = me.sessionId;
+	        }
+	        if(cube.isEmpty(me.params.tableName)){
+	        	me.params.isVirtual = true;
+	        }
+	        me.params.option = "upload";
+	        
+	        var url = "";
+	        if (!me.paramsByPost) {
+	        	url = _getUrl(me.url, me.params);
+	        } else {
+	        	url = me.url + "?option=" + me.params.option;
+	        }
+	        
+	        xhr.open("POST", url, true);
+	        xhr.setRequestHeader('Content-Disposition', encodeURIComponent(me.file.name));
+	        if (me.file.md5) {
+	        	xhr.setRequestHeader("fileMD5", me.file.md5);
+	        }
+	        
+			if (cube.notEmpty(cube.customHeaders)) {
+				for (var key in cube.customHeaders) {
+					xhr.setRequestHeader(key, cube.customHeaders[key]);
+				}
+			}
+	        
+	        var fd = new FormData();
+	        if (/msie\s10/i.test(navigator.userAgent) && me.file.size == 0) {//IE10上传空文件会失败，在此处理一下
+	        	var oBlob = new Blob([" "], { type: "text/plain"});
+	        	fd.append("file", oBlob, me.file.name);
+	        } else {
+	        	fd.append("file", me.file, me.file.name);  
+	        }
+	        
+	        if (me.paramsByPost) {
+	        	_appendParams(fd, me.params);
+	        }
+	        
+	        xhr.send(fd);  
+	    };
+	    
+	    me.getUploadedFiles = function()
+	    {
+	    	var fileList = [];
+	    	// 获取已经上传的文件信息。
+	    	try
+        	{
+	    		var xmlHttp = createXMLHttpRequest(); 
+	 		    open(xmlHttp);
+		        me.params.option = "getFile";
+		        var param = _getUrl("", me.params);
+	       
+		        xmlHttp.send(param);
+		        if (xmlHttp.status == 200) {
+		            if (cube.notEmpty(xmlHttp.responseText)) 
+		            {
+		            	try
+		            	{
+			                //获取已经上传的文件列表。
+			                fileList = $.parseJSON(xmlHttp.responseText);  
+		            	}
+		            	catch(e)
+		            	{
+		            	}
+		            }
+		        }
+	        }
+	        catch(e)
+        	{
+        	}
+	        return fileList;
+	    }
+	    
+	    me.removeFile = function(fileName)
+	    {
+		    var fileName = encodeURIComponent(fileName);
+		    var xmlHttp = createXMLHttpRequest(); 
+		    open(xmlHttp);
+	        me.params.option = "delete";
+	        me.params.fileName = fileName;
+	        if(cube.isEmpty(me.params.tableName)){
+	        	me.params.isVirtual = true;
+	        }
+	        var param = _getUrl("", me.params);
+	        xmlHttp.send(param);
+	        if (xmlHttp.status == 200 && cube.notEmpty(xmlHttp.responseText)) {
+	            if (xmlHttp.responseText.indexOf("-2") == 0) {
+	            	return false;
+	            } else {
+	            	return true;
+	            }
+	        } else {
+	           return false;
+	        }
+	    };
+	    
+	    /**
+	     * 提供一个方法，下载指定的文件。
+	     * 
+	     * @overload function()
+	     * @overload function(p_fileName)
+	     * 
+	     * @param p_fileName  
+	     *            要下载的文件名。  如果文件名称，则会下载选中的文件
+	     */
+	    me.download = function(p_fileName)
+	    {
+	    	if(typeof(p_fileName) == "string")
+	    	{
+	    		if (p_fileName.substring(p_fileName.length - 1) == ";")
+	            {
+	                p_fileName = p_fileName.substring(0, p_fileName.length - 1);
+	            }
+		        var codedName = p_fileName.replace(/\+/g,"%2B").replace(/\#/g,"%23");
+		        
+		        var __fileDownloadFormFrame = $("#__fileDownloadFormFrame");
+		        if (__fileDownloadFormFrame.length > 0) {
+		        	__fileDownloadFormFrame.remove();
+            	}
+		        
+		        var iframe = $("<iframe id='__fileDownloadFormFrame' name='__fileDownloadFormFrame' style='display:none;position:absolute;main:-1000px;width:1px;height:1px'></iframe>");
+        		$("body").append(iframe);
+        		iframe.on("load", function(){
+        			var content = "";
+     			    try {
+     			    	content = iframe.contents().find("body").html();
+     			    } catch(e) {
+     			    	content = "error";
+     			    }
+     			   
+     			    if (cube.notEmpty(content)) {
+     			    	cube.indicate("warning", cube.msg("DOWNLOADFAIL"));
+     			    }
+        		})
+            	
+            	var form = $("#__fileDownloadForm");
+            	if (form.length == 0) {
+            		form = $("<form>");
+				    form.attr("id", "__fileDownloadForm");
+				    form.attr("style", "display:none");
+				    form.attr("target", "__fileDownloadFormFrame");
+				    form.attr("method", "get"); 
+				    $("body").append(form);
+            	} else {
+            		form.empty();
+            	}
+            	
+            	var random = cube.random();
+            	var params = {
+            			option: "download",
+            			tableName: me.params.tableName,
+            			pkVal: me.params.pkVal,
+            			colName: me.params.colName,
+            			fileName: encodeURI(codedName),
+            			uploadMode: me.params.uploadMode,
+            			filePath: me.params.filePath,
+         		        ftpSecurity: me.params.ftpSecurity,
+            			rnd: random};
+            	
+                for (var key in params) {
+                    var input = $("<input>");
+				    input.attr("type", "hidden");
+				    input.attr("name", key);
+				    input.attr("value", params[key]);
+				    form.append(input);
+                }
+                
+                var input = $("<input>");
+			    input.attr("type", "hidden");
+			    input.attr("name", "cl_u_id");
+			    input.attr("value", cube.cl_u_id);
+			    form.append(input);
+            	
+            	form.attr("action", me.url);  
+			    form.submit();
+	    	}
+	    };
+	    
+	    me.refreshPk = function(p_items, p_pkColName, params)
+	    {
+	        if (cube.isArray(p_items) && p_items.length > 0){
+	            var replaceValues = "";
+	            for(var i = 0; i < p_items.length; i++){
+	                if (cube.notEmpty(p_items[i].mxVirtualId)) {
+	                    replaceValues = replaceValues + p_items[i].mxVirtualId + ":" + p_items[i][p_pkColName] + ";";
+	                } else if (cube.notEmpty(params.pkVal())){
+	                	 replaceValues = replaceValues +params.pkVal() + ":" + p_items[i][p_pkColName] + ";";
+	                }
+	            }
+	            var codedPath = params.filePath ? params.filePath.replace(/\+/g,"%2B") : "";
+		        var pathParam = codedPath ? ("&filePath=" + codedPath) : "";
+	            var ftpSecurityParam = params.ftpSecurity ? ("&ftpSecurity=" + params.ftpSecurity) : "";
+	            var xmlHttp = createXMLHttpRequest();
+	            open(xmlHttp);
+	            xmlHttp.send("option=refreshPk&tableName=" + params.tableName + pathParam + "&colName=" + params.colName + "&uploadMode="
+	                + params.uploadMode + ftpSecurityParam + "&replaceValues=" + replaceValues 
+	            		+ "&rnd=" + cube.random());
+	            
+	            if (xmlHttp.status == 200 && xmlHttp.responseText) {
+	                return true;
+	            } else {
+	                return false;
+	            }
+	        }
+	    };
+	    
+	    /**
+	     * 设置 {@link params} 的值。
+	     */
+	    me.setParams = function(p_params)
+	    {
+	        if (me.params != p_params)
+	        {
+	            me.params = p_params;
+	        }
+	    };
+	    
+	    /**
+	     * 取消当前上传操作。
+	     */
+	    me.cancel = function()
+	    {
+	        if (xhr)
+	        {
+	            try
+	            {
+	                xhr.abort();    
+	            }
+	            catch(e){}
+	        }
+	    }
+	    
+	    function createXMLHttpRequest() {
+			var xmlHttp = null;
+			if (window.ActiveXObject) {
+				xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+			} else if (window.XMLHttpRequest) {
+				xmlHttp = new XMLHttpRequest();
+			}
+			
+			return xmlHttp
+		}
+	    
+	    function open(xmlHttp) {
+	    	var version = cube.getIEVersion();
+         	if (cube.ieCorsProxy && version > -1 && version <= 9.0 && cube.crosDomain(me.url)) {
+         		xmlHttp.open("POST", cube.mappath(cube.ieCorsProxyHost), false);
+         		xmlHttp.setRequestHeader("X-CorsProxy-Url", me.url);
+         	} else {
+         		xmlHttp.open("POST", me.url, false);
+         	}
+         	
+         	xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+         	
+         	if (cube.notEmpty(cube.customHeaders) && xmlHttp.setRequestHeader) {
+				for (var key in cube.customHeaders) {
+					xmlHttp.setRequestHeader(key, cube.customHeaders[key]);
+				}
+			}
+         	
+         	if (cube.notEmpty(cube.cl_u_id)) {
+         		xmlHttp.setRequestHeader("cl_u_id", cube.cl_u_id);
+			}
+	    }
+	    
+	    function _xhr_readystatechange(event)
+	    {
+	        var xhr = event.currentTarget;
+	    	if (xhr != null && xhr.readyState == 4 )
+	    	{
+	    		var result = xhr.responseText;
+	    		if (xhr.status == 404) {
+	    			result = "-2";
+	    		}
+	    		if(typeof me.onuploadcomplete == "function"){
+	    			me.onuploadcomplete({  resultValue:result });
+	    	    }
+	    	}
+	    }
+	    
+	    function _xhr_uploadCanceled(e)
+	    {
+	        if(typeof me.oncanceled == "function"){
+				me.oncanceled({  event: e });
+		    }
+	    }
+	    
+	    function _uploadProgress(event)
+	    {      
+	    	if(xhr.uploadProgress == null)
+	    	{
+	    	     xhr.uploadProgress = "xhr";
+	    	}
+	        if(typeof me.onprogresschange == "function"){
+				me.onprogresschange({ event:event });
+		    }
+	    }
+	    
+	    function _uploadStart()
+	    {
+	    	setInterval(function(){
+	         	 if(xhr.uploadProgress == null)
+	         	 {
+	         	      xhr.uploadProgress = "getProgress";
+	         	 }
+	             if(xhr.uploadProgress == "xhr")
+	             {
+	                  return;
+	             }
+	             _getProgress();
+	         }, 500);
+	         
+	    }
+	    /**
+	     *@ignore
+	     *文件是否已上传完成 
+	     */
+	    var isUploadEnd = false; 
+	    
+	    function _uploadEnd()
+	    {
+	    	  isUploadEnd = true;
+	    	  me.sessionId = null;
+	          if(typeof me.onprogresschange == "function"){
+					me.onprogresschange(99);
+			  }
+	    }
+	    
+	    function _startUpload()
+	    {
+	    	isUploadEnd = false;
+	    	me.sessionId = null;
+	    	try{
+	    		var xmlHttp = createXMLHttpRequest(); 
+	    		open(xmlHttp);
+				xmlHttp.send("option=startUpload&rnd=" + cube.random());
+				if (xmlHttp.status == 200) {
+					if (typeof xmlHttp.responseText == "string") {
+						  me.sessionId = xmlHttp.responseText.replace(/^\s*/, "").replace(/\s*$/, "");
+					}
+				}
+							
+	    	}catch(e){}
+	    }
+	    
+	    function _getProgress()
+	    {  
+	    	if(isUploadEnd === true || me.sessionId == null)
+	    	{
+	    	     return; 
+	    	}
+		    try {
+		    	var xmlHttp = createXMLHttpRequest(); 
+		    	open(xmlHttp);
+				xmlHttp.send("option=getProgress&sessionId="+me.sessionId+"&rnd=" + cube.random());
+				if (xmlHttp.status == 200) {
+					var res = xmlHttp.responseText;
+					if (res) {
+						res = parseInt(res, 10);
+						if (res != -1 && !isNaN(res)) {
+							try {
+								if(0 < res < 100){
+									if(typeof me.onprogresschange == "function"){
+										me.onprogresschange(res);
+									}
+						        }
+								window.setTimeout(_getProgress, 500)
+							} catch (e) {
+							}
+						 } 
+					}
+				} 
+			} catch (e) {
+			}
+	    }
+	    
+	    function _uploadSucceed(event)
+	    {
+	    	me.onprogresschange(100);
+	    	if(typeof me.onprogresscomplete == "function"){
+	    		me.onprogresscomplete({ event:event });
+	    	}
+	    }
+	    
+	    function _uploadError(event)
+	    {
+	        if(typeof me.onprogresserror == "function"){
+	    		me.onprogresserror({ event:event });
+	    	}
+	    }
+	    
+	    function _getUrl(p_url, p_params)
+	    {
+	        var params = "";
+	        var url = "";
+	        for (var key in p_params)
+	        {
+	            if (params != "")
+	            {
+	            	params+="&";
+	            }
+	            
+	            if (typeof(p_params[key]) == "string" && p_params[key].replace(/^\s*/, "").replace(/\s*$/, "") == "") {
+	           		params += key + "=";
+	            } else {
+	            	if (key == "fileName") {
+	            		params += key + "=" + p_params[key];
+		            } else if(key == "params"){
+		            	params += key + "=" + JSON.stringify(p_params[key]);
+		            } else {
+		            	params += key + "=" + encodeURIComponent(encodeURIComponent(p_params[key]));
+		            }
+	            }
+	        }
+	        
+	        url = p_url + (cube.isEmpty(params) ? "" : (cube.isEmpty(p_url) ? "" : "?") + params);
+	        
+	        if (cube.cl_u_id) {
+	        	url += "&cl_u_id=" + cube.cl_u_id;
+			}
+	        
+	        return url + "&rnd=" + cube.random();
+	    }
+	    
+	    function _appendParams(fd, p_params)
+	    {
+	        for (var key in p_params)
+	        {
+	        	if (key == "params") {
+	        		fd.append(key, JSON.stringify(p_params[key]));  
+	        	} else {
+	        		fd.append(key, p_params[key]); 
+	        	}
+	        }
+	    }
+	    
+	    /**
+	     * 根据文件名找路径, 用于图片的url
+	     */
+	    me.getUri = function(p_url, p_name, p_type, p_filePath, p_uploadMode, p_tableName, p_colName, p_pkVal) {
+	    	var uri = null;
+	    	var codedName = p_name.replace(/\+/g,"%2B");
+		    var codedPath = p_filePath ? p_filePath.replace(/\+/g,"%2B") : "";
+		    var pathParam = codedPath ? ("&filePath=" + codedPath) : "";
+		    if (p_type == "path") {
+		        uri = encodeURI(encodeURI(p_url + "?option=download&filePath=" + codedPath + "&fileName=" + codedName + "&uploadMode="
+	                    + p_uploadMode + "&rnd=" + cube.random()));
+		    } else if (p_type == "form" || p_type == "grid") {
+		        uri = encodeURI(encodeURI(p_url + "?option=download&tableName=" +p_tableName + "&pkVal=" 
+		        		+ p_pkVal + "&colName=" + p_colName + "&fileName=" + codedName + "&uploadMode="
+		                + p_uploadMode + pathParam  + "&rnd=" + cube.random()));   
+		    }
+		    
+		    return uri;
+	    }
+    };
+    
+    return FileUploader;
+});

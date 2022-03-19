@@ -14,7 +14,7 @@ public class DeptController {
     DeptService deptService;
 
     @GetMapping("/dept/{id}")
-    public Department getDept(@PathVariable("id") Integer id){
+    public Department getDept(@PathVariable("id") Integer id) {
         return deptService.getDeptById(id);
     }
 }

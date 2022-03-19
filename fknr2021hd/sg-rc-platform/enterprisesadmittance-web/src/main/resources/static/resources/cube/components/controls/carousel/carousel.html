@@ -1,0 +1,25 @@
+<div class="cube carousel slide" data-bind='attr:{"style": style,"id": id},css:{imgfull:showImgFull}'>
+    <ol class="carousel-indicators" data-bind="foreach: imgItems">
+      <li data-bind='attr:{"class": ($parent.currentImgIndex()==num?"active":""),"data-slide-to": (num-1),"data-target": "#"+$parent.id()}'></li>
+    </ol>  
+    <div class="carousel-inner" data-bind="foreach: imgItems">
+      <div class="item" data-bind='attr:{"class": "item " + ($parent.currentImgIndex()==num?"active ":""), "num": num}'>
+        <img data-bind="attr:{'src': imgSrc,'alt': title}"/>
+        <!-- ko if:$parent.showCaption() -->
+        <div class="carousel-caption">
+          <h4 data-bind="text: title"></h4>
+          <p data-bind="text: content"></p>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: typeof(innerhtml)!="undefined" -->
+        <div data-bind="html: innerhtml"></div>
+        <!-- /ko -->
+      </div>
+    </div>
+    <!-- ko if:showArrow() -->
+    <a class="carousel-control left" data-bind='attr:{"href": "#"+id()}'
+      data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" data-bind='attr:{"href": "#"+id()}'
+      data-slide="next">&rsaquo;</a>
+    <!-- /ko -->
+</div> 

@@ -1,0 +1,29 @@
+<ul class="dropdown-menu dropdown"  data-bind="style:{display:isList()?null:(hoverItem()==parentItem()?'block':'none')},foreach: children">
+	<!-- ko if: typeof(hasChildren)!='undefined' && hasChildren -->
+	<li class="dropdown-submenu" data-bind="event:{mouseenter:$parent.openSubItems,mouseleave:$parent.closeSubItems},mouseenterBubble: false">
+		<a>
+			<!-- ko if: typeof(icon) != "undefined" -->
+			<span data-bind='attr:{"class":"icon icon-"+icon}'></span>
+			<!-- /ko -->
+			<span data-bind="text: text"></span>
+		</a>
+		<div data-bind='component:{name: "submenutmpl", params: {isList:$parent.isList,isHorizontalChildren:$parent.isHorizontalChildren,hoverItem:$parent.childrenHoverItem,parentItem: $data,children: children, selectMenuItem: $parent.selectMenuItem}}'></div>
+	</li>
+	<!-- /ko -->
+	<!-- ko if: typeof(hasChildren)=='undefined' || !hasChildren -->
+		<!-- ko if:text=='-' -->
+		<li class="divider"></li>
+		<!-- /ko -->
+		<!-- ko if:!(text=='-') -->
+		<li data-bind="attr:{code:typeof(code)!='undefined'?code:''}">
+			<a data-bind="attr:{href: typeof(route)!='undefined'?route:''},click:$parent.selectMenuItem">
+				<!-- ko if: typeof(icon) != "undefined" -->
+				<span data-bind='attr:{"class":"icon-"+icon}'></span>
+				<!-- /ko -->
+				<span data-bind="text: text"></span>
+			</a>
+		</li>
+		<!-- /ko -->
+	<!-- /ko -->
+	
+</ul>

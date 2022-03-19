@@ -1,0 +1,15 @@
+<!-- ko if: isShow-->
+<div class="cube modal-backdrop fade loading" data-bind="css:{'in': isShow},style:{backgroundColor:backgroundColor,position: fixed()?'fixed':'', zIndex: zIndex()}">
+	<div style="position: absolute; top: 50%; left: 50%">
+		<div style="position: relative; top: -50%; left: -50%; color: #ccc;">
+			<!-- ko if: content() != null -->
+				<div data-bind="html: content"></div>
+			<!-- /ko -->
+			<!-- ko if: content() == null -->
+				<img alt="加载中" data-bind="attr:{src: imgUrl}">
+			<!-- /ko -->
+		</div>
+	</div>
+
+</div>
+<!-- /ko -->

@@ -1,0 +1,137 @@
+<!-- ko if: item != null -->
+<tr
+	data-bind='css: grid._selectedItem()==item?"info":"", event:{dblclick: function() {grid.dblclick(item)}}'>
+	<!-- ko if: grid.markColumn() != null -->
+	<td class="table-markcolumn"
+		data-bind="style:{width: typeof(grid.markColumn().width)!='undefined'?grid.markColumn().width:'30px'}, html: grid.renderMarkCell(item, $element) "></td>
+	<!-- /ko -->
+	<!-- ko if: grid.isShowCheckBox -->
+	<td width="30px" class="table-checkbox"><input name="rowCheckbox"
+		type="checkbox"
+		data-bind="visible: grid.checkboxVisible(item),attr:{type:grid.isRadio()?'radio':'checkbox',value:item[grid.primaryKey()]},checked: grid._selectedIds">
+	</td>
+	<!-- /ko -->
+	<!-- ko if: grid.isShowRowNumber -->
+	<td class="table-rownum" data-bind='style:{width:grid.rowNumberWidth()}'>
+		<!-- ko if: level == 1 -->
+		<span data-bind=" text:(grid.isRowNumberSerial()?(grid.pageIndex()-1)*grid.pageSize():0) + $index()+1"></span>
+		<!-- /ko -->
+		<!-- ko if: level > 1 -->
+		<span data-bind=" text:index + '.'+ ($index()+1)"></span>
+		<!-- /ko -->
+	</td>
+	<!-- /ko -->
+	<!-- ko if:(grid._selectedItem()!=item || grid._isEdited()== false) && !grid.isAllEdited() -->
+	<!-- ko foreach: {data:grid.columns,as:'column'} -->
+	<!-- ko if:((column.name == $parent.grid.primaryKey() && $parent.grid.isShowPrimaryKey()== true) || column.name != $parent.grid.primaryKey()) && (typeof(column.visible)=='undefined' || column.visible) -->
+	<td
+		data-bind="css:{'wrapreverse':typeof(column.isAllowAutowrap)!='undefined'&&column.isAllowAutowrap!=$parent.grid.isAllowAutowrap()},
+					style:{'text-align': column.align,width: typeof(width)!='undefined'?width:$parent.grid.columnDefaultWidth(),'padding-left':column.name==$parent.grid.treeField()&&$parent.level>1?((20*($parent.level-1))+'px'):null},
+           			event:{
+           				mouseenter:function(){$parent.grid.mouseenter($parent.item[$parent.grid.primaryKey()], $parent.item[column.name], column, $element)},
+           				mouseleave:function(){$parent.grid.mouseleave($parent.item[$parent.grid.primaryKey()], $parent.item[column.name], column, $element)},
+           				dblclick:function(){column.onDblClick?column.onDblClick($parent.item[$parent.grid.primaryKey()],$parent.item[column.name], column):null},
+           				click: function() {column.onClick?column.onClick($parent.item[$parent.grid.primaryKey()],$parent.item[column.name], column):$parent.grid.setSelectedItem($parent.item, $parentContext.$index(),$parent.parentItem)}
+           			}">
+         <!-- ko if:  column.name==$parent.grid.treeField() && ((typeof($parent.item.items) != 'undefined' && $parent.item.items().length > 0) || $parent.item.hasChildren === true) -->
+         <span data-bind="attr:{'class':($parent.expanded()?'icon-caret-down':'icon-caret-right')},click: $parent.expandItem"></span>
+         <!-- /ko -->
+         <span data-bind="html:$parent.grid.renderCell($parent.item[column.name], $element, column, $parent.item)"></span>
+    </td>
+	<!-- /ko -->
+	<!-- /ko -->
+	<!-- /ko -->
+
+	<!-- ko if:(grid._isEdited()== true && grid._selectedItem()==item) || grid.isAllEdited() -->
+	<!-- ko foreach: grid.columns -->
+	<!-- ko if:((name == $parent.grid.primaryKey() && $parent.grid.isShowPrimaryKey()== true) || name != $parent.grid.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+	<td
+		data-bind="style:{width: typeof(width)!='undefined'?width:$parent.grid.columnDefaultWidth(),overflow: (editorType != 'NoEditor'?'visible':null)}">
+		<!-- ko if: editorType == "NoEditor" -->
+		<div
+			data-bind="html: $parent.grid.renderCell($parent.item[$data.name], $element, $data, $parent.item)"></div>
+		<!-- /ko --> 
+		<!-- ko if: editorType != "NoEditor" -->
+		<div
+			data-bind="attr: {'class':'control-group '+(typeof(validStatus)!='undefined'?validStatus():''),
+	                  				title:(typeof(validHint)!='undefined'?validHint():'')}">
+			<!-- ko if: editorType == "DateTimeEditor" -->
+			<div data-bind="component: { name: 'datetimeeditor', params: $parent.grid.getEditorParam($data, $parent.item, $parentContext.$index())}"></div>
+			<!-- /ko -->
+			<!-- ko if: editorType == "FileEditor" -->
+			<div data-bind="component: { name: 'fileeditor', params: $parent.grid.getEditorParam($data, $parent.item, $parentContext.$index())}"></div>
+			<!-- /ko -->
+			<!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor" -->
+			<div data-bind="component: { name: 'commoneditor', params:  $parent.grid.getEditorParam($data, $parent.item, $parentContext.$index())}"></div>
+			<!-- /ko -->
+		</div> 
+		<!-- /ko -->
+	</td>
+	<!-- /ko -->
+	<!-- /ko -->
+	<!-- /ko -->
+	<!-- ko if: grid.isShowTempColumn -->
+	<td></td>
+	<!-- /ko -->
+	<td data-bind="'visible': grid.isAllowOperations,
+		style:{width:grid.operationsColumnWidth,textAlign:grid.operationsColumnAlign}">
+		<!-- ko if: (!grid._isEdited() || grid._selectedItem() != item)-->
+			<!-- ko if: !grid.isAllEdited() --> 
+				<a href="" data-bind='text: grid.isShowEditBtnText()?cube.msg("EDIT"):"", 
+					css:{"icon-edit":!grid.isShowEditBtnText()}, 
+					attr:{title: cube.msg("EDIT")}, 
+					visible: grid.isAllowEdit, 
+					click: function(){grid.editItem(item,$index(),parentItem)}, clickBubble: false'></a>
+			<!-- /ko --> 
+		<a href="" data-bind='text: grid.isShowEditBtnText()?cube.msg("DELETE"):"", 
+			css:{"icon-remove":!grid.isShowEditBtnText()}, 
+			attr:{title: cube.msg("DELETE")}, 
+			visible: grid.isAllowDelete, 
+			click: function(){grid.delItem(item)}, clickBubble: false'></a>
+		<a href="" data-bind='text: grid.isShowEditBtnText()?cube.msg("MOVEUP"):"", 
+			css:{"icon-arrow-up":!grid.isShowEditBtnText()},
+			attr:{title: cube.msg("MOVEUP")}, 
+			visible: grid.isAllowShift, 
+			click: function(){grid.shiftupItem(item,parentItem)}, clickBubble: false'></a>
+		<a href="" data-bind='text: grid.isShowEditBtnText()?cube.msg("MOVEDOWN"):"", 
+			css:{"icon-arrow-down":!grid.isShowEditBtnText()}, 
+			attr:{title: cube.msg("MOVEDOWN")}, 
+			visible: grid.isAllowShift, 
+			click:  function(){grid.shiftdownItem(item,parentItem)}, clickBubble: false'></a>
+		<!-- /ko --> 
+		<!-- ko if: (grid._isEdited() && grid._selectedItem()==item) || grid.isAllEdited() -->
+			<a href="" data-bind='text: grid.isShowEditBtnText()?cube.msg("SAVE"):"", 
+				css:{"icon-save":!grid.isShowEditBtnText()}, 
+				attr:{title: cube.msg("SAVE")},
+				visible: grid.isShowSave, 
+				click: grid.saveItem, clickBubble: false'></a>
+			<!-- ko if: !grid.isAllEdited() --> 
+			<a href="" data-bind='text: grid.isShowEditBtnText()?cube.msg("CANCEL"):"", 
+				css:{"icon-share-alt":!grid.isShowEditBtnText()}, 
+				attr:{title: cube.msg("CANCEL")}, 
+				click: grid.cancelSaveItem, clickBubble: false'>
+			</a>
+			<!-- /ko --> 
+		<!-- /ko --> 
+		<!-- ko foreach: grid.customOperations -->
+			<!-- ko if: typeof(icon)!='undefined' --> 
+			<a href="" data-bind="attr:{title: caption, 'class':icon}, 
+				visible: $parent.grid.customOperationsVisible(item, typeof(visible)!='undefined'?visible:null), 
+				click: function(){click($parent.item)}, clickBubble: false"></a>
+			<!-- /ko --> 
+			<!-- ko if: typeof(icon)=='undefined' --> 
+			<a href="" data-bind="text:caption,attr:{title: caption}, 
+				visible: $parent.grid.customOperationsVisible(item, typeof(visible)!='undefined'?visible:null), 
+				click: function(){click($parent.item)}, clickBubble: false"></a>
+			<!-- /ko --> 
+		<!-- /ko -->
+	</td>
+</tr>
+	<!-- ko if: typeof(item.items) != 'undefined' && expanded() --> 
+		<!-- ko foreach: { data: item.items, as: 'childitem' }-->
+			<!-- ko if: childitem != null -->
+				<!-- ko component:{name: "treegriditem", params:{item: childitem, parentItem: $parent.item, grid: $parent.grid, level: $parent.level + 1,index: $parent.level == 1?(($parent.grid.isRowNumberSerial()?($parent.grid.pageIndex()-1)*$parent.grid.pageSize():0) + $parentContext.$index()+1):($parent.index + '.'+ ($index()+1))}} --><!-- /ko -->
+			<!-- /ko -->
+		<!-- /ko -->
+	<!-- /ko -->
+<!-- /ko -->

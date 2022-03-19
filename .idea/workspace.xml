@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1972bf1a-2326-477d-bcb5-2aaba95691e7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/MstApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/MstApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/bean/DeptInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/bean/DeptInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/controller/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/controller/TestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/mapper/DeptInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/mapper/DeptInfoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/service/impl/DeptInfoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/service/impl/DeptInfoServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/util/ConvertVideo.java" beforeDir="false" afterPath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/util/ConvertVideo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/util/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/mstlx/src/main/java/com/mstdemo/mst/util/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mstlx/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/mstlx/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mstlx/src/main/resources/mybatis/mapper/DeptInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mstlx/src/main/resources/mybatis/mapper/DeptInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Springboot01CacheApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Springboot01CacheApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Util/RedisKeyPrefixConst.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Util/RedisKeyPrefixConst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Util/RedisUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Util/RedisUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Util/RedisUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Util/RedisUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Util/productCanchekey.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/Util/productCanchekey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/bean/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/bean/Department.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/bean/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/bean/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/config/MyCacheConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/config/MyCacheConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/config/MyRedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/config/MyRedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/controller/DeptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/controller/DeptController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/controller/EmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/mapper/ProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/mapper/ProductMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/service/DeptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/service/DeptService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/service/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/service/EmployeeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/java/com/atguigu/cache/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot-01-cache/src/test/java/com/atguigu/cache/Springboot01CacheApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-01-cache/src/test/java/com/atguigu/cache/Springboot01CacheApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="26P7sjSlebEHYR7FgSW0UtUDsrr" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../2022106dmsc" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1972bf1a-2326-477d-bcb5-2aaba95691e7" name="Default Changelist" comment="" />
+      <created>1647313575462</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1647313575462</updated>
+      <workItem from="1647313576842" duration="6000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,0 +1,402 @@
+<div class="cube grid" data-bind="attr:{style:style},style:{height:height},css:{autowrap: isAllowAutowrap}">
+	<table class="table" data-bind='css:{
+		"table-bordered": isShowBorder,
+		"table-striped": isShowStripe,
+		"table-hover": isShowHover,
+		"table-condensed": isShowCondense
+		},style:{"table-layout":tableLayout()}'>
+              <thead>
+              	<!-- ko ifnot: isAllowSort -->
+              		<!-- ko foreach: _levelColumns -->
+	              	<tr>
+              			<!-- ko if: $parent.isShowCheckBox() && $index() == 0 -->
+	              			<th width="15px" data-bind='attr:{"rowSpan":$parent._levelColumns().length}'>
+	              				<!-- ko ifnot: $parent.isRadio -->
+	              				<input type="checkbox" data-bind="checked: $parent._selectedAll">
+	              				<!-- /ko -->
+	              			</th>
+              			<!-- /ko -->
+              			<!-- ko if: $parent.isShowRowNumber() && $index() == 0 -->
+	              			<th width="40px" data-bind='attr:{"rowSpan":$parent._levelColumns().length}'>
+	              				<!-- ko if: $parent.rowNumberColumnName() == null -->
+			          				<!--ko text: cube.msg('ROWNUM')--><!--/ko-->
+			          			<!-- /ko -->
+			          			<!-- ko if: $parent.rowNumberColumnName() != null -->
+			          				<!--ko text: $parent.rowNumberColumnName--><!--/ko-->
+			          			<!-- /ko -->
+	              			</th>
+              			<!-- /ko -->
+						<!-- ko foreach: $data -->
+							<!-- ko if:((name == $parents[1].primaryKey() && $parents[1].isShowPrimaryKey()== true) || name != $parents[1].primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+							<th data-bind='text: caption, attr:{"valign":"", "colSpan": colspan, "rowSpan": colspan>1?1:($parents[1]._levelColumns().length-$parentContext.$index())}, style:{width: typeof(width)!="undefined"?width:$parents[1].columnDefaultWidth},
+							event:{mousemove: function(data, event){$parents[1].mousemove($element,event)}, mousedown: function(data,event){$parents[1].mousedown($element,data,event)},mouseup:$parents[1].mouseup}'></th>
+							<!-- /ko -->
+						<!-- /ko -->
+						<!-- ko if: $index() == 0 -->
+						<th data-bind="'visible': $parent.isAllowOperations,attr:{'rowSpan': $parent._levelColumns().length}" style="text-align:center"><!--ko text: cube.msg('OPERATIONS')--><!--/ko--></th>
+						<!-- /ko -->
+	              	</tr>
+	              	<!-- /ko -->
+              	<!-- /ko -->
+              	<!-- ko if: isAllowSort -->
+              	    <!-- ko foreach: _levelColumns -->
+	              	<tr>
+              			<!-- ko if: $parent.isShowCheckBox() && $index() == 0 -->
+	              			<th width="15px" data-bind='attr:{"rowSpan":$parent._levelColumns().length}'>
+	              				<!-- ko ifnot: $parent.isRadio -->
+	              				<input type="checkbox" data-bind="checked: $parent._selectedAll">
+	              				<!-- /ko -->
+	              			</th>
+              			<!-- /ko -->
+              			<!-- ko if: $parent.isShowRowNumber() && $index() == 0 -->
+	              			<th width="40px" data-bind='attr:{"rowSpan":$parent._levelColumns().length}'>
+	              				<!-- ko if: $parent.rowNumberColumnName() == null -->
+			          				<!--ko text: cube.msg('ROWNUM')--><!--/ko-->
+			          			<!-- /ko -->
+			          			<!-- ko if: $parent.rowNumberColumnName() != null -->
+			          				<!--ko text: $parent.rowNumberColumnName--><!--/ko-->
+			          			<!-- /ko -->
+	              			</th>
+              			<!-- /ko -->
+						<!-- ko foreach: $data -->
+							<!-- ko if: colspan == 1 -->
+								<!-- ko if:((name == $parents[1].primaryKey() && $parents[1].isShowPrimaryKey()== true) || name != $parents[1].primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+								<th class='sort'  data-bind='attr:{"colSpan": colspan, "rowSpan": colspan>1?1:($parents[1]._levelColumns().length-$parentContext.$index())}, style:{width: typeof(width)!="undefined"?width:$parents[1].columnDefaultWidth},
+								event:{mousemove: function(data, event){$parents[1].mousemove($element,event)}, mousedown: function(data,event){$parents[1].mousedown($element,data,event)},mouseup:$parents[1].mouseup}'>
+									<div data-bind="click: $parents[1].sortGrid,mousedownBubble: false"  title="排序">
+				                  		<!-- ko if: $parents[1].sortName()== name-->
+				                  			<span data-bind='attr:{"class": $parents[1].sortType()==1?"icon-arrow-up":"icon-arrow-down"}'></span>
+				                  		<!-- /ko -->
+				                  		<span data-bind='text: caption'></span>
+			                  		</div>
+			                  	</th>
+			                  	<!-- /ko -->
+							<!-- /ko -->
+							<!-- ko ifnot: colspan == 1 -->
+								<!-- ko if:((name == $parents[1].primaryKey() && $parents[1].isShowPrimaryKey()== true) || name != $parents[1].primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+		                  		<th data-bind='text: caption, attr:{"colSpan": colspan, "rowSpan": colspan>1?1:($parents[1]._levelColumns().length-$parentContext.$index())}, style:{width: typeof(width)!="undefined"?width:$parents[1].columnDefaultWidth}' ></th>
+		                  		<!-- /ko -->
+							<!-- /ko -->
+						<!-- /ko -->
+						<!-- ko if: $index() == 0 -->
+						<th data-bind="'visible': $parent.isAllowOperations,attr:{'rowSpan': $parent._levelColumns().length}"><!--ko text: cube.msg('OPERATIONS')--><!--/ko--></th>
+						<!-- /ko -->
+	              	</tr>
+	              	<!-- /ko -->
+              	<!-- /ko -->
+              </thead>
+              <tbody>
+              	<!-- ko foreach: { data: items, as: 'item' }-->
+              	<!-- ko if: item!=null -->
+               <tr data-bind='css:$parent._selectedItem()==item?"info":"",event:{dblclick: function() {$parent.dblclick(item)}}'>
+           			<!-- ko if: $parent.isShowCheckBox -->
+	              		<td class="table-checkbox"><input name="rowCheckbox" type="checkbox" data-bind="visible: $parent.checkboxVisible(item),attr:{type:$parent.isRadio()?'radio':'checkbox',value:item[$parent.primaryKey()]},checked: $parent._selectedIds"></td>
+              		<!-- /ko -->
+              		<!-- ko if: $parent.isShowRowNumber -->
+            			<td class="table-rownum"><span data-bind="text: ($parent.isRowNumberSerial()?($parent.pageIndex()-1)*$parent.pageSize():0) + $index()+1"></span></td>
+           			<!-- /ko -->
+                  <!-- ko if:$parent._selectedItem()!=$data || $parent._isEdited()== false-->
+	                  <!-- ko foreach: {data:$parent._showItemColumns,as:"column"} -->
+	                  		<!-- ko if:((column.name == $parents[1].primaryKey() && $parents[1].isShowPrimaryKey()== true) || column.name != $parents[1].primaryKey()) && (typeof(column.visible)=='undefined' || column.visible) -->
+                  			<td data-bind="css:{'wrapreverse':typeof(column.isAllowAutowrap)!='undefined'&&column.isAllowAutowrap!=$parents[1].isAllowAutowrap()},style:{'text-align': column.align,width: typeof(width)!='undefined'?width:$parents[1].columnDefaultWidth()}, html:$parents[1].renderCell(item[column.name], $element, column, item),
+                  			 event:{
+                  			 	mouseenter:function(){$parents[1].mouseenter(item[$parents[1].primaryKey()], item[column.name], column, $element)},
+                  				mouseleave:function(){$parents[1].mouseleave(item[$parents[1].primaryKey()], item[column.name], column, $element)},
+                  				dblclick:function(){column.onDblClick?column.onDblClick(item[$parents[1].primaryKey()],item[column.name], column):null},
+                  			 	click: function() {column.onClick?column.onClick(item[$parents[1].primaryKey()],item[column.name], column):$parents[1].setSelectedItem(item, $parentContext.$index())}}"></td>
+                  			 <!-- /ko -->
+	                  <!-- /ko -->
+                  <!-- /ko -->
+                  
+                  <!-- ko if:$parent._isEdited()== true && $parent._selectedItem()==$data-->
+	                   <!-- ko foreach: $parent._showItemColumns -->
+	                   	<!-- ko if:((name == $parents[1].primaryKey() && $parents[1].isShowPrimaryKey()== true) || name != $parents[1].primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+	                  	<td data-bind="style:{width: typeof(width)!='undefined'?width:$parents[1].columnDefaultWidth(),overflow:'visible'}">
+	                  		<div data-bind="attr: {'class':'control-group '+validStatus(),title:validHint()}">
+								<!-- ko if: editorType == "DateTimeEditor" -->
+								<div data-bind="component: { name: 'datetimeeditor', params: { 
+									showTimePicker: typeof(showTimePicker)!='undefined'?showTimePicker:undefined,
+									showDayPicker: typeof(showDayPicker)!='undefined'?showDayPicker:undefined,
+									value: $parents[1]._editedItem[name],
+									format: typeof(format)!='undefined'?format:undefined,
+									isAllowEdit: typeof(isAllowEdit)!='undefined'?isAllowEdit:undefined,
+									isShowValue: typeof(isShowValue)!='undefined'?isShowValue:undefined,
+									validType: typeof(validType)!='undefined'?validType:undefined,
+									nullable: typeof(nullable)!='undefined'?nullable:undefined,
+									validStatus: typeof(validStatus)!='undefined'?validStatus:undefined,
+									validHint: typeof(validHint)!='undefined'?validHint:undefined,
+									validFailValue:typeof(validFailValue)!='undefined'?validFailValue:undefined,
+									isClickCloseDialog:  typeof(isClickCloseDialog)!='undefined'?isClickCloseDialog:undefined,
+									isExtDisplay: typeof(isExtDisplay)!='undefined'?isExtDisplay:true,
+									width: '75%'} }"></div>
+						         <!-- /ko -->
+						         <!-- ko if: editorType == "FileEditor" -->
+							      <div data-bind="component: { name: 'fileeditor', params: { name: typeof(name)!='undefined'?name:'',
+							       	    url: typeof(url)!='undefined'?url:'',
+							       	    isShowPreview: typeof(isShowPreview)!='undefined'?isShowPreview:undefined,
+							       	    autoUpload: typeof(autoUpload)!='undefined'?autoUpload:undefined,
+							       	    previewSize: typeof(previewSize)!='undefined'?previewSize:undefined,
+							       	    maxCount: typeof(maxCount)!='undefined'?maxCount:undefined,
+							       	    maxFileSize: typeof(maxFileSize)!='undefined'?maxFileSize:undefined,
+							       	    isGetMd5: typeof(isGetMd5)!='undefined'?isGetMd5:undefined,
+							       	    allowTypes: typeof(allowTypes)!='undefined'?allowTypes:undefined,
+							       	    type: typeof(type)!='undefined'?type:undefined,
+							       	    filePath: typeof(filePath)!='undefined'?filePath:undefined,
+							       	    tableName: typeof(tableName)!='undefined'?tableName:undefined,
+							       	    primaryKey: typeof(primaryKey)!='undefined'?primaryKey:undefined,
+							       	    pkVal: typeof(pkVal)!='undefined'?pkVal:undefined,
+							       	    colName: typeof(colName)!='undefined'?colName:undefined,
+							       	    uploadMode: typeof(uploadMode)!='undefined'?uploadMode:undefined,
+							       	    params: typeof(params)!='undefined'?params:undefined,
+							       	    isVirtual: typeof(isVirtual)!='undefined'?isVirtual:undefined,
+							       	    isShowUploadButton: typeof(isShowUploadButton)!='undefined'?isShowUploadButton:undefined,
+		       	    					isShowRemoveButton: typeof(isShowRemoveButton)!='undefined'?isShowRemoveButton:undefined,
+		       	    					isShowDownloadButton: typeof(isShowDownloadButton)!='undefined'?isShowDownloadButton:undefined,
+		       	    					isShowThumbnail: typeof(isShowThumbnail)!='undefined'?isShowThumbnail:undefined,
+							       	    validStatus: typeof(validStatus)!='undefined'?validStatus:undefined,
+										validHint: typeof(validHint)!='undefined'?validHint:undefined,
+										onItemUploading: typeof(onItemUploading)!='undefined'?onItemUploading:undefined,
+										onItemUploaded: typeof(onItemUploaded)!='undefined'?onItemUploaded:undefined,
+										onItemUploadFail: typeof(onItemUploadFail)!='undefined'?onItemUploadFail:undefined,
+							       	    onAllItemUploaded: typeof(onAllItemUploaded)!='undefined'?onAllItemUploaded:undefined,
+							       	    onItemRemoved: typeof(onItemRemoved)!='undefined'?onItemRemoved:undefined,
+							       	    onAllItemRemoved: typeof(onAllItemRemoved)!='undefined'?onAllItemRemoved:undefined,
+							       	    onChanged: $parents[1]._editor_upload
+							       	    } }"></div>
+					            <!-- /ko -->
+						         <!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor" -->
+								<div data-bind="component: { name: 'commoneditor', params: { value: $parents[1]._editedItem[name],
+									readOnly: typeof(readOnly)!='undefined'?readOnly:undefined,
+									editorType: typeof(editorType)!='undefined'?editorType:'TextEditor',
+									isShowScroll: typeof(isShowScroll)!='undefined'?isShowScroll:undefined,
+									isShowNull: typeof(isShowNull)!='undefined'?isShowNull:undefined,
+									dropdownMenuHeight: typeof(dropdownMenuHeight)!='undefined'?dropdownMenuHeight: undefined,
+									isTextEllipsis: typeof(isTextEllipsis)!='undefined'?isTextEllipsis:undefined,
+									isShowCheckbox: typeof(isShowCheckbox)!='undefined'?isShowCheckbox:undefined,
+									isClickShow: typeof(isClickShow)!='undefined'?isClickShow:undefined,
+									textMode: typeof(textMode)!='undefined'?textMode:undefined,
+									type: typeof(type)!='undefined'?type:undefined,
+									list: typeof(list)!='undefined'?list:undefined,
+									validType: typeof(validType)!='undefined'?validType:undefined,
+									validOptions: typeof(validOptions)!='undefined'?validOptions:undefined,
+									maxLength: typeof(maxLength)!='undefined'?maxLength:undefined,
+									nullable: typeof(nullable)!='undefined'?nullable:undefined,
+									treeOptions: typeof(treeOptions)!='undefined'?treeOptions:undefined,
+									validStatus: typeof(validStatus)!='undefined'?validStatus:undefined,
+									validHint: typeof(validHint)!='undefined'?validHint:undefined,
+									customValidate: typeof(customValidate)!='undefined'?customValidate:undefined,
+									customBtnText: typeof(customBtnText)!='undefined'?customBtnText:undefined,
+									customBtnIcon: typeof(customBtnIcon)!='undefined'?customBtnIcon:undefined,
+									customBtnEnabled: typeof(customBtnEnabled)!='undefined'?customBtnEnabled:undefined,
+									isAllowEdit: typeof(isAllowEdit)!='undefined'?isAllowEdit:undefined,
+									isValueIsEmptyEnter: typeof(isValueIsEmptyEnter)!='undefined'?isValueIsEmptyEnter:undefined,
+									textAlign: typeof(align)!='undefined'?align:undefined,
+									isExtDisplay: typeof(isExtDisplay)!='undefined'?isExtDisplay:true,
+									onChanged: typeof(onChanged)!='undefined'?onChanged:undefined,
+									onClick: typeof(onClick)!='undefined'?onClick:undefined,
+									onSelectedChanged: typeof(onSelectedChanged)!='undefined'?onSelectedChanged:undefined,
+									width: editorType=='DropDownEditor'?'auto':(editorType=='NumberEditor'?'40%':'85%')} }"></div>
+								 <!-- /ko -->
+							 </div>
+	                  	</td>
+	                  	 <!-- /ko -->
+	                  <!-- /ko -->
+                  <!-- /ko -->
+                  
+                  <td data-bind="'visible': $parent.isAllowOperations,style:{width:$parent.operationsColumnWidth,textAlign:$parent.operationsColumnAlign}">
+	                  <!-- ko if: !$parent._isEdited() || $parent._selectedItem()!=$data -->
+	                  	<a href="" title='编辑' class='icon-edit' data-bind='visible: $parent.isAllowEdit, click: function(){$parent.editItem(item,$index())}, clickBubble: false'></a>
+	                  	<a href="" title='删除' class='icon-remove' data-bind='visible: $parent.isAllowDelete, click: $parent.delItem, clickBubble: false'></a>
+	                  	<a href="" title='上移' class='icon-arrow-up' data-bind='visible: $parent.isAllowShift, click: $parent.shiftupItem, clickBubble: false'></a>
+	                  	<a href="" title='下移' class='icon-arrow-down' data-bind='visible: $parent.isAllowShift, click: $parent.shiftdownItem, clickBubble: false'></a>
+	                  <!-- /ko -->
+	                   <!-- ko if: $parent._isEdited() && $parent._selectedItem()==$data-->
+	                  	<a href="" title='保存' class='icon-save' data-bind='click: $parent.saveItem, clickBubble: false'></a>
+	                  	<a href="" title='取消' class='icon-share-alt' data-bind='click: $parent.cancelSaveItem, clickBubble: false'></a>
+	                  <!-- /ko -->
+	                  <!-- ko foreach: $parent.customOperations -->
+	                    	 <!-- ko if: typeof(icon)!='undefined' -->
+	                    	<a href="" data-bind="attr:{title: caption, 'class':icon}, visible: $parents[1].customOperationsVisible(item, typeof(visible)!='undefined'?visible:null), click: function(){click(item)}, clickBubble: false"></a>
+	                    	<!-- /ko -->
+	                    	<!-- ko if: typeof(icon)=='undefined' -->
+	                    	<a href="" data-bind="text:caption,attr:{title: caption}, visible: $parents[1].customOperationsVisible(item, typeof(visible)!='undefined'?visible:null), click: function(){click(item)}, clickBubble: false"></a>
+	                    	<!-- /ko -->
+	                     <!-- /ko -->
+                  </td>
+                </tr>
+                <!-- /ko -->
+                <!-- /ko -->
+                 
+                <!-- ko if:isAllowAppend -->
+                	<tr>
+	           			<!-- ko if: isShowCheckBox -->
+	              			<td></td>
+	              		<!-- /ko -->
+	              		<!-- ko if: isShowRowNumber -->
+	            			<td></td>
+	           			<!-- /ko -->
+                		<!-- ko foreach: appendColumns -->
+                		<!-- ko if:((name == $parent.primaryKey() && $parent.isShowPrimaryKey()== true) || name != $parent.primaryKey()) && (typeof(visible)=='undefined' || visible) -->
+                		<td style="overflow:visible">
+                			<div data-bind="attr: {'class':'control-group '+validStatus(),title:validHint()}">
+	                  		<!-- ko if: editorType == "DateTimeEditor" -->
+							<div data-bind="component: { name: 'datetimeeditor', params: { 
+								showTimePicker: typeof(showTimePicker)!='undefined'?showTimePicker:undefined,
+								showDayPicker: typeof(showDayPicker)!='undefined'?showDayPicker:undefined,
+								value: $parent._appendedItem[name],
+								format: typeof(format)!='undefined'?format:undefined,
+								isAllowEdit: typeof(isAllowEdit)!='undefined'?isAllowEdit:undefined,
+								isShowValue: typeof(isShowValue)!='undefined'?isShowValue:undefined,
+								validType: typeof(validType)!='undefined'?validType:undefined,
+								nullable: typeof(nullable)!='undefined'?nullable:undefined,
+								validStatus: typeof(validStatus)!='undefined'?validStatus:undefined,
+								validHint: typeof(validHint)!='undefined'?validHint:undefined,
+								validFailValue:typeof(validFailValue)!='undefined'?validFailValue:undefined,
+								isClickCloseDialog:  typeof(isClickCloseDialog)!='undefined'?isClickCloseDialog:undefined,
+								isExtDisplay: typeof(isExtDisplay)!='undefined'?isExtDisplay:true,
+								width: '75%'} }"></div>
+					         <!-- /ko -->
+					         <!-- ko if: editorType == "FileEditor" -->
+						      <div data-bind="component: { name: 'fileeditor', params: { name: typeof(name)!='undefined'?name:'',
+						       	    url: typeof(url)!='undefined'?url:'',
+						       	    isShowPreview: typeof(isShowPreview)!='undefined'?isShowPreview:undefined,
+						       	    autoUpload: typeof(autoUpload)!='undefined'?autoUpload:undefined,
+						       	    previewSize: typeof(previewSize)!='undefined'?previewSize:undefined,
+						       	    maxCount: typeof(maxCount)!='undefined'?maxCount:undefined,
+						       	    maxFileSize: typeof(maxFileSize)!='undefined'?maxFileSize:undefined,
+						       	    isGetMd5: typeof(isGetMd5)!='undefined'?isGetMd5:undefined,
+						       	    allowTypes: typeof(allowTypes)!='undefined'?allowTypes:undefined,
+						       	    type: typeof(type)!='undefined'?type:undefined,
+						       	    filePath: typeof(filePath)!='undefined'?filePath:undefined,
+						       	    tableName: typeof(tableName)!='undefined'?tableName:undefined,
+						       	    primaryKey: typeof(primaryKey)!='undefined'?primaryKey:undefined,
+						       	    pkVal: typeof(pkVal)!='undefined'?pkVal:undefined,
+						       	    colName: typeof(colName)!='undefined'?colName:undefined,
+						       	    uploadMode: typeof(uploadMode)!='undefined'?uploadMode:undefined,
+						       	    params: typeof(params)!='undefined'?params:undefined,
+						       	    isVirtual: typeof(isVirtual)!='undefined'?isVirtual:undefined,
+						       	    isShowUploadButton: typeof(isShowUploadButton)!='undefined'?isShowUploadButton:undefined,
+	       	    					isShowRemoveButton: typeof(isShowRemoveButton)!='undefined'?isShowRemoveButton:undefined,
+	       	    					isShowDownloadButton: typeof(isShowDownloadButton)!='undefined'?isShowDownloadButton:undefinede,
+	       	    					isShowThumbnail: typeof(isShowThumbnail)!='undefined'?isShowThumbnail:undefined,
+						       	    validStatus: typeof(validStatus)!='undefined'?validStatus:undefined,
+									validHint: typeof(validHint)!='undefined'?validHintundefined,
+									onItemUploading: typeof(onItemUploading)!='undefined'?onItemUploading:undefined,
+									onItemUploaded: typeof(onItemUploaded)!='undefined'?onItemUploaded:undefined,
+									onItemUploadFail: typeof(onItemUploadFail)!='undefined'?onItemUploadFail:undefined,
+						       	    onAllItemUploaded: typeof(onAllItemUploaded)!='undefined'?onAllItemUploaded:undefined,
+						       	    onItemRemoved: typeof(onItemRemoved)!='undefined'?onItemRemoved:undefined,
+						       	    onAllItemRemoved: typeof(onAllItemRemoved)!='undefined'?onAllItemRemoved:undefined,
+						       	    onChanged: $parent._editor_upload
+						       	    } }"></div>
+				            <!-- /ko -->
+					         <!-- ko if: editorType != "DateTimeEditor" && editorType != "FileEditor"-->
+							<div data-bind="component: { name: 'commoneditor', params: { value: $parent._appendedItem[name],
+								readOnly: typeof(readOnly)!='undefined'?readOnly:undefined,
+								editorType: typeof(appendEditorType)!='undefined'?appendEditorType:(typeof(editorType)!='undefined'?editorType:'TextEditor'),
+								isShowScroll: typeof(isShowScroll)!='undefined'?isShowScroll:undefined,
+								isShowNull: typeof(isShowNull)!='undefined'?isShowNull:undefined,
+								dropdownMenuHeight: typeof(dropdownMenuHeight)!='undefined'?dropdownMenuHeight: undefined,
+								isTextEllipsis: typeof(isTextEllipsis)!='undefined'?isTextEllipsis:undefined,
+								isShowCheckbox: typeof(isShowCheckbox)!='undefined'?isShowCheckbox:undefined,
+								isClickShow: typeof(isClickShow)!='undefined'?isClickShow:undefined,
+								textMode: typeof(textMode)!='undefined'?textMode:undefined,
+								type: typeof(type)!='undefined'?type:undefined,
+								list: typeof(list)!='undefined'?list:undefined,
+								validType: typeof(validType)!='undefined'?validType:undefined,
+								validOptions: typeof(validOptions)!='undefined'?validOptions:undefined,
+								maxLength: typeof(maxLength)!='undefined'?maxLength:undefined,
+								nullable: typeof(nullable)!='undefined'?nullable:undefined,
+								treeOptions: typeof(treeOptions)!='undefined'?treeOptions:undefined,
+								validStatus: typeof(validStatus)!='undefined'?validStatus:undefined,
+								validHint: typeof(validHint)!='undefined'?validHint:undefined,
+								customValidate: typeof(customValidate)!='undefined'?customValidate:undefined,
+								customBtnText: typeof(customBtnText)!='undefined'?customBtnText:undefined,
+								customBtnIcon: typeof(customBtnIcon)!='undefined'?customBtnIcon:undefined,
+								customBtnEnabled: typeof(customBtnEnabled)!='undefined'?customBtnEnabled:undefined,
+								isAllowEdit: typeof(isAllowEdit)!='undefined'?isAllowEdit:undefined,
+								isValueIsEmptyEnter: typeof(isValueIsEmptyEnter)!='undefined'?isValueIsEmptyEnter:undefined,
+								textAlign: typeof(align)!='undefined'?align:undefined,
+								isExtDisplay: typeof(isExtDisplay)!='undefined'?isExtDisplay:true,
+								onChanged: typeof(onChanged)!='undefined'?onChanged:undefined,
+								onClick: typeof(onClick)!='undefined'?onClick:undefined,
+								onSelectedChanged: typeof(onSelectedChanged)!='undefined'?onSelectedChanged:undefined,
+								width: editorType=='DropDownEditor'?'auto':(editorType=='NumberEditor'?'40%':'85%')} }"></div>
+							 <!-- /ko -->
+							 </div>
+	                  	</td>
+	                  	<!-- /ko -->
+	                  	<!-- /ko -->
+	                  	<td data-bind="'visible': isAllowOperations,style:{width:operationsColumnWidth,textAlign:operationsColumnAlign}">
+	                  		<a href="" class='icon-save' data-bind='attr:{title: cube.msg("SAVE")},visible: isShowSave, click: saveAppend'></a>
+	                  		<a href="" class='icon-plus'  data-bind='attr:{title: cube.msg("ADD")},visible: isShowAdd, click: appendItem'></a>
+	                  		<!-- ko foreach: customOperations -->
+		                    	<!-- ko if: typeof(icon)!='undefined' -->
+		                    	<a href="" data-bind="attr:{title: caption, 'class':icon},  click: $parent.appendCustomClick, clickBubble: false"></a>
+		                    	<!-- /ko -->
+		                    	<!-- ko if: typeof(icon)=='undefined' -->
+		                    	<a href="" data-bind="text:caption,attr:{title: caption},  click: $parent.appendCustomClick, clickBubble: false"></a>
+		                    	<!-- /ko -->
+	                     	<!-- /ko -->
+	                  	</td>
+                	</tr>
+                <!-- /ko -->
+                 <!-- /ko -->
+              </tbody>
+            </table>
+            <!-- ko if: watermarkOptions()!=null -->
+	            <div class="watermark" data-bind="style:{
+			       	 	opacity: watermarkOptions().alpha,
+			       	 	color: watermarkOptions().color,
+			       	 	fontSize: watermarkOptions().fontSize,
+			       	 	filter: 'progid:DXImageTransform.Microsoft.Alpha(opacity='+watermarkOptions().alpha*100+')'
+			        }">
+		       		<!-- ko foreach: { data: watermarkRows, as: 'row' } -->
+		       			<!-- ko foreach: { data: $parent.watermarkCols, as: 'col' } -->
+		       				<div data-bind="style:{
+		       						left: col.x+($parentContext.$index()%2==0?0:$parents[1].watermarkOptions().indent)+'px',
+		       						top: row.y+'px',
+		       						transform: 'rotate(-'+$parents[1].watermarkOptions().rotate+'deg)',
+		       						width: $parents[1].watermarkOptions().width+'px',
+		       						height: $parents[1].watermarkOptions().height+'px'
+		       					}, 
+		       					text: $parents[1].watermarkOptions().text"></div>
+		       			<!-- /ko -->
+		       		<!-- /ko -->
+	       		</div>
+	        <!-- /ko -->
+	        <!-- ko if: isShowLoading-->
+			<div class="cube modal-backdrop fade loading in loading-data">
+				<div style="position: absolute; top: 50%; left: 50%">
+					<div style="position: relative; top: -50%; left: -50%; color: #ccc;">
+						<img alt="加载中" data-bind="attr:{src: cube.cubepath('$/images/window_loading.gif')}">
+					</div>
+				</div>
+			</div>
+			<!-- /ko -->
+</div>
+<!-- ko if: isAllowPaging -->
+<div class="gridpagenavibar">
+ 	<pagenavibar params="
+		size: 'middle',
+		showArrow: true,
+		isShowBtnText: isShowBtnText,
+		firstIcon: firstIcon,
+		previousIcon: previousIcon,
+		nextIcon: nextIcon,
+		endIcon: endIcon,
+		showTotal: true,
+		showGoto: true,
+		showAllPage: false,
+		pageTotalCount: _pageCount,
+		count: itemCount,
+		pageIndex: pageIndex,
+		pageVisibleCount: pageVisibleCount,
+		pageInfoToLeft: pageInfoToLeft,
+		blurGoto: blurGoto,
+		loadTime: loadTime,
+		isShowLoadTime: isShowLoadTime() && autoLoad(),
+		loadTimeFadeout: loadTimeFadeout,
+		onPageIndexChanged: onCurrentPageIndexChanged"></pagenavibar>
+</div>
+<!-- /ko -->

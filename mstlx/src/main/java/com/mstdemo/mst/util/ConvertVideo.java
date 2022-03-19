@@ -26,7 +26,7 @@ public class ConvertVideo {
         }
     }
 
-    public static void getPath(){
+    public static void getPath() {
         // 先获取当前项目路径，在获得源文件、目标文件、转换器的路径
         File diretory = new File("");
         try {
@@ -38,11 +38,11 @@ public class ConvertVideo {
             //转换视频的插件
             ffmpegPath = "D:\\ffmpeg1\\ffmpeg-20171225-be2da4c-win64-static\\bin\\";
             System.out.println(currPath);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("getPath出错");
         }
     }
+
     public static boolean process() {
         int type = checkContentType();
         boolean status = false;
@@ -74,7 +74,7 @@ public class ConvertVideo {
             return 0;
         } else if (type.equals("flv")) {
             return 0;
-        }else if (type.equals("kux")) {
+        } else if (type.equals("kux")) {
             return 0;
         }
         // 对ffmpeg无法解析的文件格式(wmv9，rm，rmvb等),
@@ -171,6 +171,7 @@ public class ConvertVideo {
             return false;
         }
     }
+
     private static boolean processMp4(String oldfilepath) {
 
         if (!checkfile(inputPath)) {
@@ -219,32 +220,25 @@ public class ConvertVideo {
 }
 
 
-
-class PrintStream extends Thread
-{
+class PrintStream extends Thread {
     java.io.InputStream __is = null;
-    public PrintStream(java.io.InputStream is)
-    {
+
+    public PrintStream(java.io.InputStream is) {
         __is = is;
     }
 
     @Override
-    public void run()
-    {
-        try
-        {
-            while(this != null)
-            {
+    public void run() {
+        try {
+            while (this != null) {
                 int _ch = __is.read();
-                if(_ch != -1) {
-                    System.out.print((char)_ch);
+                if (_ch != -1) {
+                    System.out.print((char) _ch);
                 } else {
                     break;
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

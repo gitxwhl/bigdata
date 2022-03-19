@@ -1,0 +1,13 @@
+<!-- ko if: _url -->
+	<!-- ko if: isOut -->
+		<!-- ko if: type() == "ajax" -->
+			<div class="include" data-bind="html: ajaxHtml"></div>
+		<!-- /ko --> 
+		<!-- ko if: type() == "iframe" -->
+			<iframe name="iframe_include" style="width:100%;" frameborder=0 data-bind="style:{height:iframeHeight()},attr:{src:_url}"></iframe>
+		<!-- /ko --> 
+	<!-- /ko --> 
+	<!-- ko ifnot: isOut -->
+		<div class="include" data-bind="component: { name: _url, params: _params }"></div>
+	<!-- /ko --> 
+<!-- /ko --> 

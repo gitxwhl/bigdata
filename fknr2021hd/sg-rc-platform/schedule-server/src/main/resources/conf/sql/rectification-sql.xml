@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+
+    <sql id="rectificationQuery"
+         desc="整改通知单信息查询">
+        <mysql>
+            SELECT
+            r.ID,
+            r.SUPERVISION_UNIT,
+            r.SUPERVISED_UNIT,
+            r.SUPERVISION_CONTENT,
+            r.INSERT_TIME,
+            r.PUBLISH_STATE,
+            r.RECTIFICATION_ENDDATE,
+            r.RECTIFICATION_FEEDBACK,
+            r.RECTIFICATION_STARTDATE,
+            r.RECTIFICATION_STATE,
+            r.STATE,
+            r.SUPERVISED_FAX,
+            r.SUPERVISED_PHONE,
+            r.SUPERVISION_ENDDATE,
+            r.SUPERVISION_FAX,
+            r.SUPERVISION_PHONE,
+            r.SUPERVISION_STARTDATE,
+            r.WORK_SUGGESTION
+            FROM
+            rectification_notice r
+            WHERE
+            r.PUBLISH_STATE = '0'
+            ${filters}
+            ORDER BY
+            r.INSERT_TIME
+        </mysql>
+    </sql>
+    <sql id="rectificationQuestionQuery"
+         desc="整改问题信息查询">
+        <mysql>
+            SELECT
+            ID,
+            QUESTION,
+            RECTIFICATION_REQUIR,
+            RECTIFICATION_DEADLINE,
+            RECTIFICATION_STATE,
+            INSERT_TIME,
+            UPDATE_USER,
+            UPDATE_TIME
+            FROM
+            rectification_question
+            WHERE
+            RECTIFICATION_ID =:id
+            ORDER BY
+            RECTIFICATION_STATE
+        </mysql>
+    </sql>
+    <sql id="rectificationNoticeQuery"
+         desc="整改通知单信息查询">
+        <mysql>
+            SELECT
+            ID,
+            SUPERVISION_UNIT,
+            SUPERVISION_CONTENT,
+            STATE,
+            RECTIFICATION_STATE,
+            RECTIFICATION_STARTDATE,
+            RECTIFICATION_ENDDATE
+            FROM
+            rectification_notice
+            WHERE
+            SUPERVISED_UNIT = :unitId
+            ${filters}
+            ORDER BY
+            INSERT_TIME
+        </mysql>
+    </sql>
+</sqls>

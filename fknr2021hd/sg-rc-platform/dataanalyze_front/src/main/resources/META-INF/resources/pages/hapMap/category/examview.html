@@ -1,0 +1,635 @@
+<style>
+
+    .dl{font-size: 14px}
+
+
+    .titleDetails {
+        font-size: 20px;
+        margin-bottom: 10px;
+        background: #D9D9D9;
+        padding: 6px 10px;
+    box-sizing: border-box;
+
+        border-radius: 6px;
+    }
+
+    .td1 {
+        font-size: 16px;
+        text-align: center !important;
+        background: #EFEAEA;
+    }
+
+
+    /*.modal-footer {*/
+    /*    text-align: center;*/
+    /*    background-color: #fff;*/
+    /*    padding: 0px;*/
+    /*    border: none;*/
+    /*}*/
+
+    .modal .modal-header .close {
+        line-height: 23px;
+        font-size: 30px;
+        color: #fff;
+        font-weight: lighter;
+        text-shadow: 0 0 0 #ffffff;
+        opacity: 1;
+    }
+
+
+    .modal .dialog-header-button {
+        display: none;
+    }
+
+    .modal-header h3,
+    .modal-header .close {
+        color: #fff;
+    }
+
+    .newBody>div {
+        margin-bottom: 20px;
+    box-sizing: border-box;
+
+    }
+
+    .w-200 {
+        width: 200px;
+    }
+
+    .newBody span {
+        display: inline-block;
+    }
+
+    .inputStyle {
+        border: 1px solid #0b7cb8 !important;
+    box-sizing: border-box;
+
+        background: #05204e !important;
+        color: white !important;
+        width: 200px;
+    }
+
+    input[type="text"] {
+        margin: 0;
+    }
+
+    .text {
+        text-align: right;
+        line-height: 30px;
+        color: white;
+    }
+
+    .mar-b-24 {
+        margin-bottom: 26px;
+    box-sizing: border-box;
+
+    }
+
+    label {
+        width: 120px;
+        text-align: right;
+        margin-right: 20px;
+        height: 30px;
+        box-sizing: border-box;
+        line-height: 30px;
+    }
+
+    .glsxLabel {
+        width: 175px;
+        text-align: left;
+    }
+
+    input.search-query {
+    box-sizing: border-box;
+
+        padding-left: 4px;
+        padding-right: 4px;
+        width: 230px;
+        background: transparent;
+    }
+.qbox{
+    margin:80px 20px 0px 20px;
+    box-sizing: border-box;
+}
+.lbox{
+    box-sizing: border-box;
+    height:650px;
+    width: 20%;
+    float: left;
+    margin-right: 20px;
+    padding: 60px 0 0 20px;
+}
+.rbox{
+    float: left;
+    height:650px;
+    width: 78%;
+    padding: 40px 0 0 20px;
+    box-sizing: border-box;
+
+
+}
+dl{
+    font-size: 18px;
+}
+dt{
+    margin-bottom: 40px;
+    box-sizing: border-box;
+
+}
+dd{
+    margin-left: 40px;
+    margin-bottom: 40px;
+    box-sizing: border-box;
+
+}
+.bdr{
+        border: 4px solid #104D74;
+        /*border-bottom: none;*/
+        border-radius: 20px;
+        box-sizing: border-box;
+}
+.xingzeng{
+    display: none;
+    position: relative;
+}
+.mask {
+    position:fixed;
+    top:0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(0,0,0,0.8);
+}
+    .mask2,.mask3 {
+        position:fixed;
+        top:0;
+        left:0;
+        bottom: 0;
+        right: 0;
+        z-index: 1100;
+        background-color: rgba(0,0,0,0.8);
+    }
+.xingzengh{
+    display: inline-block;
+    border: 1px solid white;
+        position:fixed;
+        top:50px;
+        left:530px;
+        width:50%;
+        height:90%;
+        background-color:rgb(0,32,96);
+        padding:10px ;
+    box-sizing: border-box;
+    z-index: 1010;
+}
+.xz{
+        height:40px;
+        border-bottom:1px solid white;
+        margin-bottom:20px ;
+        font-size: 22px;
+        box-sizing: border-box;
+
+    }
+.guanbi{
+    float: right;
+    padding-right: 10px;
+    box-sizing: border-box;
+
+}
+.guanbi:hover{
+    cursor:pointer
+}
+.bianji{
+    display: none;
+    position: relative;
+
+}
+.bianjih{
+    display: inline-block;
+    border: 1px solid white;
+        position:fixed;
+        top:50px;
+        left:530px;
+        width:1000px;
+        height:90%;
+        background-color:rgb(0,32,96);
+        padding:10px ;
+    box-sizing: border-box;
+    z-index: 1020;
+}
+.bj{
+        height:40px;
+        border-bottom:1px solid white;
+        margin-bottom:20px ;
+        font-size: 22px;
+    box-sizing: border-box;
+
+}
+.glsx{
+    display:none;
+}
+.bjglsx{
+    display:none;
+}
+.glsxh{
+    display: inline-block;
+    width: 60%;
+    min-width: 470px;
+    height: 40%;
+    background-color:rgb(0,32,96);
+    border: 1px solid rgb(0,105,194);
+    position: absolute;
+    top:492px;
+    left:250px;
+    z-index: 1220;
+}
+.glsxbt{
+    padding:0px 10px;
+    line-height: 30px;
+    height:30px;
+    border-bottom:1px solid rgb(0,105,194);
+    margin-bottom:20px ;
+    font-size: 14px;
+    box-sizing: border-box;
+
+}
+.glgb{
+    float: right;
+}
+.glgb:hover{
+    cursor:pointer
+}
+.glsxleft{
+    width: 150px;
+    height: 200px;
+    border: 1px solid rgb(0,105,194);
+    float: left;
+    margin-left: 30px;
+    box-sizing: border-box;
+
+}
+.glsxcenter{
+    width: 80px;
+    height: 200px;
+    float: left;
+    margin-left:20px;
+    margin-right:10px;
+    box-sizing: border-box;
+
+}
+.glsxright{
+    width: 150px;
+    height: 200px;
+    border: 1px solid rgb(0,105,194);
+    float: left;
+    margin-left: 10px;
+    box-sizing: border-box;
+
+
+}
+.glsxan{
+    width: 450px;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+}
+.bcbt{
+    color: white;
+    border-radius: 3px;
+    padding: 3px;
+    box-sizing: border-box;
+
+    margin: 10px 0 0 210px;
+    background-color:rgb(22,155,213);
+    border: none;
+}
+.glgbbt{
+    color: white;
+    border-radius: 3px;
+    box-sizing: border-box;
+
+    padding: 3px;
+    margin-top: 10px;
+    background-color:rgb(22,155,213);
+    border: none;
+}
+.wxz{
+    padding:3px ;
+    border-bottom: 1px solid rgb(22,155,213);
+    box-sizing: border-box;
+
+}
+.yxz{
+    padding:3px ;
+    border-bottom: 1px solid rgb(22,155,213);
+    box-sizing: border-box;
+
+}
+.glxz,.bjglxz{
+    width: 100%;
+    height: 25px;
+    margin-top: 40px;
+    padding-left:20px ;
+    box-sizing: border-box;
+    border: 1px solid rgb(22,155,213);
+}
+.glqx{
+    width: 100%;
+    height: 25px;
+    margin-top: 20px;
+    
+    padding-left:20px ;
+    box-sizing: border-box;
+    border: 1px solid rgb(22,155,213);
+}
+.pointer{
+    cursor: pointer;
+}
+.dianjiq{
+    cursor: pointer;
+    color:white;
+
+}
+.dianjih{
+    cursor: pointer;
+    color:rgb(0,191,191);
+}
+.pstbt{
+    position: absolute;
+    bottom: 40px;
+    left:420px
+}
+.messages,.messagest{
+    overflow-y: auto;
+    height: 330px;
+    margin-left: 0px;
+    box-sizing: border-box;
+
+}
+.unselect,.bjunselect,
+.select ,.bjselect{
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    height: 170px;
+    width: 100%;
+    padding-left:15px;
+}
+.inputan{
+    float: left;
+    text-align:left;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#btnt{
+     width: 58px;
+        height: 30px;
+        margin-bottom: 3px;
+        margin-left: 15px;
+        margin-right:3px ;
+        background-color: rgb(22,155,213);
+        color:white;
+        border: none;
+        border-radius: 3px;
+}
+img{
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+.pagination ul>li>a{
+        color:white;
+        background-color: rgb(0,32,96); 
+
+    }
+    .pagination ul>li>a:hover{
+        color:white;
+        background-color: rgb(0,32,96); 
+
+    }
+    .page .selected{
+        color:white;
+        background-color: rgb(0,32,96); 
+    }
+</style>
+<div  class="qbox">
+    <loading params="isShow: isShow,content: contentLoading"></loading>
+        <div class="lbox bdr">  
+            <dl>
+                <dt><span>类别</span></dt>
+                <dd class='pointer xzzt' style="display: none"><span data-bind="click:jobplan "><img class="zyjh" src="pages/hapMap/icon/u12012.png" alt=""> 作业计划</span></dd>
+                <dd class='pointer wbdw' style="display: none"><span data-bind="click:outperson"><img class="wbdan" src="pages/hapMap/icon/u12014.png" alt=""> 外包单位</span></dd>
+                <dd class='pointer reny' style="display: none"><span data-bind="click:person"><img class="renyuan" src="pages/hapMap/icon/u12016.png" alt=""> 人员</span></dd>
+                <dd class='pointer fengx' style="display: none"><span data-bind="click:hazard"><img class="fengxian" src="pages/hapMap/icon/u12018.png" alt=""> 风险</span></dd>
+                <dd class='pointer yingh' style="display: none"><span data-bind="click:trouble"><img class="yinhuan" src="pages/hapMap/icon/u12020.png" alt=""> 隐患</span></dd>
+                <dd class='pointer shij' style="display: none"><span data-bind="click:event"><img class="shijian" src="pages/hapMap/icon/u12022.png" alt=""> 事件</span></dd>
+                <dd class='pointer wzxx' style="display: none"><span data-bind="click:violate"><img class="wzxin" src="pages/hapMap/icon/u12024.png" alt=""> 违章信息</span></dd>
+            </dl>
+        </div>  
+                <div class="rbox bdr">
+            <div class="h-100p w-100p ">
+                <div style="display: flex;margin-bottom: 10px;margin-top: 20px;padding: 0 20px; height: 30px;">
+                    <div style="display: flex;">
+                        <a class="know-btn cur-p" style="padding: 4px 14px;" data-bind="click:refresh">刷新</a>
+                        <input id="ipt1" autocomplete="off" type="text" style="padding: 4px 14px; margin-left: 20px;height:30px ;" class="search-query" data-bind="value:titleName, event: { input: iptChange}">
+                        <a class="know-btn cur-p" style="padding: 4px 14px; margin-left: 20px;" data-bind="click: search">搜索</a>
+                        <a class="know-btn cur-p" style="padding: 4px 14px; margin-left: 20px;" data-bind="click: addin">新增</a>
+                        <a class="know-btn cur-p" style="padding: 4px 14px; margin-left: 20px;" data-bind="click: edit">编辑</a>
+<!--                        <input style='display: none;' id="articleImageFile" name="excelFile" type="file"  accept="application/vnd.ms-excel" class="x-file"  onchange="importExcel(this)">-->
+<!--                        <button type="button" id="btnt" onclick="document.getElementById('articleImageFile').click();"> 导入</button>-->
+<!--                        <a href="javascript:void(0)" id="mbxz" onclick="mbxz()" download=""   class="know-btn cur-p" style="padding: 4px 14px; margin-left: 20px;" >模板下载</a>-->
+                        <a class="know-btn cur-p" style="padding: 4px 14px; margin-left: 20px;" data-bind="click: dele">删除</a>
+                    </div>
+                </div>
+                <div style="padding: 0 20px; margin-top: 40px;">
+                    <datagrid id="instanceTable" params="
+                    style: style,
+                    items: cityContent,
+                    columns: columns,
+                    isShowRowNumber: true,
+                    isShowCheckBox: true,
+                    isRadio: true,
+                    isShowBorder: true,
+                    isShowHover: true,
+                    isShowCondense: false,
+                    isAllowEdit: false,
+                    isAllowDelete: false,
+                    isAllowShift: false,
+                    isAllowAppend: false,
+                    isAllowSort: false,
+                    isAllowPaging: false,
+                    isShowLoading:'true',
+                    operationsColumnWidth: '60px',
+                    operationsColumnAlign: 'center',
+                    onSelectedItems:onSelectedItems,
+                    primaryKey:'INSTANCE_ID'">
+                     </datagrid>
+
+                        </div>
+                        <msgdialog params="
+                                msgType: msgType,
+                                isShowDialog: isShowDialog,
+                                title: title,
+                                content: content,
+                                onConfirmBtnClick:confirmDelete">
+                        </msgdialog>
+                        <pagenavibar style="float: right;color: white;margin-right:30px" params="
+                                        size: size,
+                                        showArrow: true,
+                                showTotal: true,
+                                showGoto: true,
+                                count: count,
+                                showAllPage: false,
+                                pageTotalCount: pageTotalCount,
+                                pageIndex: pageIndex,
+                                pageVisibleCount: pageVisibleCount,
+                                
+                                onPageIndexChanged: onPageIndexChanged">
+
+                </pagenavibar>
+            </div>
+
+
+        <!-- 新增按钮功能弹框 -->
+    </div>
+    <div class="mask" style="display: none"></div>
+    <div class='xingzeng'>
+        <div class="xz"><span>新增</span> <span class='guanbi' data-bind="click: gbClick">X</span>  </div>
+        <div class="box_sub_title">
+            基本属性
+        </div>
+        <div style="display: flex; margin-bottom: 20px;">
+            <label><i style="color:red">*</i>名称</label>
+            <input id="ipt2" autocomplete="off" type="text" class="search-query" data-bind="value:name, event: { input: iptChange2}">
+        </div>
+        <div style="display: flex; margin-bottom: 20px;">
+            <label><i style="color:red">*</i>编码</label>
+            <input id="ipt3" disabled autocomplete="off" type="text" class="search-query" data-bind="value:genrela, event: { input: iptChange3}">
+        </div>
+        <div style="display: flex; margin-bottom: 20px;">
+            <label><i style="color:red">*</i>描述</label>
+            <input id="ipt4" autocomplete="off" type="text" class="search-query" data-bind="value:attribute, event: { input: iptChange4}">
+        </div>
+        <div style="display: flex; margin-bottom: 20px;">
+            <label><i style="color:red">*</i>属性</label>
+            <input type="text" autocomplete="off" class="search-query" data-bind="value:describe" readonly>
+        </div>
+        <div class="box_sub_title" >
+            关联属性
+        </div>
+        <!-- 模板循环 -->
+        <div class='messages'>
+           
+        </div>
+        
+        <div style="display: flex;">
+            <label>&nbsp;</label>
+            <div class='pstbt'>
+                <a class="know-btn cur-p" data-bind="click: exadd" id="addBtn" dataClick="true" >
+                    保存</a>
+                <a class="know-btn cur-p" data-bind="click: gbClick">
+                    取消</a>
+            </div>
+        </div>
+         <!-- 关联属性 -->
+        <div class="mask2" style="display: none"></div>
+    <div class='glsx'>
+        <div class='glsxbt'><span>选择实例</span> <span class='glgb' data-bind="click: gbglsx">X</span></div>
+        <div>
+            <div class='glsxleft'>
+                <div class='wxz'>未选择</div>
+                <!-- 未选择循环模板 -->
+                    <div class='unselect'>
+                         
+                    </div>
+            </div>
+            <div class='glsxcenter'>
+                <div class='glxz' data-bind="click:wselect">  选择 ></div>
+                <div class='glqx' data-bind="click:qxelect"><取消</div>
+            </div>
+            <div class='glsxright'>
+                <div class='yxz'>已选择</div>
+                <div class='select'>
+                    
+                </div>
+            </div>
+        </div>
+        <div class='glsxan'>
+            <button class='bcbt' data-bind="click:pushId">确定</button>
+            <button class='glgbbt' data-bind="click: gbglsx">取消</button>
+        </div>
+    </div>
+</div>
+
+
+    <!-- 编辑按钮功能坦克 -->
+
+    <div class='bianji'>
+        <div class="bj"><span>编辑</span> <span class='guanbi' data-bind="click: gbClick">X</span>  </div>
+        <div class="box_sub_title">
+            基本属性
+        </div>
+        <div style="display: flex; margin-bottom: 20px;">
+            <label><i style="color:red">*</i>名称</label>
+            <input id="ipt5" autocomplete="off" type="text" class="search-query" data-bind="value:bjname, event: { input: iptChange5}">
+        </div>
+        <div style="display: flex; margin-bottom: 20px;">
+            <label><i style="color:red">*</i>编码</label>
+            <input type="text" disabled autocomplete="off" class="search-query" data-bind="value:bjnodeName" readonly>
+        </div>
+        <div style="display: flex; margin-bottom: 20px;">
+            <label><i style="color:red">*</i>描述</label>
+            <input id="ipt6" autocomplete="off" type="text" class="search-query" data-bind="value:bjattribute, event: { input: iptChange6}">
+        </div>
+        <div style="display: flex; margin-bottom: 20px;">
+            <label><i style="color:red">*</i>属性</label>
+            <input type="text" autocomplete="off" class="search-query" data-bind="value:bjdescribe" readonly>
+        </div>
+        <div class="box_sub_title">
+            关联属性
+        </div>
+        <!-- 循环模板 -->
+        <div class='messagest'>
+            
+        </div>
+       
+        <div style="display: flex;">
+            <label>&nbsp;</label>
+            <div  class='pstbt'>
+                <a class="know-btn cur-p" data-bind="click: editinstance" id="editBtn" dataClick="true">
+                   保存</a>
+                <a class="know-btn cur-p" data-bind="click: gbClick">
+                    取消</a>
+            </div>
+        </div>
+        <div class="mask3" style="display: none"></div>
+        <div class='bjglsx'>
+            <div class='glsxbt'><span>选择实例</span> <span class='glgb' data-bind="click: gbglsx">X</span></div>
+            <div>
+                <div class='glsxleft'>
+                    <div class='wxz'>未选择</div>
+                    <!-- 未选择循环模板 -->
+                        <div class='bjunselect'>
+                             
+                        </div>
+                </div>
+                <div class='glsxcenter'>
+                    <div class='bjglxz' data-bind="click:bjwselect">  选择 ></div>
+                    <div class='glqx'   data-bind="click:bjqxelect"><取消</div>
+                </div>
+                <div class='glsxright'>
+                    <div class='yxz'>已选择</div>
+                    <div class='bjselect'>
+
+                    </div>
+                </div>
+            </div>
+            <div class='glsxan'>
+                <button class='bcbt' data-bind="click:bjpushId">确定</button>
+                <button class='glgbbt' data-bind="click: gbglsx">取消</button>
+            </div>
+        </div>
+    </div>
+    
+</div>

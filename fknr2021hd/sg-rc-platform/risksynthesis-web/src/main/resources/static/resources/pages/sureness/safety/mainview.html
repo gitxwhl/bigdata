@@ -1,0 +1,172 @@
+<style>
+    .unit {
+        width: 210px;
+        height: 42px;
+        background: url("./resources/images/u2675.png") no-repeat;
+        background-size: 100%;
+        margin-left: 15px;
+    }
+
+    .select {
+        background: transparent;
+        width: 120px;
+        border: 1px solid #0b7cb8;
+        color: #999999;
+    }
+
+    .input-append input {
+        background: transparent;
+        width: 100px;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+
+    .tableBody tr a {
+        color: #0099CC;
+        padding: 5px;
+    }
+
+    /*时间框点击选择样式修改*/
+    .input-append .btn {
+        background: transparent;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+</style>
+<div data-bind="visible: isShow()">
+    <div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px">全国考试情况</p>
+        <div style="margin-top:15px;margin-left: 20px;display: flex">
+            <p class="unit">
+                <span
+                    style="display:inline-block;font-size: 18px;color: white;margin-left:10px;margin-top:12px;">考试次数:</span>
+                <span style="font-size: 18px;color: yellow;" data-bind="text:number"></span>
+            </p>
+            <p class="unit">
+                <span
+                    style="display:inline-block;font-size: 18px;color: white;margin-left:10px;margin-top:12px;">考试人数:</span>
+                <span style="font-size: 18px;color: yellow;" data-bind="text:numberTest"></span>
+            </p>
+            <p class="unit">
+                <span
+                    style="display:inline-block;font-size: 18px;color: white;margin-left:10px;margin-top:12px;">考试通过人数:</span>
+                <span style="font-size: 18px;color: yellow;" data-bind="text:through"></span>
+            </p>
+            <p class="unit">
+                <span
+                    style="display:inline-block;font-size: 18px;color: white;margin-left:10px;margin-top:12px;">考试通过率:</span>
+                <span style="font-size: 18px;color: yellow;" data-bind="text:passRate"></span>
+            </p>
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:23px">各单位考试情况</p>
+        <div style="width: 100%">
+            <chart params="
+                                  height:'520px',
+                                  width: '97%',
+                                  option:option">
+            </chart>
+        </div>
+    </div>
+    <div>
+        <div style="display: flex;margin-bottom: 20px;margin-top:20px">
+
+            <div>
+                <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">省份：</span>
+                <select class="select" data-bind="
+                                                     options: sssfOption,
+                                                     optionsText: 'text',
+                                                     optionsValue:'text',
+                                                     optionsValue:'id',
+                                                     value: sssf,
+                                                  ">
+                </select>
+            </div>
+            <div>
+                <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">考场:</span>
+                <select class="select w-100" data-bind="
+                                                         options: qyxzOption,
+                                                         optionsText: 'text',
+                                                         optionsValue:'text',
+                                                         optionsValue:'id',
+                                                         value: qyxz,
+                                                      ">
+                </select>
+            </div>
+            <div style="margin-left: 30px">
+                <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">考试名称:</span>
+                <input type="text" data-bind="value:ksmcName"
+                    style="border:1px solid #0b7cb8;background-color:transparent;color: white;width:120px">
+            </div>
+            <div>
+                <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">考试状态：</span>
+                <select class="select" data-bind="
+                                                     options: zrztOption,
+                                                     optionsText: 'text',
+                                                     optionsValue:'text',
+                                                     optionsValue:'id',
+                                                     value: zrzt,
+                                                  ">
+                </select>
+            </div>
+            <div style="margin-left: 30px">
+                <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">发布时间:</span>
+                <datetimeeditor params="
+                    showTimePicker: true,
+                    width:'160px',
+                    showDayPicker: true,
+                    format: 'yyyy-MM-dd HH:mm:ss',
+                    value:startTime">
+                </datetimeeditor>
+            </div>
+            <div>
+                <span style="font-size: 18px;color: white;margin: 20px 10px 20px 10px">至</span>
+                <datetimeeditor
+                    params="showTimePicker: true,width:'160px',showDayPicker: true, format: 'yyyy-MM-dd HH:mm:ss',value: endTime">
+                </datetimeeditor>
+            </div>
+            <div class="know-btn cur-p" data-bind="click:query"
+                style="background-color:#169bd5;display:inline-block;color:white;width: 80px;line-height:30px;height: 30px;text-align: center;font-size: 16px;margin:0px 0px 10px 15px">
+                查询</div>
+        </div>
+        <div style="padding: 0 30px;margin-top: 20px;">
+            <div>
+                <datagrid id="instanceTable" params="
+                        style: style,
+                        items: blacklistContent,
+                        columns: blacklistMeter,
+                        isShowRowNumber: true,
+                        isShowCheckBox: false,
+                        isShowBorder: true,
+                        isShowHover: true,
+                        isShowCondense: false,
+                        isAllowEdit: false,
+                        isAllowDelete: false,
+                        isAllowOperations: true,
+                        isAllowShift: false,
+                        isAllowAppend: false,
+                        isAllowSort: false,
+                        isAllowPaging: false,
+                        isShowLoading:'true',
+                        customOperations:customOperations,
+                        operationsColumnWidth: '60px',
+                        operationsColumnAlign: 'center',
+                        pageSize: pageSize,
+                        primaryKey: 'id'
+                        "></datagrid>
+                <pagenavibar style="float: right;color: white;margin-right:30px" params="
+                    size: size,
+                    showArrow: showArrow,
+                    showTotal: showTotal,
+                    showGoto: showGoto,
+                    count: count,
+                    showAllPage: showAllPage,
+                    pageTotalCount: pageTotalCount,
+                    pageIndex: pageIndex,
+                    pageVisibleCount: pageVisibleCount,
+                    onPageIndexChanged: onPageIndexChanged">
+
+                </pagenavibar>
+            </div>
+        </div>
+    </div>
+</div>

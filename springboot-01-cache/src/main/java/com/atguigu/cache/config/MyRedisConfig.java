@@ -26,6 +26,7 @@ public class MyRedisConfig {
         template.setDefaultSerializer(ser);
         return template;
     }
+
     @Bean
     public RedisTemplate<Object, Department> deptRedisTemplate(
             RedisConnectionFactory redisConnectionFactory)
@@ -38,11 +39,10 @@ public class MyRedisConfig {
     }
 
 
-
     //CacheManagerCustomizers可以来定制缓存的一些规则
     @Primary  //将某个缓存管理器作为默认的
     @Bean
-    public RedisCacheManager employeeCacheManager(RedisTemplate<Object, Employee> empRedisTemplate){
+    public RedisCacheManager employeeCacheManager(RedisTemplate<Object, Employee> empRedisTemplate) {
         RedisCacheManager cacheManager = new RedisCacheManager(empRedisTemplate);
         //key多了一个前缀
 
@@ -53,7 +53,7 @@ public class MyRedisConfig {
     }
 
     @Bean
-    public RedisCacheManager deptCacheManager(RedisTemplate<Object, Department> deptRedisTemplate){
+    public RedisCacheManager deptCacheManager(RedisTemplate<Object, Department> deptRedisTemplate) {
         RedisCacheManager cacheManager = new RedisCacheManager(deptRedisTemplate);
         //key多了一个前缀
 

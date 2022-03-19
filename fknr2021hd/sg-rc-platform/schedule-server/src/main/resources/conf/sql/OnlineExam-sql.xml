@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="getQuesInfo" desc="获取安规题库信息">
+        <mysql>
+            SELECT
+            ID,
+            SAFETY_TYPE,
+            QUESTION_TYPE,
+            QUESTION_CONTENT,
+            ANSWER_OPTIONS,
+            STANDARD_ANSWER,
+            QUESTION_MEMO,
+            QUESTION_ISSUE,
+            INSERT_USER,
+            INSERT_TIME,
+            UPDATE_USER,
+            UPDATE_TIME
+            FROM
+            SAFETY_QUESTIONS
+            ORDER By SAFETY_TYPE
+        </mysql>
+    </sql>
+
+    <sql id="getSearchTestQuesInfo" desc="搜索框获取安规题库信息">
+        <mysql>
+            SELECT
+            ID,
+            SAFETY_TYPE,
+            QUESTION_TYPE,
+            QUESTION_CONTENT,
+            ANSWER_OPTIONS,
+            STANDARD_ANSWER,
+            QUESTION_MEMO,
+            QUESTION_ISSUE,
+            INSERT_USER,
+            INSERT_TIME,
+            UPDATE_USER,
+            UPDATE_TIME
+            FROM
+            SAFETY_QUESTIONS
+            WHERE ${filter}
+            ORDER By SAFETY_TYPE
+        </mysql>
+    </sql>
+
+    <sql id="getAnswerManageInfo" desc="获取答卷管理信息">
+        <mysql>
+            SELECT
+            ID,
+            SAFETY_TYPE,
+            PAPER_TYPE,
+            PAPERNAME,
+            STATUS,
+            PUBLISH_USER,
+            PUBLISH_DATE
+            FROM
+            EXAM_TEST_PAPER
+            ORDER BY PUBLISH_DATE DESC
+        </mysql>
+    </sql>
+
+    <sql id="getSearchTextManageInfo" desc="搜索框获取答卷管理信息">
+        <mysql>
+            SELECT
+            ID,
+            SAFETY_TYPE,
+            PAPER_TYPE,
+            PAPERNAME,
+            STATUS,
+            PUBLISH_USER,
+            PUBLISH_DATE
+            FROM
+            EXAM_TEST_PAPER
+            WHERE ${filter}
+            ORDER BY PUBLISH_DATE DESC
+        </mysql>
+    </sql>
+</sqls>

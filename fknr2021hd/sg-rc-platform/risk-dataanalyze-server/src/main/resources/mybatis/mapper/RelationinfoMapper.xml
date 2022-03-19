@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.raysdata.riskdataanalyzeserver.mapper.RelationinfoMapper" >
+
+
+    <!--/**
+     * 关系文件导出
+     *
+     */-->
+    <select id="ServiceAll" resultType="map" parameterType="map">
+    SELECT
+            a.RELATION_ID,
+            a.MODELING_GRAPH_ID,
+            b.column_type_name RELATION_NAME,
+            a.RELATION_CODE,
+            d.column_type_name SOURCE_TYPE,
+            e.column_type_name TARGET_TYPE,
+            c.column_type_name RELATION_TYPE,
+            a.RELATION_DESCRIBE,
+            a.PROCESSENDTIME
+            FROM
+            ( SELECT * FROM srp_bd_kg_relationinfo) a
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'RELATION_NAME' ) b ON a.RELATION_NAME = b.column_type_code
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'RELATION_TYPE' ) c ON a.RELATION_TYPE = c.column_type_code
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) d ON a.SOURCE_TYPE = d.column_type_code 
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) e ON a.TARGET_TYPE = e.column_type_code
+  </select>
+
+    <select id="getAllCount" resultType="int">
+        select count(*) from srp_bd_kg_relationinfo
+    </select>
+    <select id="getList" resultType="map" parameterType="java.lang.String">
+        SELECT * FROM srp_modeling where TYPE_NAME = #{param}
+    </select>
+    <select id="getCodeCount" resultType="int">
+        select count(RELATION_CODE) from srp_bd_kg_relationinfo
+    </select>
+    <insert id="fileRelationLead" parameterType="map">
+        INSERT INTO
+        srp_bd_kg_relationinfo
+        (MODELING_GRAPH_ID,RELATION_NAME,SOURCE_TYPE,TARGET_TYPE,RELATION_TYPE,
+         RELATION_DESCRIBE, RELATION_CODE)
+         VALUES
+         (#{modelingGraphId},#{relationName},#{sourceType},#{targetType},#{relationType},#{relationDescribe},#{relationCode})
+    </insert>
+
+    <insert id="instKnowlwdgeFusion" parameterType="map">
+        INSERT INTO SRP_BD_KG_KNOWLWDGE_FUSION
+        (
+            TYPE,
+            NUMBER_DATA_UPDATE,
+            UPDATE_PREVIOUS,
+            UPDATE_AFTER,
+            STORAGE_LOCATION
+          )
+          VALUES
+            (#{k1},#{k2},#{k3},#{k4},#{k5})
+    </insert>
+
+    <!--/**
+     * 实例文件导入
+     */-->
+    <select id="serviceAlls" resultType="int">
+      select count(*) from srp_bd_kg_instanceinfo
+    </select>
+    <select id="getInstanceCount" resultType="int">
+      select count(INSTANCE_CODE) from srp_bd_kg_instanceinfo
+    </select>
+    <insert id="saveExample" parameterType="map">
+        INSERT INTO SRP_BD_KG_KNOWLWDGE_FUSION
+        (TYPE_NAME,TYPE,NUMBER_DATA_UPDATE,UPDATE_PREVIOUS,UPDATE_AFTER,STORAGE_LOCATION,UPDATE_TIME)
+
+        VALUES
+            (#{k1},#{k3},#{k4},#{k5},#{k6},#{k7},NOW())
+    </insert>
+    <insert id="fileExample" parameterType="map">
+        INSERT INTO srp_bd_kg_instanceinfo (
+            TYPE_NAME,
+            INSTANCE_NAME,
+            INSTANCE_DESCRIBE,
+            INSTANCE_SOURCE,
+            INSTANCE_CODE
+            )
+            VALUES
+            (#{t1},#{t2},#{t3},#{t4},#{t5})
+    </insert>
+    <!--/**
+     * 查询知识融合列表
+     */-->
+    <select id="getCount" resultType="int">
+        select count(1) cnt from srp_bd_kg_knowlwdge_fusion
+    </select>
+    <select id="getCounts" resultType="java.util.Map" parameterType="map">
+        select
+        TYPE_NAME,
+        TYPE,
+        NUMBER_DATA_UPDATE,
+        UPDATE_PREVIOUS,
+        UPDATE_AFTER,
+        STORAGE_LOCATION,
+        UPDATE_TIME
+        from
+        srp_bd_kg_knowlwdge_fusion
+        ORDER BY UPDATE_TIME DESC
+        limit #{offset},#{limit}
+    </select>
+
+    <!--<select id="getCounts" resultType="com.raysdata.riskdataanalyzeserver.bean.SrpBdkgKnowlwdgeFusion" parameterType="java.util.Map">
+        select
+            TYPE_NAME AS typeName,
+            TYPE AS type,
+            NUMBER_DATA_UPDATE AS numberDataUpdate,
+            UPDATE_PREVIOUS AS updatePrevious,
+            UPDATE_AFTER AS upDateAfter,
+            STORAGE_LOCATION AS storageLocation,
+            UPDATE_TIME AS UpdateTime
+        from
+            srp_bd_kg_knowlwdge_fusion
+                limit #{page},#{size}
+    </select>-->
+
+</mapper>

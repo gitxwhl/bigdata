@@ -1,0 +1,223 @@
+<style>
+    .TestRecords {
+        display: inline-block;
+        width: 92px;
+        height: 40px;
+        background-color: #1B6B9D;
+        border-radius: 5px;
+        font-size: 16px;
+        color: white;
+        line-height: 40px;
+        text-align: center;
+
+    }
+
+    .EnterpriseRecords {
+        display: inline-block;
+        width: 124px;
+        height: 40px;
+        background-color: #284BA3;
+        border-radius: 5px;
+        font-size: 16px;
+        color: white;
+        line-height: 40px;
+        text-align: center;
+    }
+
+    .endorsement {
+        display: inline-block;
+        width: 92px;
+        height: 40px;
+        background-color: #284BA3;
+        border-radius: 5px;
+        font-size: 16px;
+        color: white;
+        line-height: 40px;
+        text-align: center;
+    }
+
+    #EnterpriseRecords {
+        display: none;
+    }
+
+    #endorsement {
+        display: none;
+    }
+
+    .line {
+        width: 1600px;
+        height: 2px;
+        background: url("./resources/images/u1730.png") no-repeat;
+        background-size: 1600px 2px;
+        margin: 30px auto;
+    }
+</style>
+<div data-bind="visible: page() == 'list'">
+    <div style="display: flex;margin-top:40px;margin-left: 20px" data-bind="visible: type() != 'qiye'">
+        <p style="font-size: 16px;color: white;margin-right: 10px">当前位置:</p>
+        <p style="font-size: 16px;color: white;margin-right: 10px" data-bind="text:title,click:goBack"></p>
+        <p style="font-size: 16px;color: white;margin-right: 10px">> 人员信息查看</p>
+    </div>
+    <div style="margin: 50px 0px 50px 50px;display: flex">
+        <div style="width: 111px;height: 152px;margin:50px 0px 50px 50px">
+            <img src="./resources/images/u4944.jpg">
+        </div>
+        <div>
+            <div style="display: flex;margin-top: 50px">
+                <p style="width: 400px; font-size: 16px;color: white;margin-left: 200px">
+                    姓名:<span data-bind="text:personnelName"></span>
+                </p>
+                <p style="width: 400px;font-size: 16px;color: white;">
+                    手机号:<span data-bind="text:personnelPhone"></span>
+                </p>
+                <p style="width: 400px;font-size: 16px;color: white;">
+                    身份证号:<span data-bind="text:personnelCard"></span>
+                </p>
+            </div>
+            <div style="display: flex;margin-top: 40px">
+                <p style="width: 400px; font-size: 16px;color: white;margin-left: 200px">
+                    性别:<span data-bind="text:personnelSex"></span>
+                </p>
+                <p style="width: 400px;font-size: 16px;color: white;">
+                    三种人标识:<span data-bind="text:personnelHead"></span>
+                </p>
+                <p style="width: 400px;font-size: 16px;color: white;">
+                    单位名称:<span data-bind="text:personnelUnit"></span>
+                </p>
+            </div>
+            <div style="display: flex;margin-top: 40px">
+                <p style="width: 400px; font-size: 16px;color: white;margin-left: 200px">
+                    年龄:<span data-bind="text:personnelAge"></span>
+                </p>
+                <p style="width: 400px;font-size: 16px;color: white;">
+                    专业类型:<span data-bind="text:personnelType"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div style="margin-left: 100px">
+        <span class="TestRecords" data-bind="click:TestRecords">考试记录</span>
+        <span class="EnterpriseRecords" style="width: 160px;" data-bind="click:EnterpriseRecords">人员企业变更记录</span>
+        <span class="endorsement" data-bind="click:endorsement">违章记录</span>
+    </div>
+    <div style="width:90%;margin-left:100px;margin-top: 20px;">
+        <datagrid id="TestRecords" params="
+                    style: style,
+                    items: examinationContent,
+                    columns: examination,
+                    isShowRowNumber: isShowRowNumber,
+                    isShowCheckBox: isShowCheckBoxs,
+                    isShowBorder: isShowBorder,
+                    isShowStripe: isShowStripe,
+                    isShowHover: isShowHover,
+                    isShowCondense: isShowCondense,
+                    isAllowEdit: isAllowEdit,
+                    isAllowDelete: isAllowDelete,
+                    isAllowOperations: isAllowOperations,
+                    isAllowShift: isAllowShift,
+                    isAllowAppend: isAllowAppend,
+                    isAllowSort: isAllowSort,
+                    isAllowPaging: isAllowPaging,
+                    pageSize: pageSize,
+                    rowNumberWidth:'3%',
+                    checkboxWidth:'3%',
+                    "></datagrid>
+    </div>
+    <div style="width:60%;margin-left:100px;margin-top: 20px;">
+        <datagrid id="EnterpriseRecords" params="
+                    style: style,
+                    items: enterpriseContent,
+                    columns: enterprise,
+                    isShowRowNumber: isShowRowNumber,
+                    isShowCheckBox: isShowCheckBoxs,
+                    isShowBorder: isShowBorder,
+                    isShowStripe: isShowStripe,
+                    isShowHover: isShowHover,
+                    isShowCondense: isShowCondense,
+                    isAllowEdit: isAllowEdit,
+                    isAllowDelete: isAllowDelete,
+                    isAllowOperations: isAllowOperations,
+                    isAllowShift: isAllowShift,
+                    isAllowAppend: isAllowAppend,
+                    isAllowSort: isAllowSort,
+                    isAllowPaging: isAllowPaging,
+                    pageSize: pageSize,
+                    rowNumberWidth:'3%',
+                    checkboxWidth:'3%',
+                    "></datagrid>
+    </div>
+    <div style="width:90%;margin-left:100px;margin-top: 20px;">
+        <datagrid id="endorsement" params="
+                    style: style,
+                    items: unprofessionalContent,
+                    columns: unprofessional,
+                    isShowRowNumber: isShowRowNumber,
+                    isShowCheckBox: isShowCheckBoxs,
+                    isShowBorder: isShowBorder,
+                    isShowStripe: isShowStripe,
+                    isShowHover: isShowHover,
+                    isShowCondense: isShowCondense,
+                    isAllowEdit: isAllowEdit,
+                    isAllowDelete: isAllowDelete,
+                    isAllowOperations: isAllowOperations,
+                    isAllowShift: isAllowShift,
+                    isAllowAppend: isAllowAppend,
+                    isAllowSort: isAllowSort,
+                    isAllowPaging: isAllowPaging,
+                    pageSize: pageSize,
+                    rowNumberWidth:'3%',
+                    checkboxWidth:'3%',
+                    primaryKey:'violation_org_id'
+                    "></datagrid>
+    </div>
+</div>
+<div data-bind="visible: page() == 'ViolationDetails'">
+    <div style="display: flex;margin-top:40px;margin-left: 20px" data-bind="visible: type() != 'qiye'">
+        <p style="font-size: 16px;color: white;margin-right: 10px">当前位置:</p>
+        <p style="font-size: 16px;color: white;margin-right: 10px">人员信息 ></p>
+        <p style="font-size: 16px;color: white;margin-right: 10px">施工企业信息查看</p>
+    </div>
+    <div style="display: flex;margin-top: 50px;justify-content: space-around;position: relative;">
+        <p style="font-size: 20px;color: white">违章查看</p>
+        <i class="icon-remove cur-p" style="color: #00E5FF; font-size: 26px;position: absolute; right: 90px;"
+            data-bind="click: function(){refresh()}"></i>
+    </div>
+    <p class="line"></p>
+    <p style="font-size: 18px;color: white;margin-left: 100px;margin-top:50px">违章单位</p>
+    <div style="display: flex">
+        <p style="width: 400px; font-size: 16px;color: white;margin-left: 120px;margin-top: 30px">违章单位:<span
+                data-bind="text:ViolationUnit"></span></p>
+        <p style="width: 400px;font-size: 16px;color: white;margin-left:600px;margin-top: 30px" ;>违章时间:<span
+                data-bind="text:ViolationTime"></span></p>
+    </div>
+    <div style="display: flex">
+        <p style="width: 400px;font-size: 16px;color: white;margin-left: 120px;margin-top: 30px">单位性质:<span
+                data-bind="text:natureUnit"></span></p>
+        <p style="width: 400px;font-size: 16px;color: white;margin-left:600px;margin-top: 30px" ;>违章级别:<span
+                data-bind="text:ViolationGrade"></span></p>
+    </div>
+    <div style="display: flex">
+        <p style="width: 400px;font-size: 16px;color: white;margin-left: 120px;margin-top: 30px">巡检单位:<span
+                data-bind="text:InspectionUnit"></span></p>
+    </div>
+    <p style="font-size: 18px;color: white;margin-left: 100px;margin-top:50px">违章详细信息</p>
+    <p style="width: 400px; font-size: 16px;color: white;margin-left: 120px;margin-top: 30px">违章人员:<span
+            data-bind="text:ViolationPersonnel"></span></p>
+    <p style="width: 400px;font-size: 16px;color: white;margin-left:120px;margin-top: 30px" ;>违章性质:<span
+            data-bind="text:ViolationNature"></span></p>
+    <p style="font-size: 16px;color: white;margin-left:120px;margin-top: 30px" ;>违章内容:<span
+            data-bind="text:ViolationContents"></span></p>
+    <p style="width: 400px;font-size: 16px;color: white;margin-left:120px;margin-top: 30px" ;>违章地点:<span
+            data-bind="text:ViolationPlace"></span></p>
+    <div style="width: 400px;font-size: 16px;color: white;margin-left:120px;margin-top: 30px;">违章证据：
+        <p style="font-size: 16px;color: white;margin-left:80px;margin-top: 30px">整改前:</p>
+        <p style="font-size: 16px;color: white;margin-left:80px;margin-top: 30px">整改后:</p>
+    </div>
+    <p style="font-size: 18px;color: white;margin-left: 100px;margin-top:30px">处罚情况</p>
+    <p style="font-size: 16px;color: white;margin-left: 140px;margin-top:30px">处罚内容：<span style="margin-left: 20px"
+            data-bind="text:penalizeContent"></span></p>
+    <p style="font-size: 18px;color: white;margin-left: 100px;margin-top:30px">积分情况</p>
+    <div style="font-size: 16px;color: white;margin-left: 140px;margin-top:30px">积分详情：总分20分<p style="margin-left:70px"
+            data-bind="text:IntegralDetails"></p>
+    </div>
+</div>

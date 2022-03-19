@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="searchPeccancyByLimit" desc="根据省市县的权限查询反违章的数据">
+        <mysql>
+            SELECT
+            peccancy_manage.ID,
+            peccancy_manage.WORK_PLAN_CODE,
+            peccancy_manage.BEGIN_TIME,
+            peccancy_manage.PECCANCY_CATEGORY,
+            peccancy_manage.VIOLATION_CONTENT,
+            peccancy_manage.VIOLATION_LEVEL,
+            peccancy_manage.ILLEGAL_PARTIES,
+            peccancy_manage.PECCANCY_PERSON_TYPE,
+            peccancy_manage.WORK_CONTENT,
+            peccancy_manage.PECCANCY_TYPE_DISP,
+            peccancy_manage.VIOLATION_ORG,
+            peccancy_manage.PECCANCY_TEAM,
+            peccancy_manage.PECCANCY_PERSON,
+            peccancy_manage.STANDARD_SCORE,
+            peccancy_manage.FORFEIT,
+            peccancy_manage.FIND_PERSON,
+            peccancy_manage.PECCANCY_DATETIME,
+            peccancy_manage.PUBLISH_STATE,
+            peccancy_manage.REMARKS,
+            peccancy_manage.FIND_LEVEL,
+            peccancy_manage.INSERT_USER,
+            peccancy_manage.INSERT_UNIT_ID,
+            peccancy_manage.INSERT_TIME,
+            peccancy_manage.RECTIFICATION_FEEDBACK,
+            peccancy_manage.WORK_PLACE
+            FROM
+            peccancy_manage
+            WHERE ${filter}
+        </mysql>
+    </sql>
+    <sql id="searchPeccancyByIds" desc="根据勾选数据的id查询导出数据">
+        <mysql>
+            SELECT
+            peccancy_manage.ID as id,
+            peccancy_manage.WORK_PLAN_CODE as workPlanCode,
+            peccancy_manage.BEGIN_TIME as beginTime,
+            peccancy_manage.PECCANCY_CATEGORY as peccancyCategory,
+            peccancy_manage.VIOLATION_CONTENT as violationContent,
+            peccancy_manage.VIOLATION_LEVEL as violationLevel,
+            peccancy_manage.ILLEGAL_PARTIES as illegalParties,
+            peccancy_manage.PECCANCY_PERSON_TYPE as peccancyPersonType,
+            peccancy_manage.WORK_CONTENT as workContent,
+            peccancy_manage.PECCANCY_TYPE_DISP as peccancyTypeDisp,
+            peccancy_manage.VIOLATION_ORG as violationOrg,
+            peccancy_manage.PECCANCY_TEAM as peccancyTeam,
+            peccancy_manage.PECCANCY_PERSON as peccancyPerson,
+            peccancy_manage.STANDARD_SCORE as standardScore,
+            peccancy_manage.FORFEIT as forfeit,
+            peccancy_manage.FIND_PERSON as findPerson,
+            peccancy_manage.PECCANCY_DATETIME as peccancyDatetime,
+            peccancy_manage.PUBLISH_STATE as publishState,
+            peccancy_manage.REMARKS as remarks,
+            peccancy_manage.FIND_LEVEL as findLevel,
+            peccancy_manage.INSERT_USER as insertUser,
+            peccancy_manage.INSERT_UNIT_ID as insertUnitId
+            FROM
+            peccancy_manage
+            WHERE ${ids}
+        </mysql>
+    </sql>
+    <sql id="getAnnexListByIds" desc="根据关联id条件获取附件名称相关信息">
+        <mysql>
+            SELECT
+            ID,
+            ANNEX_NAME,
+            ANNEX_SIZE
+            FROM
+            annex_information
+            WHERE
+            CLASSIFY=:classify
+            AND CONNECT_ID=:xnid
+            ORDER BY UPDATE_TIME
+        </mysql>
+    </sql>
+    <sql id="getPeccancyList" desc="获取全部导出的数据id">
+        <mysql>
+            SELECT
+            peccancy_manage.ID AS id
+            FROM
+            peccancy_manage
+            WHERE ${filtersql}
+        </mysql>
+    </sql>
+    <sql id="getpeccAnnexImgList" desc="根据关联id条件获取附件名称相关信息">
+        <mysql>
+            SELECT
+            ID,
+            ANNEX_NAME,
+            ANNEX_SIZE
+            FROM annex_information
+            WHERE
+            CLASSIFY='050101'
+            AND ${dd}
+        </mysql>
+    </sql>
+    <sql id="getPeccancyBasicData" desc="获取典型违章信息库相关信息">
+        <mysql>
+            SELECT
+            ID,
+            PECCANCY_CATEGORY,
+            PECCANCY_TYPE_DISP,
+            VIOLATION_LEVEL,
+            VIOLATION_CONTENT,
+            STANDARD_SCORE,
+            PUBLISH_STATE
+            FROM peccancy_basic_data
+            WHERE
+            PUBLISH_STATE = '1'
+            ${params}
+            ORDER BY PECCANCY_CATEGORY
+        </mysql>
+    </sql>
+</sqls>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="getSearchExamType" desc="搜索分类下试卷名">
+        <mysql>
+            SELECT
+            ID,
+            SAFETY_TYPE,
+            PAPERNAME,
+            TIME_LIMIT,
+            TOTAL_SCORE,
+            START_DATE,
+            END_DATE,
+            STATUS,
+            REMARK,
+            EFFECT_FLAG,
+            DELETE_FLAG,
+            INSERT_USER,
+            INSERT_TIME,
+            UPDATE_USER,
+            UPDATE_TIME,
+            STANDARD_SCORE,
+            ANSWER_SHOW,
+            PUBLISH_USER,
+            PUBLISH_DATE
+            FROM
+            EXAM_TEST_PAPER
+            ORDER By SAFETY_TYPE
+        </mysql>
+    </sql>
+
+    <sql id="getSearchTypechild" desc="搜索分类下试卷名">
+        <mysql>
+            SELECT
+            ID,
+            SAFETY_TYPE,
+            PAPERNAME,
+            TIME_LIMIT,
+            TOTAL_SCORE,
+            START_DATE,
+            END_DATE,
+            STATUS,
+            REMARK,
+            EFFECT_FLAG,
+            DELETE_FLAG,
+            INSERT_USER,
+            INSERT_TIME,
+            UPDATE_USER,
+            UPDATE_TIME,
+            STANDARD_SCORE,
+            ANSWER_SHOW,
+            PUBLISH_USER,
+            PUBLISH_DATE
+            FROM
+            EXAM_TEST_PAPER
+            WHERE ${filter}
+            ORDER By SAFETY_TYPE
+        </mysql>
+    </sql>
+
+    <sql id="getSearchScore" desc="搜索分数统计">
+        <mysql>
+            SELECT
+            etp.id,
+            etp.SAFETY_TYPE,
+            etp.PAPERNAME,
+            eups.SCOREPERCENTAGE,
+            COUNT(eups.SCOREPERCENTAGE) as TongJi
+            FROM
+            exam_test_paper etp
+            LEFT JOIN
+            exam_user_paper_score eups
+            ON
+            etp.ID = eups.BUS_ID
+            where
+            ${paramExamId}
+            and eups.STATUS = '4'
+            GROUP BY
+            eups.SCOREPERCENTAGE
+        </mysql>
+    </sql>
+
+
+    <sql id="getSearchStatus" desc="搜索作答情况统计">
+        <mysql>
+            SELECT
+            etp.SAFETY_TYPE,
+            etp.PAPERNAME,
+            eups.STATUS,
+            COUNT(eups.STATUS) as statusTongJi
+            FROM
+            exam_test_paper etp
+            LEFT JOIN
+            exam_user_paper_score eups
+            ON
+            etp.ID = eups.BUS_ID
+            where
+            ${paramExamId}
+            GROUP BY
+            eups.STATUS
+        </mysql>
+    </sql>
+</sqls>

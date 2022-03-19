@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="test" desc="测试查询">
+        <mysql>
+            SELECT customer.* ,facility.name facilityname
+            FROM F_VIP_CUSTOMER customer
+            JOIN
+            F_VIP_LINE vipline ON customer.id = vipline .vipid
+            JOIN
+            F_FACILITY facility ON vipline.lineid = facility.id
+            WHERE 1 = 1
+            ${filter}
+        </mysql>
+    </sql>
+</sqls>

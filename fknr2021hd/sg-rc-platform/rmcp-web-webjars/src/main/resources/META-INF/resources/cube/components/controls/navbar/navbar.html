@@ -1,0 +1,108 @@
+<div class="cube navbar cubenavbar" data-bind="css:{'navbar-fixed-top': isFixTop,'navbar-menuwrap': isMenuWrap, 'navbar-inverse': isInverse}">
+	<div class="navbar-inner" data-bind="css:{'hasbgcolor': bgcolor()!=''},style:{background:bgcolor,height:height}">
+		<!-- ko if:navLogo -->
+		<a class="brand" href="#"><img data-bind="attr{src: navLogo}" /></a>
+		<!-- /ko -->
+		<!-- ko if:navTitle -->
+		<a class="brand" data-bind="text: navTitle,style:{color: fontColor}"></a>
+		<!-- /ko -->
+		
+		
+		<div class="navsheader" data-bind="style:{width: navWidth()}">
+			<!-- ko if: _showBtn -->
+			<span class="prev icon-chevron-left" data-bind="click: function(){prev($element)},style:{top:_showBtnTop}"></span>
+			<!-- /ko -->
+			<div class="scrollborder">
+				<div class="scroll">
+		
+		
+					<ul class="nav"	data-bind="style:{height:(isMenuWrap()?'auto':height())},foreach: items">
+						<li data-bind="attr:{code:typeof(code)!='undefined'?code:''},event:{mouseover:function(data, event){$parent.openSubItems($element, data, event)},mouseout:$parent.closeSubItems},
+										style:{lineHeight:($parent.isMenuWrap()?null:$parent.height())},
+										css:{'active': $parent.selectedRoute()==route, 
+											'dropdown': typeof(hasChildren)!='undefined' && hasChildren, 
+											'open': typeof(hasChildren)!='undefined' && hasChildren && ($parent.hoverItem()!=null) && ($parent.hoverItem().route==route)}">
+							<a href='#' data-bind="css:{'dropdown-toggle': typeof(hasChildren)!='undefined' && hasChildren},
+									attr:{href: route,'data-toggle': typeof(hasChildren)!='undefined' && hasChildren?'dropdown':''},
+									style:{'background': $parent.selectedRoute()==route?$parent.activeBgColor:'',color: $parent.fontColor},
+									click:$parent.setSelectRoute">
+														
+								<!-- ko if: typeof(icon) != "undefined" -->
+									<span  data-bind='attr:{"class":"icon icon-"+icon+" "+"icon-align-"+$parent.iconAlign()}'></span>
+									<span data-bind='text: text, attr:{"class":"text-"+$parent.iconAlign()}'></span>
+								<!-- /ko -->
+					
+								<!-- ko if: typeof(icon) == "undefined" -->
+									<span data-bind='text: text'></span>
+								<!-- /ko -->
+								
+								<b class="caret bottom-up" data-bind="visible: typeof(hasChildren)!='undefined' && hasChildren,style:{'border-top-color': $parent.fontColor,'border-bottom-color': $parent.fontColor}"></b>
+								<i class="iefix"></i>
+							</a>
+							
+						</li>
+						<!-- ko if: $parent.isShowDividerVertical -->
+							<li class="divider-vertical"></li>
+						<!-- /ko -->
+					</ul>
+					
+					
+				</div>
+			</div>
+			<!-- ko if: _showBtn -->
+			<span class="next icon-chevron-right" data-bind="click: function(){next($element)},style:{top:_showBtnTop}"></span>
+			<!-- /ko -->
+		</div>
+		
+		
+		
+	<!-- <div> -->
+		<!-- ko if:isShowSearchbox -->
+		<div class="form-search form-inline navbar-search " data-bind="css:{'pull-right': isSearchboxRight}">
+			<div class="input-append">
+	           	<input type="text" class="search-query" placeholder="搜索">
+	           	<button class="btn btn-default" data-bind="click: function(){_onSearchBtnClick($element)}">
+			        <span class="icon-search"></span>
+			    </button>
+           	</div>
+           	<i class="iefix"></i>
+        </div>
+        <!-- /ko -->
+        <ul class="nav pull-right operations"	data-bind="foreach: operations" >
+			<li data-bind="	event:{mouseover:$parent.openSubItems,mouseout:$parent.closeSubItems},
+							css:{'dropdown': typeof(hasChildren)!='undefined' && hasChildren, 'open': typeof(hasChildren)!='undefined' && hasChildren && ($parent.hoverItem()!=null) && ($parent.hoverItem()==$data)}">
+				<a href='#' data-bind="css:{'dropdown-toggle': typeof(hasChildren)!='undefined' && hasChildren},
+						attr:{'data-toggle': typeof(hasChildren)!='undefined' && hasChildren?'dropdown':''},
+						style:{color: $parent.fontColor},
+						click: $parent.setSelectRoute">
+					<span data-bind="attr:{'class':'icon-'+icon}"></span>
+					<span data-bind="html: text"></span>
+					<b class="caret bottom-up" data-bind="visible: typeof(hasChildren)!='undefined' && hasChildren,style:{'border-top-color': $parent.fontColor,'border-bottom-color': $parent.fontColor}"></b>
+					<i class="iefix"></i>
+				</a>
+				
+				<!-- ko if:typeof(hasChildren)!='undefined' && hasChildren -->
+				<ul class="dropdown-menu dropdown" style="margin-top: -1px;"
+					data-bind="foreach: children">
+					<li>
+						<a data-bind="text: text, attr:{href: route},click:$parents[1].setSelectRoute"></a>
+					</li>
+				</ul>
+				<!-- /ko -->
+			</li>
+			<!-- ko if: $parent.isShowDividerVertical -->
+				<li class="divider-vertical"></li>
+			<!-- /ko -->
+		</ul>
+		
+	</div>
+	<!-- 	</div> -->
+
+	<ul class="dropdown-menu dropdown" style="margin-top: -1px;"  data-bind="style:{display: isShowChildren()?'block':'none',top:_menuHeight},
+	foreach: _children,event:{mouseover:openChildrenDialog,mouseout:closeChildrenDialog}">
+		<li>
+			<a data-bind="text: text, attr:{href: route},click:$parents[0].setSelectRoute"></a>
+		</li>
+	</ul>
+
+</div>

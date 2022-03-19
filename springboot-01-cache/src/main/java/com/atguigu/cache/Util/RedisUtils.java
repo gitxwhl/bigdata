@@ -26,20 +26,41 @@ public final class RedisUtils {
      * 指定缓存失效时间
      * 27
      *
-     * @param key  键
-     *             28
-     * @param time 时间(秒)
-     *             29
+     * @param key 键
+     *            28
+     *            //     * @param time 时间(秒)
+     *            29
      * @return 30
      */
 
-    public boolean expire(String key, long time) {
+//    public boolean expire(String key, long time) {
+//
+//        try {
+//
+//            if (time > 0) {
+//
+//                redisTemplate.expire(key, tim e, TimeUnit.SECONDS);
+//
+//            }
+//
+//            return true;
+//
+//        } catch (Exception e) {
+//
+//            e.printStackTrace();
+//
+//            return false;
+//
+//        }
+//
+//    }
+    public boolean expire(String key, long timeOut, TimeUnit until) {
 
         try {
 
-            if (time > 0) {
+            if (timeOut > 0) {
 
-                redisTemplate.expire(key, time, TimeUnit.SECONDS);
+                redisTemplate.expire(key, timeOut, until);
 
             }
 
@@ -54,6 +75,14 @@ public final class RedisUtils {
         }
 
     }
+
+
+//    public void expire(String key, long timeOut,TimeUnit until) {
+//        redisTemplate.expire(key, timeOut,until);
+//
+//
+//    }
+
 
     /**
      * 44
@@ -187,37 +216,43 @@ public final class RedisUtils {
      *              111
      * @param value 值
      *              112
-     * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
+     *              //     * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
      *              113
      * @return true成功 false 失败
      * 114
      */
 
-    public boolean set(String key, Object value, long time) {
+//    public boolean set(String key, Object value, long time) {
+//
+//        try {
+//
+//            if (time > 0) {
+//
+//                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+//
+//            } else {
+//
+//                set(key, value);
+//
+//            }
+//
+//            return true;
+//
+//        } catch (Exception e) {
+//
+//            e.printStackTrace();
+//
+//            return false;
+//
+//        }
+//
+//    }
+    public void set(String key, Object value, long timeout, TimeUnit unit) {
 
-        try {
-
-            if (time > 0) {
-
-                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
-
-            } else {
-
-                set(key, value);
-
-            }
-
-            return true;
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-            return false;
-
-        }
+        redisTemplate.opsForValue().set(key, value, timeout, unit);
 
     }
+
 
     /**
      * 130
@@ -448,6 +483,7 @@ public final class RedisUtils {
         }
 
     }
+
 
     /**
      * 250
@@ -801,7 +837,6 @@ public final class RedisUtils {
      * @param value 值
      *              434
      * @param
-     *
      * @return 436
      */
 
@@ -864,7 +899,6 @@ public final class RedisUtils {
      * @param value 值
      *              470
      * @param
-     *
      * @return 472
      */
 

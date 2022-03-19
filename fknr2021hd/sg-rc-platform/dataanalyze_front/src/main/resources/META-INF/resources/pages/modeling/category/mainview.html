@@ -1,0 +1,143 @@
+<style>
+    .cate-list {
+        margin: 0 10px 10px 10px;
+    }
+
+    .cate-list .current {
+        background-color: #EBF1F7;
+    }
+
+    .cate-list li {
+        cursor: pointer;
+        height: 40px;
+        padding-left: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* .cate-list li:hover a {
+        color: #00BFBF;
+    } */
+
+    .cate-list li a {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        line-height: 40px;
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .cate-list li a i {
+        width: 20px;
+        height: 20px;
+    }
+
+    .cate-list li a img {
+        height: 100%;
+    }
+
+    .modelActive {
+        color: #00BFBF;
+    }
+</style>
+<div class="h-100p w-100p" style="padding: 10px 10px 10px 0;">
+    <div class="h-100p w-100p bor">
+        <div style="margin: 20px; display: flex; height: calc(100% - 40px);">
+            <div class="h-100p bor" style="width: 260px;">
+                <div class="box_sub_title">
+                    类别
+                </div>
+                <ul class="cate-list">
+                    <li>
+                        <a>
+                            <img class="h-20" src="resources/images/modeling/workPlan.svg">
+                            <span class="modelActive">作业计划</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <img class="h-20" src="resources/images/modeling/outUnit.svg">
+                            <span>外包单位</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <img class="h-20" src="resources/images/modeling/user.svg">
+                            <span>人员</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <img class="h-20" src="resources/images/modeling/risk.svg">
+                            <span>风险</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <img class="h-20" src="resources/images/modeling/hiddenDanger.svg">
+                            <span>隐患</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <img class="h-20" src="resources/images/modeling/event.svg">
+                            <span>事件</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <img class="h-20" src="resources/images/modeling/violateRules.svg">
+                            <span>违章信息</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="h-100p bor" style="flex-grow: 1; margin-left: 20px; width: 100%;">
+
+                <div style="margin: 20px;">
+                    <a class="know-btn cur-p" data-bind="click:add">新增</a>
+                    <a class="know-btn cur-p" data-bind="click:modify">修改</a>
+                    <a class="know-btn cur-p" data-bind="click:deleteInstance">删除</a>
+                    <a class="know-btn cur-p" data-bind="click:isReturn">返回</a>
+                </div>
+                <div style="padding: 0 20px; margin-top: 20px;">
+                    <datagrid id="instanceTable" params="
+                                style: style,
+                                items: cityContent,
+                                columns: columns,
+                                isShowRowNumber: true,
+                                isShowCheckBox: true,
+                                isShowBorder: true,
+                                isShowHover: true,
+                                isShowCondense: false,
+                                isAllowEdit: false,
+                                isAllowDelete: false,
+                                isAllowShift: false,
+                                isAllowAppend: false,
+                                isAllowSort: false,
+                                isAllowPaging: false,
+                                isShowLoading:'true',
+                                operationsColumnWidth: '60px',
+                                operationsColumnAlign: 'center',
+                                pageSize: '10',
+                                onSelectedItems:onSelectedItems,
+                                primaryKey:'siteinfo_id'">
+                    </datagrid>
+                    <pagenavibar style="float: right;color: white;margin-right:30px" params="
+                                size: size,
+                                showArrow: true,
+                                showTotal: true,
+                                showGoto: true,
+                                count: count,
+                                showAllPage: false,
+                                pageTotalCount: pageTotalCount,
+                                pageIndex: pageIndex,
+                                pageVisibleCount: pageVisibleCount,
+                                onPageIndexChanged: onPageIndexChanged">
+
+                    </pagenavibar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

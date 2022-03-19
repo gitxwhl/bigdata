@@ -1,0 +1,78 @@
+<div class="cube container-fluid borderlayout">
+	<div class="row-fluid">
+		<!-- ko if: top() && (typeof(top().visible) == "function"?top().visible() != false:top().visible != false) -->
+		<div class="item top" data-bind="visible:topDisplay,style:{width:top().width,height:top().height,border:top().border}">
+			<!-- ko if: typeof(top().content)!='undefined' -->
+				<div  data-bind="html: top().content"></div>
+			<!-- /ko -->
+		 	<!-- ko if: typeof(top().content)=='undefined' && typeof(top().templateOptions)!='undefined' -->
+		 		<!-- ko component: top().templateOptions --> <!-- /ko -->
+		 	<!-- /ko -->
+		</div>
+		<div class="hsplit-splitter" id="hSplitter" data-bind="visible:top().isShowCloseBtn">
+			<div id="topSpiltterBtn" data-bind="attr:{title: cube.msg('HIDE')}, click: setTopPanel ,css:topDisplay()?'top':'collapsed',style:{background:btnbgcolor}">
+				<span class="caret" ></span>
+			</div>
+		</div>
+		 <!-- /ko -->
+	</div>
+	<div class="row-fluid middle">
+		<!-- ko if: main() && (typeof(main().visible) == "function"?main().visible() != false:main().visible != false) -->
+		<div class="item left"  data-bind="visible:leftDisplay,style:{width:left().width,height:left().height,border:left().border}">
+			<!-- ko if: typeof(main().content)!='undefined' -->
+				<div  data-bind="html: left().content"></div>
+			<!-- /ko -->
+		 	<!-- ko if: typeof(main().content)=='undefined' && typeof(main().templateOptions)!='undefined' -->
+		 		<!-- ko component: main().templateOptions --> <!-- /ko -->
+		 	<!-- /ko -->
+		</div>
+		<div class="vsplit-splitter" id="vSplitter"  data-bind="visible:left().isShowCloseBtn,style:{top:_btnheight}">
+			<div id="leftSpiltterBtn" data-bind="attr:{title: cube.msg('HIDE')},click:setLeftPanel,css:leftDisplay()?'top':'collapsed',style:{background:btnbgcolor}">
+				<span class="caret" ></span>
+			</div>
+		</div>
+		 <!-- /ko -->
+		 <!-- ko if: center() && (typeof(center().visible) == "function"?center().visible() != false:center().visible != false) -->
+		<div class="item center"  data-bind="style:{width:center().width,height:center().height,border:center().border}">
+			<!-- ko if: typeof(center().content)!='undefined' -->
+				<div  data-bind="html: center().content"></div>
+			<!-- /ko -->
+		 	<!-- ko if: typeof(center().content)=='undefined' && typeof(center().templateOptions)!='undefined' -->
+		 		<!-- ko component: center().templateOptions --> <!-- /ko -->
+		 	<!-- /ko -->
+		</div>
+		 <!-- /ko -->
+		 <!-- ko if: right() && (typeof(right().visible) == "function"?right().visible() != false:right().visible != false) -->
+		<div class="item right"  data-bind="visible:rightDisplay,style:{width:right().width,height:right().height,border:right().border}">
+			<!-- ko if: typeof(right().content)!='undefined' -->
+				<div  data-bind="html: right().content"></div>
+			<!-- /ko -->
+		 	<!-- ko if: typeof(right().content)=='undefined' && typeof(right().templateOptions)!='undefined' -->
+		 		<!-- ko component: right().templateOptions --> <!-- /ko -->
+		 	<!-- /ko -->
+		</div>
+		<div class="vsplit-splitter" id="vSplitter"  style="float: right" data-bind="visible:right().isShowCloseBtn,style:{top:_btnheight}">
+			<div id="rightSpiltterBtn" data-bind="attr:{title: cube.msg('HIDE')},click:setRightPanel,css:rightDisplay()?'collapsed':'top',style:{background:btnbgcolor}">
+				<span class="caret" ></span>			
+			</div>
+		</div>
+		 <!-- /ko -->
+	</div>
+	<div class="row-fluid">
+		<!-- ko if: bottom() && (typeof(bottom().visible) == "function"?bottom().visible() != false:bottom().visible != false) -->
+		<div class="hsplit-splitter" id="hSplitter" data-bind="visible: bottom().isShowCloseBtn">
+			<div id="bottomSpiltterBtn" data-bind="attr:{title: cube.msg('HIDE')},click:setBottomPanel,css:bottomDisplay()?'collapsed':'top',style:{background:btnbgcolor}">
+				<span class="caret" ></span>			
+			</div>
+		</div>
+		<div class="item bottom"  data-bind="visible:bottomDisplay,style:{width:bottom().width,height:bottom().height,border:bottom().border}">
+			<!-- ko if: typeof(bottom().content)!='undefined' -->
+				<div  data-bind="html: bottom().content"></div>
+			<!-- /ko -->
+		 	<!-- ko if: typeof(bottom().content)=='undefined' && typeof(bottom().templateOptions)!='undefined' -->
+		 		<!-- ko component: bottom().templateOptions --> <!-- /ko -->
+		 	<!-- /ko -->
+		</div>
+		 <!-- /ko -->
+	</div>
+</div>

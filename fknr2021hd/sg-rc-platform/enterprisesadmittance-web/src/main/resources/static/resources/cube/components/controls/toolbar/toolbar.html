@@ -1,0 +1,23 @@
+<div class="cube btn-toolbar" data-bind="css:{toolbar:isShowBackground}">
+	<!-- ko foreach: toolbarContent -->
+	<div class="btn-group" data-bind='foreach: group, css:{"btn-group-right" : typeof(isFloatRight)!="undefined" && isFloatRight}'>
+		<!-- ko if:  typeof(visible)=="undefined" || visible -->
+		<div data-bind='attr:{"class":"btn btn-"+(typeof(type)!="undefined"?type:"default"),"title":text,code:typeof(code)!="undefined"?code:""}, css:{"dropdown": typeof(hasChildren)!="undefined" && hasChildren, 
+								"open": typeof(hasChildren)!="undefined" && hasChildren && ($parents[1].hoverItem()!=null) && ($parents[1].hoverItem().func==func),"disabled": typeof(enable)!="undefined" && (typeof(enable)=="function"?!enable():!enable)}, click:$parent.onItemClick'>
+		  <span data-bind='attr:{"class":"icon-"+icon}'></span>
+		  <!-- ko if: $parents[1].showtext -->
+		  	<span data-bind="text:text"></span>
+		  <!-- /ko -->
+		  <!-- ko if: typeof(hasChildren)!='undefined' && hasChildren -->
+		  	<div class="box" data-bind="visible: hasChildren,event:{click:$parents[1].openSubItems},clickBubble: false">
+		  	 	<b class="caret bottom-up"></b>
+		  	</div>
+		  <!-- /ko -->
+		  <!-- ko if: typeof(hasChildren)!='undefined' && hasChildren -->
+				<div data-bind='component:{name: "submenutmpl", params: {hoverItem:$parents[1].hoverItem,parentItem: $data,children: children, selectMenuItem: $parents[1].selectMenuItem}},event:{mouseleave:$parents[1].closeSubItems}'></div>
+		  <!-- /ko -->		
+		</div>
+		<!-- /ko -->
+	</div>
+	<!-- /ko -->
+</div>

@@ -1,0 +1,32 @@
+<style>
+    .fr {
+        float: right;
+        margin-left: 10px;
+        cursor: pointer;
+        padding: 4px 10px;
+        border: 1px solid #169BD5;
+    }
+
+    .bjys {
+        background: #169BD5;
+    }
+
+    .btnfx {
+        position: absolute;
+        right: 20px;
+        z-index: 9999;
+    }
+</style>
+<div style="height: 100%; position: relative;">
+    <div class="btnfx">
+        <div class="fr">网络风险</div>
+        <div class="fr">产业风险</div>
+        <div class="fr">作业风险</div>
+        <div class="fr bjys">电网风险</div>
+    </div>
+    <chart params="
+            width:'100%',
+            height:'100%',
+            option:option">
+    </chart>
+</div>

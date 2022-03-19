@@ -15,11 +15,6 @@ public class test {
 //    }
 
 
-
-
-
-
-
     private static Map<String, Integer> sizeBitRateMap;
 
     static {
@@ -36,15 +31,12 @@ public class test {
 
     public static void main(String[] args) {
 //        VideoUtils videoUtils = new VideoUtils();
-        convertVideoToMP4(new File("D:\\\\cezhm\\\\04_1080p.kux"),"D:\\\\cezhm\\\\04_1080p.mp4");
+        convertVideoToMP4(new File("D:\\\\cezhm\\\\04_1080p.kux"), "D:\\\\cezhm\\\\04_1080p.mp4");
 
         //videoUtils.getVideoInfoAndGenerateThumbnail(new File("C:\\\\temp\\\\javae2\\\\0001.哔哩哔哩-颈椎操[流畅版].mp4"), "C:\\\\temp\\\\javae2\\\\0001.哔哩哔哩-颈椎操[流畅版]..jpg");
 
 
     }
-
-
-
 
 
     /**
@@ -60,7 +52,7 @@ public class test {
             MultimediaInfo info = multimediaObject.getInfo();
             VideoInfo videoInfo = info.getVideo();
 //            logger.info("获取视频时长：{}", info.getDuration() / 1000);
-            if (videoInfo !=null) {
+            if (videoInfo != null) {
                 VideoSize size = videoInfo.getSize();
                 int width = size.getWidth();
                 int height = size.getHeight();
@@ -91,7 +83,7 @@ public class test {
      * @param source     源文件
      * @param targetPath 转码后的路径
      */
-    public static void  convertVideoToMP4(File source, String targetPath) {
+    public static void convertVideoToMP4(File source, String targetPath) {
         MultimediaObject multimediaObject = new MultimediaObject(source);
         try {
             MultimediaInfo info = multimediaObject.getInfo();
@@ -107,7 +99,7 @@ public class test {
             //设置视频编码
             video.setCodec("h264");
 
-            if (bitRate !=null) {
+            if (bitRate != null) {
                 //设置比特率
                 video.setBitRate(bitRate * 1000);
             }

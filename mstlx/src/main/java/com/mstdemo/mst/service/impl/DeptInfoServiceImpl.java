@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeptInfoServiceImpl implements DeptInfoService {
     @Autowired
-   private DeptInfoMapper deptInfoMapper;
+    private DeptInfoMapper deptInfoMapper;
 
 
     @Override
     public int addDept(DeptInfo deptInfo) {
         int fla = deptInfoMapper.addDept(deptInfo);
-       Integer id = deptInfo.getDeptId();
+        Integer id = deptInfo.getDeptId();
         return fla;
     }
 }

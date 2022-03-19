@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+<!--    <title></title>-->
+    <title>安全生产风险管控平台</title>
+    <!-- 引入framework  固定方式引入 -->
+    <script src="cube/scripts/framework.js" type="text/javascript" charset="utf-8"></script>
+    <!-- 引入模块js -->
+    <script data-main='model.js' src='cube/scripts/libs/require.js' type="text/javascript"></script>
+    <!-- 引入css -->
+    <link rel="stylesheet" type="text/css" href="resources/css/normlize.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/public.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module.css" />
+</head>
+<style>
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        min-width: 1800px;
+        min-height: 900px;
+        position: relative;
+    }
+
+    #section {
+        height: 100%;
+        width: calc(100% - 20px);
+        margin-left: 20px;
+    }
+
+    .cd {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    .nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 220px;
+        background: #152e65;
+        z-index: 9999;
+        font-size: 12px;
+        /*display: none;*/
+    }
+
+    .list {
+        background: url('resources/images/homework/u281.png') no-repeat;
+        background-size: 100% 100%;
+        width: 160px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        margin-bottom: 16px;
+        margin-left: 10px;
+    }
+
+    .listLi {
+        background: url('resources/images/homework/u281.png') no-repeat;
+        background-size: 100% 100%;
+        width: 160px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        margin-bottom: 16px;
+        margin-left: 50px;
+        display: none;
+
+    }
+
+    .ative {
+        color: #04f9e2;
+    }
+
+    .navImg {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+    }
+
+    .Left_column2 {
+        width: 220px;
+        height: calc(100% - 20px);
+        background: url("./resources/images/staffProfile/u19.png") no-repeat;
+        background-size: 100% 100%;
+        margin: 10px;
+    }
+</style>
+
+<body style="margin: auto">
+    <!-- ko if:isShow() -->
+    <div style="height: 100%; ">
+        <div class="cd cur-p">
+            <i class="icon-arrow-right" style="color: #00CCFF; font-size: 18px;"></i>
+        </div>
+        <div class="nav">
+            <img class="navImg" src="resources/images/homework/u279.png" alt="">
+            <div style="position: absolute;">
+                <div style="padding-left: 10px; padding-top: 10px;">
+                    <i class="icon-arrow-left cur-p" style="color: #00CCFF; font-size: 18px;"></i>
+                </div>
+                <div id="menuList" style="padding-top: 10px">
+
+                </div>
+<!--                <div>-->
+<!--                    <div class="list hand" style="margin-top: 20px;">安全风险全景感知</div>-->
+<!--                    <div class="listLi ative hand" data-bind="click: toggleModule.bind($data,'safetyRisk.main')">安全风险综合可视化-->
+<!--                    </div>-->
+<!--                    <div class="listLi hand" data-bind="click: toggleModule.bind($data,'gridOperation.main')">电网运行风险预警可视化-->
+<!--                    </div>-->
+<!--                    <div class="listLi hand" data-bind="click: toggleModule.bind($data,'constructureRisk.main')">电网建设风险预警可视化-->
+<!--                    </div>-->
+<!--                    <div class="listLi hand" data-bind="click: toggleModule.bind($data,'industry.main')">产业安全风险</div>-->
+<!--                    <div class="listLi hand" data-bind="click: toggleModule.bind($data,'network.main')">网络安全风险</div>-->
+<!--                </div>-->
+
+<!--                <div>-->
+<!--                    <div class="list hand">风险作业统计分析</div>-->
+<!--                    <div class="listLi hand" data-bind="click: toggleModule.bind($data,'riskOperation.main')">风险作业全景化展示</div>-->
+<!--                    <div class="listLi hand" data-bind="click: toggleModule.bind($data,'homework.main')">作业风险统计分析报告</div>-->
+<!--                </div>-->
+            </div>
+        </div>
+        <div id="section" data-bind="component:{ name: url,params: {} }"></div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if:!isShow() -->
+<!--    <div style="width: 100%; height: 100%; position: relative;">-->
+<!--        <div class="Left_column2" style="position: fixed; overflow: hidden;">-->
+<!--            <div style="width: 250px;overflow-y: auto;height: 100%;">-->
+<!--                <div>-->
+<!--                    <div class="list" style="margin-top:50px;">数据整合</div>-->
+<!--                        <div class="listLi ative" data-bind="click: toggleModule.bind($data,'dataLoading.main')">数据加载</div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'dataConversion.main')">数据转换</div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'dataCleansing.main')">数据清洗</div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'dataGovernance.main')">数据治理</div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <div class="list">全网安全工器具预警分析</div>-->
+<!--                    <div class="listLi " data-bind="click: toggleModule.bind($data,'dataStatistics.main')">安全工器具数据统计-->
+<!--                    </div>-->
+<!--                    <div class="listLi " data-bind="click: toggleModule.bind($data,'RealTimeWarning.main')">安全工器具实时预警-->
+<!--                    </div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'supplierEvaluation.main')">安全工器具供应商评价-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <div class="list">全网安全事故事件分析</div>-->
+<!--                    <div class="listLi " data-bind="click: toggleModule.bind($data,'classification.main')">分类统计</div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'multidimensional.main')">多维度展现对比-->
+<!--                    </div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'trend.main')">趋势预测分析</div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <div class="list">全网人员安全能力分析</div>-->
+<!--                    <div class="listLi " data-bind="click: toggleModule.bind($data,'staffProfile.main')">人员基本情况-->
+<!--                    </div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'SecurityCredit.main')">人员安全资信</div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'InformationLinkage.main')">人员全网信息联动-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <div class="list" style="display: block;margin-left: 10px;"-->
+<!--                        data-bind="click: toggleModule.bind($data,'outsourcing.main')">外包单位作业风险画像</div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <div class="list">安全风险知识图谱</div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'modeling.main')">知识图谱建模 </div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'hapMap.main')">知识获取</div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'fusion.main')">知识融合</div>-->
+<!--                    <div class="listLi" data-bind="click: toggleModule.bind($data,'application.main')">知识图谱应用</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div style="width: calc(100% - 240px); margin-left: 240px; height: 100%;">-->
+<!--            <div style="height: 100%;" data-bind="component:{ name: url,params: {} }">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <!-- /ko -->
+</body>
+
+</html>
+<script>
+
+</script>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="Analysiszyxc" desc="统计分析作业现场数">
+        <mysql>
+            SELECT DS_UNIT_ID type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')>= '${startDate}'
+            GROUP BY DS_UNIT_ID
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodayZyxc" desc="统计分析今日作业现场数">
+        <mysql>
+            SELECT DS_UNIT_ID type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')
+            GROUP BY DS_UNIT_ID
+        </mysql>
+    </sql>
+    <sql id="Analysissgrs" desc="统计分析施工人数">
+        <mysql>
+            SELECT DS_UNIT_ID type,sum(WORK_NUM) peccancyCount
+            FROM wp_work_plan_day
+            where '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d') AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')
+            >= '${startDate}'
+            GROUP BY DS_UNIT_ID
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodaySgrs" desc="统计分析今日施工人数">
+        <mysql>
+            SELECT DS_UNIT_ID type,sum(WORK_NUM) peccancyCount
+            FROM wp_work_plan_day
+            where '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')
+            GROUP BY DS_UNIT_ID
+        </mysql>
+    </sql>
+    <sql id="Analysisgfxxcs" desc="统计分析高风险现场数">
+        <mysql>
+            SELECT DS_UNIT_ID type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')>= '${startDate}' AND ZYAQ_RISK='1'
+            GROUP BY DS_UNIT_ID
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodayGfxxcs" desc="统计分析今日高风险现场数">
+        <mysql>
+            SELECT DS_UNIT_ID type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d') AND ZYAQ_RISK='1'
+            GROUP BY DS_UNIT_ID
+        </mysql>
+    </sql>
+    <sql id="Analysislsjhs" desc="统计分析临时计划数">
+        <mysql>
+            SELECT DS_UNIT_ID type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')>= '${startDate}' AND PLAN_TYPE='4'
+            GROUP BY DS_UNIT_ID
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodayLsjhs" desc="统计分析今日临时计划数">
+        <mysql>
+            SELECT DS_UNIT_ID type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_day
+            where '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d') AND PLAN_TYPE='4'
+            GROUP BY DS_UNIT_ID
+        </mysql>
+    </sql>
+    <sql id="Analysisqxjhs" desc="统计分析抢修计划数">
+        <mysql>
+            SELECT XJ_UNIT_ID type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_qx
+            where '${endDate}' >= DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')>= '${startDate}'
+            GROUP BY XJ_UNIT_ID
+        </mysql>
+    </sql>
+    <sql id="AnalysisTodayQxjhs" desc="统计分析今日抢修计划数">
+        <mysql>
+            SELECT XJ_UNIT_ID type,count(WORK_PLAN_ID) peccancyCount
+            FROM wp_work_plan_qx
+            where '${today}' between DATE_FORMAT(ACTUAL_BEGIN_TIME,'%Y-%m-%d')
+            AND DATE_FORMAT(ACTUAL_END_TIME,'%Y-%m-%d')
+            GROUP BY XJ_UNIT_ID
+        </mysql>
+    </sql>
+</sqls>

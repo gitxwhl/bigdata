@@ -1,0 +1,170 @@
+<div style="margin-bottom: 10px;">
+        <div style="display: flex;margin-top:40px;margin-left: 20px">
+                <p style="font-size: 16px;color: white;margin-right: 10px">当前位置:</p>
+                <p style="font-size: 16px;color: white;margin-right: 10px">安全准入管理 ></p>
+                <p style="font-size: 16px;color: white;margin-right: 10px" data-bind="click: returnBack">黑名单、负面清单 ></p>
+                <p style="font-size: 16px;color: white;margin-right: 10px">企业详情信息</p>
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px;">基本信息</p>
+        <div style="width:90%;margin-top: 40px;display: flex;margin-left: 100px">
+                <p style="font-size: 16px;color: white;width: 400px">企业名称:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:enterpriseName"></span></p>
+                <p style="font-size: 16px;color: white;width: 400px">成立时间:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:establishedTime"></span></p>
+                <p style="font-size: 16px;color: white;width: 400px">执照编号:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:licenseNumber"></span></p>
+                <p style="font-size: 16px;color: white;width: 400px">企业性质:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:enterpriseProperty"></span>
+                </p>
+        </div>
+        <div style="width:90%;margin-top: 40px;display: flex;margin-left: 100px">
+                <p style="font-size: 16px;color: white;width: 400px">法人代表:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:legalPerson"></span></p>
+                <p style="font-size: 16px;color: white;width: 400px">所在省市:<span
+                                style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:region"></span>
+                </p>
+                <p style="font-size: 16px;color: white;width: 400px">承装修资质:<span
+                                style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:fitment"></span>
+                </p>
+                <p style="font-size: 16px;color: white;width: 400px">联系单位:<span
+                                style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:Unit"></span></p>
+        </div>
+        <div style="width:90%;margin-top: 40px;display: flex;margin-left: 100px">
+                <p style="font-size: 16px;color: white;width: 400px">主项资质:<span
+                                style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:subject"></span>
+                </p>
+                <p style="font-size: 16px;color: white;width: 400px">联系电话:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:contactNumber"></span></p>
+                <p style="font-size: 16px;color: white;width: 400px">单位人数:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:unitNumber"></span></p>
+                <p style="font-size: 16px;color: white;width: 400px">单位地址:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:unitLocation"></span></p>
+        </div>
+        <!-- <div style="width:45%;margin-top: 40px;display: flex;margin-left: 100px">
+                <p style="font-size: 16px;color: white;width: 400px">单位地址:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:unitLocation"></span></p>
+                <p style="font-size: 16px;color: white;width: 400px">注册资本:<span
+                                style="font-size: 16px;color: white;margin-left: 20px"
+                                data-bind="text:registeredCapital"></span>
+                </p>
+        </div> -->
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px;">本年度违章情况</p>
+        <div style="width:96%;margin-left: 40px;margin-top: 20px;">
+                <datagrid id="instanceTable" params="
+                    style: style,
+                    items: ViolationContent,
+                    columns: Violation,
+                    isShowRowNumber: isShowRowNumber,
+                    isShowCheckBox: false,
+                    isShowBorder: isShowBorder,
+                    isShowHover: isShowHover,
+                    isShowCondense: isShowCondense,
+                    isAllowEdit: isAllowEdit,
+                    isAllowDelete: isAllowDelete,
+                    isAllowOperations: isAllowOperations,
+                    isAllowShift: isAllowShift,
+                    isAllowAppend: isAllowAppend,
+                    isAllowSort: isAllowSort,
+                    isAllowPaging: isAllowPaging,
+                    pageSize: pageSize,
+                    primaryKey:'id'
+                    "></datagrid>
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:20px;">企业注册信息</p>
+        <div style="width:96%;margin-left: 40px;margin-top: 20px;">
+                <datagrid id="instanceTable" params="
+                    style: style,
+                    items:messageContent,
+                    columns: message,
+                    isShowRowNumber: isShowRowNumber,
+                    isShowCheckBox: false,
+                    isShowBorder: isShowBorder,
+                    isShowHover: isShowHover,
+                    isShowCondense: isShowCondense,
+                    isAllowEdit: isAllowEdit,
+                    isAllowDelete: isAllowDelete,
+                    isAllowOperations: isAllowOperations,
+                    isAllowShift: isAllowShift,
+                    isAllowAppend: isAllowAppend,
+                    isAllowSort: isAllowSort,
+                    isAllowPaging: isAllowPaging,
+                    pageSize: pageSize,
+                    primaryKey:'id'
+                    "></datagrid>
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:20px;">准入情况</p>
+        <div style="width:96%;margin-left: 40px;margin-top: 20px;">
+                <datagrid id="instanceTable" params="
+                    style: style,
+                    items: admittanceContent,
+                    columns: Admittance,
+                    isShowRowNumber: isShowRowNumber,
+                    isShowCheckBox: false,
+                    isShowBorder: isShowBorder,
+                    isShowHover: isShowHover,
+                    isShowCondense: isShowCondense,
+                    isAllowEdit: isAllowEdit,
+                    isAllowDelete: isAllowDelete,
+                    isAllowOperations: isAllowOperations,
+                    isAllowShift: isAllowShift,
+                    isAllowAppend: isAllowAppend,
+                    isAllowSort: isAllowSort,
+                    isAllowPaging: isAllowPaging,
+                    pageSize: pageSize,
+                    primaryKey:'id'
+                    "></datagrid>
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:20px;">工作负责人</p>
+        <div style="width:96%;margin-left: 40px;margin-top: 20px;">
+                <datagrid id="instanceTable" params="
+                    style: style,
+                    items: JobLeaderContent,
+                    columns: JobLeader,
+                    isShowRowNumber: isShowRowNumber,
+                    isShowCheckBox: false,
+                    isShowBorder: isShowBorder,
+                    isShowHover: isShowHover,
+                    isShowCondense: isShowCondense,
+                    isAllowEdit: isAllowEdit,
+                    isAllowDelete: isAllowDelete,
+                    isAllowOperations: isAllowOperations,
+                    isAllowShift: isAllowShift,
+                    isAllowAppend: isAllowAppend,
+                    isAllowSort: isAllowSort,
+                    isAllowPaging: isAllowPaging,
+                    pageSize: pageSize,
+                    primaryKey:'siteworkerinfo_id'
+                    "></datagrid>
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:20px;">外包人员</p>
+        <div style="width:96%;margin-left: 40px;margin-top: 20px;">
+                <datagrid id="instanceTable" params="
+                    style: style,
+                    items: epibolyLeaderContent,
+                    columns: epibolyLeader,
+                    isShowRowNumber: isShowRowNumber,
+                    isShowCheckBox: false,
+                    isShowBorder: isShowBorder,
+                    isShowHover: isShowHover,
+                    isShowCondense: isShowCondense,
+                    isAllowEdit: isAllowEdit,
+                    isAllowDelete: isAllowDelete,
+                    isAllowOperations: isAllowOperations,
+                    isAllowShift: isAllowShift,
+                    isAllowAppend: isAllowAppend,
+                    isAllowSort: isAllowSort,
+                    isAllowPaging: isAllowPaging,
+                    pageSize: pageSize,
+                    primaryKey:'siteworkerinfo_id'
+                    "></datagrid>
+        </div>
+</div>

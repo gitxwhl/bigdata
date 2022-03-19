@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.raysdata.riskdataanalyzeserver.mapper.AtlasMapper">
+
+    <!--//安全风险知识图谱
+    /*
+     *页面加载接口
+     *知识图谱建模查询
+     * paramJson:{"typeName":""}
+     * */-->
+
+    <sql id="sql_where">
+        <if test="typeId !=null and typeId !=''">
+            and TYPE_ID=#{typeId}
+        </if>
+        <if test="typeName!=null and typeName !=''">
+            and TYPE_NAME like concat("%",#{typeName},"%")
+        </if>
+
+    </sql>
+    <select id="getList" resultType="map" parameterType="map">
+        SELECT
+        a.TYPE_ID,
+        a.TYPE_NAME,
+        b.column_type_name TYPE_NAME,
+        b.column_type_code,
+        a.TYPE_CODE,
+        a.TYPE_ICON,
+        a.TYPE_DESCRIBE,
+        a.UPDATE_TIME
+        FROM
+        ( SELECT TYPE_ID, TYPE_CODE, TYPE_ICON, TYPE_DESCRIBE, UPDATE_TIME, TYPE_NAME FROM srp_modeling WHERE 1=1 <include
+            refid="sql_where"/>   ORDER BY TYPE_NAME limit #{offset},#{size}) a
+        LEFT JOIN ( SELECT column_type_name, column_type_code FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) b ON a.TYPE_NAME = b.column_type_code
+
+</select>
+
+
+    <select id="getListdetails" resultType="map" parameterType="map">
+        SELECT
+        a.TYPE_ID,
+        b.column_type_name TYPE_NAME,
+        a.TYPE_CODE,
+        a.TYPE_ICON,
+        a.TYPE_DESCRIBE,
+        a.UPDATE_TIME
+        FROM srp_modeling a
+        LEFT JOIN ( SELECT column_type_name,column_type_code FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) b ON
+        a.TYPE_NAME = b.column_type_code
+        WHERE 1=1
+        <if test="typeName!=null and typeName !=''">
+            and TYPE_NAME like concat("%",#{typeName},"%") or TYPE_CODE like
+            concat("%",#{typeName},"%")
+        </if>
+        <if test="typeId !=null and typeId !=''">
+            and TYPE_ID=#{typeId}
+        </if>
+    </select>
+
+    <select id="getModeingList" resultType="java.lang.String">
+        select TYPE_NAME,TYPE_CODE,TYPE_ICON,TYPE_DESCRIBE,UPDATE_TIME from srp_modeling
+    </select>
+
+    <!--//安全风险知识图谱
+        /*
+         *页面加载接口
+         *知识图谱建模查询
+         * paramJson:{"typeName":""}
+         * 统计
+         * */-->
+    <select id="getListCount" resultType="int" parameterType="map">
+        SELECT
+        COUNT(*)
+        FROM
+        ( SELECT TYPE_ID, TYPE_CODE, TYPE_ICON, TYPE_DESCRIBE, UPDATE_TIME, TYPE_NAME FROM srp_modeling WHERE 1=1 <include
+            refid="sql_where"/>) a
+        LEFT JOIN ( SELECT column_type_name, column_type_code FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) b ON a.TYPE_NAME = b.column_type_code
+    </select>
+
+
+    <select id="getExampleName" resultType="string">
+        SELECT TYPE_NAME FROM srp_modeling WHERE TYPE_NAME =#{typeName}
+    </select>
+
+    <!--/*
+     *删除接口
+     *知识图谱建模删除
+     * paramJson:{"typeId":""}
+     * */-->
+    <select id="getTypeId" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT TYPE_CODE FROM srp_modeling WHERE TYPE_ID = #{typeId}
+    </select>
+
+    <select id="findSrpModeling" resultType="com.raysdata.riskdataanalyzeserver.bean.SrpModeling">
+        SELECT TYPE_ID typeId,TYPE_NAME typeName,TYPE_CODE typeCode,TYPE_ICON typeIcon,UPDATE_TIME typeTime,TYPE_DESCRIBE typeDescribe FROM srp_modeling WHERE TYPE_ID=#{typeId}
+    </select>
+
+
+    <delete id="rowsNum"  parameterType="java.lang.String">
+        DELETE FROM srp_modeling where 1=1 and TYPE_ID =#{typeId}
+    </delete>
+
+    <select id="getModelTyteName" resultType="java.lang.String"  parameterType="java.lang.String">
+        SELECT TYPE_NAME FROM srp_modeling WHERE 1=1 and TYPE_CODE = #{typeCode}
+    </select>
+    <select id="getModelName" resultType="java.lang.String"  parameterType="java.lang.String">
+        SELECT column_type_name FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' AND column_num = #{columnnum}
+    </select>
+    <select id="getList1" resultType="map" parameterType="java.lang.String">
+        SELECT INSTANCE_ID FROM srp_bd_kg_instanceinfo WHERE INSTANCE_SOURCE = #{typeCode}
+    </select>
+    <delete id="rowsNum1" parameterType="java.lang.String">
+        <if test="instanceIds !=null and instanceIds.size>0">
+            DELETE FROM srp_bd_kg_instancerelationinfo
+            WHERE 1=1
+            and SOURCE_INSTANCE_ID IN
+            <foreach collection="instanceIds" item="instanceId" separator="," open="(" close=")">
+                #{instanceId}
+            </foreach>
+            or TARGET_INSTANCE_ID IN
+            <foreach collection="instanceIds" item="instanceId" separator="," open="(" close=")">
+                #{instanceId}
+            </foreach>
+        </if>
+    </delete>
+    <delete id="rowsNum2" parameterType="java.lang.String">
+        DELETE FROM srp_bd_kg_instanceinfo where INSTANCE_SOURCE=#{typeCode}
+    </delete>
+    <delete id="rowsNum3" parameterType="java.lang.String">
+        DELETE FROM srp_bd_kg_relationinfo where  MODELING_GRAPH_ID=#{typeId}
+    </delete>
+    <!--/*
+     *新增接口
+     *知识图谱建模新增
+     * paramJson:{"params":{"typeName":"","typeCode":"","typeDescribe":"","typeIcon":""}}
+     * */-->
+    <insert id="addModeing" parameterType="map">
+        insert into srp_modeling(TYPE_NAME,TYPE_CODE,TYPE_ICON,TYPE_DESCRIBE,UPDATE_TIME)
+        VALUES (#{typeName},#{typeCode},#{typeIcon},#{typeDescribe},#{dateString})
+    </insert>
+
+    <select id="getsrgMing" resultType="java.lang.String">
+        SELECT TYPE_ID typeId FROM srp_modeling WHERE TYPE_CODE =#{typeCode};
+    </select>
+
+    <!--/*
+     *生成编号接口
+     * */-->
+    <select id="getMaxId" resultType="java.lang.String">
+        SELECT MAX(TYPE_ID) FROM srp_modeling
+    </select>
+    <select id="getModeingCount" resultType="int">
+        SELECT COUNT(*) FROM srp_modeling
+    </select>
+    <!--/*
+     *编辑接口
+     *知识图谱建模编辑
+     * paramJson:{"params":{"typeId":"","typeName":"","typeCode":"","typeDescribe":"","typeIcon":""}}
+     * */-->
+    <update id="updateModeling" parameterType="java.util.Map">
+        UPDATE srp_modeling SET TYPE_NAME=#{typeName},TYPE_CODE=#{typeCode},TYPE_ICON=#{typeIcon},TYPE_DESCRIBE=#{typeDescribe},UPDATE_TIME=#{dateString} WHERE TYPE_ID=#{typeId}
+    </update>
+
+    <!--//知识获取
+    /*
+     *知识获取
+     *关系表查询
+     * */-->
+    <select id="getRelationInfoCount" resultType="integer">
+        SELECT count(*) FROM srp_bd_kg_relationinfo
+    </select>
+    <select id="getRelationInfoList" resultType="map" parameterType="map">
+        SELECT
+            a.RELATION_ID,
+            b.column_type_name RELATION_NAME,
+            a.RELATION_CODE,
+            d.column_type_name SOURCE_TYPE,
+            e.column_type_name TARGET_TYPE,
+            c.column_type_name RELATION_TYPE,
+            a.RELATION_DESCRIBE,
+            a.PROCESSENDTIME
+            FROM
+            ( SELECT * FROM srp_bd_kg_relationinfo where 1=1 limit #{offset},#{limit}) a
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'RELATION_NAME' ) b ON a.RELATION_NAME = b.column_type_code
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'RELATION_TYPE' ) c ON a.RELATION_TYPE = c.column_type_code
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) d ON a.SOURCE_TYPE = d.column_type_code 
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) e ON a.TARGET_TYPE = e.column_type_code
+    </select>
+    <!--/*
+     *知识获取
+     *关系表编号生成
+     * */-->
+    <select id="getRelationNumber" resultType="java.lang.String">
+        SELECT max(RELATION_ID) FROM srp_bd_kg_relationinfo
+    </select>
+
+    <!-- /*
+     *新增接口
+     *知识获取新增关系
+     * paramJson:{"params":{"relationName":"","relationCode":"","sourceType":"","targetType":"","relationType":"","relationDescribe":""}}
+     * */-->
+    <select id="getModelingGraphId" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT TYPE_ID FROM srp_modeling WHERE 1=1 and TYPE_NAME=#{sourceType}
+    </select>
+    <insert id="insertRelationInfo" parameterType="map">
+        INSERT INTO srp_bd_kg_relationinfo
+        ( MODELING_GRAPH_ID, RELATION_NAME, SOURCE_TYPE, TARGET_TYPE, RELATION_TYPE, RELATION_DESCRIBE, RELATION_CODE, PROCESSENDTIME )
+            VALUES
+            ( #{modelingGraphId},#{relationName},#{sourceType},#{targetType},#{relationType},#{relationDescribe},#{relationCode}, NOW() )
+    </insert>
+    <select id="checkRelationCode" resultType="int" parameterType="java.lang.String">
+        SELECT count(*) FROM srp_bd_kg_relationinfo WHERE 1=1 and RELATION_CODE=#{relationCode}
+    </select>
+
+
+
+    <select id="findRelationInfo" resultType="java.lang.String">
+        SELECT RELATION_ID AS relationId FROM srp_bd_kg_relationinfo WHERE RELATION_CODE = #{relationCode}
+    </select>
+
+    <!--/*
+     *知识获取界面
+     *实例信息查询
+     * paramJson:{"page":"", "size":"", "params":{"modelingId":"","instanceName":""}}
+     * */-->
+    <select id="getTypeCode" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT TYPE_CODE FROM srp_modeling WHERE TYPE_NAME = #{modelingId}
+    </select>
+    <select id="getInstanceInfoCount" resultType="int" parameterType="map">
+        SELECT COUNT(*) FROM srp_bd_kg_instanceinfo
+        WHERE 1=1
+        <if test="typeCode !=null and typeCode != ''">
+            AND INSTANCE_SOURCE=#{typeCode}
+        </if>
+        <if test="instanceName !=null and instanceName != ''">
+            and INSTANCE_NAME like concat("%",#{instanceName},"%")
+        </if>
+    </select>
+    <select id="getInstanceInfoList" resultType="map" parameterType="java.lang.String">
+        SELECT INSTANCE_ID,INSTANCE_NAME,INSTANCE_CODE,INSTANCE_DESCRIBE,UPDATE_TIME
+        FROM srp_bd_kg_instanceinfo
+        WHERE 1=1
+        <if test="typeCode !=null and typeCode != ''">
+            AND INSTANCE_SOURCE=#{typeCode}
+        </if>
+        <if test="instanceName !=null and instanceName != ''">
+            and INSTANCE_NAME like concat("%",#{instanceName},"%")
+        </if>
+        limit #{offset},#{limit}
+    </select>
+    <!--/*
+     *知识获取
+     *实例表编号生成
+     * */-->
+    <select id="instanceNumber" resultType="java.lang.String">
+        SELECT MAX(INSTANCE_ID) FROM srp_bd_kg_instanceinfo
+    </select>
+
+    <!--/*
+     *知识获取
+     *删除实例
+     *paramJson:{"params":[{"instanceId":""}]}
+     * */-->
+    <select id="findInstanceInfoName" resultType="java.lang.String"
+            parameterType="java.lang.String">
+        SELECT INSTANCE_NAME FROM srp_bd_kg_instanceinfo WHERE INSTANCE_ID = #{instanceId}
+    </select>
+    <select id="findInsta" resultType="com.raysdata.riskdataanalyzeserver.bean.Instanceinfo">
+        SELECT INSTANCE_ID instanceId,TYPE_NAME typeName,INSTANCE_CODE instanceCode,INSTANCE_DESCRIBE instanceDescribe,INSTANCE_NAME instanceName FROM srp_bd_kg_instanceinfo WHERE INSTANCE_ID =#{instanceId}
+    </select>
+
+    <delete id="deleteInstanceinfo" parameterType="java.util.List">
+        <if test="instanceIds !=null and instanceIds.size >0 ">
+            DELETE FROM srp_bd_kg_instanceinfo
+            WHERE INSTANCE_ID IN
+            <foreach collection="instanceIds" index="no" item="instanceId" separator="," open="("
+                     close=")">
+                #{instanceId}
+            </foreach>
+        </if>
+    </delete>
+
+    <!--/*
+     *知识获取
+     *新增实例
+     *paramJson:{"params":{"modelingId":"","instanceName":"","instanceCode":"","instanceDescribe":""},"idList":[{"instanceId":"","relationId":""}]}
+     *
+     * */-->
+    <insert id="insertInstanceInfo" parameterType="map">
+        INSERT INTO
+        srp_bd_kg_instanceinfo
+        (TYPE_NAME,INSTANCE_NAME,INSTANCE_DESCRIBE,INSTANCE_SOURCE,INSTANCE_CODE,UPDATE_TIME)
+        VALUES(#{modelingId},#{instanceName},#{instanceDescribe},#{typeCode},#{instanceCode},NOW())
+    </insert>
+    <select id="findInstanceCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM srp_bd_kg_instanceinfo WHERE INSTANCE_NAME = #{instanceName}
+    </select>
+
+
+    <select id="getTypeName" resultType="java.lang.String">
+        SELECT TYPE_NAME FROM srp_bd_kg_instanceinfo    WHERE INSTANCE_NAME=#{instanceName}
+    </select>
+
+
+
+
+
+    <select id="getId" resultType="java.lang.String">
+        SELECT INSTANCE_ID FROM srp_bd_kg_instanceinfo WHERE INSTANCE_CODE = #{instanceCode}
+    </select>
+    <select id="getName" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT INSTANCE_NAME FROM srp_bd_kg_instanceinfo WHERE INSTANCE_ID = #{instanceId}
+    </select>
+    <select id="getRelationName" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT RELATION_NAME FROM srp_bd_kg_relationinfo WHERE RELATION_ID = #{relationId}
+    </select>
+    <insert id="insert" parameterType="java.lang.String">
+        INSERT INTO srp_bd_kg_instancerelationinfo(SOURCE_INSTANCE_ID,SOURCE_INSTANCE_NAME,TARGET_INSTANCE_ID,TARGET_INSTANCE_NAME,RELATION_ID,RELATION_NAME,UPDATE_TIME)
+        VALUES (#{id},#{instanceName},#{instanceId},#{name},#{relationId},#{relationName},NOW())
+    </insert>
+
+    <select id="findInscebyid" resultType="java.lang.String">
+        SELECT INSTANCE_ID FROM srp_bd_kg_instanceinfo WHERE  INSTANCE_CODE = #{instaceCode}
+    </select>
+
+
+
+    <select id="getIntanceCout" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM srp_bd_kg_instanceinfo
+    </select>
+
+
+
+    <!--/*
+     *知识获取
+     *根据源类别名称查询关系
+     *paramJson:{"modelingId":""}
+     * */-->
+    <select id="getRelationInfoById" resultType="map" parameterType="java.lang.String">
+        SELECT
+            a.RELATION_ID,
+            d.column_type_name SOURCE_TYPE,
+            b.column_type_name RELATION_NAME,
+            e.column_type_name TARGET_TYPE,
+            a.TARGET_TYPE TYPE_NAME
+            FROM
+            ( SELECT * FROM srp_bd_kg_relationinfo where 1=1 and SOURCE_TYPE =#{modelingId}) a
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'RELATION_NAME' ) b ON a.RELATION_NAME = b.column_type_code
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'RELATION_TYPE' ) c ON a.RELATION_TYPE = c.column_type_code
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) d ON a.SOURCE_TYPE = d.column_type_code 
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) e ON a.TARGET_TYPE = e.column_type_code
+    </select>
+    <!--/*
+    *知识获取
+    *根据类别查询实例
+    *paramJson:{"targetType":"","relationId":""}
+    * */-->
+    <select id="getInstanceInfoListByType" resultType="map" parameterType="java.lang.String">
+        SELECT
+        INSTANCE_ID,INSTANCE_NAME,INSTANCE_CODE,INSTANCE_DESCRIBE,UPDATE_TIME
+        FROM srp_bd_kg_instanceinfo
+        WHERE  TYPE_NAME=#{targetType}
+    </select>
+    <select id="getInstanceInfoListName" resultType="java.lang.String">
+        SELECT INSTANCE_NAME
+        FROM srp_bd_kg_instanceinfo
+        WHERE  INSTANCE_ID =#{instanceId}
+    </select>
+    <!--/*
+     *知识获取
+     *根据id查询实例详情
+     *paramJson:{"instanceId":""}
+     * */-->
+    <select id="getInstanceInfoById" resultType="map" parameterType="java.lang.String">
+        SELECT
+            a.INSTANCE_ID,
+            a.INSTANCE_NAME,
+            a.INSTANCE_CODE,
+            a.INSTANCE_DESCRIBE,
+            b.column_type_name TYPE_NAME
+            FROM
+            ( SELECT * FROM srp_bd_kg_instanceinfo WHERE INSTANCE_ID = #{instanceId}) a
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'TYPE_NAME' ) b ON a.TYPE_NAME = b.column_type_code
+    </select>
+
+    <!--/*
+     *知识获取
+     *通过ID查询实例关系
+     *paramJson:{"instanceId":"","targetType":"","relationId":""}
+     * */-->
+    <select id="getInstancerelationinfoByIdCount" resultType="int" parameterType="java.util.Map">
+        SELECT count(1) cnt
+        FROM srp_bd_kg_instancerelationinfo
+        WHERE SOURCE_INSTANCE_ID = #{instanceId} AND RELATION_ID = #{relationId}
+    </select>
+
+    <select id="getInstanceRelationInfo" resultType="map" parameterType="java.util.Map">
+        SELECT DISTINCT TARGET_INSTANCE_ID INSTANCE_ID,TARGET_INSTANCE_NAME INSTANCE_NAME,RELATION_ID
+        FROM srp_bd_kg_instancerelationinfo
+        WHERE SOURCE_INSTANCE_ID = #{instanceId} AND RELATION_ID = #{relationId}
+    </select>
+    <select id="getInstanceRelationInfoInser" resultType="map" parameterType="java.util.Map">
+        SELECT DISTINCT TARGET_INSTANCE_ID INSTANCE_ID,TARGET_INSTANCE_NAME INSTANCE_NAME,RELATION_ID
+        FROM srp_bd_kg_instancerelationinfo
+        WHERE RELATION_ID = #{relationId}
+    </select>
+
+
+
+<!--    <select id="getExample" resultType="map" >-->
+<!--        select-->
+<!--        a.INSTANCE_ID,a.TYPE_NAME,a.INSTANCE_NAME-->
+<!--        from-->
+<!--        (select * from srp_bd_kg_instanceinfo where TYPE_NAME = #{targetType}) a-->
+<!--        where-->
+<!--        a.INSTANCE_ID not in-->
+<!--        <foreach collection="substrings" item="substring" index="index" open="(" close=")" separator=",">-->
+<!--            #{substring}-->
+<!--        </foreach>-->
+
+<!--    </select>-->
+<!--    <select id="getExample" resultType="map" parameterType="java.util.Map">-->
+<!--        select-->
+<!--            a.INSTANCE_ID,a.TYPE_NAME,a.INSTANCE_NAME-->
+<!--        from-->
+<!--                (select * from srp_bd_kg_instanceinfo where TYPE_NAME = #{targetType}) a-->
+<!--        where a.INSTANCE_ID not in (#{substring})-->
+<!--    </select>-->
+
+    <select id="getExample" resultType="map" parameterType="java.util.Map">
+        select
+            a.INSTANCE_ID,a.TYPE_NAME,a.INSTANCE_NAME
+        from
+                (select * from srp_bd_kg_instanceinfo where TYPE_NAME = #{targetType}) a
+        where a.INSTANCE_ID not in
+        <foreach item="item" index="index" collection="selectList" open="(" separator="," close=")">
+            (#{item.INSTANCE_ID})
+        </foreach>
+    </select>
+
+
+
+    <!--/*
+     *知识获取
+     *编辑实例
+     *paramJson:{"params":{"instanceId":"","instanceName":"","instanceDescribe":""},"idList":[{"instanceId":"","relationId":""}]}
+     *
+     * */-->
+    <update id="updateInstanceinfo" parameterType="map">
+        UPDATE srp_bd_kg_instanceinfo
+        SET INSTANCE_NAME=#{instanceName},INSTANCE_DESCRIBE=#{instanceDescribe}
+        WHERE INSTANCE_ID=#{instanceId}
+    </update>
+    <select id="getInName" resultType="com.raysdata.riskdataanalyzeserver.bean.Knowledge">
+        SELECT INSTANCE_NAME instanceNames,INSTANCE_DESCRIBE instanceDescribe FROM srp_bd_kg_instanceinfo WHERE  INSTANCE_ID=#{instanceId}
+    </select>
+
+    <select id="findInstanceinfobj" resultType="com.raysdata.riskdataanalyzeserver.bean.Instanceinfo">
+        SELECT
+            TYPE_NAME typeName,
+            INSTANCE_CODE instanceCode,
+            INSTANCE_NAME instanceName,
+            INSTANCE_DESCRIBE instanceDescribe
+        FROM
+            srp_bd_kg_instanceinfo
+
+    </select>
+
+    <select id="findInstanceinfobj1" resultType="com.raysdata.riskdataanalyzeserver.bean.Instanceinfo">
+        SELECT
+            TYPE_NAME typeName,
+            INSTANCE_CODE instanceCode,
+            INSTANCE_NAME instanceName,
+            INSTANCE_DESCRIBE instanceDescribe
+        FROM
+            srp_bd_kg_instanceinfo
+            where
+        INSTANCE_NAME=#{instanceName}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+    <select id="findinstancexq" resultType="com.raysdata.riskdataanalyzeserver.bean.Instanceinfo">
+        SELECT INSTANCE_NAME instanceName,INSTANCE_DESCRIBE instanceDescribe,INSTANCE_CODE instanceCode   FROM srp_bd_kg_instanceinfo  WHERE INSTANCE_ID=#{instanceId}
+    </select>
+
+
+
+
+
+
+
+
+
+    <update id="updateInstanceRelationInfo" parameterType="map">
+        update srp_bd_kg_instancerelationinfo
+        set SOURCE_INSTANCE_NAME = #{instanceName} where SOURCE_INSTANCE_ID = #{instanceId}
+    </update>
+
+    <select id="findInstanceinfo" resultType="com.raysdata.riskdataanalyzeserver.bean.Instanceinfo">
+        SELECT TYPE_NAME typeName,INSTANCE_CODE instanceCode,INSTANCE_DESCRIBE instanceDescribe FROM srp_bd_kg_instanceinfo WHERE INSTANCE_ID =#{instanceId}
+    </select>
+
+    <update id="updateInstanceInfo" parameterType="map">
+        update srp_bd_kg_instancerelationinfo
+        set TARGET_INSTANCE_NAME = #{instanceName} where TARGET_INSTANCE_ID = #{instanceId}
+    </update>
+
+    <delete id="deleteInstanceRelationInfo" parameterType="map">
+        <if test="sqls != null and sqls.size>0 and listsInstance !=null and listsInstance.size>0">
+            DELETE FROM srp_bd_kg_instancerelationinfo
+            WHERE SOURCE_INSTANCE_ID = #{instanceId}
+            and RELATION_ID in
+            <foreach collection="sqls" item="relationId" separator="," open="(" close=")">
+                #{relationId}
+            </foreach>
+            and TARGET_INSTANCE_ID in
+            <foreach collection="listsInstance" item="instancenei" separator="," open="(" close=")">
+                #{instancenei}
+            </foreach>
+        </if>
+    </delete>
+    <select id="getRelationCount" resultType="int" parameterType="map">
+        SELECT COUNT(1)
+        FROM srp_bd_kg_instancerelationinfo
+        WHERE SOURCE_INSTANCE_ID = #{instanceId} and TARGET_INSTANCE_ID = #{instanceId1} AND RELATION_ID =#{relationId}
+    </select>
+    <!--/*
+     *知识获取
+     *拓扑图
+     *paramJson:{"instanceId":""}
+     * */-->
+    <select id="getImage" parameterType="java.lang.String" resultType="map">
+        SELECT
+            a.RELATION_ID,
+            a.SOURCE_INSTANCE_NAME,
+            b.column_type_name RELATION_NAME,
+            a.TARGET_INSTANCE_NAME,
+            a.TARGET_INSTANCE_ID
+            FROM
+            ( SELECT * FROM srp_bd_kg_instancerelationinfo WHERE SOURCE_INSTANCE_ID = #{instanceId} ) a
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'RELATION_NAME' ) b ON a.RELATION_NAME = b.column_type_code
+    </select>
+
+    <select id="getImageTuoPu" parameterType="java.lang.String" resultType="map">
+        SELECT
+            a.SOURCE_INSTANCE_NAME,
+            b.column_type_name RELATION_NAME,
+            a.TARGET_INSTANCE_NAME,
+            a.TARGET_INSTANCE_ID
+        FROM
+            ( SELECT * FROM srp_bd_kg_instancerelationinfo
+            <if test="instanceIds !=null and instanceIds.size>0">
+                WHERE
+                SOURCE_INSTANCE_ID IN
+                      <foreach collection="instanceIds" item="instanceId" close=")" open="(" separator=",">
+                           #{instanceId}
+                      </foreach>
+            </if>
+                ) a
+                LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'RELATION_NAME' ) b ON a.RELATION_NAME = b.column_type_code
+</select>
+
+    <sql id="sql_where1">
+        <choose>
+        <when test="targetIds !=null and targetIds.size >0">
+            WHERE SOURCE_INSTANCE_ID IN
+            <foreach collection="targetIds" item="targetId" separator="," open="(" close=")">
+                #{targetId}
+            </foreach>
+            AND TARGET_INSTANCE_ID IN
+            <foreach collection="targetIds" item="targetId" separator="," open="(" close=")">
+                #{targetId}
+            </foreach>
+        </when>
+        <otherwise>
+            WHERE SOURCE_INSTANCE_ID IN ("")
+            AND TARGET_INSTANCE_ID IN ("")
+        </otherwise>
+        </choose>
+    </sql>
+
+    <select id="getImage2" parameterType="java.util.List" resultType="map">
+        SELECT
+        a.RELATION_ID,
+        a.SOURCE_INSTANCE_NAME,
+        b.column_type_name RELATION_NAME,
+        a.TARGET_INSTANCE_NAME
+        FROM
+        ( SELECT * FROM srp_bd_kg_instancerelationinfo
+            <include refid="sql_where1"/>
+<!--        <if test="targetIds !=null and targetIds.size >0">-->
+<!--            WHERE SOURCE_INSTANCE_ID IN-->
+<!--            <foreach collection="targetIds" item="targetId" separator="," open="(" close=")">-->
+<!--                #{targetId}-->
+<!--            </foreach>-->
+<!--            AND TARGET_INSTANCE_ID IN-->
+<!--            <foreach collection="targetIds" item="targetId" separator="," open="(" close=")">-->
+<!--                #{targetId}-->
+<!--            </foreach>-->
+<!--        </if>-->
+        ) a
+        LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'RELATION_NAME' ) b ON
+        a.RELATION_NAME = b.column_type_code
+    </select>
+
+    <sql id="sql_where8">
+        <choose>
+            <when test="instanceName != '' and  instanceName != null">
+                INSTANCE_NAME LIKE CONCAT("%",#{instanceName},"%");
+            </when>
+            <otherwise>
+                INSTANCE_NAME = #{instanceName};
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!--/**
+     * 通过实例名称查询拓扑图
+     * @param paramJson
+     * @return
+     */-->
+    <select id="getInstanceName" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT 
+            INSTANCE_ID
+        FROM srp_bd_kg_instanceinfo
+        where
+        <include refid="sql_where8"/>
+    </select>
+    <select id="getInstanceNameTp" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+        INSTANCE_ID
+        FROM srp_bd_kg_instanceinfo
+        where
+        <include refid="sql_where8"/>
+    </select>
+
+
+    <insert id="insertTopology" parameterType="map">
+        INSERT INTO srp_bd_kg_instancerelationinfo(SOURCE_INSTANCE_ID,SOURCE_INSTANCE_NAME,TARGET_INSTANCE_ID,TARGET_INSTANCE_NAME,RELATION_ID,RELATION_NAME,UPDATE_TIME)
+        VALUES (#{instanceId},#{instanceName},#{instanceId1},#{name},#{relationId},#{relationName},NOW())
+    </insert>
+    <update id="updateTopology">
+        UPDATE srp_bd_kg_instancerelationinfo
+        <set>
+            <if test="instanceId!=null and instanceId!=''">SOURCE_INSTANCE_ID=#{instanceId},</if>
+            <if test="instanceName!=null and instanceName!=''">SOURCE_INSTANCE_NAME=#{instanceName},</if>
+            <if test="instanceId1!=null and instanceId1!=''">TARGET_INSTANCE_ID=#{instanceId1},</if>
+            <if test="name!=null and name!=''">TARGET_INSTANCE_NAME=#{name},</if>
+            <if test="relationId!=null and relationId!=''">RELATION_ID=#{relationId},</if>
+            <if test="relationName!=null and relationName!=''">RELATION_NAME=#{relationName},</if>
+            UPDATE_TIME=NOW()
+        </set>
+        WHERE RELATION_ID = #{relationId}
+              AND TARGET_INSTANCE_ID =#{instanceId1}
+              AND SOURCE_INSTANCE_ID =#{instanceId}
+    </update>
+
+    <delete id="delTopology">
+        DELETE FROM srp_bd_kg_instancerelationinfo
+        WHERE SOURCE_INSTANCE_ID = #{instanceId}
+        <if test="relationIds!=null and relationIds.size>0">
+            AND RELATION_ID IN
+            <foreach collection="relationIds" item="res" separator="," open="(" close=")">
+                #{res}
+            </foreach>
+        </if>
+
+    </delete>
+
+    <insert id="InsertInstanceInfoInclude">
+        INSERT INTO srp_bd_kg_instancerelationinfo(SOURCE_INSTANCE_ID,SOURCE_INSTANCE_NAME,TARGET_INSTANCE_ID,TARGET_INSTANCE_NAME,RELATION_ID,RELATION_NAME,UPDATE_TIME)
+        VALUES (#{instanceId},#{instanceName},#{instanceId1},#{name},#{relationId},#{relationName},NOW())
+    </insert>
+
+
+    <select id="findTopology" resultType="map">
+        SELECT
+            INSTANCE_RELATION_ID,
+            SOURCE_INSTANCE_ID,
+            SOURCE_INSTANCE_NAME,
+            TARGET_INSTANCE_ID,
+            TARGET_INSTANCE_NAME,
+            RELATION_ID,
+            RELATION_NAME,
+            UPDATE_TIME
+        FROM srp_bd_kg_instancerelationinfo
+
+    </select>
+    <select id="getSrpModeling" resultType="java.lang.String">
+        SELECT
+            TYPE_NAME typeName
+        FROM srp_modeling
+        <where>
+            TYPE_ID= #{typeId};
+        </where>
+    </select>
+
+<!--    <select id="getSrpModelings" resultType="map">-->
+<!--        SELECT TYPE_ID typeId,TYPE_NAME typeName,TYPE_CODE typeCode,TYPE_ICON typeIcon,UPDATE_TIME typeTime,TYPE_DESCRIBE typeDescribe FROM srp_modeling WHERE TYPE_CODE =#{typeCode};-->
+<!--    </select>-->
+    <select id="getSrpModelings" resultType="com.raysdata.riskdataanalyzeserver.bean.SrpModeling">
+        SELECT TYPE_ID typeId,TYPE_NAME typeName,TYPE_CODE typeCode,TYPE_ICON typeIcon,UPDATE_TIME typeTime,TYPE_DESCRIBE typeDescribe FROM srp_modeling WHERE TYPE_CODE =#{typeCode};
+    </select>
+
+</mapper>

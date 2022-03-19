@@ -1,0 +1,291 @@
+<style>
+    .left{
+        width:100%;
+        min-width: 468px;
+        height:32%;
+        background:inherit;
+        background-color:rgba(0, 32, 96, 1);
+        box-sizing:border-box;
+        border-width:5px;
+        border-style:solid;
+        border-color:rgba(16, 77, 116, 1);
+        border-radius:0px;
+        -moz-box-shadow:none;
+        -webkit-box-shadow:none;
+        box-shadow:none;
+        margin-bottom: 12px;
+    }
+    .left_2{
+        height:32%;
+
+    }
+    .left_3{
+        height:32%;
+    }
+    .RunningTotal{
+        width:47%;
+        height:60%;
+        background:inherit;
+        background-color:rgba(0, 32, 97, 1);
+        box-sizing:border-box;
+        border-width:4px;
+        border-style:solid;
+        border-color:rgba(16, 77, 116, 1);
+        border-radius:0px;
+        -moz-box-shadow:none;
+        -webkit-box-shadow:none;
+        box-shadow:none;
+        font-size:9px;
+        color:#FFFFFF;
+    }
+    .picture{
+        width: 44px;
+        height: 41px;
+        background: url("./resources/images/safetyRisk/u254.png") no-repeat;
+        background-size: 44px 41px;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+    .construction_picture{
+        background: url("./resources/images/safetyRisk/u256.png") no-repeat;
+        background-size: 100% 100%;
+    }
+    .industry_picture{
+        background: url("./resources/images/safetyRisk/u258.png") no-repeat;
+        background-size: 100% 100%;
+    }
+    .newwork_picture{
+        background: url("./resources/images/safetyRisk/u260.png") no-repeat;
+        background-size: 100% 100%;
+    }
+    .content{
+        margin-top: 20px;
+    }
+    .centre{
+        width:48%;
+        height:98.2%;
+        background:inherit;
+        background-color:rgba(0, 32, 96, 1);
+        box-sizing:border-box;
+        border-width:5px;
+        border-style:solid;
+        border-color:rgba(16, 77, 116, 1);
+        border-radius:0px;
+        -moz-box-shadow:none;
+        -webkit-box-shadow:none;
+        box-shadow:none;
+    }
+    .select {
+        background: #01255C;
+        /*color: white;*/
+        width: calc(100% - 20px);
+        /*margin-left: 10px;*/
+        border: 1px solid #044B8B;
+        color: white;
+        font-size: 16px;
+        margin-top:100px;
+        /*margin-left: 190px;*/
+    }
+
+</style>
+<div style="width: 100%;height: 100%;">
+    <div style="display: flex;margin-top: 10px;width: 100%;height: 100%;">
+        <div style="margin-right: 10px;width: 25%;height: 100%;">
+           <div class="left">
+               <div style="display: flex;margin-top: 25px;margin-left: 13px;height: 42%;">
+                   <div class="RunningTotal" style="display: flex">
+                       <div class="picture"></div>
+                       <div class="content">
+                           <p style="margin-left: 60px;font-size: 30px" data-bind="text: powernumber"></p>
+                           <p style="margin-left: 20px;font-size: 14px;margin-top: 10px">电网运行风险总数</p>
+                       </div>
+                   </div>
+                   <div class="RunningTotal" style="margin-left: 10px;display: flex">
+                       <div class="construction_picture picture"></div>
+                       <div class="content">
+                           <p style="margin-left: 60px;font-size: 30px" data-bind="text:constructionnumber"></p>
+                           <p style="margin-left: 20px;font-size: 14px;margin-top: 10px">电网建设风险总数</p>
+                       </div>
+                   </div>
+               </div>
+               <div style="display: flex;margin-top: 25px;margin-left: 13px;height: 42%;">
+                   <div class="RunningTotal" style="display: flex">
+                       <div class="picture industry_picture picture"></div>
+                       <div class="content">
+                           <p style="margin-left: 60px;font-size: 30px" data-bind="text: industrynumber"></p>
+                           <p style="margin-left: 43px;font-size: 14px;margin-top: 10px">产业风险总数</p>
+                       </div>
+                   </div>
+                   <div class="RunningTotal" style="margin-left: 10px;display: flex">
+                       <div class="picture newwork_picture"></div>
+                       <div class="content">
+                           <p style="margin-left: 60px;font-size: 30px" data-bind="text: networknumber"></p>
+                           <p style="margin-left: 43px;font-size: 14px;margin-top: 10px">网络风险总数</p>
+                       </div>
+                   </div>
+               </div>
+           </div>
+            <div class="left left_2">
+                <h3 style="font-size:18px;margin-left: 155px;margin-top: 10px">电网风险等级</h3>
+                <div style="margin-top: 20px;position: relative;width: 100%;height: 100%">
+                    <div style="position: absolute; left: -50px;top: -40px;width: 100%;height: 100%;">
+                    <chart params="
+                                width:'90%',
+                                height:'90%',
+                                option:pieoption">
+                    </chart>
+                    </div>
+                </div>
+            </div>
+            <div class="left left_3">
+                <div style="margin-left: 30px;position: relative;width: 100%;height: 100%">
+                    <div style="position: absolute; left: -50px;top: 30px;width: 100%;height: 100%;">
+                    <chart params="
+                                    width:'90%',
+                                    height:'90%',
+                                    option:option2">
+                    </chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="centre">
+            <div style="height: calc(100% - 120px);">
+                <div style="font-size: 20px;margin-left:350px;margin-top: 15px">安全风险综合情况</div>
+                <div style="display: flex;margin-left: 100px">
+
+<!--                    <div style="width: 25%;">-->
+<!--                        <select class="select" data-bind="-->
+<!--                                options:classificationRisks,-->
+<!--                                optionsText: 'text',-->
+<!--                                optionsValue:'text',-->
+<!--                                optionsValue:'id',-->
+<!--                                value:classification,-->
+<!--                                event: { change: eventChange}-->
+<!--                            ">-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="riskGrade" style="width: 25%;">-->
+<!--                        <select class="select" data-bind="-->
+<!--                                options:riskGrade,-->
+<!--                                optionsText: 'text',-->
+<!--                                optionsValue:'text',-->
+<!--                                optionsValue:'id',-->
+<!--                                value:Grade,-->
+<!--                                 event: { change: eventChanges}-->
+<!--                            ">-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="riskGrade2" style="width: 25%; display: none">-->
+<!--                        <select class="select" data-bind="-->
+<!--                                options:riskGrade2,-->
+<!--                                optionsText: 'text',-->
+<!--                                optionsValue:'text',-->
+<!--                                optionsValue:'id',-->
+<!--                                value:Grade,-->
+<!--                                  event: { change: eventChangess}-->
+<!--                            ">-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="Electri" style="width: 25%;">-->
+<!--                        <select class="select" data-bind="-->
+<!--                                options:transmitElectricity,-->
+<!--                                optionsText: 'text',-->
+<!--                                optionsValue:'text',-->
+<!--                                optionsValue:'id',-->
+<!--                                value:Electricity,-->
+<!--                                  event: { change: eventChangess}-->
+<!--                            ">-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="chanye" style="width: 25%;display: none" >-->
+<!--                        <select class="select" data-bind="-->
+<!--                                options:chanye,-->
+<!--                                optionsText: 'text',-->
+<!--                                optionsValue:'text',-->
+<!--                                optionsValue:'id',-->
+<!--                                value:Grade,-->
+<!--                                  event: { change: eventChangess}-->
+<!--                            ">-->
+<!--                        </select>-->
+<!--                    </div>-->
+                    <div style="width: 20%;">
+                        <select class="select" data-bind="
+                            options: dwfxContent,
+                            optionsText: 'text',
+                            optionsValue:'text',
+                            optionsValue:'id',
+                            value: classification,
+                            event: { change: eventChange}
+                        ">
+                        </select>
+                    </div>
+                    <div style="width: 20%;">
+                        <select class="select" data-bind="
+                            options: zyfxContent,
+                            optionsText: 'text',
+                            optionsValue:'text',
+                            optionsValue:'id',
+                            value: Grade,
+                            event: { change: eventChange1}
+                        ">
+                        </select>
+                    </div>
+                    <div class="riskGrade2" style="width: 25%; display: none">
+                        <select class="select" data-bind="
+                                options:transmitElectricity,
+                                optionsText: 'text',
+                                optionsValue:'text',
+                                optionsValue:'id',
+                                value:Electricity,
+                                event: { change: eventChange2}
+                            ">
+                        </select>
+                    </div>
+                </div>
+                <div id="china_map" style="height: 90%;"></div>
+                <!-- <chart params="
+                        height:'100%',
+                        option:option">
+                </chart> -->
+            </div>
+        </div>
+        <div class="right" style="margin-left: 10px;width: 25%;">
+            <div class="left">
+                <div style="margin-top: 20px;position: relative;width: 100%;height: 100%;">
+                    <div style="position: absolute; left: -18px;top: -26px;width: 100%;height: 100%;">
+                        <chart  params="
+                                    width:'100%',
+                                    height:'100%',
+                                    option:option3">
+                        </chart>
+                    </div>
+                </div>
+            </div>
+            <div class="left left_2">
+                <h3 style="font-size:18px;margin-left: 155px;margin-top: 10px">产业风险等级</h3>
+                <div style="margin-top: 20px;position: relative;width: 100%;height: 100%">
+                    <div style="position: absolute; left: -50px;top: -40px;width: 100%;height: 100%">
+                        <chart  params="
+                                    width:'90%',
+                                    height:'90%',
+                                    option:option4">
+                        </chart>
+                    </div>
+                </div>
+            </div>
+            <div class="left left_3">
+                <h3 style="font-size:18px;margin-left: 155px;margin-top: 10px">网络安全风险等级</h3>
+                <div style="margin-top: 10px;position: relative;width: 100%;height: 100%">
+                    <div style="width: 100%;height: 100%">
+                        <chart  params="
+                                    width:'100%',
+                                    height:'90%',
+                                    option:option5">
+                        </chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

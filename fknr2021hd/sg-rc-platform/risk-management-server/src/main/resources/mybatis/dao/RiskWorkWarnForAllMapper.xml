@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.raysdata.riskmanagementserver.dao.RiskWorkWarnForAllDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.raysdata.riskmanagementserver.bean.SrpRiskEventewarning">
+<!--        <result column="id" property="id" />-->
+<!--        <result column="model_table_name" property="modelTableName" />-->
+<!--        <result column="model_table" property="modelTable" />-->
+<!--        <result column="model_field" property="modelField" />-->
+<!--        <result column="model_field_name" property="modelFieldName" />-->
+<!--        <result column="model_field_hump" property="modelFieldHump" />-->
+<!--        <result column="model_table_hump" property="modelTableHump" />-->
+<!--        <result column="is_valid" property="isValid" />-->
+    </resultMap>
+<!--    <sql id="sql_where_cu">-->
+<!--        <choose>-->
+<!--            <when test="srpRiskSysTabVoPo.startTime != null and srpRiskSysTabVoPo.startTime != '' and  srpRiskSysTabVoPo.endTime != null and srpRiskSysTabVoPo.endTime != '' ">-->
+<!--                a.BEGIN_TIME between STR_TO_DATE(#{srpRiskSysTabVoPo.startTime},'%Y-%m-%d %H:%i:%s') and STR_TO_DATE(#{srpRiskSysTabVoPo.endTime},'%Y-%m-%d %H:%i:%s')-->
+<!--            </when>-->
+<!--            <otherwise>-->
+<!--                to_days( a.BEGIN_TIME ) = to_days( now( ) )-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+
+<!--        <if test="srpRiskSysTabVoPo.warningLevel !=null and srpRiskSysTabVoPo.warningLevel!=''">-->
+<!--            and a.WORKRISK_LEVEL = #{srpRiskSysTabVoPo.warningLevel}-->
+<!--        </if>-->
+
+<!--        <if test="srpRiskSysTabVoPo.workType !=null and srpRiskSysTabVoPo.workType !=''">-->
+<!--            and a.WORK_TYPE = #{srpRiskSysTabVoPo.workType}-->
+<!--        </if>-->
+<!--    </sql>-->
+
+    <sql id="sql_where">
+            <choose>
+                <when test="srpRiskSysTabVoPo.areaId != null and srpRiskSysTabVoPo.areaId != ''">
+                    LEFT JOIN (
+                    SELECT
+                    a.*
+                    FROM
+                    SRP_WORK_WORKPLANDAYS a
+                    WHERE 1=1
+                    <choose>
+                        <when test="srpRiskSysTabVoPo.startTime != null and srpRiskSysTabVoPo.startTime != '' and  srpRiskSysTabVoPo.endTime != null and srpRiskSysTabVoPo.endTime != '' ">
+                           and a.BEGIN_TIME between STR_TO_DATE(#{srpRiskSysTabVoPo.startTime},'%Y-%m-%d %H:%i:%s') and STR_TO_DATE(#{srpRiskSysTabVoPo.endTime},'%Y-%m-%d %H:%i:%s')
+                        </when>
+                        <otherwise>
+                           and to_days( a.BEGIN_TIME ) = to_days( now( ) )
+                        </otherwise>
+                    </choose>
+
+                    <if test="srpRiskSysTabVoPo.warningLevel !=null and srpRiskSysTabVoPo.warningLevel!=''">
+                        and a.WORKRISK_LEVEL = #{srpRiskSysTabVoPo.warningLevel}
+                    </if>
+
+                    <if test="srpRiskSysTabVoPo.workType !=null and srpRiskSysTabVoPo.workType !=''">
+                        and a.WORK_TYPE = #{srpRiskSysTabVoPo.workType}
+                    </if>
+                    and a.DATAREPORT_ORG_ID = #{srpRiskSysTabVoPo.areaId}
+                    ) srg ON srst.column_type_code = srg.CITY_ID
+                    WHERE
+                    srst.column_code = #{srpRiskSysTabVoPo.areaId}
+                    GROUP BY
+                    srst.column_type_name
+                    ORDER BY
+                    srst.column_type_code + 0
+                </when>
+                <otherwise>
+                    LEFT JOIN ( SELECT a.* FROM SRP_WORK_WORKPLANDAYS a
+                    WHERE 1=1
+                    <choose>
+                        <when test="srpRiskSysTabVoPo.startTime != null and srpRiskSysTabVoPo.startTime != '' and  srpRiskSysTabVoPo.endTime != null and srpRiskSysTabVoPo.endTime != '' ">
+                            and a.BEGIN_TIME between STR_TO_DATE(#{srpRiskSysTabVoPo.startTime},'%Y-%m-%d %H:%i:%s') and STR_TO_DATE(#{srpRiskSysTabVoPo.endTime},'%Y-%m-%d %H:%i:%s')
+                        </when>
+                        <otherwise>
+                            and to_days( a.BEGIN_TIME ) = to_days( now( ) )
+                        </otherwise>
+                    </choose>
+
+                    <if test="srpRiskSysTabVoPo.warningLevel !=null and srpRiskSysTabVoPo.warningLevel!=''">
+                        and a.WORKRISK_LEVEL = #{srpRiskSysTabVoPo.warningLevel}
+                    </if>
+
+                    <if test="srpRiskSysTabVoPo.workType !=null and srpRiskSysTabVoPo.workType !=''">
+                        and a.WORK_TYPE = #{srpRiskSysTabVoPo.workType}
+                    </if>
+
+                    ) srg ON srst.column_type_code = srg.DATAREPORT_ORG_ID
+                    WHERE
+                    srst.column_code = 'DATAREPORT_ORG'
+                    GROUP BY
+                    srst.column_type_name
+                    ORDER BY
+                    srst.column_type_code + 0
+                </otherwise>
+            </choose>
+    </sql>
+    <sql id="sql_wher_areid">
+        <if test="areaId != null and areaId != '' ">
+            and c.DATAREPORT_ORG_ID = #{areaId}
+        </if>
+    </sql>
+
+    <sql id="sql_where_warnType">
+        <choose>
+            <when test="warnType == 1 ">
+                and a.WORKRISK_LEVEL = '06'
+            </when>
+            <otherwise>
+                and a.GRIDRISK_LEVEL = '09'
+            </otherwise>
+        </choose>
+    </sql>
+
+   <sql id="sql_where_areaId">
+       <choose>
+           <when test="areaId !=null and areaId !='' ">
+               LEFT JOIN (
+               SELECT
+               a.*
+               FROM
+               SRP_WORK_WORKPLANDAYS a
+               WHERE
+               to_days( a.BEGIN_TIME ) = to_days( now( ) )
+                <include refid="sql_where_warnType"/>
+               AND a.DATAREPORT_ORG_ID = #{areaId}
+               ) srg ON srst.column_type_code = srg.CITY_ID
+               WHERE
+               srst.column_code = #{areaId}
+               GROUP BY
+               srst.column_type_name
+               ORDER BY
+               srst.column_type_code + 0
+           </when>
+           <otherwise>
+               LEFT JOIN (
+               SELECT
+               a.*
+               FROM
+               SRP_WORK_WORKPLANDAYS a
+               WHERE
+               to_days( a.BEGIN_TIME ) = to_days( now( ) )
+               <include refid="sql_where_warnType"/>
+               ) srg ON srst.column_type_code = srg.DATAREPORT_ORG_ID
+               WHERE
+               srst.column_code = 'DATAREPORT_ORG'
+               GROUP BY
+               srst.column_type_name
+               ORDER BY
+               srst.column_type_code + 0
+           </otherwise>
+       </choose>
+
+   </sql>
+
+
+
+
+
+
+    <select id="getSrpriskworkplanlist"  resultType="java.util.Map">
+        SELECT
+        c.WORK_PLAN_ID,
+        c.WORK_PLAN_CODE_DAY,
+        c.WORK_PLAN_NAME,
+        c.WORK_PLACE,
+        case when END_TIME &lt;= now( ) then '已完工' else '已开工' end as isEnd
+        FROM
+        SRP_WORK_WORKPLANDAYS c
+        WHERE to_days( c.BEGIN_TIME ) = to_days( now( ) )
+        and c.city_id = #{srpWorkWorkplandaysVo.cityID}
+        LIMIT  #{srpWorkWorkplandaysVo.size} OFFSET #{srpWorkWorkplandaysVo.offset}
+    </select>
+
+    <select id="getSrpriskworkplanlistcnt"  resultType="java.lang.Integer">
+        SELECT
+            count( 1 ) cnt
+        FROM
+            SRP_WORK_WORKPLANDAYS c
+        WHERE
+            to_days( c.BEGIN_TIME ) = to_days( now( ) )
+          AND c.city_id = #{srpWorkWorkplandaysVo.cityID}
+    </select>
+
+    <select id="getSrpriskworkwarnworkstatecnt"  resultType="java.util.Map">
+        SELECT
+            COUNT( CASE WHEN c.WORK_STATE = '01' THEN 1 ELSE NULL END ) AS WORK_STATE1,
+            COUNT( CASE WHEN c.WORK_STATE = '02' THEN 1 ELSE NULL END ) AS WORK_STATE2,
+            COUNT( CASE WHEN c.WORK_STATE = '03' THEN 1 ELSE NULL END ) AS WORK_STATE3,
+            COUNT( CASE WHEN c.WORK_STATE = '04' THEN 1 ELSE NULL END ) AS WORK_STATE4,
+            COUNT( CASE WHEN c.WORK_STATE = '05' THEN 1 ELSE NULL END ) AS WORK_STATE5
+        FROM
+            SRP_WORK_WORKPLANDAYS c
+        <where>
+            to_days( c.BEGIN_TIME ) = to_days( now( ) )
+
+            <if test="areaVo.areaId != null and areaVo.areaId != '' ">
+                and c.DATAREPORT_ORG_ID = #{areaVo.areaId}
+            </if>
+        </where>
+    </select>
+
+
+
+
+    <select id="getSrpriskworkwarnforallworktypecnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            COUNT(case when c.WORK_TYPE = '01' then 1 else NULL end) AS  WORK_TYPE1,
+            COUNT(case when c.WORK_TYPE = '02' then 1 else NULL end) AS  WORK_TYPE2,
+            COUNT(case when c.WORK_TYPE = '03' then 1 else NULL end) AS  WORK_TYPE3,
+            COUNT(case when c.WORK_TYPE = '04' then 1 else NULL end) AS  WORK_TYPE4,
+            COUNT(case when c.WORK_TYPE = '05' then 1 else NULL end) AS  WORK_TYPE5,
+            COUNT(case when c.WORK_TYPE = '06' then 1 else NULL end) AS  WORK_TYPE6,
+            COUNT(case when c.WORK_TYPE = '07' then 1 else NULL end) AS  WORK_TYPE7,
+            COUNT(case when c.WORK_TYPE = '08' then 1 else NULL end) AS  WORK_TYPE8
+        FROM SRP_WORK_WORKPLANDAYS c
+        WHERE to_days( c.BEGIN_TIME ) = to_days( now( ) )
+        <include refid="sql_wher_areid"/>
+    </select>
+
+    <select id="getSrpriskworkwarnforallareacnt"  resultType="java.util.Map">
+        SELECT
+            srst.column_type_name DATAREPORT_ORG,
+            srst.column_type_code DATAREPORT_ORG_ID,
+            count( srg.WORK_PLAN_ID ) AS PLANWARN_CNT
+        FROM
+            srp_risk_sys_tab srst
+               <include refid="sql_where"/>
+    </select>
+
+    <select id="findSrpriskworkwarnforallareacnt"  resultType="java.util.Map">
+        SELECT
+        srst.column_type_name DATAREPORT_ORG,
+        srst.column_type_code DATAREPORT_ORG_ID,
+        count( srg.WORK_PLAN_ID ) AS PLANWARN_CNT
+        FROM
+        srp_risk_sys_tab srst
+        <include refid="sql_where_areaId"/>
+    </select>
+
+
+
+    <select id="getSrpriskworkplaninfo" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            a.WORKCONTENTS,
+            a.BEGIN_TIME,
+            a.END_TIME,
+            b.column_type_name WORK_TYPE,
+            a.WORK_PLACE,
+            a.PROJECT_NAME,
+            c.column_type_name POWER_CUT,
+            a.SUBCONTRACT_ORG,
+            a.SUPERVISORORG,
+            d.column_type_name WORKRISK_LEVEL,
+            e.column_type_name GRIDRISK_LEVEL,
+            f.column_type_name VOLTAGE_LEVEL,
+            g.column_type_name LIVE_WORK_FLAG,
+            a.WORK_MANAGER,
+            a.WORK_MANAGER_CONTACT,
+            h.VIOLATION_CNT
+        FROM
+            SRP_WORK_WORKPLANDAYS a
+                LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'WORK_TYPE' ) b ON a.WORK_TYPE = b.column_type_code
+                LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'POWER_CUT' ) c ON a.POWER_CUT = c.column_type_code
+                LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'WORKRISK_LEVEL' ) d ON a.WORKRISK_LEVEL = d.column_type_code
+                LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'GRIDRISK_LEVEL' ) e ON a.GRIDRISK_LEVEL = e.column_type_code
+                LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'VOLTAGE_LEVEL' ) f ON a.VOLTAGE_LEVEL = f.column_type_code
+                LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'LIVE_WORK_FLAG' ) g ON a.LIVE_WORK_FLAG = g.column_type_code
+                LEFT JOIN ( SELECT VIOLATION_STAFF_ID, count( 1 ) VIOLATION_CNT FROM srp_work_violationfile  GROUP BY VIOLATION_STAFF_ID ) h ON a.WORK_MANAGER_ID = h.VIOLATION_STAFF_ID
+        WHERE
+            a.WORK_PLAN_ID = #{workPlanId}
+    </select>
+
+
+</mapper>

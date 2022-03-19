@@ -1,0 +1,239 @@
+<style>
+    .modal-header{
+        background: #002060;
+    }
+    .modal-header h3 {
+        line-height: 30px;
+        width: 100%;
+        color:white;
+        font-size: 24px;
+        margin-left: 800px;
+
+    }
+    .modal .modal-header .close {
+        line-height: 23px;
+        font-size: 30px;
+        color: #fff;
+        font-weight: lighter;
+        text-shadow: 0 0 0 #ffffff;
+        opacity: 1;
+    }
+    .modal .dialog-header-button {
+        /*line-height: 23px;*/
+        /*font-size: 30px;*/
+        /*color: #fff;*/
+        /*font-weight: lighter;*/
+        /*text-shadow: 0 0 0 #ffffff;*/
+        /*opacity: 1;*/
+        display: none;
+    }
+    .modal .modal-body {
+        max-height: none;
+        background: #002060;
+    }
+    .release{
+           width:38px;
+           height:38px;
+           background: url("./resources/images/gridOperation/u744.png") no-repeat;
+           background-size: 38px 38px;
+           margin-top: 15px;
+           margin-left: 130px;
+       }
+    .releases{
+        margin-top: 25px;margin-left:10px;color: #49f9f3;font-size: 20px
+    }
+    .feedback{
+        width:38px;
+        height:38px;
+        background: url("./resources/images/gridOperation/u749.png") no-repeat;
+        background-size: 38px 38px;
+        margin-top: 15px;
+    }
+    .feedbacks{
+        margin-top: 25px;margin-left:10px;color: #3466ad;font-size: 20px;
+    }
+    .report{
+        width:38px;
+        height:38px;
+        background: url("./resources/images/gridOperation/u754.png") no-repeat;
+        background-size: 38px 38px;
+        margin-top: 15px;
+    }
+    .reports{
+        margin-top: 25px;margin-left:10px;color: #3466ad;font-size: 20px;
+    }
+    .inform{
+        width:38px;
+        height:38px;
+        background: url("./resources/images/gridOperation/u759.png") no-repeat;
+        background-size: 38px 38px;
+        margin-top: 15px;
+    }
+    .informs{
+        margin-top: 25px;margin-left:10px;color: #3466ad;font-size: 20px;
+    }
+    .relieve{
+        width:38px;
+        height:38px;
+        background: url("./resources/images/gridOperation/u764.png") no-repeat;
+        background-size: 38px 38px;
+        margin-top: 15px;
+    }
+    .relieves{
+        margin-top: 25px;margin-left:10px;color: #3466ad;font-size: 20px;
+    }
+    .line{
+        width:92px;
+        height:6px;
+        background: url("./resources/images/gridOperation/u733p000.png") no-repeat;
+        background-size: 92px 6px;
+        margin-top: 32px;
+        margin-left: 10px;
+    }
+    .num {
+        width: 142px;
+        height: 52px;
+        background: url("./resources/images/gridOperation/u1510.png") no-repeat;
+        background-size: 142px 52px;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        line-height: 52px;
+        margin-left: 50px;
+    }
+
+    .right {
+        width: 700px;
+        height: 54px;
+        background: url("./resources/images/gridOperation/u884.png") no-repeat;
+        background-size: 700px 54px;
+        font-size: 16px;
+        color: white;
+        line-height: 54px;
+        padding-left: 10px;
+    }
+    .rights {
+        width: 700px;
+        height: 51px;
+        background: url("./resources/images/gridOperation/u892.png") no-repeat;
+        background-size: 700px 51px;
+        font-size: 16px;
+        color: white;
+        line-height: 54px;
+        padding-left: 10px;
+    }
+    .duty {
+        width: 142px;
+        height: 114px;
+        background: url("./resources/images/gridOperation/u1828.png") no-repeat;
+        background-size: 142px 114px;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        line-height: 114px;
+        margin-left: 50px;
+    }
+
+    .duty_content {
+        width: 700px;
+        height: 114px;
+        background: url("./resources/images/gridOperation/u1830.png") no-repeat;
+        background-size:700px 114px;
+        font-size: 16px;
+        color: white;
+        line-height: 114px;
+        padding-left: 10px;
+    }
+</style>
+<div>
+    <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px;">基本信息</p>
+    <div style="width:90%;margin-top: 40px;display: flex;margin-left: 160px">
+        <p style="font-size: 16px;color: white;width: 700px">标题:<span style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:title"></span></p>
+        <p style="font-size: 16px;color: white;width: 400px">预警编号:<span style="font-size: 16px;color: white;margin-left: 20px"data-bind="text:number"></span></p>
+        <p style="font-size: 16px;color: white;width: 400px">预警等级:<span style="font-size: 16px;color: white;margin-left: 20px"data-bind="text:hierarchy"></span></p>
+    </div>
+    <div style="width:90%;margin-top: 40px;display: flex;margin-left:160px">
+        <p style="font-size: 16px;color: white;width: 700px">预警计划开始时间:<span style="font-size: 16px;color: white;margin-left: 20px"data-bind="text:startTime"></span></p>
+        <p style="font-size: 16px;color: white;width: 400px">预警计划结束时间:<span style="font-size: 16px;color: white;margin-left: 20px"data-bind="text:endtTime"></span></p>
+        <p style="font-size: 16px;color: white;width: 400px">发布单位:<span style="font-size: 16px;color: white;margin-left: 20px"data-bind="text:monad"></span></p>
+    </div>
+    <div style="width:58%;margin-top: 40px;display: flex;margin-left: 160px">
+        <p style="font-size: 16px;color: white;width:700px">发布人员:<span style="font-size: 16px;color: white;margin-left:20px"data-bind="text:staff"></span></p>
+        <p style="font-size: 16px;color: white;width: 400px;margin-left: 220px">预警状态:<span style="font-size: 16px;color: white;margin-left:48px"data-bind="text:status"></span></p>
+        <!--            <p style="font-size: 16px;color: white;"><span style="font-size: 16px;color: white;margin-left: 20px"></span></p>-->
+    </div>
+    <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px;">预警管控工作流程</p>
+    <div>
+        <div style="display: flex">
+            <div class="hand" style="display: flex" data-bind="click:first">
+                <p class="release"></p>
+                <p class="releases">发布</p>
+            </div>
+            <p class="line"></p>
+            <div class="hand" style="display: flex" data-bind="click:second">
+                <p class="feedback"></p>
+                <p class="feedbacks">反馈</p>
+            </div>
+            <p class="line"></p>
+            <div class="hand" style="display: flex"  data-bind="click:three">
+                <p class="report"></p>
+                <p class="reports" >报告</p>
+            </div>
+            <p class="line"></p>
+            <div class="hand" style="display: flex" data-bind="click:four">
+                <p class="inform"></p>
+                <p class="informs" >告知</p>
+            </div>
+            <p class="line"></p>
+            <div class="hand" style="display: flex" data-bind="click:five">
+                <p class="relieve"></p>
+                <p class="relieves">解除</p>
+            </div>
+        </div>
+        <div class="relieves_content" style="margin-top: 30px;margin-left:83px;display: none">
+            <div style="display: flex">
+                <p class="duty">解除信息</p>
+                <p class="duty_content" data-bind="text:warnrel"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">调度员</p>
+                <p class="right" data-bind="text:name"></p>
+            </div>
+
+            <div style="display: flex">
+                <p class="num">联系方式</p>
+                <p class="right" data-bind="text:phone"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">解除时间</p>
+                <p class="rights" data-bind="text:removedate"></p>
+            </div>
+        </div>
+    </div>
+    <div class="publish">
+        <div style="margin: 20px 0px 0px 100px;width: 508px;height: 741px;display: flex">
+            <img style="margin-right: 15px;" src="./resources/images/gridOperation/u729.jpg">
+            <img style="margin-right: 15px;"src="./resources/images/gridOperation/u731.jpg">
+            <img  src="./resources/images/gridOperation/u733.jpg">
+        </div>
+    </div>
+    <div class="feedbackss" style="display: none">
+        <div style="margin: 35px 0px 0px 132px;width: 501px;height: 709px;display: flex">
+            <img style="margin-right: 15px;" src="./resources/images/gridOperation/u766.jpg">
+
+        </div>
+    </div>
+    <div class="InformSingle" style="display: none">
+        <div style="margin: 35px 0px 0px 132px;width: 825px;height: 547px;display: flex">
+<!--            <img style="margin-right: 15px;" src="./resources/images/gridOperation/u801.png">-->
+        </div>
+    </div>
+    <div class="reportss" style="display: none">
+        <div style="margin: 35px 0px 0px 132px;width: 825px;height: 547px;display: flex">
+<!--            <img style="margin-right: 15px;" src="./resources/images/gridOperation/u801.png">-->
+            <img  data-bind="attr:{src:src}">
+
+        </div>
+    </div>
+
+</div>

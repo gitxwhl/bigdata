@@ -1,0 +1,817 @@
+<style>
+    .job {
+        position: absolute;
+        top: 50px;
+        left: 20px;
+    }
+
+    .power {
+        position: absolute;
+        top: 45px;
+        left: 190px;
+    }
+
+    .safety {
+        position: absolute;
+        top: 50px;
+        left: 360px;
+    }
+
+    .danger {
+        position: absolute;
+        top: 50px;
+        left: 530px;
+    }
+
+    .command {
+        position: absolute;
+        top: 50px;
+        left: 1250px;
+    }
+
+    .management {
+        position: absolute;
+        top: 50px;
+        left: 1420px;
+    }
+
+    .industry {
+        position: absolute;
+        top: 50px;
+        left: 1595px;
+    }
+
+    .more {
+        position: absolute;
+        top: 50px;
+        left: 1770px;
+    }
+
+
+    .day {
+        display: inline-block;
+        width: 45px;
+        height: 25px;
+        background: url("./resources/images/u1132.png") no-repeat;
+        background-size: 45px 25px;
+    }
+
+    .today {
+        display: inline-block;
+        width: 45px;
+        height: 25px;
+        background: url("./resources/images/u1134.png") no-repeat;
+        background-size: 45px 25px;
+    }
+
+    .distance {
+        margin-right: 5px;
+    }
+
+    .grade {
+        width: 100%;
+        height:96px;
+        background: url("./resources/images/u1082.png") no-repeat;
+        background-size:100% 100%;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    .release {
+        display: inline-block;
+        width: 14%;
+        height: 50px;
+        background: url("./resources/images/u1120.png") no-repeat;
+        background-size:100% 100%;
+        margin: 14px 7px 10px 4px;
+    }
+
+    .rank {
+        display: inline-block;
+        width: 7%;
+        /*height: 20px;*/
+        background: url("./resources/images/u1084.png") no-repeat;
+        background-size: 100% 100%;
+        /*margin: 25px 2px 10px 10px;*/
+    }
+
+    .six {
+        display: inline-block;
+        width:12%;
+
+        background: url("./resources/images/u1084.png") no-repeat;
+        background-size:100% 100%;
+        margin: 25px 2px 10px 20px;
+    }
+
+
+
+        .voltageClasses {
+            display: none;
+        }
+
+        .PowerFailureReason {
+            display: none;
+        }
+
+        .PowerEquipment {
+            display: none;
+        }
+
+        .earlyWarningTime {
+            display: none;
+        }
+
+        .earlyWarningType {
+            display: none;
+        }
+
+    .evaluateStatistics {
+        display: none;
+    }
+
+    .earlyWarning {
+        width: 105px;
+        height: 48px;
+        border: 1px solid rgba(0, 153, 204, 1);
+        color: white;
+        font-size: 18px;
+        text-align: center;
+        line-height: 48px
+    }
+
+    .num {
+        width: 142px;
+        height: 52px;
+        background: url("../resources/resources/images/u1510.png") no-repeat;
+        background-size: 142px 52px;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        line-height: 52px;
+        margin-left: 50px;
+    }
+
+    .risk {
+        width: 142px;
+        height: 105px;
+        background: url("../resources/resources/images/u1546.png") no-repeat;
+        background-size: 142px 105px;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        line-height: 105px;
+        margin-left: 50px;
+    }
+
+    .risk_content {
+        width: 1518px;
+        height: 105px;
+        background: url("../resources/resources/images/u1548.png") no-repeat;
+        background-size: 1518px 105px;
+        font-size: 16px;
+        color: white;
+        line-height: 105px;
+        padding-left: 10px;
+    }
+
+    .require {
+        width: 142px;
+        height: 161px;
+        background: url("../resources/resources/images/u1550.png") no-repeat;
+        background-size: 142px 161px;
+        font-size: 16px;
+        color: white;
+        margin-left: 50px;
+        line-height: 161px;
+        text-align: center;
+    }
+
+    .require_content {
+        width: 1518px;
+        height: 161px;
+        background: url("../resources/resources/images/u1552.png") no-repeat;
+        background-size: 1518px 161px;
+        font-size: 16px;
+        color: white;
+        line-height: 161px;
+        padding-left: 10px;
+    }
+
+    .right {
+        width: 1518px;
+        height: 54px;
+        background: url("../resources/resources/images/u1512.png") no-repeat;
+        background-size: 1518px 54px;
+        font-size: 16px;
+        color: white;
+        line-height: 54px;
+        padding-left: 10px;
+    }
+
+    .duty {
+        width: 142px;
+        height: 114px;
+        background: url("../resources/resources/images/u1828.png") no-repeat;
+        background-size: 142px 114px;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        line-height: 114px;
+        margin-left: 50px;
+    }
+
+    .duty_content {
+        width: 1518px;
+        height: 114px;
+        background: url("../resources/resources/images/u1830.png") no-repeat;
+        background-size: 1518px 114px;
+        font-size: 16px;
+        color: white;
+        line-height: 114px;
+    }
+
+    .accessory {
+
+        width: 1518px;
+        height: 52px;
+        background: url("../resources/resources/images/u1830.png") no-repeat;
+        background-size: 1518px 52px;
+        font-size: 16px;
+        color: white;
+        line-height: 52px;
+        padding-left: 10px;
+    }
+
+    /*.table-bordered:nth-child(1) tr{*/
+    /*    background:red;*/
+    /*    color: red;*/
+    /*}*/
+    /*.pagination ul > li > a{*/
+    /*    border: 1px solid #169bd5;*/
+    /*}*/
+    /*.pagination ul > .disabled > a, .pagination ul > .disabled > a:hover, .pagination ul > .disabled > a:focus{*/
+    /*    color:white;*/
+    /*}*/
+    /*.pagination ul > .disabled > a{*/
+    /*    background-color: #052271;*/
+    /*}*/
+    .page-middle input {
+        /* background-color: #010b3e;*/
+        /*color: white;*/
+        background: none;
+        color: white;
+        /*border: 1px solid #169bd5;*/
+    }
+</style>
+<div>
+    <div data-bind="visible: page() == 'list'" style="margin-left: 230px;">
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px">全网电网风险情况</p>
+        <div style="width: 98%;display:flex;flex-direction:row-reverse;">
+            <span class="today distance year" data-bind="click:year"
+                  style="font-size: 14px;color: white;text-align: center;line-height: 25px;">本年</span>
+            <span class="today distance month" data-bind="click:month"
+                  style="font-size: 14px;color: white;text-align: center;line-height: 25px;">本月</span>
+            <span class="today distance week" data-bind="click:week"
+                  style="font-size: 14px;color: white;text-align: center;line-height: 25px;">本周</span>
+            <span class="today distance tomorrow" data-bind="click:tomorrow"
+                  style="font-size: 14px;color: white;text-align: center;line-height: 25px;">明日</span>
+            <span class=" distance day" data-bind="click:day"
+                style="font-size: 14px;color: white;text-align: center;line-height: 25px;">当日</span>
+        </div>
+
+        <div class="grade" style="width: 96%">
+            <div class="release fabu">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:30px;margin-top:23px;">预警数:</span>
+                <span style="font-size: 16px;color: yellow;margin-left:10px;" data-bind="text: release"></span>
+            </div>
+            <div class="release yujing" style="display: none">
+                <span
+                        style="display:inline-block;font-size: 16px;color: white;margin-left:30px;margin-top:23px;">预警数:</span>
+                <span style="font-size: 16px;color: yellow;margin-left:10px;" data-bind="text: release"></span>
+            </div>
+            <div class="rank">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:10px;margin-top:20px;">一级:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text: stair"></span>
+            </div>
+            <div class="rank">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:10px;margin-top:20px;">二级:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text: second">0</span>
+            </div>
+            <div class="rank">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:10px;margin-top:20px;">三级:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text: three"></span>
+            </div>
+            <div class="rank">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:10px;margin-top:20px;">四级:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text: four"></span>
+            </div>
+            <div class="rank">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:10px;margin-top:20px;">五级:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text: five"></span>
+            </div>
+            <div class="six" style="width: 12%">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-top:20px;margin-left:10px">六级及以上:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text: six"></span>
+            </div>
+            <div class="release" style="margin-left: 10px">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:30px;margin-top:23px;">风险数:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text:risk"></span>
+            </div>
+            <div class="release aa">
+                <span
+                    style="display:inline-block;font-size: 16px;color: white;margin-left:30px;margin-top:23px;">解除数:</span>
+                <span style="font-size: 16px;color: yellow;" data-bind="text: relieve"></span>
+            </div>
+        </div>
+        <p style="font-size: 18px;color: white;margin-top:25px">各单位风险信息统计情况</p>
+        <div style="margin-top: 0px;width: 98%;">
+            <chart params="
+                        width:'100%',
+                        height:'500px',
+                        option:pieoption">
+            </chart>
+        </div>
+        <div style="display: flex;">
+
+            <p style="font-size: 18px;width:17%;color: white;margin:10px 0px 0px 0px;">各单位电网风险分布情况</p>
+            <select class="select" style="background-color:#032695;color: white;" data-bind="options: selectList,
+                                                   optionsText: 'text',
+                                                   optionsValue:'id',
+                                                   value: selectId,
+                                                   event: { change: eventChange}">
+            </select>
+            <div style="display: inline-block;margin-left: 46%">
+                <span class=" distance day Distributionday" data-bind="click:gridDistributionday" style="font-size: 14px;color: white;text-align: center;line-height: 25px;">日</span>
+                <span class="today distance Distributionweek" data-bind="click:Distributionweek" style="font-size: 14px;color: white;text-align: center;line-height: 25px;">周</span>
+                <span class="today distance Distributionmonth" data-bind="click:Distributionmonth" style="font-size: 14px;color: white;text-align: center;line-height: 25px;">月</span>
+                <span class="today distance Distributionyear" data-bind="click:Distributionyear" style="font-size: 14px;color: white;text-align: center;line-height: 25px;">年</span>
+                <!--            <span class="today distance year" data-bind="click:year" style="font-size: 14px;color: white;text-align: center;line-height: 25px;">本年</span>-->
+            </div>
+        </div>
+
+        <!--        预警数量-->
+        <div class="WarningNumber">
+            <chart params=" width:'99%',
+                            height:heightMap,
+                            option:option2">
+            </chart>
+        </div>
+        <!--        电压等级-->
+        <div class="voltageClasses">
+            <chart params="
+                                  width:'1650px',
+                                  height:heightMap,
+                                  option:option3">
+            </chart>
+        </div>
+        <!--        停电事由-->
+        <div class="PowerFailureReason">
+            <chart params="
+                                  width:'1650px',
+                                  height:heightMap,
+                                  option:option4">
+            </chart>
+        </div>
+        <!--        停电设备-->
+        <div class="PowerEquipment">
+            <chart params="
+                                  width:'1650px',
+                                  height:heightMap,
+                                  option:option5">
+            </chart>
+        </div>
+        <!--        预警事件持续时间-->
+        <div class="earlyWarningTime">
+            <chart params="
+                                  width:'1650px',
+                                  height:heightMap,
+                                  option:option6">
+            </chart>
+        </div>
+        <!--        预警影响类型-->
+        <div class="earlyWarningType">
+            <chart params="
+                                  width:'1650px',
+                                  height:heightMap,
+                                  option:option7">
+            </chart>
+        </div>
+        <!--        评价指标统计情况-->
+<!--        <div class="evaluateStatistics">-->
+<!--            <chart params="-->
+<!--                                   width:'1620px',-->
+<!--                                  height:heightMap,-->
+<!--                                    option:option8">-->
+<!--            </chart>-->
+<!--        </div>-->
+
+
+
+        <p style="font-size: 18px;color: white;margin-top:10px">各单位今日电网风险预警信息列表</p>
+<!--        <div style="width:100%;">-->
+        <div style="width:97%;margin-top: 20px;">
+            <datagrid id="instanceTable" params="
+						style: style,
+						items: items,
+						columns: columns,
+						isShowRowNumber: isShowRowNumber,
+						isShowCheckBox: isShowCheckBox,
+						isShowBorder: isShowBorder,
+						isShowStripe: isShowStripe,
+						isShowHover: isShowHover,
+						isShowCondense: isShowCondense,
+						isAllowEdit: isAllowEdit,
+						isAllowDelete: isAllowDelete,
+						isAllowOperations: isAllowOperations,
+						isAllowShift: isAllowShift,
+						isAllowAppend: isAllowAppend,
+						isAllowSort: isAllowSort,
+						isAllowPaging: isAllowPaging,
+						pageSize: pageSize,
+						rowNumberWidth:'3%',
+						checkboxWidth:'3%',
+
+						onSelectedItems:onSelectedItems,
+						 primaryKey: primaryKey
+						"></datagrid>
+
+        <pagenavibar style="float: right;color: white;" params="
+                        size: size,
+                        showArrow: showArrow,
+                        showTotal: showTotal,
+                        showGoto: showGoto,
+                        count: count,
+                        showAllPage: showAllPage,
+                        pageTotalCount: pageTotalCount,
+                        pageIndex: pageIndex,
+                        pageVisibleCount: pageVisibleCount,
+                        onPageIndexChanged: onPageIndexChanged">
+
+        </pagenavibar>
+        </div>
+    </div>
+
+    <div data-bind="visible: page() == 'edit'" style="margin-left: 230px">
+        <div style="display: flex;margin-top:40px;margin-left: 20px">
+            <p style="font-size: 16px;color: white;margin-right: 10px">当前位置:</p>
+            <p style="font-size: 16px;color: white;margin-right: 10px" data-bind="click:goBack">电网运行风险></p>
+            <p style="font-size: 16px;color: white;margin-right: 10px">电网风险详情</p>
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px;">基本信息</p>
+        <div style="margin-top: 40px;display: flex;margin-left: 160px">
+            <p style="font-size: 16px;color: white;width: 700px">预警标题:<span
+                    style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:title"></span></p>
+            <p style="font-size: 16px;color: white;width: 400px">预警编号:<span
+                    style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:number"></span></p>
+            <p style="font-size: 16px;color: white;width: 400px">预警等级:<span
+                    style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:hierarchy"></span></p>
+        </div>
+        <div style="margin-top: 40px;display: flex;margin-left:160px">
+            <p style="font-size: 16px;color: white;width: 700px">开始时间:<span
+                    style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:startTime"></span></p>
+            <p style="font-size: 16px;color: white;width: 400px">结束时间:<span
+                    style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:endtTime"></span></p>
+            <p style="font-size: 16px;color: white;width: 400px">发布单位:<span
+                    style="font-size: 16px;color: white;margin-left: 20px" data-bind="text:monad"></span></p>
+        </div>
+        <div style="width:58%;margin-top: 40px;display: flex;margin-left: 160px">
+            <p style="font-size: 16px;color: white;width:700px">发布人员:<span
+                    style="font-size: 16px;color: white;margin-left:20px" data-bind="text:staff"></span></p>
+            <p style="font-size: 16px;color: white;width: 400px;margin-left:151px">状态:<span
+                    style="font-size: 16px;color: white;margin-left:14px" data-bind="text:status"></span></p>
+            <!--            <p style="font-size: 16px;color: white;"><span style="font-size: 16px;color: white;margin-left: 20px"></span></p>-->
+        </div>
+        <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px;">预警管控工作流程</p>
+        <div style="margin-left: 30px;margin-top: 30px;display: flex">
+            <p class="earlyWarning requisition " data-bind="click: requisition_click" ,>预警通知单</p>
+            <p class="earlyWarning feedback" data-bind="click: feedback_click">预警反馈单</p>
+            <p class="earlyWarning report" data-bind="click: report_click">预警报告单</p>
+            <p class="earlyWarning notify" data-bind="click: notify_click">预警告知单</p>
+            <p class="earlyWarning exploiting" data-bind="click: exploiting_click">预警实施</p>
+            <p class="earlyWarning relieve" data-bind="click: relieve_click">预警解除</p>
+        </div>
+        <div class="requisitions" style="margin-bottom: 30px;margin-left: -20px">
+            <div style="display: flex">
+                <p class="num">预警编号</p>
+                <p class="right" data-bind="text:informNum"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">发布单位</p>
+                <p class="right" data-bind="text:informUnit"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警日期</p>
+                <p class="right" data-bind="text:informData"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">停电设备</p>
+                <p class="right" data-bind="text:informPowercut"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警事由</p>
+                <p class="right" data-bind="text:informMatter"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警时段</p>
+                <p class="right" data-bind="text:informTimeframe "></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">风险等级</p>
+                <p class="right" data-bind="text:informgrade"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">主送部门</p>
+                <p class="right" data-bind="text:informbranch"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">责任单位</p>
+                <p class="right" data-bind="text:informaccountability"></p>
+            </div>
+            <div style="display: flex">
+                <p class="risk">风险分析</p>
+                <p class="risk_content" data-bind="text:informanalyze"></p>
+            </div>
+            <div style="display: flex">
+                <p class="require">管控措施及要求</p>
+                <p class="require_content" data-bind="text:informrequire"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">签收部门</p>
+                <p class="right" data-bind="text:informdepartment"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">编制</p>
+                <p class="right" data-bind="text:informauthorizedStrength"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">附件</p>
+                <p class="accessory" data-bind="text:annex"></p>
+            </div>
+        </div>
+        <div class="feedbacks" style="display: none;margin-bottom: 30px;margin-left: -20px">
+            <div style="display: flex">
+                <p class="num">预警编号</p>
+                <p class="right" data-bind="text:feedbackNum"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">反馈单位</p>
+                <p class="right" data-bind="text:feedbackUnit"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">反馈日期</p>
+                <p class="right" data-bind="text:feedbackTime"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">主送单位</p>
+                <p class="right" data-bind="text:feedbacksent"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警单编号</p>
+                <p class="right" data-bind="text:feedbackoddNum"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警时段</p>
+                <p class="right" data-bind="text:feedbackTimeframe"></p>
+            </div>
+            <div style="display: flex">
+                <p class="require">管控措施落实情况</p>
+                <p class="require_content" data-bind="text:feedbackrequire"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">编制</p>
+                <p class="right" data-bind="text:feedbackauthorizedStrength"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">审核</p>
+                <p class="right" data-bind="text:feedbackaudit"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">批准</p>
+                <p class="right" data-bind="text:feedbackratify"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">附件</p>
+                <p class="accessory" data-bind="text:annex"></p>
+            </div>
+        </div>
+        <div class="reports" style="display: none;margin-bottom: 30px;margin-left: -20px">
+            <div style="display: flex">
+                <p class="num">预警编号</p>
+                <p class="right" data-bind="text:reportNum"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">报送日期</p>
+                <p class="right" data-bind="text:reportTime"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">主送单位</p>
+                <p class="right" data-bind="text:reportunit"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警时段</p>
+                <p class="right" data-bind="text:reportTimeframe"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警情况</p>
+                <p class="right" data-bind="text:reportcondition"></p>
+            </div>
+            <div style="display: flex">
+                <p class="require">涉及区域和影响范围</p>
+                <p class="require_content" data-bind="text:reportscope"></p>
+            </div>
+            <div style="display: flex">
+                <p class="require">需政府协调的事项建议</p>
+                <p class="require_content" data-bind="text:reportsuggest"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">报告单位</p>
+                <p class="right" data-bind="text:reportmonad"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">联系人</p>
+                <p class="right" data-bind="text:reportName"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">联系电话</p>
+                <p class="right" data-bind="text:reportPhone"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">附件</p>
+                <p class="accessory" data-bind="text:annex"></p>
+            </div>
+        </div>
+        <div class="notifys" style="display: none;margin-bottom: 30px;margin-left: -20px">
+            <div style="display: flex">
+                <p class="num">预警编号</p>
+                <p class="right" data-bind="text:notifysNum"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">报送日期</p>
+                <p class="right" data-bind="text:notifysTime"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">送达单位</p>
+                <p class="right" data-bind="text:notifysmonad"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警事由</p>
+                <p class="right" data-bind="text:notifysMatter"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警时段</p>
+                <p class="right" data-bind="text:notifysTimeframe"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">风险分析</p>
+                <p class="right" data-bind="text:notifysanalyze"></p>
+            </div>
+            <div style="display: flex">
+                <p class="require">电网风险管控措施</p>
+                <p class="require_content" data-bind="text:notifysmeasure"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">告知单位</p>
+                <p class="right" data-bind="text:notifysunit"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">联系人</p>
+                <p class="right" data-bind="text:notifysName"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">联系电话</p>
+                <p class="right" data-bind="text:notifysPhone"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">附件</p>
+                <p class="accessory" data-bind="text:annex"></p>
+            </div>
+        </div>
+        <div class="exploitings" style="display: none;margin-bottom: 30px;margin-left: -20px">
+            <div style="display: flex">
+                <p class="num">预警编号</p>
+                <p class="right" data-bind="text:exploitingsNum"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">停电设备</p>
+                <p class="right" data-bind="text:exploitingsPowercut"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警事由</p>
+                <p class="right" data-bind="text:exploitingsMatter"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警等级</p>
+                <p class="right" data-bind="text:exploitingsclass"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">预警时段</p>
+                <p class="right" data-bind="text:exploitingsTimeframe"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">主送部门</p>
+                <p class="right" data-bind="text:exploitingsunit"></p>
+            </div>
+            <div style="display: flex">
+                <p class="duty">责任单位</p>
+                <p class="duty_content" data-bind="text:exploitingsmonad"></p>
+            </div>
+            <p style="font-size: 18px;color: white;margin-left: 40px;margin-top:50px;margin-bottom: 30px">电网风险管控模块五维度管理
+            </p>
+            <div style="display: flex">
+                <div>
+                    <img class="dianwang" data-bind="click:power" style="width: 60px;height: 60px;margin-left: 50px"
+                        src="../resources/resources/images/u1883.png">
+
+                    <img style="width: 110px;height:6px" src="../resources/resources/images/u1855.png">
+                </div>
+
+                <div>
+                    <img class="crew" data-bind="click:personnel" style="width: 60px;height: 60px;"
+                        src="../resources/resources/images/u1839.png">
+                    <img style="width: 110px;height:6px" src="../resources/resources/images/u1855.png">
+                </div>
+                <div>
+                    <img class="devicename" data-bind="click:facility" style="width: 60px;height:60px;"
+                        src="../resources/resources/images/u1843.png">
+                    <img style="width: 110px;height:6px" src="../resources/resources/images/u1855.png">
+                </div>
+                <div>
+                    <img class="atmosphere" data-bind="click:surrounding" style="width: 60px;height: 60px;"
+                        src="../resources/resources/images/u1847.png">
+                    <img style="width: 110px;height:6px" src="../resources/resources/images/u1855.png">
+                </div>
+                <div>
+                    <img class="advocate" data-bind="click:useName" style="width: 60px;height:60px;"
+                        src="../resources/resources/images/u1849.png">
+                </div>
+            </div>
+            <div style="display: flex">
+                <p style="font-size: 16px;color: white;margin-left: 63px;margin-top: 10px">电网</p>
+                <p style="font-size: 16px;color: white;margin-left: 137px;margin-top: 10px">人员</p>
+                <p style="font-size: 16px;color: white;margin-left: 147px;margin-top: 10px">设备</p>
+                <p style="font-size: 16px;color: white;margin-left: 143px;margin-top: 10px">环境</p>
+                <p style="font-size: 16px;color: white;margin-left: 145px;margin-top: 10px">用户</p>
+            </div>
+            <div class="powers"
+                style="font-size: 16px;color: white;margin-top: 30px;margin-left: 50px;margin-bottom:30px;display: block">
+                XX预警信息对XX变运行方式产生影响，已安排相关部门及人员对风险进行控制，编写事故预案。
+                调度风险预案
+            </div>
+            <div class="personnels"
+                style="font-size: 16px;color: white;margin-top: 30px;margin-left: 50px;margin-bottom:30px;display: none">
+                已安排XX变电检修一组作业人员对现场危险点进行勘察，发现危险源1处，需通过检修进行处理。
+                到岗到位检查
+                工作票、危险点分析单审核情况
+                安监人员进行巡查，保证安全的组织措施、技术措施及制定的风险控制措施落实到位
+            </div>
+            <div class="facilitys"
+                style="font-size: 16px;color: white;margin-top: 30px;margin-left: 50px;margin-bottom:30px;display: none">
+                XX变电检修一组对预警设备进行排查，巡线发现#103塔C相绝缘子均压环及横担处有放电痕迹，邻近塔身上发现有残留鸟粪，已进行处理。
+                设备控制措施
+                巡视设备人员到岗情况
+            </div>
+            <div class="surroundings"
+                style="font-size: 16px;color: white;margin-top: 30px;margin-left: 50px;margin-bottom:30px;display: none">
+                XX变电站红外测温正常，未发现隐患源，已安排人员进行定点看护，联系人张三，电话18612459876。
+                设备运行维护单位对涉及风险的输电线路、电力电缆、变电站设备运行环境提前进行隐患排查对线下隐患、沟道积水、变电站技防设备损坏等风险制定专项控制措施
+            </div>
+            <div class="useNames"
+                style="font-size: 16px;color: white;margin-top: 30px;margin-left: 50px;margin-bottom:30px;display: none">
+                XX变#2变主变停电期间对XX有限公司造成影响，已做好全停后的事故处置预案和电解槽保温措施，同时加强运行主变特巡和测温工作。
+                反映出可能造成的对重要用户的影响
+                告知用户可能存在的风险
+                协助客户开展风险防范工作(安全隐患制定保障措施、负荷切倒方案、应急电源接入方案完善电气事故应急预案、组织开展全面演练)
+            </div>
+
+        </div>
+        <div class="relieves" style="display: none;margin-bottom: 30px;margin-left: -20px">
+            <div style="display: flex">
+                <p class="duty">解除信息</p>
+                <p class="duty_content" data-bind="text:relievesmessage"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">调度员</p>
+                <p class="right" data-bind="text:relievesyardman"></p>
+            </div>
+
+            <div style="display: flex">
+                <p class="num">联系方式</p>
+                <p class="right" data-bind="text:relievesphone"></p>
+            </div>
+            <div style="display: flex">
+                <p class="num">解除时间</p>
+                <p style="line-height: 52px;padding-left: 5px" class="accessory" data-bind="text:relievesTime"></p>
+            </div>
+        </div>
+    </div>
+
+</div>

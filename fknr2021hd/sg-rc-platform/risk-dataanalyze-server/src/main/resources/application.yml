@@ -1,0 +1,211 @@
+#全局配置
+rmcp:
+  version: 0.0.1-SNAPSHOT
+  swagger:
+    title: risk-dataanalyze-server doc
+    description: 大屏展示 API
+    contact: risk-dataanalyze-server development team
+#业务应用端口及其他配置
+server:
+  port: 10040
+  tomcat:
+    max-connections: 20000
+    uri-encoding: UTF-8
+  jsp-servlet:
+    init-parameters:
+      development: true
+  servlet:
+    context-path: /risk-dataanalyze-server
+
+#服务注册与发现配置
+eureka:
+  client:
+    enabled: false
+    serviceUrl:
+      defaultZone: http://39.98.246.39:8761/eureka/
+  instance:
+    #    leaseRenewalIntervalInSeconds: 5
+    #    leaseExpirationDurationInSeconds: 5
+    preferIpAddress: true
+    #instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${servertest.port}
+
+#spring全局配置
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+08:00
+  application:
+    name: risksynthesis-server
+  mvc:
+    async:
+      request-timeout=2000:
+
+
+
+  #导入文件大小
+  http:
+  multipart:
+    max-file-size: 100MB
+    max-request-size: 100MB
+    enabled: false
+  #分布式session配置
+  redis:
+    host: 172.28.1.225
+    port: 16379
+    password: ENCSM4CBC(f/qWCfYvHnbc7QHafFFCkQ==)
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    password: 123456
+
+  session:
+    #REDIS使用redis作为会话存储、NONE则使用中间件的会话，用户登录信息使用EHcache存储,默认为EHcache存储
+    storeType: REDIS
+#    storeType: none
+#日志开关
+logSwitch: true
+#前后端一致性校验
+signValidateFlag: true
+#平台服务配置
+px:
+  #公共数据库SCHEMA配置
+  schema: rmcp
+  #业务数据库SCHEMA配置
+  appSchema: rmcp
+  #附件 非结构化环境配置
+  uds:
+    trackerServer: localhost:22122 #FASTDFS tracker服务地址（需要配置）
+    appId: f44801765c2b11ea88d002426a3dc31d
+    disabled: true
+    connectTimeout: 100
+    networkTimeout: 100
+    charset: iso8859-1
+    trackerHttpPort: 80
+    antiStealToken: true
+    maxConnectionCount: 100  #最大连接数
+    maxWaitTime: 10  #最大超时时间,单位：秒g
+    fileService: simpleFileService #noTableFileService, simpleFileService, udsFileService
+    type: fastdfs
+  #数据库配置
+  datasource:
+#    dataSource:
+#      type: com.alibaba.druid.pool.DruidDataSource
+#      driverClassName: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://172.28.1.130:13306/pi6000?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+#      username: root
+#      password: ENCSM4CBC(f/qWCfYvHnbc7QHafFFCkQ==)
+#      initialSize: 20
+#      maxActive: 30
+    dataSource:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/pi6000?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useLocalSessionState=true&serverTimezone=GMT%2B8
+      username: root
+      password: zpproot
+      initialSize: 5
+      maxActive: 20
+
+
+#ic登录   最新配置
+isc:
+  appId: 2c905b667839cd2d0178aa08f27a0ab0 #业务系统在ISC的编码
+  rootMenuId: 2c905b667839cd2d0178aa08f27a0ab0 #菜单根节点ID
+  sso: http://sgcc.isc.com:22001/isc_sso/  #ISC登录地址
+  frontServ: http://sgcc.isc.com:22001/isc_frontmv_serv #ISC服务端资源接口地址
+  busiUrl: http://172.28.1.225:10007/zb_fk_screen_frontend/  #风控系统入口地址
+  isCache: true #是否开启缓存日志,需要与ISC服务端保持一致
+  jmsUrl: failover\\:(tcp\\://jms.isc.com\\:61616) #如果isCache为true，此处必须配置
+  jmsTopic: AGENT_MQ_40288cd66068cfe501606d96b4d85101 #如果isCache为true，此处必须配置
+  menuMode: isc #菜单获取方式
+
+  #  PI6000权限配置
+  ua:
+    #同步isc组织机构的Restful服务的url
+    #iscAdapterUrl: http://172.16.200.84:8082/isc_frontmv_serv
+    #长期未登录用户审计时间（单位：天）
+    #unloginTime: 180
+    #用户认证模式（默认使用用户名认证）：1、username（用户名）;2、fullname（用户姓名）
+    authName: username
+    #是否启用用户关键操作审计（默认禁用）：1、true（启用）;2、false（禁用）
+    actionAudit: false
+    appID: b23b101faea611e98ddc0242ac110005
+    app_mode: true
+    loginMode: parallel         #登录策略(kickout/single/parallel)
+    maxCaptchaCount: 5        #用户和密码输入错误几次，出现验证码(若设为为0，表示默认显示验证码)
+    maxCaptchaTime: 1         #验证码最大有效时间（单位：分钟）
+    maxSession: 200
+    #1、isc_sso(ISC认证，PI6000 鉴权); 2、sso（PI6000 单点登录）; 3、workbench
+    authMode: sso
+    #    isc:
+    #      enabled: false
+    sso:
+      ssoserver: http://39.98.246.39:90/pi6000-ua-sso
+    #是否启用方法注解权限校验
+    methodAuthz:
+      enabled: true
+    auth:
+      #是否启用登录认证和权限校验
+      enabled: false
+      loginURL: /rmcp-service-operation-schedule/login/login.html
+      successURL: /rmcp-service-operation-schedule/main/index.jsp
+      unauthURL: /rmcp-service-operation-schedule/errorpages/401.htm
+
+      #url权限校验拦截器，采用短路拦截规则，优先级: annoAutzPath->annoAutzPath->urlAutzPath
+      #匿名认证拦截器
+      annoAutzPath:
+        - /login/login.html
+        - /errorpages/401.htm
+        - /**/*.htm
+        - /**/*.html
+        - /hessian/**
+        - /APP/bpm-framework/uischeme/**
+      #登录认证拦截器
+      loginAutzPath:
+        - /login/login.html
+        - /**/*.jsp
+        - /rmcp-service-operation-schedule/**
+        - /api/**
+        - /test/**
+        - /
+
+      #菜单URL和功能认下拦截器
+      urlAutzPath:
+        - /**
+
+logging:
+  level:
+    com.raysdata.scheduleserver: DEBUG
+    org.springframework.jdbc.core.JdbcTemplate: DEBUG
+    org.springframework.jdbc.core.StatementCreatorUtils: Trace
+    com.raysdata.riskdataanalyzeserver.mapper: debug
+    com.raysdata.riskdataanalyzeserver.service: debug
+    com.raysdata.riskdataanalyzeserver.controller: debug
+#    网关
+#gqjUrl: http://127.0.0.1:10036/risk-management-server/api/
+
+#PI6000组件直连地址
+pi6000-ua-web: 172.28.1.254:18091
+pi6000-mdl-web: 172.28.1.254:18092
+pi6000-bpm-web: 172.28.1.254:18093
+pi6000-task-web: 172.28.1.254:18094
+#业务appID
+appId: b23b101faea611e98ddc0242ac110005
+#业务组织体系id
+orgSystemId: e6455d5fb74611e99595005056835b0c
+#uds下载url地址
+uds-download-url: http://39.98.246.39:18096/pi6000-uds-web/api/file/udsFileService/download
+uds-upload-url: http://39.98.246.39:18096/pi6000-uds-web/api/file/udsFileService/upload
+uds-delete-url: http://39.98.246.39:18096/pi6000-uds-web/api/file/udsFileService/delete
+
+#mybatis:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    call-setters-on-nulls: true
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

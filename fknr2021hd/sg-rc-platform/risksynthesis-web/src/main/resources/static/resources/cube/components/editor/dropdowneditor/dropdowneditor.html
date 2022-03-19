@@ -1,0 +1,53 @@
+<div class="cube btn-group dropdowneditor"
+	data-bind="css:{'open': isShowDropdownOptions},attr:{'readOnly': readOnly}" >
+	<!-- ko if: isAllowEdit -->
+		<div class="input-append">
+			<input  type="text" data-bind="hasFocus: hasFocus, textInput: _checkText, attr:{disabled: disabled},style:{width: width,textAlign: textAlign},event:{mouseout: doCloseDropdownOptions}" />
+			<button type="button" class="btn dropdown-toggle split-toggle" data-toggle="dropdown" data-bind="attr:{disabled: disabled},
+				event:{click: function(data,event){doClickDropdownOptions($element,event)}}">
+		   		<span class="caret" data-bind=""></span>
+		 	</button>
+	 	</div>
+	<!-- /ko -->
+	<!-- ko ifnot: isAllowEdit -->
+		<!-- ko ifnot:isSplit -->
+			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-bind="hasFocus: hasFocus, attr:{disabled: disabled},
+				event:{mouseover: function(data,event){doOpenDropdownOptions($element,event)},click: function(data,event){doOpenDropdownOptions($element,event)}, mouseout: doCloseDropdownOptions}, style:{width: width,textAlign: textAlign}">		
+				<span data-bind=" text: selectedItem()!=null?_checkText:'请选择' "></span>
+				<span class="caret"></span>
+			</button>
+		<!-- /ko -->
+		
+		<!-- ko if: isSplit-->
+			<button type="button" class="btn" data-bind="text:selectedItem()!=null?_checkText:'请选择',hasFocus: hasFocus, attr:{disabled: disabled}, style:{width: width,textAlign: textAlign}"></button>
+			<button type="button" class="btn dropdown-toggle split-toggle" data-toggle="dropdown" data-bind="attr:{disabled: disabled},
+				event:{mouseover: function(data,event){doOpenDropdownOptions($element,event)}, click:function(data,event){doOpenDropdownOptions($element,event)}, mouseout: doCloseDropdownOptions}">
+	    		<span class="caret" data-bind=""></span>
+	  		</button>
+	  	<!-- /ko -->
+	<!-- /ko -->
+  	
+	<ul class="dropdown-menu" data-bind="event:{mouseenter: function(data,event){doOpenDropdownOptions($element,event)},mouseleave: doCloseDropdownOptions},css:{'dropdown-scroll':isShowScroll, 'dropdown-checkbox':isShowCheckbox},style:{width: ((width()!='auto') && isTextEllipsis())?width:null,  minWidth: ((width()!='auto') && !isTextEllipsis())?width:null, maxHeight: dropdownMenuHeight()!='auto'?dropdownMenuHeight:null}">
+		<!-- ko if:isShowNull -->
+			<li>
+				<!-- ko if: isShowCheckbox -->
+					<input type="checkbox" data-bind="checkedValue: '', checked: $data._checkListvalue" />
+				<!-- /ko -->
+				<a href="#" data-bind="text: '请选择',value: '',click: $data.selectItem"></a>
+			</li>
+		<!-- /ko -->
+		<!-- ko foreach:t_items -->
+			<li>
+				<!-- ko if: $parent.isShowCheckbox -->
+					<input type="checkbox" data-bind="checkedValue: value, checked: $parent._checkListvalue" />
+				<!-- /ko -->
+				<!-- ko ifnot: $parent.isTextEllipsis-->
+					<a href="#" data-bind="html: text,click: $parent.selectItem"></a> 
+				<!-- /ko -->
+				<!-- ko if: $parent.isTextEllipsis-->
+					<a href="#" class="textEllipsis" data-bind="attr:{title: text}, html: text,click: $parent.selectItem"></a> 
+				<!-- /ko -->
+			</li>
+		<!-- /ko -->
+	</ul>
+</div>

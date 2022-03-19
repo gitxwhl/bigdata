@@ -1,0 +1,28 @@
+<div data-bind="visible: step() == 1">
+	<dataform id="exceltmpl_excelForm"
+		params="
+	loadMeta:false,
+	fields:columnFields,
+	displaySubmitButton:false,
+	cols: 3,
+	separator:'：',
+	validHintType: 'pop'
+">
+	</dataform>
+</div>
+<div data-bind="visible: step() == 2">
+	<div>
+		<h6>
+			<span data-bind="text:cube.msg('IMPORT_EXCEL_WIZARD_ANALYSE_RESULT')"></span>
+			（<span data-bind="text:cube.msg('IMPORT_EXCEL_WIZARD_ANALYSE_RESULT_DESCRIPTION')"></span>）
+		</h6>
+	</div>
+	<datagrid id="exceltmpl_excelGrid" params="
+			url: previewGridBaseUrl,
+			loadMeta:false,
+			autoLoad: false,
+			height: '250px',
+			columns: columns,
+			items: items
+	"></datagrid>
+</div>

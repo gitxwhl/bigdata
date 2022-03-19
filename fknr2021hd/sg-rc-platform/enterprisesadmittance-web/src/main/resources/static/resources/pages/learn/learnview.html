@@ -1,0 +1,72 @@
+<style>
+    .select {
+        background: #05204e;
+        width: 180px;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+
+    .table-bordered:nth-child(1) tr {
+        background: #0e1748;
+        color: #5793f3;
+    }
+    /*.table-bordered:nth-child(1) tr{*/
+    /*    background: #0e1748;*/
+    /*    color: #5793f3;*/
+    /*}*/
+</style>
+<div>
+    <div>
+        <div style="display: flex;margin-top:70px;margin-left: 100px">
+            <div style="margin-left:-110px">
+                <span style="font-size: 18px;color: white;margin: 20px 5px 20px 60px">学习标题:</span>
+                <input type="text" data-bind="value:StudyTitle"
+                    style="border:1px solid #0b7cb8;background-color:#05204e;color: white;width: 250px">
+
+            </div>
+
+            <div style="margin-left: 40px">
+                <span style="font-size: 18px;color: white;margin: 20px 5px 20px 30px">学习类型:</span>
+                <!--                <input type="text" data-bind="value:issue" style="border:1px solid #0b7cb8;background-color:#05204e;color: white;width: 150px">-->
+                <select class="select w-100" data-bind="
+                                                         options: StudyTypeContent,
+                                                         optionsText: 'text',
+                                                         optionsValue:'text',
+                                                         optionsValue:'id',
+                                                         value: StudyType,
+                                                      ">
+                </select>
+            </div>
+            <div class="know-btn cur-p"
+                style="background-color:#169bd5;display:inline-block;color:white;width: 80px;line-height:30px;height: 30px;text-align: center;font-size: 16px;margin:0px 0px 10px 20px">
+                查询</div>
+            <div class="know-btn cur-p"
+                style="background-color:#169bd5;display:inline-block;color:white;width: 80px;line-height:30px;height: 30px;text-align: center;font-size: 16px;margin:0px 0px 10px 20px">
+                新建</div>
+
+        </div>
+        <div style="width:96%;margin-left: 40px;margin-top: 20px;">
+            <datagrid id="instanceTable" params="
+						style: style,
+						items: items,
+						columns: columns,
+						isShowRowNumber: isShowRowNumber,
+						isShowCheckBox: isShowCheckBox,
+						isShowBorder: isShowBorder,
+						isShowHover: isShowHover,
+						isShowCondense: isShowCondense,
+						isAllowEdit: isAllowEdit,
+						isAllowDelete: isAllowDelete,
+						isAllowOperations: isAllowOperations,
+						isAllowShift: isAllowShift,
+						isAllowAppend: isAllowAppend,
+						isAllowSort: isAllowSort,
+						isAllowPaging: isAllowPaging,
+						pageSize: pageSize,
+						rowNumberWidth:'3%',
+						checkboxWidth:'3%',
+						onSelectedItems:onSelectedItems,
+						"></datagrid>
+        </div>
+    </div>
+</div>

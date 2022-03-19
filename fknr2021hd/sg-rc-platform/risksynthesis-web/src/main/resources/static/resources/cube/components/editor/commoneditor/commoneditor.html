@@ -1,0 +1,147 @@
+<!-- ko if: prefixText() != "" -->
+<span  data-bind='text:prefixText()'></span>
+<!-- /ko -->
+<!-- ko if:	editorType()=="TextEditor" && textMode()!="password" && textMode()!="multiline" -->
+<input  type="text"
+	data-bind="hasFocus: hasFocus, value: value, valueUpdate: blurValid()?'blur':'afterkeydown', attr:{name: name, readOnly: readOnly, maxlength:typeof(maxLength)!='undefined'?maxLength():null},style:{width: width,textAlign: textAlign}, event: {blur: _valid, click:_onclick, keydown:_onkeydown}" />
+<!-- /ko -->
+<!-- ko if: editorType()=="TextEditor" && textMode()=="password" -->
+<input type="password" data-bind="hasFocus: hasFocus, textInput: value, attr:{name: name, readOnly: readOnly, maxlength:typeof(maxLength)!='undefined'?maxLength():null},style:{width: width,textAlign: textAlign}, event: {blur: _valid, keydown:_onkeydown}"></input>
+<!-- /ko -->
+<!-- ko if:	editorType()=='TextEditor' && textMode()=="multiline" -->
+<textarea
+	data-bind="hasFocus: hasFocus, value: value, valueUpdate:'afterkeydown', attr:{name: name, readOnly: readOnly, maxlength:typeof(maxLength)!='undefined'?maxLength():null},style:{width: width,height: height,textAlign: textAlign}, event: {blur: _valid, keydown:_onkeydown}"></textarea>
+<!-- /ko -->
+<!-- ko if: editorType() == "LabelEditor" -->
+<span class="uneditable-input labelEditor" data-bind="html:labelValue, css:{autowrap: labelAutowrap},attr:{title:labelTitle, name: name, readOnly: readOnly},style:{width: width,textAlign: textAlign}, event: {blur: _valid}"></span>
+<!-- /ko -->
+
+<!-- ko if: editorType() =="DropDownEditor" -->
+<!-- ko component:{
+		name: 'dropdowneditor',
+		params: {hasFocus:hasFocus, isShowNull:isShowNull, isSelectedFirst:isSelectedFirst, isAllowEdit: isAllowEdit, autoMatching: autoMatching, isClickShow: isClickShow, isTextEllipsis: isTextEllipsis, isExtDisplay: isExtDisplay,  isShowScroll: isShowScroll, onSelectedChanged: onSelectedChanged, isShowCheckbox:isShowCheckbox,readOnly: readOnly, _checkListvalue: _checkListvalue, selectedValue: value, items: list, diabled: readOnly, width:width, dropdownMenuHeight: dropdownMenuHeight,commonRendered: onRendered}
+	}--> <!-- /ko -->
+<!-- /ko -->
+
+<!-- ko if:	editorType()=="CheckEditor"-->
+<div>
+<input type="checkbox"
+	data-bind="checked: value, attr:{name: name, disabled: readOnly}" />
+</div>	
+<!-- /ko -->
+
+<!-- ko if:	editorType()=="CheckListEditor" && type()=="radio" -->
+	<!-- ko if:	checkListCols() == null -->
+	<div data-bind="foreach: list,style:{width: width}">
+		<label class="radio inline" data-bind="style:{'display': $parent.isCheckListVer()?'block':'inline-block', 'margin-left': $parent.isCheckListVer()?'0px':'auto'}">
+			<input type="radio"
+				data-bind="checkedValue: value, checked: $parent._checkListvalue, attr:{name: $parent.name, disabled: $parent.readOnly}" />
+			<span data-bind="text: text"></span>
+		</label>
+	</div>
+	<!-- /ko -->	
+	<!-- ko ifnot:	checkListCols() == null -->
+	<div data-bind="style:{width: width}">	
+		<table>
+			<tbody data-bind="foreach: _list">
+				<tr data-bind="foreach: $data">
+					<td>
+						<label class="radio inline">
+							<input type="radio"
+								data-bind="checkedValue: value, checked: $parents[1]._checkListvalue, attr:{name: $parents[1].name, disabled: $parents[1].readOnly}" />
+							<span data-bind="text: text"></span>
+						</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- /ko -->	
+<!-- /ko -->
+
+<!-- ko if:	editorType()=="CheckListEditor" && type()=="checkbox"-->
+	<!-- ko if:	checkListCols() == null -->
+	<div data-bind="foreach: list,style:{width: width}">
+		<label class="checkbox inline" data-bind="style:{'display': $parent.isCheckListVer()?'block':'inline-block', 'margin-left': $parent.isCheckListVer()?'0px':'auto'}">
+			<input type="checkbox"
+				data-bind="checkedValue: value, checked: $parent._checkListvalue, attr:{name: $parent.name, disabled: $parent.readOnly}" />
+			<span data-bind="text: text"></span>
+		</label>
+	</div>
+	<!-- /ko -->	
+	<!-- ko ifnot:	checkListCols() == null -->
+	<div data-bind="style:{width: width}">	
+		<table>
+			<tbody data-bind="foreach: _list">
+				<tr data-bind="foreach: $data">
+					<td>
+						<label class="checkbox inline">
+							<input type="checkbox"
+								data-bind="checkedValue: value, checked: $parents[1]._checkListvalue, attr:{name: $parents[1].name, disabled: $parents[1].readOnly}" />
+							<span data-bind="text: text"></span>
+						</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- /ko -->
+<!-- /ko -->
+
+<!-- ko if:	editorType()=="ListEditor"-->
+<div data-bind='style:{width: width}'>
+	<ul class="dropdown-menu" style="position: static; display: block;"
+		data-bind="foreach: list">
+		<li data-bind="css: {active:value==$parent.value()}"><a href="#" data-bind="text: text,css: {active:value==$parent.value()}, click: $parent._selectListItem"></a></li>
+	</ul>
+</div>
+<!-- /ko -->
+
+<!-- ko if:	editorType()=="TransferEditor"-->
+	<!-- ko component:{
+		name: 'transfereditor',
+		params: {  width:width,value:value,list: list,
+	 						transferHeight:transferHeight,
+	 						transferWidth:transferWidth,
+	 						displayAddButton:displayAddButton,
+	 						displayDeleteButton:displayDeleteButton,
+	 						displayAddAllButton:displayAddAllButton,
+	 						displayDeleteAllButton:displayDeleteAllButton,
+	 						commonRendered: onRendered}
+	}--> <!-- /ko -->
+<!-- /ko -->
+
+<!-- ko if:	editorType()=="NumberEditor"-->
+<div class="input-append numbereditor">
+	<input type="text"
+		data-bind="hasFocus: hasFocus, textInput: value, style:{width: width,textAlign: textAlign}, attr:{readOnly: readOnly},event:{keydown: _input_keydown,keypress:_input_keypress,keyup:_input_keyup,blur: _valid}">
+	<span class="add-on" style="position: relative;"> <span class="caret-down"
+		data-bind="click:setNumberUp"></span> <span class="caret-up"
+		data-bind="click:setNumberDown"></span>
+	</span>
+</div>
+<!-- /ko -->
+<!-- ko if:	editorType()=="CustomEditor" -->
+<div class="input-append customEditor">
+	<input type="text"
+		data-bind="hasFocus: hasFocus, textInput: value, style:{width: width,textAlign: textAlign}, attr:{readOnly:readOnly() || !isAllowEdit(),maxlength:typeof(maxLength)!='undefined'?maxLength():null},event:{blur: _valid}">
+	 <button type="button" class="btn btn-default" data-bind="click:_onclick, keydown:_onkeydown">
+	 	<!-- ko if:	customBtnText()!=null-->
+	 		<!-- ko text:customBtnText --><!-- /ko -->
+	 	<!-- /ko -->
+	 	<!-- ko if:	customBtnText()==null-->
+	 	 <span data-bind="css: 'icon-' + customBtnIcon()" aria-hidden="false"></span>
+	 	<!-- /ko -->
+    </button>
+</div>
+<!-- /ko -->
+
+<!-- ko if: editorType() =="DropDownTreeEditor" -->
+<!-- ko component:{
+		name: 'dropdowntreeeditor',
+		params: {hasFocus:hasFocus, isShowNull:isShowNull, isSelectedFirst:isSelectedFirst, isShowScroll: isShowScroll, onSelectedChanged: onSelectedChanged, isShowCheckbox:isShowCheckbox, isExtDisplay: isExtDisplay, readOnly: readOnly, selectedValue: value, items: list, diabled: readOnly,width:width,treeOptions: treeOptions(),isSelectedClose: isSelectedClose, dropdownMenuHeight: dropdownMenuHeight, isAllowEdit: isAllowEdit, autoMatching: autoMatching, commonRendered: onRendered}
+	}--> <!-- /ko -->
+<!-- /ko -->
+<!-- ko if: suffixText() != "" -->
+<span data-bind='text:suffixText'></span>
+<!-- /ko -->

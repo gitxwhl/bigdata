@@ -1,0 +1,57 @@
+<!-- ko if: prefixText() != "" -->
+<span  data-bind='text:prefixText()'></span>
+<!-- /ko -->
+<div data-bind="attr: {'class':'cube datepicker input-append editor-text-'+textAlign()}">
+   <input type='text' data-bind="value: _value, hasFocus: hasFocus, 
+    	event: {
+    	blur: _valid, 
+    	keydown:_input_keydown,keypress:_input_keydown,keyup:_input_keydown,
+    	click: function(data,event){!isAllowEdit()?showPopoverDialog($element,event):_input_selectionchanged($element,event)}},
+    	attr:{'readOnly': readOnly() || (!_timeEditor() && !isAllowEdit()),maxlength:typeof(maxLength)!='undefined'?maxLength():null},style:{width: width,textAlign: textAlign}"></input>
+   <!-- ko if: !_timeEditor() -->
+   <button type="button" class="btn btn-default" data-bind="click: function(data,event){showPopoverDialog($element,event)}">
+        <span class="icon-calendar" aria-hidden="false"></span>
+  	</button>
+    <!-- /ko -->
+   	<!-- ko if: _timeEditor() -->
+	<span class="add-on" style="position: relative;">    	
+		<span class="caret-up" data-bind="click:setTimeUp"></span>
+    	<span class="caret-down" data-bind="click:setTimeDown"></span> 
+	</span>
+	<!-- /ko -->
+</div>
+<!-- ko if: suffixText() != "" -->
+<span data-bind='text:suffixText'></span>
+<!-- /ko -->
+<!-- ko if: !_timeEditor() -->
+<div class="par" style='position: relative;' data-bind="style:{left: leftOffset()}">
+    <div tabIndex='1' class="popover" data-bind='click: dateClick,
+        attr:{"class": "popover "+popoverDirection()+" "+ msgType()}, 
+        style:{display: isShowDialog()?"block":"none"},
+        hasFocus: calendarFocus,
+        event:{mouseover: mouseoverPopoverDialog, mousedown: mousedownInnerPopoverDialog, blur: hiddenPopoverDialog}' 
+        style='outline:none;'>
+        <div class="arrow"></div>
+        <calendar params="showTimePicker: showTimePicker,
+        showDayPicker: showDayPicker,
+        showMonthPicker: showMonthPicker,
+        showQuarterPicker: showQuarterPicker,
+        year: year,
+        quarter: quarter,
+        month: month,
+        day: day,
+        hour: hour,
+        minute: minute,
+        second: second,
+        isShowDialog: isShowDialog,
+        minValue: minValue,
+        maxValue: maxValue,
+        isClickCloseDialog: isClickCloseDialog,
+        onSelectDate:onSelectDate"></calendar>
+  		<div class="datetimeeditorbtns">
+			<button type="button" class="btn datetime-btn" data-bind="click: emptyTime">清空</button>
+			<button type="button" class="btn btn-primary datetime-btn" data-bind="event:{mousedown:  confirmTime}, mousedownBubble: false">确定</button>
+		</div> 
+    </div> 
+</div>
+<!-- /ko -->

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="getNetworkWide" desc="全网考试情况查询">
+        <mysql>
+            select a.examination_number,b.examination_person_number,c.passing_number,d.probability from
+            (select count(TEST_NUM) examination_number from SRP_WORK_SAFETYTEST where (DELETELOGO is null or DELETELOGO != '1')) a,
+            (select count(1) examination_person_number from SRP_WORK_SAFETYTEST where (DELETELOGO is null or DELETELOGO != '1') ) b,
+            (select count(1) passing_number from SRP_WORK_SAFETYTEST where (DELETELOGO is null or DELETELOGO != '1') and PASS_STATE='01') c,
+            (select convert(b.passing_number /a.examination_person_number*100,decimal(10,1)) probability from
+            (select count(1) examination_person_number from SRP_WORK_SAFETYTEST where (DELETELOGO is null or DELETELOGO != '1')) a,
+            (select count(1) passing_number from SRP_WORK_SAFETYTEST where (DELETELOGO is null or DELETELOGO != '1') and PASS_STATE='01') b) d
+        </mysql>
+    </sql>
+
+    <sql id="getUnitTestData" desc="各单位考试情况">
+        <mysql>
+            SELECT
+            a.column_type_code,
+            a.column_type_name,
+            IFNULL(b.examination_person_number,0) examination_person_number,
+            IFNULL(c.passing_number,0) passing_number,
+            IFNULL(d.examination_number,0) examination_number,
+            IFNULL(CONVERT ( c.passing_number / examination_person_number * 100, DECIMAL ( 10, 2 ) ),0) probability
+            FROM
+            srp_risk_sys_tab a
+            LEFT JOIN ( SELECT PROVINCE_CODE, count( 1 ) examination_person_number FROM SRP_WORK_SAFETYTEST where (DELETELOGO is null or DELETELOGO != '1')  GROUP BY
+            PROVINCE_CODE ) b ON b.PROVINCE_CODE = a.column_type_code
+            LEFT JOIN ( SELECT PROVINCE_CODE, count( 1 ) passing_number FROM
+            SRP_WORK_SAFETYTEST WHERE  (DELETELOGO is null or DELETELOGO != '1') and PASS_STATE = '01' GROUP BY PROVINCE_CODE ) c ON c.PROVINCE_CODE =
+            a.column_type_code
+            LEFT JOIN ( SELECT PROVINCE_CODE, count( TEST_NUM ) examination_number FROM SRP_WORK_SAFETYTEST where (DELETELOGO is null or DELETELOGO != '1')  GROUP BY
+            PROVINCE_CODE ) d ON d.PROVINCE_CODE = a.column_type_code
+            WHERE
+            a.column_code = 'DATAREPORT_ORG'
+            ORDER BY
+            column_num +0
+        </mysql>
+    </sql>
+
+    <!-- 省份小代码 -->
+    <sql id="getDatareportOrg" desc="省份小代码">
+        <mysql>
+            select column_type_name,column_type_code from srp_risk_sys_tab where column_code='DATAREPORT_ORG'  ORDER BY
+            column_num + 0 ASC;
+        </mysql>
+    </sql>
+
+    <!-- 考试状态小代码 -->
+    <sql id="getExaminationStatus" desc="考试状态小代码">
+        <mysql>
+            select column_type_name,column_type_code from srp_risk_sys_tab where column_code='EXAMINATION_STATUS'
+        </mysql>
+    </sql>
+
+    <!-- 考场小代码 -->
+    <sql id="getTestroomName" desc="考场小代码">
+        <mysql>
+            select testroom_name,testroom_no from SRP_WORK_SAFETYTEST where  (DELETELOGO is null or DELETELOGO != '1') group BY testroom_no
+        </mysql>
+    </sql>
+
+    <!-- 考试列表 -->
+    <sql id="getExaminationList" desc="考场列表">
+        <mysql>
+            select
+            SAFETYTEST_ID,
+            column_type_name datareport_org_id,<!-- 省份 -->
+            testroom_name,<!-- 考场 -->
+            testroom_no,<!-- 考试编号 -->
+            test_name,<!-- 考试名称 -->
+            count(1) number,<!-- 考试人数 -->
+            substring(test_date,1,10) starttime,<!-- 开始时间 -->
+            substring(test_date,1,10) begintime,<!-- 结束时间 -->
+            test_state <!-- 考题状态 -->
+            from SRP_WORK_SAFETYTEST a
+            LEFT JOIN (SELECT * FROM srp_risk_sys_tab WHERE column_code = 'DATAREPORT_ORG') b ON a.PROVINCE_CODE = b.column_type_code
+            where ${commonFilter};
+        </mysql>
+    </sql>
+    <!-- 基本详情 -->
+    <sql id="getEssentialInformation" desc="详情信息">
+        <mysql>
+            select
+            e.column_type_name datareport_org,
+            a.testroom_name,
+            a.testroom_no,
+            a.test_name,
+            TIMESTAMPDIFF(MINUTE,(DATE_FORMAT(substring(a.test_date,1,16),'%Y-%m-%d %H:%i')),
+            (DATE_FORMAT(substring(a.test_date,1,18), '%Y-%m-%d %H:%i'))) duration,
+            b.number,
+            a.test_state,
+            substring(a.test_date,1,10) starttime,
+            substring(a.test_date,1,10) begintime
+            from SRP_WORK_SAFETYTEST a
+            left join
+            (select testroom_no,count(1) number from SRP_WORK_SAFETYTEST where DELETELOGO is null or DELETELOGO != '1' GROUP BY testroom_no) b on
+            a.testroom_no=b.testroom_no
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'DATAREPORT_ORG' ) e ON a.PROVINCE_CODE = e.column_type_code
+            where a.testroom_no=${filter} and ( a.DELETELOGO is null or a.DELETELOGO != '1' ) GROUP BY a.testroom_no
+        </mysql>
+    </sql>
+
+    <!-- 人员列表 -->
+    <sql id="getPersonnelList" desc="人员列表信息">
+        <mysql>
+            select
+            a.siteworkerinfo_id,
+            a.name,
+            b.contact,
+            a.apply_post,
+            a.apply_specialty,
+            b.org_name,
+            a.test_score,
+            a.pass_state
+            from SRP_WORK_SAFETYTEST a left join srp_work_siteworkerinfo b on a.siteworkerinfo_id=b.siteworkerinfo_id
+            where ${filter}
+        </mysql>
+    </sql>
+    <sql id="deleteExamination" desc="删除考试列表数据">
+        <mysql>
+            update SRP_WORK_SAFETYTEST set  DELETELOGO = "1" where TESTROOM_NO in ( ${filter} )
+        </mysql>
+    </sql>
+
+    <sql id="getProvincialexamination" desc="省份联动查询考场数据">
+        <mysql>
+            select DISTINCT testroom_name,testroom_no from srp_work_safetytest where ${commonFilter};
+        </mysql>
+    </sql>
+
+</sqls>
+
+

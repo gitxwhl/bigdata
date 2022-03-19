@@ -1,0 +1,302 @@
+@import "bootstrap.less";
+
+@baseFontSize: 12px;
+@baseLineHeight: 16px;
+@baseBorderRadius: 2px;
+
+@linkColor: #08c;
+
+// Grays
+// -------------------------
+@grayDarker:            #222;
+@grayLight:             #999;
+
+
+// Buttons
+// -------------------------
+@btnBaseFontSize:          12px;
+@btnBaseLineHeight:        16px;
+@baseBorderRadius:      2px;
+@btnBackground:         @white;
+@btnBackgroundHighlight:            darken(@white, 10%);
+
+
+// Breadcrumbs
+// -------------------------
+@breadcrumbBaseLineHeight: 10px;
+
+
+body{
+  font-size: 12px;
+  line-height: 16px;
+}
+
+li {
+  line-height: 16px;
+}
+
+
+//Buttons & Alerts  btn-padding 4px
+.btn {
+  padding: 2px 12px;
+  margin-bottom: 0; // For input.btn
+  font-size: @btnBaseFontSize;
+  line-height: @btnBaseLineHeight;
+}
+
+// Breadcrumbs
+.breadcrumb {
+  padding: 4px 15px;
+  margin: 0 0 @breadcrumbBaseLineHeight;
+  .border-radius(@baseBorderRadius);
+  > li {
+    display: inline-block;
+    .ie7-inline-block();
+    text-shadow: 0 0 0 @white;
+    > .divider {
+      padding: 0 1px;
+    }
+  }
+  > .active {
+    color: @grayLight;
+  }
+}
+
+// Popovers
+.popover {
+  border-radius: 4px;
+}
+
+//label
+label {
+  margin-bottom: 1px;
+}
+
+//menu
+.navbar {
+  margin-bottom: 12px;
+}
+
+.navbar-inner {
+  min-height: 26px;
+}
+
+.navbar .nav {
+  margin: 0;
+}
+
+.navbar .brand {
+  padding: 4px 20px 4px;
+  font-size: 16px;
+}
+
+.navbar .nav > li > a {
+  padding: 4px 9px 4px;
+  text-shadow: 0 0 0 #ffffff;
+}
+
+.nav-pills > li > a {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+//dropdown-menu
+.dropdown-menu {
+  border-radius: 0px;
+  min-width: 120px;
+}
+
+.dropdown-menu > li > a {
+  padding: 1px 12px;
+  line-height: 16px;
+}
+
+//progress
+.progress {
+  height: 14px;
+  margin-bottom: 14px;
+  border-radius: 0px;
+}
+
+.progress .bar {
+  text-shadow: 0 0px 0 rgba(0, 0, 0, 0.25);
+}
+
+//toolbar
+.btn-group > .btn, 
+.btn-group > .dropdown-menu, 
+.btn-group > .popover {
+  font-size: 12px;
+}
+
+.btn-toolbar {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+//input
+.input-append input,
+.input-prepend input, 
+.input-append select, 
+.input-prepend select, 
+.input-append .uneditable-input, 
+.input-prepend .uneditable-input, 
+.input-append .dropdown-menu, 
+.input-prepend .dropdown-menu, 
+.input-append .popover, 
+.input-prepend .popover {
+    font-size: 12px;
+}
+
+select, 
+textarea, 
+input[type="text"], 
+input[type="password"], 
+input[type="datetime"], 
+input[type="datetime-local"], 
+input[type="date"], 
+input[type="month"], 
+input[type="time"], 
+input[type="week"], 
+input[type="number"], 
+input[type="email"], 
+input[type="url"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="color"], 
+.uneditable-input {
+  height: 16px;
+  padding: 2px 6px;
+  line-height: 16px;
+}
+
+// Everything else
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+   // Focus state
+  &:focus {
+    border-color: @inputBorder;
+    outline: 0;
+    outline: thin dotted \9; /* IE6-9 */
+    .box-shadow(none);
+  }
+}
+
+input,
+textarea,
+.uneditable-input {
+  width: 150px; // plus 12px padding and 2px border
+}
+
+//numbereditor
+.input-append 
+.add-on, 
+.input-prepend .add-on {
+  height: 16px;
+  line-height: 16px;
+  font-size: 12px;
+}
+
+//dataform
+.form-horizontal 
+.control-label {
+  padding-top: 1px;
+}
+
+.form-horizontal 
+.control-group {
+  margin-bottom: 12px;
+}
+
+label, 
+input, 
+button, 
+select, 
+textarea {
+ font-size: 12px;
+ line-height: 16px;
+}
+
+//datagrid
+.table {
+  margin-bottom: 8px;
+}
+
+.table-condensed th, 
+.table-condensed td {
+  padding: 2px 5px;
+}
+
+.table th, 
+.table td {
+  padding: 2px;
+  line-height: 16px;
+}
+
+//pagenavibar
+.pagination {
+  margin: 8px 0;
+}
+
+.pagination ul > li > a, 
+.pagination ul > li > span {
+  padding: 2px 6px;
+  line-height: 16px;
+}
+
+//form
+form {
+  margin: 0 0 8px;
+}
+
+//richeditor
+.btn-group + 
+.btn-group {
+  margin-left: 3px;
+}
+
+//pageheade
+.page-header {
+  padding-bottom: 3px;
+  margin: 4px 0 10px;
+}
+
+//tabcontainer
+.nav {
+  margin-bottom: 4px;
+}
+
+.nav-tabs > li > a {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  line-height: 16px;
+}
+
+//modal
+.modal {
+  border-radius: 4px;
+}
+
+//
+.form-search .input-append .btn {
+  padding: 4px 12px;
+}
+
+.popover-content {
+  padding: 4px 8px;
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 引入framework  固定方式引入 -->
+    <script src="cube/scripts/framework.js" type="text/javascript" charset="utf-8"></script>
+    <!-- 引入模块js -->
+    <script data-main='model.js' src='cube/scripts/libs/require.js' type="text/javascript"></script>
+    <!-- 引入css -->
+    <link rel="stylesheet" type="text/css" href="resources/css/normlize.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/public.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/module.css" />
+</head>
+<style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    .job {
+        position: absolute;
+        top: 50px;
+        left: 20px;
+    }
+    .Left_column {
+        position: fixed;
+        width: 164px;
+        height: calc(100% - 80px);
+        background: url("./resources/images/u19.png") no-repeat;
+        background-size: 100% 100%;
+        /*margin-left: 30px;*/
+        /*margin-top: 50px;*/
+    }
+
+    .Left_column2 {
+        width: 164px;
+        height: calc(100% - 80px);
+        background: url("./resources/images/u19.png") no-repeat;
+        background-size: 100% 100%;
+        /*margin-left: 20px;*/
+        /*margin-top: 50px;*/
+    }
+
+    .synthesize_Message {
+        width: 144px;
+        height: 36px;
+        background: url("./resources/images/u21.png") no-repeat;
+        background-size: 144px 36px;
+        text-align: center  ;
+        font-size: 16px;
+        color: white;
+        padding-top: 6px;
+    }
+
+    .SafetyTest {
+        width: 127px;
+        height: 36px;
+        background: url("./resources/images/u21.png") no-repeat;
+        background-size: 144px 36px;
+        text-align: center;
+        font-size: 16px;
+        color: white;
+        padding-top: 6px;
+    }
+
+    .ative {
+        color: #04f9e2;
+    }
+</style>
+
+<body style="margin: auto">
+
+    <div id="section" style="display: flex;height: 100%;">
+        <div class="Left_column" style="margin-top: 50px;margin-left: 30px;">
+            <div class="synthesize_Message ative" style="margin: 60px 5px 10px 15px;"
+                data-bind="click: toggleModule.bind($data,'1')">综合情况</div>
+            <div class="synthesize_Message" style="margin: 30px 5px 10px 15px;"
+                data-bind="click: toggleModule.bind($data,'2')">电网风险列表信息</div>
+            <div class="synthesize_Message" style="margin: 30px 5px 10px 15px;"
+                 data-bind="click: toggleModule.bind($data,'11')">数据导入</div>
+        </div>
+        <div class="Left_column2" style="margin-top: 50px;margin-left: 30px;display: none">
+            <div class="synthesize_Message ative" style="margin: 60px 5px 10px 15px;"
+                data-bind="click: toggleModule.bind($data,'3')">企业信息</div>
+            <div class="synthesize_Message" style="margin: 30px 5px 10px 15px;"
+                data-bind="click: toggleModule.bind($data,'4')">人员信息</div>
+            <div class="synthesize_Message" style="margin: 30px 5px 10px 15px;"
+                data-bind="click: toggleModule.bind($data,'10')">安全考试</div>
+            <!--            <div class="synthesize_Message" style="margin: 30px 5px 10px 15px;"-->
+            <!--                data-bind="click: function(){SafetyTest()}">安全考场</div>-->
+            <div class="examination" style="display: none">
+                <div class="SafetyTest" style="margin: 5px 5px 10px 33px;"
+                    data-bind="click: toggleModule.bind($data,'6')">通报</div>
+                <div class="SafetyTest" style="margin: 5px 5px 10px 33px;"
+                    data-bind="click: toggleModule.bind($data,'7')">学习</div>
+                <div class="SafetyTest" style="margin: 5px 5px 10px 33px;"
+                    data-bind="click: toggleModule.bind($data,'8')">考题管理</div>
+                <div class="SafetyTest" style="margin: 5px 5px 10px 33px;"
+                    data-bind="click: toggleModule.bind($data,'9')">安全考场</div>
+                <div class="SafetyTest" style="margin: 5px 5px 10px 33px;">考试管理</div>
+            </div>
+            <div class="synthesize_Message" style="margin: 30px 5px 10px 15px;"
+                data-bind="click: toggleModule.bind($data,'5')">黑名单、负面清单</div>
+        </div>
+
+        <div class="content-bg" data-bind="component: moduleOptions" style="margin-top: 10px; overflow-y: auto;">
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+
+</script>

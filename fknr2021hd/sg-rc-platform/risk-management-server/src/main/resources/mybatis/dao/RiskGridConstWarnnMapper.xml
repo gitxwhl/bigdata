@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.raysdata.riskmanagementserver.dao.RiskGridConstWarnnDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.raysdata.riskmanagementserver.bean.SrpRiskEventewarning">
+<!--        <result column="id" property="id" />-->
+<!--        <result column="model_table_name" property="modelTableName" />-->
+<!--        <result column="model_table" property="modelTable" />-->
+<!--        <result column="model_field" property="modelField" />-->
+<!--        <result column="model_field_name" property="modelFieldName" />-->
+<!--        <result column="model_field_hump" property="modelFieldHump" />-->
+<!--        <result column="model_table_hump" property="modelTableHump" />-->
+<!--        <result column="is_valid" property="isValid" />-->
+    </resultMap>
+    <sql id="sql_where_u">
+        <if test="warningLevel !=null and warningLevel !=''">
+            and a.WARNINGLEVEL =#{warningLevel}
+        </if>
+    </sql>
+
+    <sql id="sql_where">
+        <choose>
+            <when test="areaId !=null and areaId !='' ">
+                LEFT JOIN ( SELECT a.*  FROM SRP_RISK_GRIDCONSTWARNNOTICE a
+                WHERE to_days( a.WARNBEGINTIME ) = to_days( now( ) )   <include refid="sql_where_u"/> and a.DATAREPORT_ORG_ID = #{areaId}) srg ON  srst.column_type_code = srg.CITY_ID
+                WHERE
+                srst.column_code = #{areaId}
+                GROUP BY
+                srst.column_type_name
+                ORDER BY
+                srst.column_type_code + 0
+            </when>
+            <otherwise>
+                LEFT JOIN (
+                SELECT
+                a.*
+                FROM
+                SRP_RISK_GRIDCONSTWARNNOTICE a
+                WHERE
+                to_days( a.WARNBEGINTIME ) = to_days( now( ) )
+                <include refid="sql_where_u"/>
+                ) srg ON srst.column_type_code = srg.DATAREPORT_ORG_ID
+                WHERE
+                srst.column_code = 'DATAREPORT_ORG'
+                GROUP BY
+                srst.column_type_name
+                ORDER BY
+                srst.column_type_code + 0
+            </otherwise>
+        </choose>
+    </sql>
+    <sql id="sql_where_ur">
+            <if test="areaId !=null and areaId !=''">
+                AND a.DATAREPORT_ORG_ID = #{areaId}
+            </if>
+    </sql>
+
+
+    <sql id="sql_where_ab">
+            <if test="year !=null and year !='' ">
+                #{year}-01
+            </if>
+    </sql>
+
+
+    <select id="getSrpriskgridconstwarnlevelcnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            COUNT( CASE WHEN WARNINGLEVEL = '03' THEN 1 ELSE NULL END ) AS LEVEL3,
+            COUNT( CASE WHEN WARNINGLEVEL = '04' THEN 1 ELSE NULL END ) AS LEVEL4
+        FROM
+            SRP_RISK_GRIDCONSTWARNNOTICE a
+        WHERE
+            to_days( WARNBEGINTIME ) = to_days( now( ) )
+            <include refid="sql_where_ur"/>
+    </select>
+    <select id="getSrpriskgridconstwarnworkcnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            COUNT( CASE WHEN c.WORK_TYPE = '01' THEN 1 ELSE NULL END ) AS WORK_TYPE1,
+            COUNT( CASE WHEN c.WORK_TYPE = '02' THEN 1 ELSE NULL END ) AS WORK_TYPE2,
+            COUNT( CASE WHEN c.WORK_TYPE = '03' THEN 1 ELSE NULL END ) AS WORK_TYPE3,
+            COUNT( CASE WHEN c.WORK_TYPE = '04' THEN 1 ELSE NULL END ) AS WORK_TYPE4,
+            COUNT( CASE WHEN c.WORK_TYPE = '05' THEN 1 ELSE NULL END ) AS WORK_TYPE5,
+            COUNT( CASE WHEN c.WORK_TYPE = '06' THEN 1 ELSE NULL END ) AS WORK_TYPE6,
+            COUNT( CASE WHEN c.WORK_TYPE = '07' THEN 1 ELSE NULL END ) AS WORK_TYPE7,
+            COUNT( CASE WHEN c.WORK_TYPE = '08' THEN 1 ELSE NULL END ) AS WORK_TYPE8
+        FROM
+            SRP_RISK_GRIDCONSTWARNNOTICE a,
+            SRP_RISK_TRANSFORWORKPLAN b,
+            SRP_WORK_WORKPLANDAYS c
+        <where>
+            a.GRIDCONSTWARNNOTICE_ID = b.GRIDCONSTWARNNOTICE_ID
+            AND b.WORK_PLAN_ID = c.WORK_PLAN_ID
+            AND to_days( a.WARNBEGINTIME ) = to_days( now( ) )
+            <if test="areaVo.areaId != null and areaVo.areaId != '' ">
+                and a.DATAREPORT_ORG_ID = #{areaVo.areaId}
+            </if>
+        </where>
+    </select>
+
+    <sql id="sql_week">
+        <choose>
+            <when test="areaVo.areaId != null and areaVo.areaId != '' ">
+                 LEFT JOIN (
+                SELECT
+                a.*
+                FROM
+                SRP_RISK_GRIDCONSTWARNNOTICE a
+                <where>
+                    YEARWEEK( date_format( a.WARNBEGINTIME, '%Y-%m-%d' ), 1 ) = YEARWEEK( now( ), 1 )
+                    <if test="areaVo.areaId != null and areaVo.areaId != '' ">
+                        and a.DATAREPORT_ORG_ID = #{areaVo.areaId}
+                    </if>
+                </where>
+                ) srg ON srst.column_type_code = srg.CITY_ID
+                <where>
+                    <if test="areaVo.areaId != null and areaVo.areaId != '' ">
+                        srst.column_code = #{areaVo.areaId}
+                    </if>
+                </where>
+                GROUP BY
+                srst.column_type_name
+                ORDER BY
+                srst.column_type_code + 0
+            </when>
+            <otherwise>
+                LEFT JOIN (
+                SELECT
+                a.*
+                FROM
+                SRP_RISK_GRIDCONSTWARNNOTICE a
+                WHERE
+                YEARWEEK( date_format( a.WARNBEGINTIME, '%Y-%m-%d' ), 1 ) = YEARWEEK( now( ), 1 )
+                ) srg ON srst.column_type_code = srg.DATAREPORT_ORG_ID
+                WHERE
+                srst.column_code = 'DATAREPORT_ORG'
+                GROUP BY
+                srst.column_type_name
+                ORDER BY
+                srst.column_type_code + 0
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="getSrpriskgridconstwarnbeginorendcnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            srst.column_type_name DATAREPORT_ORG,
+            srst.column_type_code DATAREPORT_ORG_ID,
+            count( srg.GRIDCONSTWARNNOTICE_ID ) AS GRIDWARN_CNT
+        FROM
+        (SELECT column_code,column_type_name,column_type_code FROM srp_risk_sys_tab
+        <where>
+            <if test="areaVo.areaId != null and areaVo.areaId != '' ">
+                and column_code = #{areaVo.areaId}
+            </if>
+        </where>
+        ) srst
+        <include refid="sql_week"/>
+    </select>
+
+
+
+
+
+
+    <select id="getSrpriskgridconstwarnyearcnt" resultType="java.util.LinkedHashMap">
+        SELECT
+        <foreach collection="yearList" index="i"  item="p" separator=",">
+           <if test="i==1">
+               count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month1
+           </if>
+            <if test="i==2">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month2
+            </if>
+            <if test="i==3">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month3
+            </if>
+            <if test="i==4">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month4
+            </if>
+            <if test="i==5">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month5
+            </if>
+            <if test="i==6">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month6
+            </if>
+            <if test="i==7">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month7
+            </if>
+            <if test="i==8">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month8
+            </if>
+            <if test="i==9">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month9
+            </if>
+            <if test="i==10">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month10
+            </if>
+            <if test="i==11">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month11
+            </if>
+            <if test="i==12">
+                count( CASE WHEN date_format( WARNBEGINTIME, '%Y-%m' ) = #{p} THEN 1 ELSE NULL END ) AS month12
+            </if>
+        </foreach>
+        FROM
+            SRP_RISK_GRIDCONSTWARNNOTICE
+        <where>
+            <if test="areaVo.areaId != null and areaVo.areaId != '' ">
+                AND DATAREPORT_ORG_ID = #{areaVo.areaId}
+            </if>
+        </where>
+
+
+    </select>
+
+
+    <select id="getSrpriskgridconstworklistcnt"  resultType="java.lang.Integer">
+        SELECT
+            count( 1 ) AS list_cnt
+        FROM
+            SRP_RISK_GRIDCONSTWARNNOTICE a,
+            SRP_RISK_TRANSFORWORKPLAN b,
+            SRP_WORK_WORKPLANDAYS c
+        WHERE
+            a.GRIDCONSTWARNNOTICE_ID = b.GRIDCONSTWARNNOTICE_ID
+          AND b.WORK_PLAN_ID = c.WORK_PLAN_ID
+          AND to_days( a.WARNBEGINTIME ) = to_days( now( ) )
+          AND a.city_id = #{srpRiskGridconstwarnnoticeVo.cityId}
+    </select>
+
+
+    <select id="getSrpriskgridconstwarnareacnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            srst.column_type_name DATAREPORT_ORG,
+            srst.column_type_code DATAREPORT_ORG_ID,
+            count( srg.GRIDCONSTWARNNOTICE_ID ) AS GRIDWARN_CNT
+        FROM
+            srp_risk_sys_tab srst
+            <include refid="sql_where"/>
+    </select>
+
+    <select id="getSrpriskgridconstworklist"  resultType="java.util.Map">
+        SELECT
+        c.WORK_PLAN_ID,
+        c.WORK_PLAN_CODE_DAY,
+        c.WORK_PLAN_NAME,
+        c.WORK_PLACE,
+        CASE
+        WHEN END_TIME &lt;= now( ) THEN
+        '已完工' ELSE '已开工'
+        END AS isEnd
+        FROM
+        SRP_RISK_GRIDCONSTWARNNOTICE a,
+        SRP_RISK_TRANSFORWORKPLAN b,
+        SRP_WORK_WORKPLANDAYS c
+        WHERE
+        a.GRIDCONSTWARNNOTICE_ID = b.GRIDCONSTWARNNOTICE_ID
+        AND b.WORK_PLAN_ID = c.WORK_PLAN_ID
+        AND to_days( a.WARNBEGINTIME ) = to_days( now( ) )
+        AND a.city_id = #{srpRiskGridconstwarnnoticeVo.cityId}
+        LIMIT  #{srpRiskGridconstwarnnoticeVo.size} OFFSET #{srpRiskGridconstwarnnoticeVo.offset}
+
+    </select>
+    <select id="getSrpriskgridconstworkplaninfo" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            a.PROJECT_ID,
+            a.PROJECT_NAME,
+            a.WORK_PLAN_CODE_DAY,
+            ( MAJORWORKER_NUM + 0 ) + ( OUTWORKER_NUM + 0 ) + ( INDUSTRIALWORKER_NUM + 0 ) AS staff_cnt,
+            a.WORK_ORG,
+            c.column_type_name,
+            a.WORKCONTENTS,
+            a.WORK_MANAGER,
+            a.WORK_MANAGER_ID,
+            a.WORK_MANAGER_CONTACT,
+            b.PHOTO
+        FROM
+            SRP_WORK_WORKPLANDAYS a
+                LEFT JOIN SRP_WORK_SITEWORKERINFOS b ON a.WORK_ORG_ID = b.ORG_ID
+                LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'WORK_TYPE' ) c ON a.WORK_TYPE = c.column_type_code
+        WHERE
+            a.WORK_PLAN_ID = #{workPlanId}
+    </select>
+
+
+
+
+
+
+</mapper>

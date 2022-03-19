@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.raysdata.riskmanagementserver.dao.RiskWorkWarnDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.raysdata.riskmanagementserver.bean.SrpRiskEventewarning">
+<!--        <result column="id" property="id" />-->
+<!--        <result column="model_table_name" property="modelTableName" />-->
+<!--        <result column="model_table" property="modelTable" />-->
+<!--        <result column="model_field" property="modelField" />-->
+<!--        <result column="model_field_name" property="modelFieldName" />-->
+<!--        <result column="model_field_hump" property="modelFieldHump" />-->
+<!--        <result column="model_table_hump" property="modelTableHump" />-->
+<!--        <result column="is_valid" property="isValid" />-->
+    </resultMap>
+
+    <sql id="sql_where">
+        <choose>
+            <when test="warningLevel !=null and warningLevel !='' ">
+                LEFT JOIN ( SELECT a.WORK_PLAN_ID,a.DATAREPORT_ORG_ID FROM SRP_WORK_WORKPLANDAYS a WHERE a.BEGIN_TIME like CONCAT('%', DATE(CURDATE()),'%') AND GRIDRISK_LEVEL = #{warningLevel} ) srg ON srst.column_type_code = srg.DATAREPORT_ORG_ID
+                WHERE
+                srst.column_code = 'DATAREPORT_ORG'
+                GROUP BY
+                srst.column_type_name
+                ORDER BY
+                srst.column_type_code + 0
+            </when>
+            <otherwise>
+                LEFT JOIN ( SELECT a.WORK_PLAN_ID,a.DATAREPORT_ORG_ID FROM SRP_WORK_WORKPLANDAYS a WHERE a.BEGIN_TIME like CONCAT('%', DATE(CURDATE()),'%') ) srg ON srst.column_type_code = srg.DATAREPORT_ORG_ID
+                WHERE
+                srst.column_code = 'DATAREPORT_ORG'
+                GROUP BY
+                srst.column_type_name
+                ORDER BY
+                srst.column_type_code + 0
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="sql_where_u">
+        <choose>
+            <when test="warningLevel !=null and warningLevel !='' ">
+                LEFT JOIN ( SELECT a.* FROM SRP_WORK_WORKPLANDAYS a WHERE to_days( a.BEGIN_TIME ) = to_days( now( ) ) AND WARNINGLEVEL = #{warningLevel} ) srg ON srst.column_type_code = srg.DATAREPORT_ORG_ID
+                WHERE
+                srst.column_code = 'DATAREPORT_ORG'
+                GROUP BY
+                srst.column_type_name
+                ORDER BY
+                srst.column_type_code + 0
+            </when>
+            <otherwise>
+                LEFT JOIN ( SELECT a.* FROM SRP_WORK_WORKPLANDAYS a WHERE to_days( a.BEGIN_TIME ) = to_days( now( ) ) ) srg ON srst.column_type_code = srg.DATAREPORT_ORG_ID
+                WHERE
+                srst.column_code = 'DATAREPORT_ORG'
+                GROUP BY
+                srst.column_type_name
+                ORDER BY
+                srst.column_type_code + 0
+            </otherwise>
+        </choose>
+    </sql>
+
+
+
+    <select id="getSrpriskworkwarnareacnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            srst.column_type_name DATAREPORT_ORG,
+            srst.column_type_code DATAREPORT_ORG_ID,
+            count( srg.WORK_PLAN_ID ) AS GRIDWARN_CNT
+        FROM
+            srp_risk_sys_tab srst
+            <include refid="sql_where"/>
+
+    </select>
+
+    <select id="getSrpriskindusriskwarnareacnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            srst.column_type_name DATAREPORT_ORG,
+            srst.column_type_code DATAREPORT_ORG_ID,
+            count( srg.WORK_PLAN_ID ) AS GRIDWARN_CNT
+        FROM
+            srp_risk_sys_tab srst
+            <include refid="sql_where_u"/>
+
+    </select>
+    <select id="getSrpriskgridconstwarnlevelcnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            COUNT( CASE WHEN WARNINGLEVEL = '01' THEN 1 ELSE NULL END ) AS LEVEL1,
+            COUNT( CASE WHEN WARNINGLEVEL = '02' THEN 1 ELSE NULL END ) AS LEVEL2,
+            COUNT( CASE WHEN WARNINGLEVEL = '03' THEN 1 ELSE NULL END ) AS LEVEL3,
+            COUNT( CASE WHEN WARNINGLEVEL = '04' THEN 1 ELSE NULL END ) AS LEVEL4
+        FROM
+            SRP_RISK_GRIDCONSTWARNNOTICE
+        WHERE
+            WARNBEGINTIME like CONCAT('%', DATE(CURDATE()),'%')
+    </select>
+    <select id="getRiskindusriskwarncnt" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            count( 1 ) WARNINGLEVEL_CNT,
+            COUNT( CASE WHEN WARNINGLEVEL = '01' THEN 1 ELSE NULL END ) AS WARNINGLEVEL1,
+            COUNT( CASE WHEN WARNINGLEVEL = '02' THEN 1 ELSE NULL END ) AS WARNINGLEVEL2,
+            COUNT( CASE WHEN WARNINGLEVEL = '03' THEN 1 ELSE NULL END ) AS WARNINGLEVEL3
+        FROM
+            SRP_RISK_INDUSRISKWARNNOTICE
+        WHERE
+            WARNBEGINTIME like CONCAT('%', DATE(CURDATE()),'%')
+    </select>
+</mapper>

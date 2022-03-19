@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
     @Autowired
-   private DeptInfoService deptInfoService;
+    private DeptInfoService deptInfoService;
 
 
     @RequestMapping("/add")
-    public int add(@RequestBody DeptInfo deptInfo){
+    public int add(@RequestBody DeptInfo deptInfo) {
         return deptInfoService.addDept(deptInfo);
     }
 }

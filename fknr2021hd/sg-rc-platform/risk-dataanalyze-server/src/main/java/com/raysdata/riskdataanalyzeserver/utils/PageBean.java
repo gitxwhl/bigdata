@@ -1,0 +1,28 @@
+package com.raysdata.riskdataanalyzeserver.utils;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class PageBean<T> {
+    private List<T> content;  //内容列表
+
+    private int size ;  //每页大小
+
+    private int elementTotalSize;   //list中元素有多少个
+
+    private int page; //当前页数
+
+    private int totalPage;   //总的页数
+
+    private int totalSize;   //总共的数量
+
+
+}

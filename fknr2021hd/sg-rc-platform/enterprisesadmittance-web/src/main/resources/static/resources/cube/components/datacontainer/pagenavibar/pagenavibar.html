@@ -1,0 +1,112 @@
+<div class="cube pagination page" data-bind='attr:{"class": "cube pagination page "+p_size()}'>
+  <!-- ko if:isShowLoadTime() -->
+  <ul class="loadtime">
+    <li class="disabled">
+      <a>
+        <span aria-hidden="true" data-bind="text:cube.msg('LOADED_TIME',loadTime())"></span>
+      </a>
+    </li>
+  </ul>
+  <!-- /ko -->
+  <!-- ko if:showArrow() -->
+  <ul>
+    <li class="" data-bind='attr:{"class": (pageIndex() == 1 || oldPageIndex() == 1 || pageTotalCount() <= 1?"disabled":"")} '>
+      <a href="#" aria-label="First"  data-bind='click: onFirstPageClick'>
+      	<!-- ko if:firstIcon() == "" -->  
+	      	<!-- ko if:!isShowBtnText() -->
+	        <span aria-hidden="true">&lceil;&lt;</span>
+	        <!-- /ko -->
+	        <!-- ko if:isShowBtnText() -->
+	        <span aria-hidden="true" data-bind="text: cube.msg('FIRST')"></span>
+	        <!-- /ko -->
+        <!-- /ko -->
+       	<!-- ko if:firstIcon() != "" -->
+        <span data-bind='attr:{"class":firstIcon}'></span>
+        <!-- /ko -->
+      </a>
+    </li>
+    <li class="" data-bind='attr:{"class": (pageIndex() == 1 || oldPageIndex() == 1 || pageTotalCount() <= 1?"disabled":"")} '>
+      <a href="#" aria-label="Previous" data-bind='click: onPagePreviousClick'>
+       	<!-- ko if:previousIcon() == "" -->  
+	        <!-- ko if:!isShowBtnText() -->
+	        <span aria-hidden="true">&lt;</span>
+	        <!-- /ko -->
+	        <!-- ko if:isShowBtnText() -->
+	        <span aria-hidden="true" data-bind="text: cube.msg('PREVIOUS')"></span>
+	        <!-- /ko -->
+	    <!-- /ko -->
+	   	<!-- ko if:previousIcon() != "" -->
+        <span data-bind='attr:{"class":previousIcon}'></span>
+        <!-- /ko -->
+      </a>
+    </li>
+  </ul>
+  <!-- /ko -->
+  <ul data-bind='foreach: pageNumbers'>
+    <li>
+      <a href="#" class="" data-bind='attr:{"class": ($parent.pageIndex()==text||$parent.oldPageIndex()==text?"selected":"")}, click: $parent.onPageIndexClick, text: text' >
+      </a>
+    </li>
+  </ul>
+  <!-- ko if:showArrow() -->
+  <ul>
+    <li class="" data-bind='attr:{"class": (pageIndex() == pageTotalCount() || oldPageIndex() == pageTotalCount() || pageTotalCount() <= 1 ?"disabled":"")} '>
+      <a href="#" aria-label="Next" data-bind='click: onPageNextClick'>
+        <!-- ko if:nextIcon() == "" -->     
+	        <!-- ko if:!isShowBtnText() -->
+	        <span aria-hidden="true">&gt;</span>
+	        <!-- /ko -->
+	        <!-- ko if:isShowBtnText() -->
+	        <span aria-hidden="true" data-bind="text: cube.msg('NEXT')"></span>
+	        <!-- /ko -->
+	    <!-- /ko -->
+	    <!-- ko if:nextIcon() != "" -->
+        <span data-bind='attr:{"class":nextIcon}'></span>
+        <!-- /ko -->
+      </a>
+    </li>
+    <li class="" data-bind='attr:{"class": (pageIndex() == pageTotalCount() || oldPageIndex() == pageTotalCount() || pageTotalCount() <= 1 ?"disabled":"")} '>
+      <a href="#" aria-label="End" data-bind='click: onEndPageClick'>       
+       <!-- ko if:endIcon() == "" -->
+	    	<!-- ko if:!isShowBtnText() -->
+	      	<span aria-hidden="true">&gt;&rfloor;</span>
+	        <!-- /ko -->
+	        <!-- ko if:isShowBtnText() -->
+	       	<span aria-hidden="true" data-bind="text: cube.msg('END')"></span>
+	        <!-- /ko -->
+    	<!-- /ko -->
+        <!-- ko if:endIcon() != "" -->
+        <span data-bind='attr:{"class":endIcon}'></span>
+        <!-- /ko -->
+      </a>
+    </li>
+  </ul>
+  <!-- /ko -->
+  <!-- ko if:showTotal() -->
+  <ul data-bind="css:{pageInfo: pageInfoToLeft}">
+    <li  class="disabled">
+      <a>
+      	<i style="font-style:normal" data-bind="text:cube.msg('TOTAL')">共</i><span data-bind="text: pageTotalCount"></span><i style="font-style:normal" data-bind="text:cube.msg('PAGE')">页</i>，
+      	<span data-bind="text: count"></span><i style="font-style:normal" data-bind="text:cube.msg('ITEMCOUNT')">条记录</i>
+      </a>
+    </li>
+  </ul>
+  <!-- /ko -->
+  <!-- ko if:showGoto() -->
+  <ul>
+    <li class="disabled">
+      <a data-bind="text:cube.msg('TO')">到</a>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      <input type="text" data-bind="value: pageIndex,valueUpdate: blurGoto()?'blur':'afterkeydown', event:{keydown: _input_keydown,keypress:_input_keypress}"/>
+    </li>
+  </ul>
+  <ul>
+    <li class="disabled">
+      <a data-bind="text:cube.msg('PAGE')">页</a>
+    </li>
+  </ul>
+  <!-- /ko -->
+</div>

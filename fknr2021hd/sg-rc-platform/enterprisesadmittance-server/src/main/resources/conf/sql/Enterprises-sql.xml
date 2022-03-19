@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="GetEnterpriseCnt" desc="单位总数">
+        <mysql>
+            SELECT
+            count( 1 ) enterprise_cnt
+            FROM
+            SRP_WORK_SITEINFO
+            WHERE
+            ${filter} and ( DELETELOGO is null or DELETELOGO != '1' );
+        </mysql>
+    </sql>
+
+    <sql id="GetBlacklistOrgCnt" desc="黑名单数">
+        <mysql>
+            SELECT
+            count( 1 ) HMD
+            FROM
+            SRP_WORK_BLACKLISTORG
+            WHERE
+            ${filter};
+        </mysql>
+    </sql>
+
+    <sql id="GetNegativelistOrgCnt" desc="负面清单数">
+        <mysql>
+            SELECT
+            count( 1 ) FMQD
+            FROM
+            SRP_WORK_NEGATIVELISTORG
+            WHERE
+            ${filter};
+        </mysql>
+    </sql>
+
+    <sql id="GetEnterprisesAdmittanceInfoCnt" desc="各单位准入情况">
+        <mysql>
+            SELECT
+            o.column_type_code,
+            column_type_name DATAREPORT_ORG,
+            IFNULL( a.enterprise_cnt_y, 0 ) enterprise_cnt_y,
+            IFNULL( a.enterprise_cnt_n, 0 ) enterprise_cnt_n,
+            IFNULL( a.enterprise_cnt_w, 0 ) enterprise_cnt_w
+            FROM
+            srp_risk_sys_tab o
+            LEFT JOIN (
+            SELECT
+            PROVINCE_CODE,
+            count( CASE WHEN ACCESS_STATE = '01' THEN 1 ELSE NULL END ) enterprise_cnt_y,
+            count( CASE WHEN ACCESS_STATE = '02' THEN 1 ELSE NULL END ) enterprise_cnt_n,
+            count( CASE WHEN ACCESS_STATE IS NULL	OR ACCESS_STATE NOT IN ( '01','02' ) THEN 1 ELSE NULL END ) enterprise_cnt_w
+            FROM
+            SRP_WORK_SITEINFO
+            WHERE
+            1 = 1
+            AND ( DELETELOGO IS NULL OR DELETELOGO != '1' )
+            GROUP BY
+            PROVINCE_CODE
+            ) a ON a.PROVINCE_CODE = o.column_type_code
+            WHERE
+            column_code = 'DATAREPORT_ORG'
+            ORDER BY
+            o.column_num + 0 ASC;
+        </mysql>
+    </sql>
+
+
+
+    <sql id="GetWorkSiteinfoCount" desc="企业信息查询列表总数">
+        <mysql>
+            SELECT
+            COUNT( 1 ) AS WORKSITEINFO_CNT
+            FROM
+            srp_work_siteinfo a
+            WHERE
+            ${filter}
+            and ( a.DELETELOGO is null or a.DELETELOGO != '1' );
+        </mysql>
+    </sql>
+
+
+
+
+    <sql id="GetSrpWorkSiteinfo" desc="现场作业单位信息查询">
+        <mysql>
+            select a.SITEINFO_ID,
+            a.PROVINCE_CODE,
+            a.BASICINFO_CONTRACTOR,
+            a.BASICINFO_ORGADDRESS,
+            a.BASICINFO_CREDITCODE,
+            a.BASICINFO_ESTABLISHDATE,
+            a.BASICINFO_REGISTEREDCAPITAL,
+            a.BASICINFO_OPERATINGPERIOD,
+            a.BASICINFO_BUSINESSLICENSE,
+            a.BASICINFO_LEGALREPRESENTATIVE,
+            a.BASICINFO_CONTACTNUMBER,
+            a.BASICINFO_IDCARD,
+            a.BASICINFO_IDCARDPHOTO,
+            a.CREATE_TIME,
+            a.UPDATE_TIME,
+            a.FORMULAIRE_DE_DEMANDE_ID,
+            a.APPLICATION_DATE,
+            a.REMARK,
+            a.REPORT_CARD_BEGINTIME,
+            a.REPORT_CARD_ENDTIME,
+            a.ACCEPT_ORG,
+            a.ANNEX,
+            d.column_type_name ORG_NATURE,
+            a.DATAFILL_ORG,
+            a.DATAFILL_ORG_ID,
+            f.column_type_name DATAREPORT_ORG,
+            a.DATAREPORT_ORG_ID,
+            a.DATACOMMON_ID,
+            b.MUMBER_CUT,
+            c.SITEQUAINFO_ID,
+            c.CERTIFICATION_TYPE,
+            c.CERTIFICATION_NAME,
+            c.CERTIFICATION_NO,
+            c.CERTIFICATION_VALIDITY,
+            c.CERTIFICATION_LEVEL,
+            c.ANNUAL_REVIEW_TIME,
+            c.ANNEX SITEQUAINFO_ANNEX
+            from SRP_WORK_SITEINFO a
+            left JOIN (select ORG_ID, count(1) mumber_cnt from SRP_WORK_SITEWORKERINFO GROUP BY ORG_ID) b on
+            a.SITEINFO_ID = b.ORG_ID
+            left JOIN (select * from SRP_WORK_SITEQUAINFO where CERTIFICATION_TYPE = '02') c on a.SITEINFO_ID =
+            c.SITEINFO_ID
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'ORG_NATURE') d on a.ORG_NATURE =
+            d.column_type_code
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'DATAREPORT_ORG') f on a.PROVINCE_CODE =
+            f.column_type_code
+            where
+            ${filter}
+            and ( a.DELETELOGO is null or a.DELETELOGO != '1' ) ;
+        </mysql>
+
+
+    </sql>
+
+    <sql id = "GetSrpWorkePlanDayList" desc="作业计划信息查询">
+        <mysql>
+            SELECT
+            b.WORK_PLAN_ID,
+            b.work_plan_name,
+            b.WORK_STATE,
+            b.SUBSTATION_NAME,
+            b.WORK_TYPE,
+            b.WORKRISK_LEVEL,
+            b.BEGIN_TIME,
+            b.END_TIME
+            FROM  srp_work_siteinfo a INNER JOIN srp_work_workplanday b ON a.SITEINFO_ID = b.WORK_ORG_ID
+            WHERE
+            ${filter}
+            and ( a.DELETELOGO is null or a.DELETELOGO != '1' )
+            ${limit}
+        </mysql>
+    </sql>
+
+    <sql id="getSrpWorkePlanDayCount" desc="作业计划总数">
+        <mysql>
+            SELECT
+            COUNT( 1 ) AS WORKSITEINFO_CNT
+            FROM  srp_work_siteinfo a INNER JOIN srp_work_workplanday b ON a.SITEINFO_ID = b.WORK_ORG_ID
+            WHERE
+            ${filter}
+            and ( a.DELETELOGO is null or a.DELETELOGO != '1' )
+        </mysql>
+    </sql>
+
+
+    <sql id="GetSrpWorkViolationfile" desc="企业违章信息查询">
+        <mysql>
+            SELECT a.VIOLATIONFILE_ID,
+            e.WORK_PLAN_ID,
+            n.VIOLATION_CLAUSE,
+            n.VIOLATION_CLAUSE_DESCRIPTION,
+            (case e.VIOLATION_NATURE when '01' then '管理违章'
+            when '02' then '行为违章' when '03' then '装置违章'
+            END) VIOLATION_NATURE,
+            g.column_type_name VIOLATION_LEVEL,
+            e.VIOLATION_STAFF,
+            e.VIOLATION_STAFF_ID,
+            e.VIOLATION_ORG,
+            e.VIOLATION_ORG_ID,
+            e.VIOLATION_WORK_GROUP,
+            e.VIOLATION_WORK_GROUP_ID,
+            (case e.CHECK_LEVEL when '01' then '省公司级' when '02' then '市公司级'
+            when '03' then '区县级' when '04' then '班组级' end) CHECK_LEVEL,
+            e.CHECK_STAFF,
+            e.CHECK_STAFF_ID,
+            e.VIOLATION_DATE,
+            e.VIOLATION_PHOTO,
+            e.WORK_STEPS,
+            e.CREATE_TIME,
+            e.UPDATE_TIME,
+            e.VIOLATION_CONTENT,
+            e.DATAFILL_ORG,
+            e.DATAFILL_ORG_ID,
+            e.DATAREPORT_ORG,
+            e.DATAREPORT_ORG_ID,
+            e.DATACOMMON_ID,
+
+            b.INSPECTIONPLAN_ID,
+            b.INSPECTIONPLAN_NAME,
+            b.INSPECTIONPLAN_TYPE,
+            b.INSPECTIONPLAN_DATE,
+            b.INSPECTIONPLAN_METHOD,
+            b.INSPECTION_ORG,
+            b.INSPECTION_ORG_ID,
+            b.DATAFILL_ORG INSPECTION_DATAFILL_ORG,
+            b.DATAFILL_ORG_ID INSPECTION_DATAFILL_ORG_ID,
+            b.DATAREPORT_ORG INSPECTION_DATAREPORT_ORG,
+            b.DATAREPORT_ORG_ID INSPECTION_DATAREPORT_ORG_ID,
+
+            c.WORK_PLAN_CODE_DAY,
+            c.WORK_PLAN_NAME,
+            c.WORK_TYPE,
+            c.WORKCONTENTS,
+            c.WORK_PLACE,
+            c.BEGIN_TIME,
+            c.END_TIME,
+            c.WORK_ORG,
+            c.WORK_ORG_ID,
+            c.DATAFILL_ORG WORKPLAN_DATAFILL_ORG,
+            c.DATAFILL_ORG_ID WORKPLAN_DATAFILL_ORG_ID,
+            c.DATAREPORT_ORG WORKPLAN_DATAREPORT_ORG,
+            c.DATAREPORT_ORG_ID WORKPLAN_DATAREPORT_ORG_ID,
+
+            d.RECTIFICATION_NOTICE,
+            d.RECTIFICATION_FEEDBACK,
+            d.RECTIFICATION_BEGIN,
+            d.RECTIFICATION_END,
+
+            a.VIOLATION_ORG_POINTS,
+            a.PENALTY_AMOUNT,
+            f.SITEINFO_ID,
+
+            i.column_type_name ORG_NATURE
+            from SRP_WORK_ORGVIOLATIONPENALTY a
+            left join (SELECT * FROM SRP_WORK_VIOLATIONFILE WHERE ${page})  e on a.VIOLATIONFILE_ID = e.VIOLATIONFILE_ID
+            left join SRP_WORK_INSPECTIONPLAN b on e.INSPECTIONPLAN_ID = b.INSPECTIONPLAN_ID
+            left join SRP_WORK_WORKPLANDAY c on e.WORK_PLAN_ID = c.work_plan_id
+            left join SRP_WORK_VIOLATIONRECTIFICATION d on e.VIOLATIONFILE_ID = d.VIOLATIONFILE_ID
+            left join SRP_WORK_SITEINFO f on e.VIOLATION_ORG_ID = f.SITEINFO_ID
+            LEFT JOIN ( SELECT * FROM srp_work_violationfiletorules ) y ON y.VIOLATIONFILE_ID =e.VIOLATIONFILE_ID
+            LEFT JOIN ( SELECT * FROM SRP_WORK_VIOLATIONRULES ) n ON n.VIOLATIONRULES_ID = y.VIOLATIONRULES_ID
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'VIOLATION_LEVEL') g on e.VIOLATION_LEVEL =
+            g.column_type_code
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'VIOLATION_NATURE') h on e.VIOLATION_NATURE =
+            h.column_type_code
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'ORG_NATURE') i on f.ORG_NATURE =
+            i.column_type_code
+            WHERE
+            ${filter}
+            AND YEAR(VIOLATION_DATE)=YEAR(NOW())
+            and ( f.DELETELOGO is null or f.DELETELOGO != '1' )
+            ${limit}
+        </mysql>
+    </sql>
+
+
+    <sql id="GetSrpWorkViolationfileCount" desc="企业违章信息列表总数">
+        <mysql>
+            SELECT
+            COUNT( 1 ) AS WORKSITEINFO_CNT
+            from SRP_WORK_ORGVIOLATIONPENALTY a
+            left join SRP_WORK_VIOLATIONFILE e on a.VIOLATIONFILE_ID = e.VIOLATIONFILE_ID
+            left join SRP_WORK_INSPECTIONPLAN b on e.INSPECTIONPLAN_ID = b.INSPECTIONPLAN_ID
+            left join SRP_WORK_WORKPLANDAY c on e.WORK_PLAN_ID = c.work_plan_id
+            left join SRP_WORK_VIOLATIONRECTIFICATION d on e.VIOLATIONFILE_ID = d.VIOLATIONFILE_ID
+            left join SRP_WORK_SITEINFO f on e.VIOLATION_ORG_ID = f.SITEINFO_ID
+            LEFT JOIN ( SELECT * FROM srp_work_violationfiletorules ) y ON y.VIOLATIONFILE_ID =e.VIOLATIONFILE_ID
+            LEFT JOIN ( SELECT * FROM SRP_WORK_VIOLATIONRULES ) n ON n.VIOLATIONRULES_ID = y.VIOLATIONRULES_ID
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'VIOLATION_LEVEL') g on e.VIOLATION_LEVEL =
+            g.column_type_code
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'VIOLATION_NATURE') h on e.VIOLATION_NATURE =
+            h.column_type_code
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'ORG_NATURE') i on f.ORG_NATURE =
+            i.column_type_code
+            WHERE
+            ${filter}
+            AND YEAR(VIOLATION_DATE)=YEAR(NOW())
+            and ( f.DELETELOGO is null or f.DELETELOGO != '1' )
+        </mysql>
+    </sql>
+
+
+
+    <sql id="GetSrpworkViolationrules" desc="违章记分规则详情">
+        <mysql>
+            select a.VIOLATIONFILE_ID,
+            a.WORK_PLAN_ID,
+            c.VIOLATION_CLAUSE,
+            c.VIOLATION_CLAUSE_DESCRIPTION,
+            c.VIOLATION_CLAUSE_ORGPOINTS,
+            c.VIOLATION_CLAUSE_STAFFPOINTS
+            from SRP_WORK_VIOLATIONFILE a
+            LEFT JOIN SRP_WORK_VIOLATIONFILETORULES b on a.VIOLATIONFILE_ID = b.VIOLATIONFILE_ID
+            LEFT JOIN SRP_WORK_VIOLATIONRULES c on b.VIOLATIONRULES_ID = c.VIOLATIONRULES_ID
+            WHERE
+            ${filter}
+        </mysql>
+    </sql>
+
+    <sql id="getEnterCount" desc="查询企业信息总个数">
+        <mysql>
+            SELECT
+            column_type_name columntypename,
+            IFNULL(nature_y + nature_n + nature_w,0)  natureall
+            FROM
+            srp_risk_sys_tab o
+            LEFT JOIN (
+            SELECT
+            PROVINCE_CODE,
+            count( CASE WHEN  ACCESS_STATE = '01' THEN 1 ELSE NULL END ) nature_y,
+            count( CASE WHEN  ACCESS_STATE = '02' THEN 1 ELSE NULL END ) nature_n,
+            count( CASE WHEN  ACCESS_STATE IS NULL OR ACCESS_STATE NOT IN ( '01', '02' ) THEN 1 ELSE NULL END ) nature_w
+            FROM
+            srp_work_siteinfo
+            WHERE
+            DELETELOGO IS NULL
+            OR DELETELOGO != '1'
+            GROUP BY
+            PROVINCE_CODE
+            ) a ON o.column_type_code = a.PROVINCE_CODE
+            WHERE
+            column_code = 'DATAREPORT_ORG'
+            ORDER BY
+            column_num + 0;
+        </mysql>
+    </sql>
+
+    <sql id="GetSrpRiskSysTab" desc="获取字典定义">
+        <mysql>
+            select em_id,
+            column_code,
+            column_name,
+            column_type_name,
+            column_type_code,
+            column_num
+            from srp_risk_sys_tab
+            WHERE
+            ${filter}
+        </mysql>
+    </sql>
+
+
+    <sql id="GetSrpWorkSiteinfochange" desc="作业单位准入变更信息">
+        <mysql>
+            select
+            a.SITEINFOCHANGE_ID,
+            a.PROVINCE_CODE,
+            a.NAME,
+            a.SITEINFO_ID,
+            a.REGISTRATION_DATE,
+            a.CREATE_TIME,
+            a.UPDATE_TIME,
+            a.CONTENT,
+            d.column_type_name AUDIT_STATUS,
+            a.DATAFILL_ORG,
+            a.DATAFILL_ORG_ID,
+            a.DATAREPORT_ORG,
+            a.DATAREPORT_ORG_ID,
+            c.column_type_name ORG_NATURE
+            from SRP_WORK_SITEINFOCHANGE a
+            LEFT JOIN `SRP_WORK_SITEINFO` b on a.SITEINFO_ID = b.SITEINFO_ID
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'ORG_NATURE') c on b.ORG_NATURE =
+            c.column_type_code
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'AUDIT_STATUS') d on a.AUDIT_STATUS =
+            d.column_type_code
+            WHERE
+            ${filter}
+            and ( b.DELETELOGO is null or b.DELETELOGO != '1' )
+        </mysql>
+    </sql>
+
+
+    <sql id="GetSrpWorkSiteinfoAll" desc="单位准入情况">
+        <mysql>
+            select
+            a.BASICINFO_CONTRACTOR,
+            a.BASICINFO_ORGADDRESS,
+            a.BASICINFO_CREDITCODE,
+            a.BASICINFO_ESTABLISHDATE,
+            a.BASICINFO_REGISTEREDCAPITAL,
+            a.BASICINFO_OPERATINGPERIOD,
+            a.BASICINFO_BUSINESSLICENSE,
+            a.BASICINFO_LEGALREPRESENTATIVE,
+            a.BASICINFO_CONTACTNUMBER,
+            a.BASICINFO_IDCARD,
+            a.BASICINFO_IDCARDPHOTO,
+            a.CREATE_TIME,
+            a.UPDATE_TIME,
+            a.FORMULAIRE_DE_DEMANDE_ID,
+            a.APPLICATION_DATE,
+            a.REMARK,
+            a.REPORT_CARD_BEGINTIME,
+            a.REPORT_CARD_ENDTIME,
+            a.ACCEPT_ORG,
+            a.ANNEX,
+            a.ORG_NATURE,
+            c.column_type_name ACCESS_STATE,
+            e.column_type_name DATAREPORT_ORG,
+            a.DATAREPORT_ORG_ID,
+            b.CERTIFICATION_TYPE,
+            b.CERTIFICATION_NAME,
+            b.CERTIFICATION_NO,
+            b.CERTIFICATION_VALIDITY,
+            b.CERTIFICATION_LEVEL,
+            a.PROVINCE_CODE,
+            b.ANNEX
+            from
+            SRP_WORK_SITEINFO a
+            LEFT JOIN SRP_WORK_SITEQUAINFO b on a.SITEINFO_ID = b.SITEINFO_ID
+            LEFT JOIN (select * from srp_risk_sys_tab where column_code = 'ACCESS_STATE') c on a.ACCESS_STATE =
+            c.column_type_code
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'DATAREPORT_ORG' ) e ON a.PROVINCE_CODE = e.column_type_code
+            WHERE
+            ${filter}
+            and ( a.DELETELOGO is null or a.DELETELOGO != '1' );
+        </mysql>
+    </sql>
+
+    <sql id="GetWorkSiteinfoList" desc="企业信息查询列表">
+        <mysql>
+            SELECT
+            SITEINFO_ID,
+            PROVINCE_CODE,
+            BASICINFO_CONTRACTOR,
+            BASICINFO_CREDITCODE,
+            c.column_type_name ORG_NATURE,
+            BASICINFO_LEGALREPRESENTATIVE,
+            ACCEPT_ORG,
+            e.column_type_name DATAREPORT_ORG,
+            DATAREPORT_ORG_ID,
+            case when ISNULL(b.VIOLATION_CNT) then 0 else b.VIOLATION_CNT end VIOLATION_CNT,
+            case when ISNULL(f.VIOLATION_ORG_POINTS) then 0 else f.VIOLATION_ORG_POINTS end VIOLATION_ORG_POINTS,
+            DATAFILL_ORG,
+            DATAFILL_ORG_ID,
+            CASE WHEN ACCESS_STATE = '01' THEN '有效' WHEN ACCESS_STATE = '02' THEN '无效'  ELSE '' END ACCESS_STATE
+            FROM (SELECT * FROM srp_work_siteinfo WHERE ${page})
+            a
+            LEFT JOIN ( SELECT VIOLATION_ORG_ID, count( 1 ) VIOLATION_cnt
+            FROM SRP_WORK_VIOLATIONFILE  GROUP BY VIOLATION_ORG_ID ) b on a.SITEINFO_ID =
+            b.VIOLATION_ORG_ID
+            LEFT JOIN ( SELECT  VIOLATION_ORG_ID,SUM( VIOLATION_ORG_POINTS+0 ) VIOLATION_ORG_POINTS FROM SRP_WORK_ORGVIOLATIONPENALTY  GROUP BY VIOLATION_ORG_ID ) f on b.VIOLATION_ORG_ID =
+            f.VIOLATION_ORG_ID
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'ORG_NATURE' ) c on a.ORG_NATURE =
+            c.column_type_code
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'DATAREPORT_ORG' ) e on a.PROVINCE_CODE =
+            e.column_type_code
+            where
+            ${filter}
+            and ( a.DELETELOGO is null or a.DELETELOGO != '1' ) ORDER BY CREATE_TIME DESC
+            ${limit}
+        </mysql>
+    </sql>
+
+    <sql id="GetSrpWorksiteworker" desc="工作负责人">
+        <mysql>
+            SELECT
+            a.SITEINFO_ID,
+            b.ORG_ID,
+            a.ACCEPT_ORG,
+            b.SITEWORKERINFO_ID,
+            b.ORG_NAME,
+            b.NAME,
+            b.ID_CARD,
+            d.column_type_name PROFESSION,
+            b.CONTACT,
+            c.TEST_SCORE
+            FROM
+            SRP_WORK_SITEINFO a
+            LEFT JOIN (SELECT * FROM SRP_WORK_SITEWORKERINFO WHERE ${page}) b ON a.SITEINFO_ID = b.ORG_ID
+            LEFT JOIN (
+            SELECT
+            m.SITEWORKERINFO_ID,
+            m.TEST_SCORE
+            FROM
+            (
+            SELECT
+            x.SITEWORKERINFO_ID,
+            x.TEST_SCORE
+            FROM
+            SRP_WORK_SAFETYTEST x,
+            ( SELECT SITEWORKERINFO_ID, MAX( TEST_DATE ) max_date FROM SRP_WORK_SAFETYTEST GROUP BY SITEWORKERINFO_ID ) y
+            WHERE
+            x.SITEWORKERINFO_ID = y.SITEWORKERINFO_ID
+            AND x.TEST_DATE = y.max_date
+            ) m
+            GROUP BY
+            m.SITEWORKERINFO_ID,
+            m.TEST_SCORE
+            ) c ON c.SITEWORKERINFO_ID = b.SITEWORKERINFO_ID
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'PROFESSION' ) d ON b.PROFESSION = d.column_type_code
+            WHERE
+            ${filter}
+            and ( a.DELETELOGO is null or a.DELETELOGO != '1' )
+            ${limit}
+        </mysql>
+    </sql>
+
+
+    <sql id="GetSrpWorksiteworkerCount" desc="工作负责人总数">
+        <mysql>
+            SELECT
+            COUNT( 1 ) AS WORKSITEINFO_CNT
+            FROM
+            SRP_WORK_SITEINFO a
+            LEFT JOIN SRP_WORK_SITEWORKERINFO b ON a.SITEINFO_ID = b.ORG_ID
+            LEFT JOIN (
+            SELECT
+            m.SITEWORKERINFO_ID,
+            m.TEST_SCORE
+            FROM
+            (
+            SELECT
+            x.SITEWORKERINFO_ID,
+            x.TEST_SCORE
+            FROM
+            SRP_WORK_SAFETYTEST x,
+            ( SELECT SITEWORKERINFO_ID, MAX( TEST_DATE ) max_date FROM SRP_WORK_SAFETYTEST GROUP BY SITEWORKERINFO_ID ) y
+            WHERE
+            x.SITEWORKERINFO_ID = y.SITEWORKERINFO_ID
+            AND x.TEST_DATE = y.max_date
+            ) m
+            GROUP BY
+            m.SITEWORKERINFO_ID,
+            m.TEST_SCORE
+            ) c ON c.SITEWORKERINFO_ID = b.SITEWORKERINFO_ID
+            LEFT JOIN ( SELECT * FROM srp_risk_sys_tab WHERE column_code = 'PROFESSION' ) d ON b.PROFESSION = d.column_type_code
+            WHERE
+            ${filter}
+            and ( a.DELETELOGO is null or a.DELETELOGO != '1' )
+        </mysql>
+    </sql>
+
+    <sql id="deleteEnterprise" desc="删除企业信息列表数据">
+        <mysql>
+            update srp_work_siteinfo set DELETELOGO = '1' where SITEINFO_ID in ( ${filter} )
+        </mysql>
+    </sql>
+
+</sqls>
+
+

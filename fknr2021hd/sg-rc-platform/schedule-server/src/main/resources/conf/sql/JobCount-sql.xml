@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql id="WorkPlanIdList" desc="获取作业上报表中的id">
+        <mysql>
+            SELECT wp.WORK_PLAN_ID
+            FROM work_plan wp INNER JOIN work_plan_fb wpfp
+            ON wp.WORK_PLAN_ID = wpfp.WORK_PLAN_ID
+            WHERE wp.WORK_TICKET =:ticket ${sql}
+        </mysql>
+    </sql>
+
+    <sql id="selectticket" desc="获取有效的作业工作票">
+        <mysql>
+            SELECT
+            wp.BUILD_UNIT_NAME,wp.REPORT_UNIT,
+            sum( if(WORK_TICKET is not null,1,0)) jobSum,
+            sum( if(WORK_TICKET ='1',1,0)) oneTicket,
+            sum( if(WORK_TICKET ='2',1,0)) twoTicket,
+            sum( if(WORK_TICKET ='3',1,0)) lightningTicket,
+            sum( if(WORK_TICKET ='4',1,0)) taskTicket,
+            sum( if(WORK_TICKET ='5',1,0)) operateTicket,
+            sum( if(WORK_TICKET ='6',1,0)) safeTicket,
+            sum( if(WORK_TICKET ='7',1,0)) btworkTicket,
+            sum( if(WORK_TICKET ='8',1,0)) dyworkTicket,
+            sum( if(WORK_TICKET ='9',1,0)) yxworkTicket,
+            sum( if(WORK_TICKET ='10',1,0)) fireTicket,
+            sum( if(WORK_TICKET ='11',1,0)) aconstructionTicket,
+            sum( if(WORK_TICKET ='12',1,0)) bconstructionTicket,
+            sum( if(WORK_TICKET ='13',1,0)) transmissionTicket,
+            sum( if(WORK_TICKET ='14',1,0)) distributionTicket,
+            sum( if(WORK_TICKET ='15',1,0)) substationTicket,
+            sum( if(WORK_TICKET ='16',1,0)) dlmonitoringTicket,
+            sum( if(WORK_TICKET ='17',1,0)) dlcorrespondTicket,
+            sum( if(WORK_TICKET ='18',1,0)) informationTicket
+            FROM
+            work_plan wp INNER JOIN work_plan_fb wpfp ON wp.WORK_PLAN_ID = wpfp.WORK_PLAN_ID
+            WHERE
+            IS_DELETE=0 ${filters}
+            GROUP BY
+            ${grouping}
+        </mysql>
+    </sql>
+</sqls>

@@ -1,0 +1,138 @@
+<style>
+    .right_bottom {
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        background-color: rgba(0, 32, 96, 1);
+        box-sizing: border-box;
+        border-width: 4px;
+        border-style: solid;
+        border-color: rgba(16, 77, 116, 1);
+        border-radius: 0px;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        /*margin-top: 20px;*/
+    }
+
+    .select {
+        background: #01255C;
+        width: 180px;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+    .details_pic{
+        width:1600px;
+        height:242px;
+        background: url("./resources/images/staffProfile/u6814.png") no-repeat;
+        background-size: 100% 100%;
+        margin-left: 20px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: left;
+    }
+    /*时间选择框样式设置*/
+    .input-append input {
+        background: transparent;
+        width: 111px;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+    .input-append .btn {
+        background: transparent;
+        border: 1px solid #0b7cb8;
+        color: white;
+    }
+</style>
+<div style="margin-top: 20px;height: 100%;">
+    <div  class="right_bottom">
+        <div style="display: flex">
+            <div style="display: flex">
+                <p style="font-size: 16px;margin:50px 10px 0px 50px">任务名称:</p>
+                <p><input type="text" id="ipt1" autocomplete="off"
+                          style="border:1px solid #0b7cb8;background-color:#01255C;color: white;width: 170px;margin-top: 47px"data-bind="value:titleName, event: { input: iptChange}">
+                </p>
+            </div>
+<!--            <div style="font-size: 16px;margin:50px 10px 0px 50px">-->
+<!--                <span style="font-size: 18px;color: white;margin: 20px 6px 20px 9px">开始时间:</span>-->
+<!--                                <input type="text" data-bind="value:Name" style="border:1px solid #0b7cb8;background-color:#05204e;color: white;width:150px">-->
+<!--                <datetimeeditor  params="showTimePicker: true,width:'162px',showDayPicker: true, format: ' yyyy-MM-dd HH:mm:ss', value: time"  > </datetimeeditor>-->
+
+<!--            </div>-->
+<!--            <div style="font-size: 16px;margin:50px 10px 0px 30px">-->
+<!--                <span style="font-size: 18px;color: white;">结束时间:</span>-->
+<!--                <datetimeeditor  params="showTimePicker: true,width:'162px',showDayPicker: true, format: 'yyyy-MM-dd HH:mm:ss', value: endTime"  > </datetimeeditor>-->
+<!--            </div>-->
+            <div style="display: flex">
+                <p style="font-size: 16px;margin:50px 10px 0px 50px">进程状态:</p>
+                <p><select style="margin-top: 47px" class="select w-100" data-bind="
+                                                         options: releaseUnit,
+                                                         optionsText: 'text',
+                                                         optionsValue:'id',
+                                                         value: Unit,
+                                                      ">
+                </select></p>
+<!--                <p><input type="text"-->
+<!--                          style="border:1px solid #0b7cb8;background-color:#01255C;color: white;width: 170px;margin-top: 47px"data-bind="value:Unit">-->
+<!--                </p>-->
+            </div>
+<!--            <div style="display: flex">-->
+<!--                <p style="font-size: 16px;margin:50px 10px 0px 50px">省份:</p>-->
+<!--                <p><select style="margin-top: 47px" class="select w-100" data-bind="-->
+<!--                                                         options: province,-->
+<!--                                                         optionsText: 'text',-->
+<!--                                                         optionsValue:'id',-->
+<!--                                                         value: provinceContent,-->
+<!--                                                      ">-->
+<!--                </select></p>-->
+<!--            </div>-->
+            <div class="know-btn cur-p" style="background-color:#169bd5;display:inline-block;color:white;width: 80px;line-height:30px;height: 30px;text-align: center;font-size: 16px;margin:48px 0px 10px 45px"data-bind="click: search" >查询</div>
+        </div>
+        <div style="width: 99%;margin-left:10px;margin-top: 20px">
+            <loading params="isShow: isShow,content: content"></loading>
+            <datagrid id="instanceTable" params="
+                            style: style,
+                            items: items,
+                            columns: columns,
+                            isShowRowNumber: isShowRowNumber,
+                            isShowCheckBox: isShowCheckBox,
+                            isShowBorder: isShowBorder,
+                            isShowStripe: isShowStripe,
+                            isShowHover: isShowHover,
+                            isShowCondense: isShowCondense,
+                            isAllowEdit: isAllowEdit,
+                            isAllowDelete: isAllowDelete,
+                            operationsColumnWidth: '60px',
+                            operationsColumnAlign: 'center',
+                            isAllowOperations:false,
+                            operationsColumnWidth:'120px',
+                            isAllowShift: isAllowShift,
+                            isAllowAppend: isAllowAppend,
+                            isAllowSort: isAllowSort,
+                            isAllowPaging: isAllowPaging,
+                            pageSize: pageSize,
+                            customOperations:customOperations,
+                            rowNumberWidth:'4%',
+                            checkboxWidth:'4%',
+                            primaryKey:'SERVER_IP'
+                            "></datagrid>
+        </div>
+        <pagenavibar style="float: right;color: white;margin-right: 44px" params="
+                        size: size,
+                        showArrow: showArrow,
+                        showTotal: showTotal,
+                        showGoto: showGoto,
+                        count: count,
+                        showAllPage: showAllPage,
+                        pageTotalCount: pageTotalCount,
+                        pageIndex: pageIndex,
+                        pageVisibleCount: pageVisibleCount,
+                        onPageIndexChanged: onPageIndexChanged"></pagenavibar>
+
+    </div>
+
+</div>
+
+
+
+</div>

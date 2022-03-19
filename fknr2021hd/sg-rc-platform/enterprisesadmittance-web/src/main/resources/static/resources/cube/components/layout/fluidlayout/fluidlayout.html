@@ -1,0 +1,14 @@
+<div class="cube container" data-bind="style: {width:width,  height:height}">
+	<!-- ko foreach: items -->
+	
+		<div data-bind="attr:{'class':'span'+(typeof(colspan)!='undefined'?colspan:1)},style:{textAlign: typeof(textAlign)!='undefined'?textAlign:null}">
+			<!-- ko if: typeof(content)!='undefined' -->
+				<div data-bind="html: content"></div>
+			<!-- /ko -->
+			<!-- ko if: typeof(content)=='undefined' && typeof(templateOptions)!='undefined' -->
+				<!-- ko component: templateOptions --><!-- /ko -->
+			<!-- /ko -->
+		</div>
+		
+	<!-- /ko -->
+</div>
