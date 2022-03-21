@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.mapper.WyworkorganizationMapper">
+  <resultMap id="BaseResultMap" type="com.property.entity.Wyworkorganization">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="plantime" jdbcType="TIMESTAMP" property="plantime" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="supplier" jdbcType="VARCHAR" property="supplier" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="isreplanting" jdbcType="VARCHAR" property="isreplanting" />
+    <result column="workingTime" jdbcType="VARCHAR" property="workingtime" />
+    <result column="plantingarea" jdbcType="VARCHAR" property="plantingarea" />
+    <result column="dictionary" jdbcType="VARCHAR" property="dictionary" />
+    <result column="plantingnum" jdbcType="VARCHAR" property="plantingnum" />
+    <result column="vegetationname" jdbcType="VARCHAR" property="vegetationname" />
+    <result column="plantingtime" jdbcType="VARCHAR" property="plantingtime" />
+    <result column="registrationtype" jdbcType="VARCHAR" property="registrationtype" />
+    <result column="person" jdbcType="VARCHAR" property="person" />
+  </resultMap>
+
+  <!--工作安排列表-->
+  <select id="getJobPlacement" resultType="Wyworkorganization">
+        SELECT
+            a.id,
+            a.name,
+            DATE_FORMAT(a.plantime,'%Y-%m-%d') plantime,
+            a.content,
+            a.supplier,
+            b.paravalue registrationtype,
+            a.del_flag
+        FROM
+            wy_workorganization a
+            LEFT JOIN (SELECT * FROM wy_dictionaries WHERE paraname = 'job_type') b ON a.registrationtype = b.parakey
+        WHERE
+            a.del_flag = '0'
+            <if test="name != null and name != ''">
+                <bind name="Name" value="'%' + name + '%'"/>
+                AND a.name like #{Name}
+            </if>
+        limit #{index},#{pageSize}
+  </select>
+
+  <!--工作安排数量-->
+  <select id="getJobPlacementCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            wy_workorganization
+        WHERE
+            del_flag = '0'
+            <if test="name != null and name != ''">
+                <bind name="Name" value="'%' + name + '%'"/>
+                AND name like #{Name}
+            </if>
+  </select>
+
+  <!--新增工作安排-->
+  <insert id="addJobPlacement" parameterType="Wyworkorganization">
+        INSERT INTO wy_workorganization(
+            name,plantime,content,supplier,registrationtype,del_flag
+        )VALUES (
+            #{name},#{plantime},#{content},#{supplier},#{registrationtype},#{delFlag}
+        )
+  </insert>
+
+  <!--修改工作安排-->
+  <update id="updateJobPlacement" parameterType="Wyworkorganization">
+        UPDATE wy_workorganization
+        SET name = #{name},plantime = #{plantime},content = #{content},registrationtype = #{registrationtype}
+        WHERE id = #{id}
+  </update>
+
+  <!--删除工作安排-->
+  <update id="deleteJobPlacement" parameterType="Wyworkorganization">
+        UPDATE wy_workorganization
+        SET del_flag = '1'
+        WHERE id = #{id}
+  </update>
+
+  <!--工作提醒-->
+  <select id="reminderWork" resultType="Wyworkorganization">
+        SELECT
+            a.id,
+            a.name,
+            DATE_FORMAT(a.plantime,'%Y-%m-%d') plantime,
+            a.content,
+            a.supplier,
+            b.paravalue registrationtype,
+            a.del_flag
+        FROM
+            wy_workorganization a
+            LEFT JOIN (SELECT * FROM wy_dictionaries WHERE paraname = 'job_type') b ON a.registrationtype = b.parakey
+        WHERE
+            a.del_flag = '0'
+            AND a.plantime >= STR_TO_DATE(now(),'%Y-%m-%d')
+  </select>
+
+  <!--添加登记-->
+  <insert id="addRegister" parameterType="Wyregister">
+        INSERT INTO wy_register(
+            plantingtime,vegetationtype,isreplanting,plantingarea,number,workingTime,vegetationname,plantingnum,
+            person,registrationtype
+        )VALUES (
+            #{plantingTime},#{vegetationType},#{isReplanting},#{plantingArea},#{number},#{workingTime},
+            #{vegetationName},#{plantingNum},#{person},#{registrationType}
+        )
+  </insert>
+
+  <!--空间情况-->
+  <select id="getSpaceInfo" resultType="java.util.LinkedHashMap">
+        SELECT
+            SUM(a.number)+SUM(a.workingTime) as peopleDay,
+            count( DISTINCT a.vegetationtype ) as vegetationType
+            <if test="registrationtype == '2'.toString()">
+                ,sum(a.plantingnum) as plantingNum
+            </if>
+        FROM
+            wy_space c
+            LEFT JOIN wy_register a ON a.plantingarea = c.id
+      WHERE
+            a.registrationtype = #{registrationtype}
+            <if test="timeType == 1">
+                AND QUARTER(a.plantingtime) = QUARTER(NOW())
+                AND YEAR(a.plantingtime) = YEAR(NOW())
+            </if>
+            <if test="timeType == 2">
+              AND QUARTER(a.plantingtime) = QUARTER(DATE_SUB(NOW(),INTERVAL 1 YEAR))
+              AND YEAR(a.plantingtime) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR))
+            </if>
+            AND a.plantingarea = #{plantingArea}
+  </select>
+
+    <!--查询字典表-->
+    <select id="getDictionaries" resultType="java.util.LinkedHashMap">
+        SELECT * FROM wy_dictionaries
+    </select>
+
+    <!--查询可关联空间区域-->
+    <select id="getSpace" resultType="java.util.LinkedHashMap">
+        SELECT id,spacename FROM wy_space WHERE del_flag = '0'
+    </select>
+</mapper>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StBusinessDataMapper">
+
+    <resultMap id="StOperationrestaurant" type="com.canteen.entity.StOperationrestaurant">
+        <id column="id" property="id"/>
+        <result property="parentIds" column="parent_ids"/>
+        <result property="restaurantName" column="RestaurantName"/>
+        <result property="restaurantCode" column="RestaurantCode"/>
+    </resultMap>
+
+    <resultMap id="getDecide" type="java.util.LinkedHashMap">
+        <result property="parentIds" column="parent_ids"/>
+        <result property="decide" column="decide"/>
+    </resultMap>
+    <!--    查询订单编号和取餐方式-->
+    <select id="selectOrderAndWay" resultType="java.util.LinkedHashMap">
+        select
+        a.ordernumber,a.pickway,a.scheduled
+        from st_ordermanagement a
+        LEFT JOIN st_operationrestaurant b ON a.restaurant = b.RestaurantCode
+        WHERE 1 = 1
+        <if test="restaurant != null and restaurant != ''">
+            and b.id in (${restaurant})
+        </if>
+        <if test="startData != null and startData != '' and endData != null and endData != ''">
+            and a.scheduled between #{startData} and #{endData}
+        </if>
+    </select>
+
+    <select id="selectRestaurantCode" resultType="java.lang.String">
+    select RestaurantCode from st_operationrestaurant
+</select>
+
+    <!--    拿到订单编号去查询对应的菜品id-->
+    <select id="selectIdByOrderNumber" resultType="java.lang.Integer">
+        select dishId
+        from st_order_dishes
+        where orderNo = #{ordernumber}
+    </select>
+
+    <!--    根据菜品id查询对应的菜品详细信息-->
+    <select id="selectDishById" resultType="java.util.Map">
+        select
+        meals,name,dishescategory,taste,category
+        from st_mydishes
+        where id = #{id}
+    </select>
+
+    <!--    查询此id在营业数据表中是否存在-->
+    <select id="selectNameById" resultType="java.lang.String">
+        select name from st_businessdata
+        where dishid = #{id}
+    </select>
+
+    <!--    往营业表中插入数据-->
+    <insert id="insertData">
+        insert into st_businessdata (meals,name,dishescategory,taste,category,dishid,businesstime)
+        values (#{meals},#{name},#{dishescategory},#{taste},#{category},#{id},#{scheduled})
+    </insert>
+
+    <!--    刷脸、刷卡、客饭单取餐数加一-->
+    <update id="updateFace">
+        update st_businessdata
+        set face = face + 1,
+        salestotal = salestotal + 1
+        where dishid = #{id}
+    </update>
+
+    <update id="updateCard">
+        update st_businessdata
+        set card = card + 1,
+        salestotal = salestotal + 1
+        where dishid = #{id}
+    </update>
+
+    <update id="updateGuest">
+        update st_businessdata
+        set guest = guest + 1,
+        salestotal = salestotal + 1
+        where dishid = #{id}
+    </update>
+
+    <!--    每次查询营养数据前先清空表数据-->
+    <delete id="deleteDate">
+        delete from st_businessdata
+    </delete>
+
+    <!--    查询营业数据总量-->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+         select count(id)
+        from st_businessdata
+    </select>
+
+    <!--    查询每条营业数据-->
+    <select id="selectStBusinessData" resultType="java.util.Map">
+        SELECT DISTINCT
+            a.businesstime,
+            a.name,
+            a.taste,
+            c.paravalue AS meals,
+            b.paravalue AS dishescategory,
+            a.category,
+            a.face,
+            a.card,
+            a.guest
+        FROM
+            st_businessdata a
+            LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'dishescategory' ) b ON a.dishescategory = b.parakey
+            LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'mealtype' ) c ON a.meals = c.parakey
+            LIMIT #{index},#{pageSize}
+    </select>
+
+    <!--    求销售，刷脸，刷卡，客饭单总量-->
+    <select id="selectTotal" resultType="java.util.Map">
+ select SUM(face) as face,SUM(salestotal) as salestotal,
+ SUM(card) as card,SUM(guest) as guest
+        from st_businessdata
+    </select>
+
+    <select id="getDecide" resultMap="getDecide">
+        SELECT parent_ids,decide FROM st_operationrestaurant WHERE RestaurantCode = #{id}
+    </select>
+
+    <select id="getOpById" resultMap="StOperationrestaurant">
+        SELECT
+            id,
+            parent_ids,
+            RestaurantName,
+            RestaurantCode
+            FROM st_operationrestaurant
+            WHERE parent_ids = #{parentIds}
+    </select>
+</mapper>

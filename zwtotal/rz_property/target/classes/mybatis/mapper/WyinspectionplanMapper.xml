@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.mapper.WyinspectionplanMapper">
+  <resultMap id="BaseResultMap" type="com.property.entity.Wyinspectionplan">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="inspectiontask" jdbcType="VARCHAR" property="inspectiontask" />
+    <result column="schedule" jdbcType="VARCHAR" property="schedule" />
+    <result column="personnel" jdbcType="VARCHAR" property="personnel" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+  </resultMap>
+
+</mapper>

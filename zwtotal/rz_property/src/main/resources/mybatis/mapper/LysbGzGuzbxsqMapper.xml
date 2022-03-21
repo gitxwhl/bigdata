@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.mapper.LysbGzGuzbxsqMapper">
+
+    <!--调用函数获取工单号-->
+    <select id="getGdh" resultType="java.lang.String">
+        SELECT fun_next_gdh('wx')
+    </select>
+
+    <!--新添加维修申请单（状态默认未提交）-->
+    <insert id="addSq" parameterType="LysbGzGuzbxsq">
+        INSERT INTO lysb_gz_guzbxsq (
+            ID,BEIZ,CORPID,FUJ,SHENHZT,SHENQLX,SHENQLY,SHENQRID,SHENQRMC,SHENQSJ,WEIXGDH,WEIXSB,BUTGYY,WEIXRY,WEIXKSSJ,
+            WEIXJSSJ,WEIXRYNAME,WEIXRYCODE,zhicyz,shenqrdh
+        ) VALUES (
+            #{ID},#{BEIZ},#{CORPID},#{FUJ},#{SHENHZT},#{SHENQLX},#{SHENQLY},#{SHENQRID},#{SHENQRMC},#{SHENQSJ},#{WEIXGDH},
+            #{WEIXSB},#{BUTGYY},#{WEIXRY},#{WEIXKSSJ},#{WEIXJSSJ},#{WEIXRYNAME},#{WEIXRYCODE},#{zhicyz},#{shenqrdh}
+        )
+    </insert>
+
+    <!--更改状态-->
+    <update id="updateState" parameterType="LysbGzGuzbxsq">
+        UPDATE lysb_gz_guzbxsq
+        <trim prefix="set" suffixOverrides=",">
+            <if test="SHENHZT != null and SHENHZT != ''">
+                SHENHZT = #{SHENHZT},
+            </if>
+            <if test="BUTGYY != null and BUTGYY != ''">
+                BUTGYY = #{BUTGYY}
+            </if>
+            <if test="WEIXRY != null and WEIXRY != ''">
+                WEIXRY = #{WEIXRY}
+            </if>
+            <if test="WEIXKSSJ != null and WEIXKSSJ != ''">
+                WEIXKSSJ = #{WEIXKSSJ}
+            </if>
+            <if test="WEIXJSSJ != null and WEIXJSSJ != ''">
+                WEIXJSSJ = #{WEIXJSSJ}
+            </if>
+            <if test="WEIXRYNAME != null and WEIXRYNAME != ''">
+                WEIXRYNAME = #{WEIXRYNAME}
+            </if>
+            <if test="WEIXRYCODE != null and WEIXRYCODE != ''">
+                WEIXRYCODE = #{WEIXRYCODE}
+            </if>
+        </trim>
+        WHERE
+            ID = #{ID}
+    </update>
+</mapper>

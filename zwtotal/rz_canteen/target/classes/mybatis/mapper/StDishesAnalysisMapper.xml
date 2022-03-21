@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StDishesAnalysisMapper">
+<!--    获取一段时间的评价总数-->
+    <select id="getTotals" resultType="java.lang.Integer">
+SELECT COUNT(distinct(a.id))
+FROM st_dishevaluation a LEFT JOIN st_dishevaluation_score b ON a.id = b.dishevaluationid
+<where>
+    <if test="restaurant != null and restaurant != ''">
+        and a.st_dishevaluation = #{restaurant}
+    </if>
+    <if test="strDate != null and strDate != ''">
+        AND a.begintime BETWEEN #{strDate} AND #{endDate}
+    </if>
+    <if test="name != null and name != ''">
+        and b.disname = #{name}
+    </if>
+    <if test="filtercomments != null and filtercomments != ''">
+        and a.filtercomments = #{filtercomments}
+    </if>
+</where>
+    </select>
+
+<!--    菜品满意程度查询-->
+    <select id="selectAnalysisOfMyFood" resultType="java.util.Map">
+        select a.verysatisfied,a.satisfied,a.commonly,a.dissatisfied,a.verydissatisfied,a.totaltimes,b.name from
+        st_score a LEFT JOIN st_mydishes b ON a.disid = b.id
+    </select>
+
+<!--获取指定日期的ids-->
+
+    <select id="selectIds" resultType="java.lang.Integer">
+SELECT distinct(a.id)
+        FROM st_dishevaluation a LEFT JOIN st_dishevaluation_score b ON a.id = b.dishevaluationid
+        <where>
+            <if test="restaurant != null and restaurant != ''">
+                and a.st_dishevaluation = #{restaurant}
+            </if>
+            <if test="strDate != null and strDate != ''">
+                AND a.begintime BETWEEN #{strDate} AND #{endDate}
+            </if>
+            <if test="name != null and name != ''">
+                and b.disname = #{name}
+            </if>
+            <if test="filtercomments != null and filtercomments != ''">
+                and a.filtercomments = #{filtercomments}
+            </if>
+        </where>
+    </select>
+
+<!--    查询对应评论id下的给菜品评分-->
+    <select id="selectScore" resultType="java.util.Map">
+        select a.score,a.disid from st_dishevaluation_score a
+        left join st_dishevaluation b on a.dishevaluationid = b.id
+        where a.dishevaluationid = #{id}
+    </select>
+
+<!--根据id查询score表中是否有此id的记录-->
+    <select id="selectById" resultType="java.lang.String">
+       select id from st_score
+       where disid = #{id}
+    </select>
+<!--    每次获取不同时段菜品评价数据量时先删除上次计算数据-->
+    <delete id="deleteScore">
+        DELETE FROM st_score
+    </delete>
+<!--    往score表中插入id-->
+    <insert id="insertId">
+        insert into st_score (disid) value (#{id})
+    </insert>
+<!--    对应id的评分等级加一-->
+    <update id="updateDishevaluation">
+        UPDATE st_score SET verysatisfied = verysatisfied + '1',totaltimes = totaltimes+ '1' WHERE disid = #{id}
+    </update>
+    <update id="updateSatisfied">
+        UPDATE st_score SET satisfied = satisfied + '1',totaltimes = totaltimes+ '1' WHERE disid = #{id}
+    </update>
+    <update id="updateCommonly">
+        UPDATE st_score SET commonly = commonly + '1',totaltimes = totaltimes+ '1' WHERE disid = #{id}
+    </update>
+    <update id="updateDissatisfied">
+        UPDATE st_score SET dissatisfied = dissatisfied + '1',totaltimes = totaltimes+ '1' WHERE disid = #{id}
+    </update>
+    <update id="updateVerydissatisfied">
+        UPDATE st_score SET verydissatisfied = verydissatisfied + '1',totaltimes = totaltimes+ '1' WHERE disid = #{id}
+    </update>
+
+<!--    餐厅评价查询-->
+    <select id="selectAnalysisOfRestaurant" resultType="java.util.Map">
+       SELECT a.environment,a.overallevaluation,a.canteenservice FROM
+        st_dishevaluation a LEFT JOIN st_dishevaluation_score b ON a.id = b.dishevaluationid
+        <where>
+            <if test="restaurant != null and restaurant != ''">
+                and a.st_dishevaluation = #{restaurant}
+            </if>
+            <if test="strDate != null and strDate != ''">
+                AND a.begintime BETWEEN #{strDate} AND #{endDate}
+            </if>
+            <if test="name != null and name != ''">
+                and b.disname = #{name}
+            </if>
+            <if test="filtercomments != null and filtercomments != ''">
+                and a.filtercomments = #{filtercomments}
+            </if>
+        </where>
+    </select>
+
+<!--    菜品整体评价查询-->
+
+    <select id="selectAnalysisOfMyFoods" resultType="java.util.Map">
+       SELECT distinct(a.id),a.environment,a.overallevaluation,a.canteenservice,a.content,
+       a.uploadpictures,a.begintime FROM
+        st_dishevaluation a LEFT JOIN st_dishevaluation_score b ON a.id = b.dishevaluationid
+        <where>
+            <if test="restaurant != null and restaurant != ''">
+                and a.st_dishevaluation = #{restaurant}
+            </if>
+            <if test="strDate != null and strDate != ''">
+                AND a.begintime BETWEEN #{strDate} AND #{endDate}
+            </if>
+            <if test="name != null and name != ''">
+                and b.disname = #{name}
+            </if>
+            <if test="filtercomments != null and filtercomments != ''">
+                and a.filtercomments = #{filtercomments}
+            </if>
+        </where>
+ limit #{startIndex},#{pageSize}
+    </select>
+
+<!--    根据评论id查询各菜品评分-->
+    <select id="selectDishesScore" resultType="java.util.Map">
+       select disname,id,score,disid from st_dishevaluation_score where dishevaluationid = #{id}
+    </select>
+
+<!--    给菜品评价加上标签-->
+    <select id="setAnalysisOfMyFoods" resultType="java.util.Map">
+       SELECT c.id,c.environment,c.overallevaluation,c.canteenservice,c.content,
+       c.uploadpictures,c.begintime FROM
+        st_dishevaluation c LEFT JOIN st_dishevaluation_score b
+        ON c.id = b.dishevaluationid
+WHERE c.st_dishevaluation = #{restaurant}
+AND c.begintime BETWEEN #{strDate} AND #{endDate}
+    </select>
+
+<!--    用户评论回复-->
+    <insert id="replay">
+        insert into
+        st_dishevaluation_replay (replay,disvaluationid,replaydate)
+        values (#{replay},#{id},#{replaydate})
+    </insert>
+
+<!--    修改用户评论-->
+    <update id="updateReplay">
+     update st_dishevaluation set
+     content = #{replay},
+environment = #{environment},
+overallevaluation = #{overallevaluation},
+canteenservice = #{canteenservice}
+     where id = #{id}
+    </update>
+<!--根据评论id返回图片地址字符串-->
+    <update id="updateImages">
+       update st_dishevaluation set
+       uploadpictures = #{images}
+        where id = #{id}
+    </update>
+<!--    修改菜品评分-->
+    <update id="updateScore">
+update st_dishevaluation_score set
+score = #{score}
+where
+id = #{id}
+    </update>
+
+<!--    删除用户评论-->
+    <delete id="deleteReplay">
+        delete from st_dishevaluation where id = #{id}
+    </delete>
+
+    <delete id="deleteReplayOfDis">
+        delete from st_dishevaluation_score where dishevaluationid = #{id}
+    </delete>
+
+<!--    查询排餐信息-->
+    <select id="selectIntelligenceMeals" resultType="java.util.Map">
+   select a.id,a.foodpictures,a.score,a.name from st_mydishes a
+   left join
+   st_intelligencemeals b on a.id = b.varietydishes
+<where>
+    <if test="restaurant != null and restaurant != ''">
+        and a.restaurant = #{restaurant}
+    </if>
+    <if test="date != null and restaurant != ''">
+        and b.timestamp = #{date}
+    </if>
+</where>
+
+    </select>
+<!--    给菜品添加标签-->
+    <update id="insertFilterComments">
+        update st_dishevaluation set filtercomments = #{filtercomments}
+        where id = #{id}
+    </update>
+
+<!--    查询回复内容-->
+    <select id="selectReplay" resultType="java.util.Map">
+        select replay,replaydate from st_dishevaluation_replay
+        where disvaluationid = #{id}
+    </select>
+<!--图片和评价内容存库-->
+    <insert id="saveComment" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
+        insert into st_dishevaluation (environment,overallevaluation,canteenservice,content,
+        uploadpictures,user,st_dishevaluation,begintime)
+        values (#{environment},#{overallevaluation},#{canteenservice},#{content},
+        #{uploadpictures},#{user},#{stDishevaluation},now())
+    </insert>
+<!--    菜品评分入库-->
+    <insert id="saveScore">
+        insert into st_dishevaluation_score (dishevaluationid,score,disname,disid)
+        values
+        (#{id},#{score},#{name},#{disid})
+    </insert>
+</mapper>

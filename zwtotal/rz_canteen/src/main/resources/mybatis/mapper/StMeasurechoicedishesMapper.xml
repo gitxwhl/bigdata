@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StMeasurechoicedishesMapper">
+    <resultMap id="choiceDishResultMap" type="com.canteen.entity.StMeasurechoicedishes">
+        <result property="id" column="id"/>
+        <result property="meteringEquipment" column="meteringequipment"/>
+        <result property="dishName" column="dishname"/>
+        <result property="restaurant" column="restaurant"/>
+        <result property="numbers" column="numbers"/>
+        <result property="weight" column="weight"/>
+        <result property="referencePrice" column="referenceprice"/>
+        <result property="remarks" column="remarks"/>
+    </resultMap>
+
+    <resultMap id="foodResultMap" type="java.util.LinkedHashMap">
+        <result property="dishCode" column="dishcode"/>
+        <result property="dishName" column="dishName"/>
+    </resultMap>
+
+    <resultMap id="getFoodByCode" type="java.util.LinkedHashMap">
+        <result property="referencePrice" column="referenceprice"/>
+        <result property="weight" column="weight"/>
+    </resultMap>
+
+    <!--排菜列表-->
+    <select id="choiceDishList" resultMap="choiceDishResultMap">
+        SELECT
+            a.id,
+            b.equipmentname meteringequipment,
+            c.dishName dishname,
+            d.RestaurantName restaurant,
+            a.numbers,
+            a.weight,
+            a.referenceprice,
+            a.remarks
+        FROM
+            ( SELECT * FROM st_measurechoicedishes ) a
+            LEFT JOIN ( SELECT * FROM st_equipmentmanagement ) b ON a.meteringequipment = b.id
+            LEFT JOIN ( SELECT * FROM st_food_management ) c ON a.dishname = c.dishcode
+            LEFT JOIN ( SELECT * FROM st_operationrestaurant ) d ON a.restaurant = d.RestaurantCode
+        WHERE
+            a.del_flag = '0'
+            <if test="restaurantName != null and restaurantName != ''">
+                AND d.id in(${restaurantName})
+            </if>
+            <if test="equipmentName != null and equipmentName != ''">
+                <bind name="EquipmentName" value="'%'+ equipmentName + '%'"/>
+                AND b.equipmentname like #{EquipmentName}
+            </if>
+            <if test="dishName != null and dishName != ''">
+                <bind name="DishName" value="'%'+ dishName + '%'"/>
+                AND c.dishName like #{DishName}
+            </if>
+            limit #{startIndex},#{pageSize}
+    </select>
+
+    <!--排菜数量-->
+    <select id="choiceDishCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            ( SELECT * FROM st_measurechoicedishes ) a
+            LEFT JOIN ( SELECT * FROM st_equipmentmanagement ) b ON a.meteringequipment = b.id
+            LEFT JOIN ( SELECT * FROM st_food_management ) c ON a.dishname = c.dishcode
+            LEFT JOIN ( SELECT * FROM st_operationrestaurant ) d ON a.restaurant = d.RestaurantCode
+        WHERE
+            a.del_flag = '0'
+            <if test="restaurantName != null and restaurantName != ''">
+                AND d.id in(${restaurantName})
+            </if>
+            <if test="equipmentName != null and equipmentName != ''">
+                <bind name="EquipmentName" value="'%'+ equipmentName + '%'"/>
+                AND b.equipmentname like #{EquipmentName}
+            </if>
+            <if test="dishName != null and dishName != ''">
+                <bind name="DishName" value="'%'+ dishName + '%'"/>
+                AND c.dishName like #{DishName}
+            </if>
+    </select>
+
+    <!--删除排菜-->
+    <update id="deleteChoiceDish">
+        UPDATE st_measurechoicedishes SET del_flag = '1' WHERE id = #{id}
+    </update>
+
+    <!--查询可关联的菜品-->
+    <select id="getFood" resultMap="foodResultMap">
+        SELECT dishcode,dishName FROM st_food_management
+    </select>
+
+    <!--新增排菜-->
+    <insert id="insertChoiceDish" parameterType="com.canteen.entity.StMeasurechoicedishes">
+        INSERT INTO st_measurechoicedishes ( meteringequipment, dishname, restaurant, numbers, weight, referenceprice, remarks, del_flag )
+        VALUES
+            ( #{meteringEquipment}, #{dishName}, #{restaurant}, #{numbers}, #{weight}, #{referencePrice}, #{remarks}, #{delFlag} )
+    </insert>
+
+    <!--根据菜品号查询菜品数量-->
+    <select id="getCntByCode" resultType="java.lang.Integer">
+        SELECT count(1) FROM st_food_management WHERE dishcode = #{dishCode} and del_flag = '0'
+    </select>
+
+    <!--根据菜品号查询菜品信息-->
+    <select id="getFoodByCode" resultMap="getFoodByCode">
+        SELECT referenceprice,weight FROM st_food_management WHERE dishcode = #{dishCode} and del_flag = '0'
+    </select>
+
+    <!--修改排菜-->
+    <update id="updateChoiceDish" parameterType="com.canteen.entity.StMeasurechoicedishes">
+        UPDATE st_measurechoicedishes
+        SET meteringequipment = #{meteringEquipment}, dishname = #{dishName}, restaurant = #{restaurant}, numbers = #{numbers},
+            weight = #{weight}, referenceprice = #{referencePrice}, remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <!--导出排菜列表-->
+    <select id="ExportChoiceDishList" resultMap="choiceDishResultMap">
+        SELECT
+            a.id,
+            b.equipmentname meteringequipment,
+            c.dishName dishname,
+            d.RestaurantName restaurant,
+            a.numbers,
+            a.weight,
+            a.referenceprice,
+            a.remarks
+        FROM
+            ( SELECT * FROM st_measurechoicedishes ) a
+            LEFT JOIN ( SELECT * FROM st_equipmentmanagement ) b ON a.meteringequipment = b.id
+            LEFT JOIN ( SELECT * FROM st_food_management ) c ON a.dishname = c.dishcode
+            LEFT JOIN ( SELECT * FROM st_operationrestaurant ) d ON a.restaurant = d.RestaurantCode
+        WHERE
+            a.del_flag = '0'
+            <if test="restaurantName != null and restaurantName != ''">
+                AND d.id in(${restaurantName})
+            </if>
+            <if test="equipmentName != null and equipmentName != ''">
+                <bind name="EquipmentName" value="'%'+ equipmentName + '%'"/>
+                AND b.equipmentname like #{EquipmentName}
+            </if>
+            <if test="dishName != null and dishName != ''">
+                <bind name="DishName" value="'%'+ dishName + '%'"/>
+                AND c.dishName like #{DishName}
+            </if>
+    </select>
+</mapper>

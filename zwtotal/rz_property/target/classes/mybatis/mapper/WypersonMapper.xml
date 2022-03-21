@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.mapper.WypersonMapper">
+
+    <!--================================================排班计划===============================================-->
+    <!--查询班次明细-->
+    <select id="getFrequency" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.id,
+            a.timestamp,
+            a.frequency frequencyId,
+            b.paravalue frequency,
+            a.starttime,
+            a.endtime
+        FROM
+            wy_frequencydetails a
+            LEFT JOIN ( SELECT * FROM wy_dictionaries WHERE paraname = 'frequency' ) b ON a.frequency = b.parakey
+        WHERE
+            STR_TO_DATE(a.timestamp,'%Y-%m-%d') = STR_TO_DATE(#{date},'%Y-%m-%d')
+    </select>
+    
+    <!--添加班次明细-->
+    <insert id="addFrequency" parameterType="WyFrequencyDetails">
+        INSERT INTO wy_frequencydetails(
+            timestamp,frequency,starttime,endtime
+        )VALUES (
+            #{timestamp},#{frequency},#{startTime},#{endTime}
+        )
+    </insert>
+
+    <!--修改班次明细-->
+    <update id="updateFrequency" parameterType="WyFrequencyDetails">
+        UPDATE wy_frequencydetails
+        SET frequency = #{frequency},starttime = #{startTime},endtime = #{endTime}
+        WHERE id = #{id}
+    </update>
+
+    <!--通过日期查询排班情况-->
+    <!--<select id="getSchedule" parameterType="java.util.LinkedHashMap">
+
+    </select>-->
+
+
+    <!--================================================巡检计划===============================================-->
+    <!--查询列表数量-->
+    <select id="inspectionplanListCnt" resultType="java.lang.Integer">
+        SELECT count(1) FROM wy_inspectionplan WHERE del_flag = '0'
+    </select>
+
+    <!--查询列表-->
+    <select id="inspectionplanList" resultType="java.util.LinkedHashMap">
+        SELECT * FROM wy_inspectionplan WHERE del_flag = '0' limit #{index},#{pageSize}
+    </select>
+
+    <!--通过id查询门岗人员-->
+    <select id="getPersonById" resultType="java.util.LinkedHashMap">
+        SELECT name FROM wy_person WHERE id in (${ids})
+    </select>
+
+    <!--新增巡检计划-->
+    <insert id="addInspectionplan" parameterType="Wyinspectionplan">
+        INSERT INTO wy_inspectionplan(
+            place,inspectiontask,schedule,personnel,content,del_flag
+        )VALUES (
+            #{place},#{inspectiontask},#{schedule},#{personnel},#{content},'0'
+        )
+    </insert>
+
+    <!--修改巡检计划-->
+    <update id="updateInspectionplan" parameterType="Wyinspectionplan">
+        UPDATE
+            wy_inspectionplan
+        SET
+            place = #{place},inspectiontask = #{inspectiontask},schedule = #{schedule},
+            personnel = #{personnel},content = #{content}
+        WHERE
+            id = #{id}
+    </update>
+
+    <!--删除巡检计划-->
+    <update id="deleteInspectionplan">
+        UPDATE wy_inspectionplan SET del_flag = '1' WHERE id = #{id}
+    </update>
+
+    <!--查询门岗人员-->
+    <select id="getPerson" resultType="java.util.LinkedHashMap">
+        SELECT id,name text FROM wy_person WHERE isgate = '0'
+    </select>
+
+    <!--================================================岗位资料===============================================-->
+    <!--新增门岗人员-->
+    <insert id="insertWyPerson">
+        INSERT INTO wy_person(
+            name,post,telephone,photo,isgate
+        )VALUES (
+            #{name},#{post},#{telephone},#{photo},#{isgate}
+        )
+    </insert>
+
+    <!--查询列表数据个数-->
+    <select id="getPersonCnt" resultType="java.lang.Integer">
+        SELECT count(1) FROM wy_person WHERE isgate = '0'
+    </select>
+
+    <!--查询列表数据-->
+    <select id="getPersonList" resultType="java.util.LinkedHashMap">
+        SELECT
+            id,
+            name,
+            post,
+            telephone,
+            photo
+        FROM
+            wy_person
+        WHERE
+            isgate = '0'
+            limit #{index},#{pageSize}
+    </select>
+
+</mapper>

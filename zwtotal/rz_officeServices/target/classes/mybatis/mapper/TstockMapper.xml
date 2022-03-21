@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.officeServices.mapper.TstockMapper">
+    <resultMap id="GoodResultMap" type="com.officeServices.entity.Tstock">
+        <id column="id"  property="id" />
+        <result property="goodNo" column="goodno"/>
+        <result property="goodName" column="goodname"/>
+        <result property="specs" column="specs"/>
+        <result property="brand" column="brand"/>
+        <result property="storeNo" column="storeno"/>
+        <result property="unitPrice" column="unitprice"/>
+        <result property="allmoney" column="allmoney"/>
+        <result property="usableaMount" column="usableamount"/>
+        <result property="inStore" column="instore"/>
+        <result property="outStore" column="outstore"/>
+        <result property="nowStore" column="nowstore"/>
+        <result property="parenttypeId" column="parenttypeid"/>
+        <result property="unit" column="unit"/>
+        <result property="pictureurl" column="pictureurl"/>
+        <result property="isDel" column="is_del"/>
+        <result property="expectcount" column="expectcount"/>
+        <result property="barCode" column="barCode"/>
+    </resultMap>
+
+
+    <resultMap id="findgoodTypeTreeMap" type="com.officeServices.entity.GoodTypeTree">
+        <id property="id" column="id"/>
+        <result property="typeName" column="typename"/>
+        <result property="pId" column="pid"/>
+    </resultMap>
+
+    <!--========================================== 库存查询 ============================================================-->
+    <!--库存查询-->
+    <select id="findGood" resultType="java.util.LinkedHashMap">
+        SELECT
+            id,
+            goodno,
+            goodname,
+            specs,
+            brand,
+            storeno,
+            unit,
+            unitprice,
+            IFNULL(allmoney,0) allmoney,
+            IFNULL(usableamount,0) usableamount,
+            IFNULL(instore,0) instore,
+            IFNULL(outstore,0) outstore,
+            IFNULL(nowstore,0) nowstore,
+            parenttypeid,
+            expectcount,
+            pictureurl,
+            is_del,
+            barcode,
+            CASE WHEN usableamount-expectcount>=0 THEN '正常' ELSE '告警' END iswarn
+        FROM
+            t_stock
+        WHERE
+            (is_del = '0' or is_del is null)
+            <if test="goodName != null and goodName != ''">
+                <bind name="GoodName" value="'%' + goodName + '%'"/>
+                AND goodname like #{GoodName}
+            </if>
+            <if test="type != null and type != ''">
+                AND parenttypeid = #{type}
+            </if>
+            LIMIT #{index},#{pageSize}
+    </select>
+
+    <!--库存数量查询-->
+    <select id="findGoodCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            t_stock
+        WHERE
+            (is_del = '0' or is_del is null)
+            <if test="goodName != null and goodName != ''">
+                <bind name="GoodName" value="'%' + goodName + '%'"/>
+                AND goodname like #{GoodName}
+            </if>
+            <if test="type != null and type != ''">
+                AND parenttypeid = #{type}
+            </if>
+    </select>
+
+    <!--新建物品-->
+    <insert id="addGood" parameterType="Tstock">
+        INSERT INTO t_stock(
+            id,goodno,goodname,specs,brand,storeno,unitprice,unit,pictureurl,is_del,expectcount,barcode,parenttypeid,creat_time
+        )VALUES (
+            #{id},#{goodNo},#{goodName},#{specs},#{brand},#{storeNo},#{unitPrice},#{unit},#{picture,jdbcType=BLOB},
+            #{isDel},#{expectcount},#{barCode},#{parenttypeId},now()
+        )
+    </insert>
+
+    <!--修改物品-->
+    <update id="updateGood" parameterType="Tstock">
+        UPDATE
+            t_stock
+        SET
+            goodname = #{goodName},specs = #{specs},brand = #{brand},storeno = #{storeNo},unitprice = #{unitPrice},
+            unit = #{unit},pictureurl = #{picture,jdbcType=BLOB},expectcount = #{expectcount},barcode = #{barCode},
+            parenttypeid = #{parenttypeId}
+        WHERE
+            id = #{id}
+    </update>
+
+    <!--========================================== 采购计划 ============================================================-->
+    <!--提交采购计划-->
+    <insert id="insertPlan" parameterType="TstockPlan">
+        INSERT INTO t_stock_plan (
+            id, apply_no, begin_person_id, begin_person_name, begin_person_phone, begin_date, begin_dep_id, begin_dep_name,
+            plan_time,end_person_id, end_person_name, end_person_phone, remark, status, is_del, allmoney, allamount, title
+        )VALUES (
+            #{id},#{applyNo},#{beginPersonId},#{beginPersonName},#{beginPersonPhone},#{beginDate},#{beginDepId},#{beginDepName},
+            #{planTime},#{endPersonId},#{endPersonName},#{endPersonPhone},#{remark},#{status},'0',#{allMoney},#{allaMount},#{title}
+        )
+    </insert>
+
+    <!--采购物品明细-->
+    <insert id="insertPlanDetail" parameterType="TstockPlanDetail">
+        INSERT INTO t_stock_plan_detail (
+            id, apply_no, goodid, goodno, goodname, specs, brand, storeno, unitprice, amount, allmoney, unit, pictureurl,
+            is_del,expectcount,location,real_unitprice, real_amount,real_allmoney
+        )VALUES (
+            #{id},#{applyNo},#{goodId},#{goodNo},#{goodName},#{specs},#{brand},#{storeNo},#{unitPrice},#{amount},#{allmoney},
+            #{unit},#{pictureUrl},'0',#{expectCount},#{location},#{realUnitprice},#{realAmount},#{realAllmoney}
+        )
+    </insert>
+
+    <!--发起采购申请—下拉框-->
+    <select id="getData" resultType="java.util.LinkedHashMap">
+        SELECT
+            id,
+            goodname,
+            CASE WHEN usableamount-expectcount>=0 THEN '正常' ELSE '告警' END iswarn
+        FROM
+            t_stock
+        WHERE
+            is_del = '0'
+            OR is_del is null
+    </select>
+
+    <!--用户查询提交的申请-->
+    <select id="getListByUser" resultType="java.util.LinkedHashMap">
+        SELECT
+            apply_no,
+            CASE STATUS
+            WHEN '0' THEN '已保存'
+            WHEN '1' THEN '处理中'
+            WHEN '2' THEN '已审批'
+            WHEN '3' THEN '已驳回'
+            ELSE NULL END `status`,
+            begin_person_name,
+            DATE_FORMAT(begin_date,'%Y-%m-%d %H:%i:%s') begin_date,
+            begin_dep_name,
+            DATE_FORMAT(plan_time,'%Y-%m-%d') plan_time,
+            begin_person_phone,
+            remark
+            FROM
+            t_stock_plan
+        WHERE
+            is_del = '0'
+            AND begin_person_id = #{beginPersonId}
+            <if test="status != null and status != ''">
+                <if test="status != '2'.toString">
+                    AND status = #{status}
+                </if>
+                <if test="status == '2'.toString">
+                    AND status in ('2','3')
+                </if>
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--用户查询提交的申请数量-->
+    <select id="getListByUserCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            t_stock_plan
+        WHERE
+            is_del = '0'
+            AND begin_person_id = #{beginPersonId}
+            <if test="status != null and status != ''">
+                <if test="status != '2'.toString">
+                    AND status = #{status}
+                </if>
+                <if test="status == '2'.toString">
+                    AND status in ('2','3')
+                </if>
+            </if>
+    </select>
+
+    <!--用户删除保存的申请-->
+    <update id="deleteSave" parameterType="TstockPlan">
+        UPDATE t_stock_plan a,t_stock_plan_detail b
+        SET a.is_del = '1',b.is_del = '1'
+        WHERE a.apply_no = #{applyNo} and b.apply_no = #{applyNo}
+    </update>
+
+    <!--审批人查询采购计划列表-->
+    <select id="getListBySp" resultType="java.util.LinkedHashMap">
+        SELECT
+            apply_no,
+            CASE STATUS
+            WHEN '1' THEN '待审批'
+            WHEN '2' THEN '已审批'
+            WHEN '3' THEN '已驳回'
+            ELSE NULL END `status`,
+            begin_person_name,
+            DATE_FORMAT(begin_date,'%Y-%m-%d %H:%i:%s') begin_date,
+            begin_dep_name,
+            DATE_FORMAT(plan_time,'%Y-%m-%d') plan_time,
+            begin_person_phone,
+            remark
+        FROM
+            t_stock_plan
+        WHERE
+            is_del = '0'
+            AND end_person_id = #{endPersonId}
+            AND status = '1'
+            <if test="depId != null and depId != ''">
+                AND begin_dep_id in (${depId})
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--审批人查询采购计划列表数量-->
+    <select id="getListBySpCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            t_stock_plan
+        WHERE
+            is_del = '0'
+            AND end_person_id = #{endPersonId}
+            <if test="depId != null and depId != ''">
+                AND begin_dep_id in (${depId})
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+    </select>
+
+    <!--通过申请编号查询物品明细-->
+    <select id="getGoodsByNo" resultType="java.util.LinkedHashMap">
+        SELECT
+            goodid,
+            goodname,
+            real_amount,
+            specs,
+            location
+        FROM
+            t_stock_plan_detail
+        WHERE
+            is_del = '0'
+            AND apply_no = #{applyNo}
+    </select>
+
+    <!--审批人审批-->
+    <update id="updateBySp" parameterType="TstockPlan">
+        UPDATE t_stock_plan
+        SET approvel_remark = #{approvelRemark},status = #{status},end_date = #{endDate}
+        WHERE apply_no = #{applyNo}
+    </update>
+
+    <!-- ============================================入库管理============================================== -->
+    <!--入库列表-->
+    <select id="getDckList" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.title,
+            a.begin_person_name,
+            a.begin_person_phone,
+            DATE_FORMAT(a.begin_date,'%Y-%m-%d') begin_date,
+            a.begin_dep_name,
+            DATE_FORMAT(a.plan_time,'%Y-%m-%d')  plan_time,
+            DATE_FORMAT(a.end_date,'%Y-%m-%d')  end_date,
+            a.end_person_name,
+            a.apply_no,
+            b.goodid,
+            c.goodno,
+            c.goodname,
+            a.remark,
+            c.brand,
+            c.specs,
+            c.unit,
+            c.unitprice,
+            b.real_amount,
+            b.real_unitprice,
+            b.location
+        FROM
+            t_stock_plan a
+            LEFT JOIN t_stock_plan_detail b ON a.apply_no = b.apply_no
+            LEFT JOIN t_stock c ON b.goodid = c.id
+        WHERE
+            a.is_del = '0'
+            AND b.is_del = '0'
+            AND a.STATUS = '2'
+            <if test="depId != null and depId != ''">
+                AND begin_dep_id in (${depId})
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--入库列表数量-->
+    <select id="getDckListCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            t_stock_plan a
+            LEFT JOIN t_stock_plan_detail b ON a.apply_no = b.apply_no
+        WHERE
+            a.is_del = '0'
+            AND b.is_del = '0'
+            AND a.STATUS = '2'
+            <if test="depId != null and depId != ''">
+                AND begin_dep_id in (${depId})
+            </if>
+    </select>
+
+    <!--添加主表记录-->
+    <insert id="insertRecordMain" parameterType="TstockPlanRecordMain">
+        INSERT INTO t_stock_plan_record_main (
+            id, apply_no, operate_person_id, operate_person_name, operate_time, pictureurl, remark, is_up
+        ) VALUES (
+            #{id},#{applyNo},#{operatePersonId},#{operatePersonName},#{operateTime},#{pictureUrl},#{remark},#{isUp}
+        )
+    </insert>
+
+    <!--添加物品记录-->
+    <insert id="insertRecord" parameterType="TstockPlanRecord">
+        INSERT INTO t_stock_plan_record (
+            id, apply_no, goodid, goodno, goodname, specs, brand, storeno, unitprice, amount, allmoney, real_unitprice,
+            real_amount, real_allmoney, parenttypeid, unit, pictureurl, is_del, is_warn, operate_person_id, operate_person_name,
+            operate_time,is_up,arrival_order_id,location,main_id
+        ) VALUES (
+            #{id},#{applyNo},#{goodId},#{goodNo},#{goodName},#{specs},#{brand},#{storeNo},#{unitPrice},#{amount},#{allmoney},
+            #{realUnitprice},#{realAmount},#{realAllmoney},#{parenttypeId},#{unit},#{pictureUrl},#{isDel},#{isWarn},
+            #{operatePersonId},#{operatePersonName},#{operateTime},#{isUp},#{arrivalOrderId},#{location},#{mainId}
+        )
+    </insert>
+
+    <!--通过id查询物品信息-->
+    <select id="getGoodInfoById" resultType="java.util.LinkedHashMap">
+        SELECT * FROM t_stock WHERE id = #{id}
+    </select>
+
+    <!--查询入库/上架记录-->
+    <select id="selectRcRecord" resultType="java.util.LinkedHashMap">
+        SELECT
+            arrival_order_id,
+            real_amount,
+            real_unitprice,
+            location
+        FROM
+            t_stock_plan_record
+        WHERE
+            is_del = '0'
+            AND is_up = #{isUp}
+            AND apply_no = #{applyNo}
+            AND goodid = #{goodId}
+    </select>
+
+    <!--查询入库/上架数量-->
+    <select id="getAmount" resultType="java.lang.Integer">
+        SELECT
+            SUM(real_amount) real_amount
+        FROM
+            t_stock_plan_record
+        WHERE
+            is_del = '0'
+            AND is_up = #{isUp}
+            AND apply_no = #{applyNo}
+            AND goodid = #{goodId}
+    </select>
+
+    <!--修改库存待入库数量-->
+    <update id="updateInstore" parameterType="Tstock">
+        UPDATE t_stock SET instore = IFNULL(instore,0) + #{inStore} WHERE id = #{id}
+    </update>
+
+    <!--上架后修改库存信息-->
+    <update id="updateStock" parameterType="Tstock">
+        UPDATE t_stock
+        SET instore = IFNULL(instore,0) - #{inStore},usableamount = IFNULL(usableamount,0) + #{inStore},nowstore = IFNULL(nowstore,0) + #{inStore},
+            expectcount = #{expectcount},allmoney = IFNULL(allmoney,0) + #{allmoney},unitprice = #{unitPrice}
+        WHERE id = #{id}
+    </update>
+
+    <!-- ============================================出库管理============================================== -->
+    <!--出库列表-->
+    <select id="getCkList" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.demanddepid,
+            a.orderid,
+            CASE a.typeid
+            WHEN '002' THEN '办公设备'
+            WHEN '003' THEN '办公文具'
+            WHEN '004' THEN '会议用品'
+            WHEN '005' THEN '打印纸'
+            ELSE NULL END typeid,
+            CASE
+            a.status
+            WHEN '11' THEN '已发放'
+            WHEN '10' THEN '待发放'
+            ELSE NULL END status,
+            DATE_FORMAT(a.begindate,'%Y-%m-%d %H:%i:%s') begindate,
+            a.beginpersonname,
+            a.demanddep,
+            DATE_FORMAT(a.receiptdate,'%Y-%m-%d') receiptdate,
+            a.attr2,
+            a.remark
+        FROM
+            t_apply_order a
+        WHERE
+            a.status = '10'
+            <if test="depId != null and depId != ''">
+                AND a.demanddepid in (${depId})
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--出库列表数量-->
+    <select id="getCkListCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            t_apply_order a
+        WHERE
+            a.status = '10'
+            <if test="depId != null and depId != ''">
+                AND a.demanddepid in (${depId})
+            </if>
+    </select>
+
+    <!-- ============================================库存统计============================================== -->
+
+    <!--待入库  待上架  待出库  告警数-->
+    <select id="getStockInfo" resultType="java.util.LinkedHashMap">
+        SELECT
+            d.cnt - e.yrk drk,
+            b.dsj,
+            c.dck,
+            a.gj
+        FROM
+            ( SELECT count( 1 ) gj FROM t_stock WHERE usableamount - expectcount &lt; 0 ) a,
+            ( SELECT IFNULL(sum( instore ),0) dsj FROM t_stock ) b,
+            ( SELECT IFNULL(sum( outstore ),0) dck FROM t_stock ) c,
+            ( SELECT IFNULL(sum( real_amount ),0) cnt FROM t_stock_plan_detail WHERE is_del = '0' ) d,
+            ( SELECT IFNULL(sum( real_amount ),0) yrk FROM t_stock_plan_record WHERE is_del = '0' AND is_up = '0' ) e
+    </select>
+
+    <!--物品库存种类-->
+    <select id="getStockKind" resultType="java.lang.Integer">
+        SELECT
+            count(DISTINCT goodno)
+        FROM
+            t_stock
+        WHERE
+            1 = 1
+            <if test="date != null and date != ''">
+                <if test="date == '1'.toString()">
+                    AND	DATE_FORMAT(creat_time,'%Y-%m') =  DATE_FORMAT(now(),'%Y-%m')   <!--本月-->
+                </if>
+                <if test="date == '2'.toString()">
+                    AND	DATE_FORMAT(creat_time,'%Y') =  DATE_FORMAT(now(),'%Y') <!--本年-->
+                </if>
+            </if>
+    </select>
+
+    <!--物品库存数量-->
+    <select id="getStockCnt" resultType="java.lang.Integer">
+        SELECT IFNULL(SUM(nowstore),0) FROM `t_stock`
+    </select>
+
+    <!--上架/入库数量-->
+    <select id="addStockCnt" resultType="java.lang.Integer">
+        SELECT
+            IFNULL(SUM(real_amount),0) real_amount
+        FROM
+            t_stock_plan_record
+        WHERE
+            is_del = '0'
+            AND is_up = #{isUp}
+            <if test="operateTime != null and operateTime != ''">
+                <if test="operateTime == '1'.toString()">        <!--本年-->
+                    AND DATE_FORMAT(operate_time,'%Y') =  DATE_FORMAT(now(),'%Y')
+                </if>
+                <if test="operateTime == '2'.toString()">         <!--去年-->
+                    AND YEAR(operate_time) =  YEAR(DATE_SUB(now(),INTERVAL 1 year))
+                </if>
+                <if test="operateTime == '3'.toString()">        <!--本月-->
+                    AND DATE_FORMAT(operate_time,'%Y-%m') =  DATE_FORMAT(now(),'%Y-%m')
+                </if>
+                <if test="operateTime == '4'.toString()">        <!--去年本月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( operate_time, '%Y%m' ) ) = 12
+                </if>
+                <if test="operateTime == '5'.toString()">        <!--上月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( operate_time, '%Y%m' ) ) = 1
+                </if>
+                <if test="operateTime == '6'.toString()">        <!--去年上月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( operate_time, '%Y%m' ) ) = 13
+                </if>
+            </if>
+    </select>
+
+    <!--上架/入库种类-->
+    <select id="addStockKind" resultType="java.lang.Integer">
+        SELECT
+            count(DISTINCT goodno)
+        FROM
+            t_stock_plan_record
+        WHERE
+            is_del = '0'
+            AND is_up = #{isUp}
+            <if test="operateTime != null and operateTime != ''">
+                <if test="operateTime == '1'.toString()">        <!--本年-->
+                    AND DATE_FORMAT(operate_time,'%Y') =  DATE_FORMAT(now(),'%Y')
+                </if>
+                <if test="operateTime == '2'.toString()">         <!--去年-->
+                    AND YEAR(operate_time) =  YEAR(DATE_SUB(now(),INTERVAL 1 year))
+                </if>
+                <if test="operateTime == '3'.toString()">        <!--本月-->
+                    AND DATE_FORMAT(operate_time,'%Y-%m') =  DATE_FORMAT(now(),'%Y-%m')
+                </if>
+                <if test="operateTime == '4'.toString()">        <!--去年本月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( operate_time, '%Y%m' ) ) = 12
+                </if>
+                <if test="operateTime == '5'.toString()">        <!--上月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( operate_time, '%Y%m' ) ) = 1
+                </if>
+                <if test="operateTime == '6'.toString()">        <!--去年上月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( operate_time, '%Y%m' ) ) = 13
+                </if>
+            </if>
+    </select>
+
+    <!--出库情况-->
+    <!--出库种类-->
+    <select id="outStockKind" resultType="java.lang.Integer">
+        SELECT
+            count( DISTINCT e.goodno )
+        FROM
+            ( SELECT * FROM t_apply_order WHERE `status` IN ( '11', '12' ) ) a
+            INNER JOIN (
+        SELECT
+            b.*
+        FROM
+            t_apply_order_approvel b
+            INNER JOIN ( SELECT orderid, MAX( step ) step FROM t_apply_order_approvel GROUP BY orderid ) c ON b.orderid = c.orderid
+            AND b.step = c.step
+            ) d ON a.orderid = d.orderid
+            LEFT JOIN t_apply_order_good e ON a.orderid = e.relateorderid
+        WHERE
+            1 = 1
+            <if test="operateTime != null and operateTime != ''">
+                <if test="operateTime == '1'.toString()">        <!--本年-->
+                    AND DATE_FORMAT(d.deal_time,'%Y') =  DATE_FORMAT(now(),'%Y')
+                </if>
+                <if test="operateTime == '2'.toString()">         <!--去年-->
+                    AND YEAR(d.deal_time) =  YEAR(DATE_SUB(now(),INTERVAL 1 year))
+                </if>
+                <if test="operateTime == '3'.toString()">        <!--本月-->
+                    AND DATE_FORMAT(d.deal_time,'%Y-%m') =  DATE_FORMAT(now(),'%Y-%m')
+                </if>
+                <if test="operateTime == '4'.toString()">        <!--去年本月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( d.deal_time, '%Y%m' ) ) = 12
+                </if>
+                <if test="operateTime == '5'.toString()">        <!--上月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( d.deal_time, '%Y%m' ) ) = 1
+                </if>
+                <if test="operateTime == '6'.toString()">        <!--去年上月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( d.deal_time, '%Y%m' ) ) = 13
+                </if>
+            </if>
+    </select>
+
+    <!--出库数量-->
+    <select id="outStockCnt" resultType="java.lang.Integer">
+        SELECT
+            IFNULL(sum(e.goodamount),0)
+        FROM
+            ( SELECT * FROM t_apply_order WHERE `status` IN ( '11', '12' ) ) a
+            INNER JOIN (
+            SELECT
+                b.*
+            FROM
+                t_apply_order_approvel b
+                INNER JOIN ( SELECT orderid, MAX( step ) step FROM t_apply_order_approvel GROUP BY orderid ) c ON b.orderid = c.orderid
+                AND b.step = c.step
+            ) d ON a.orderid = d.orderid
+            LEFT JOIN t_apply_order_good e ON a.orderid = e.relateorderid
+        WHERE
+            1 = 1
+            <if test="operateTime != null and operateTime != ''">
+                <if test="operateTime == '1'.toString()">        <!--本年-->
+                    AND DATE_FORMAT(d.deal_time,'%Y') =  DATE_FORMAT(now(),'%Y')
+                </if>
+                <if test="operateTime == '2'.toString()">         <!--去年-->
+                    AND YEAR(d.deal_time) =  YEAR(DATE_SUB(now(),INTERVAL 1 year))
+                </if>
+                <if test="operateTime == '3'.toString()">        <!--本月-->
+                    AND DATE_FORMAT(d.deal_time,'%Y-%m') =  DATE_FORMAT(now(),'%Y-%m')
+                </if>
+                <if test="operateTime == '4'.toString()">        <!--去年本月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( d.deal_time, '%Y%m' ) ) = 12
+                </if>
+                <if test="operateTime == '5'.toString()">        <!--上月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( d.deal_time, '%Y%m' ) ) = 1
+                </if>
+                <if test="operateTime == '6'.toString()">        <!--去年上月-->
+                    AND PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( d.deal_time, '%Y%m' ) ) = 13
+                </if>
+            </if>
+    </select>
+
+    <!--出库总金额统计-->
+    <select id="outStockPrice" resultType="java.lang.Double">
+        SELECT
+            IFNULL(sum(e.goodamount * e.unitprice),0)
+        FROM
+            ( SELECT * FROM t_apply_order WHERE `status` IN ( '11', '12' ) ) a
+            INNER JOIN (
+        SELECT
+            b.*
+        FROM
+            t_apply_order_approvel b
+            INNER JOIN ( SELECT orderid, MAX( step ) step FROM t_apply_order_approvel GROUP BY orderid ) c ON b.orderid = c.orderid
+            AND b.step = c.step
+            ) d ON a.orderid = d.orderid
+            LEFT JOIN t_apply_order_good e ON a.orderid = e.relateorderid
+        WHERE
+            1 = 1
+            <if test="typeid != null and typeid != ''">
+                AND a.typeid = #{typeid}
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                AND DATE_FORMAT(d.deal_time,'%Y-%m-%d') >= DATE_FORMAT(#{beginDate},'%Y-%m-%d')
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND DATE_FORMAT(d.deal_time,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+    </select>
+
+    <!--各部门本季度领用情况-->
+    <select id="getReceiveInfo" resultType="java.util.LinkedHashMap">
+        SELECT
+            c.ORGNAME,
+            IFNULL(d.amount,0) equipment,
+            IFNULL(e.amount,0) stationery,
+            IFNULL(f.amount,0) meeting,
+            IFNULL(g.amount,0) paper
+        FROM
+            t_org c
+        LEFT JOIN
+            (SELECT a.demanddepid,sum(b.goodamount) amount FROM (SELECT * FROM t_apply_order WHERE status in ('11','12')  and typeid = '002') a
+            INNER JOIN (SELECT b.* FROM t_apply_order_approvel b INNER JOIN ( SELECT orderid, MAX( step ) step FROM t_apply_order_approvel GROUP BY  orderid) c ON b.orderid = c.orderid AND b.step = c.step) h ON a.orderid = h.orderid
+            LEFT JOIN t_apply_order_good b ON a.orderid = b. relateorderid WHERE QUARTER(h.deal_time) = QUARTER(now()) AND YEAR(h.deal_time) = YEAR  (now()) GROUP BY a.demanddepid) d on c.ORGID = d.demanddepid
+        LEFT JOIN
+            (SELECT a.demanddepid,sum(b.goodamount) amount FROM (SELECT * FROM t_apply_order WHERE status in ('11','12')  and typeid = '003') a
+            INNER JOIN (SELECT b.* FROM t_apply_order_approvel b INNER JOIN ( SELECT orderid, MAX( step ) step FROM t_apply_order_approvel GROUP BY  orderid) c ON b.orderid = c.orderid AND b.step = c.step) h ON a.orderid = h.orderid
+            LEFT JOIN t_apply_order_good b ON a.orderid = b. relateorderid GROUP BY a.demanddepid) e on c.ORGID = e.demanddepid
+        LEFT JOIN
+            (SELECT a.demanddepid,sum(b.goodamount) amount FROM (SELECT * FROM t_apply_order WHERE status in ('11','12')  and typeid = '004') a
+            INNER JOIN (SELECT b.* FROM t_apply_order_approvel b INNER JOIN ( SELECT orderid, MAX( step ) step FROM t_apply_order_approvel GROUP BY  orderid) c ON b.orderid = c.orderid AND b.step = c.step) h ON a.orderid = h.orderid
+            LEFT JOIN t_apply_order_good b ON a.orderid = b. relateorderid GROUP BY a.demanddepid) f on c.ORGID = f.demanddepid
+        LEFT JOIN
+            (SELECT a.demanddepid,sum(b.goodamount) amount FROM (SELECT * FROM t_apply_order WHERE status in ('11','12')  and typeid = '005') a
+            INNER JOIN (SELECT b.* FROM t_apply_order_approvel b INNER JOIN ( SELECT orderid, MAX( step ) step FROM t_apply_order_approvel GROUP BY  orderid) c ON b.orderid = c.orderid AND b.step = c.step) h ON a.orderid = h.orderid
+            LEFT JOIN t_apply_order_good b ON a.orderid = b. relateorderid GROUP BY a.demanddepid) g on c.ORGID = g.demanddepid
+    </select>
+
+    <select id="findgoodTypeTree" resultMap="findgoodTypeTreeMap">
+        select id,typename,pid from  goodtypetree
+    </select>
+
+
+</mapper>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StOperationrestaurantMapper">
+    <resultMap id="StOperationrestaurantResult" type="com.canteen.entity.StOperationrestaurant">
+        <id column="id"  property="id" />
+        <result property="parentIds" column="parent_ids"/>
+        <result property="restaurantName" column="RestaurantName"/>
+        <result property="restaurantCode" column="RestaurantCode"/>
+        <result property="decide" column="decide"/>
+        <result property="capacity" column="capacity"/>
+        <result property="introduction" column="introduction"/>
+        <result property="deFlag" column="deflag"/>
+    </resultMap>
+
+    <resultMap id="getDecide" type="java.util.LinkedHashMap">
+        <result property="parentIds" column="parent_ids"/>
+        <result property="decide" column="decide"/>
+    </resultMap>
+
+    <resultMap id="Ststrategy" type="com.canteen.entity.StstrategyMetering">
+        <id column="id"  property="id" />
+        <result property="policyname" column="policyName"/>
+        <result property="policycode" column="policyCode"/>
+        <result property="restaurant" column="restaurant"/>
+        <result property="meteringequipment" column="meteringequipment"/>
+        <result property="applicabletime" column="applicabletime"/>
+        <result property="settlementamount" column="settlementamount"/>
+        <result property="remarks" column="remarks"/>
+    </resultMap>
+
+    <resultMap id="equipment" type="java.util.LinkedHashMap">
+        <result property="id" column="id"/>
+        <result property="equipmentname" column="equipmentname"/>
+    </resultMap>
+
+    <resultMap id="restaurant" type="java.util.LinkedHashMap">
+        <result property="id" column="id"/>
+        <result property="RestaurantName" column="RestaurantName"/>
+    </resultMap>
+
+    <resultMap id="dictionariesMap" type="java.util.LinkedHashMap">
+        <result column="paratype" jdbcType="VARCHAR" property="paratype" />
+        <result column="paraname" jdbcType="VARCHAR" property="paraname" />
+        <result column="parakey" jdbcType="VARCHAR" property="parakey" />
+        <result column="paravalue" jdbcType="VARCHAR" property="paravalue" />
+    </resultMap>
+
+
+    <!--查询餐厅级别菜单-->
+    <select id="getStOperationList" resultMap="StOperationrestaurantResult">
+        SELECT
+            a.id,
+            a.parent_ids,
+            a.RestaurantName,
+            a.RestaurantCode,
+            a.decide,
+            a.deflag
+        FROM
+        st_operationrestaurant a
+        where a.deflag = #{deFlag} OR ISNULL(a.deflag)
+    </select>
+
+
+
+    <!--通过id查询运营餐厅的信息-->
+    <select id="getDecide" resultMap="getDecide">
+        SELECT parent_ids,decide FROM st_operationrestaurant WHERE id = #{id}
+    </select>
+
+    <select id="getOpById" resultMap="StOperationrestaurantResult">
+        SELECT
+            id,
+            parent_ids,
+            RestaurantName,
+            RestaurantCode
+            FROM st_operationrestaurant
+            WHERE parent_ids = #{parentIds}
+    </select>
+
+
+    <!--查询策略列表-->
+    <select id="getStrategyList" resultMap="Ststrategy">
+        SELECT
+            a.id,
+            a.policyName,
+            a.policyCode,
+            b.RestaurantName restaurant,
+            e.equipmentname meteringequipment,
+            d.paravalue applicabletime,
+            a.settlementamount,
+            a.remarks
+        FROM
+            ( SELECT * FROM st_strategymetering ) a
+            LEFT JOIN ( SELECT * FROM st_operationrestaurant ) b ON a.restaurant = b.RestaurantCode
+            LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'applicabletime' ) d ON a.applicabletime = d.parakey
+            LEFT JOIN ( SELECT * FROM st_equipmentmanagement ) e ON a.meteringequipment = e.id
+        WHERE
+            a.del_flag = '0'
+	    <if test="restaurantName != null and restaurantName != ''">
+              AND b.id in(${restaurantName})
+        </if>
+        <if test="settlementamount != null and settlementamount != ''">
+            <if test="settlementamount == '1'.toString()">
+                AND a.settlementamount &lt; 5
+            </if>
+            <if test="settlementamount == '2'.toString()">
+                AND a.settlementamount &gt;= 5 and a.settlementamount &lt;= 10
+            </if>
+            <if test="settlementamount == '3'.toString()">
+                AND a.settlementamount &gt;= 10 and a.settlementamount &lt;= 15
+            </if>
+            <if test="settlementamount == '4'.toString()">
+                AND a.settlementamount &gt;= 15 and a.settlementamount &lt;= 20
+            </if>
+        </if>
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!--查询策略数量-->
+    <select id="getStrategyCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            ( SELECT * FROM st_strategymetering ) a
+            LEFT JOIN ( SELECT * FROM st_operationrestaurant ) b ON a.restaurant = b.RestaurantCode
+        WHERE
+            a.del_flag = '0'
+        <if test="restaurantName != null and restaurantName != ''">
+            AND b.id in(${restaurantName})
+        </if>
+        <if test="settlementamount != null and settlementamount != ''">
+            <if test="settlementamount == '1'.toString()">
+                AND a.settlementamount &lt; 5
+            </if>
+            <if test="settlementamount == '2'.toString()">
+                AND a.settlementamount &gt;= 5 and a.settlementamount &lt;= 10
+            </if>
+            <if test="settlementamount == '3'.toString()">
+                AND a.settlementamount &gt;= 10 and a.settlementamount &lt;= 15
+            </if>
+            <if test="settlementamount == '4'.toString()">
+                AND a.settlementamount &gt;= 15 and a.settlementamount &lt;= 20
+            </if>
+        </if>
+    </select>
+
+    <!--删除策略-->
+    <update id="deleteStrategy">
+        UPDATE st_strategymetering SET del_flag = '1' WHERE id = #{id} AND del_flag = '0'
+    </update>
+
+    <!--查询可关联设备-->
+    <select id="getEquipment" resultMap="equipment">
+        SELECT
+            id,
+            equipmentname
+        FROM
+            st_equipmentmanagement
+    </select>
+
+    <!--查询可关联餐厅-->
+    <select id="getRestaurant" resultMap="restaurant">
+        SELECT
+            a.id,
+            a.RestaurantName RestaurantName,
+            a.RestaurantCode RestaurantCode
+        FROM
+            ( SELECT * FROM st_operationrestaurant ) a
+        WHERE
+           a.decide = '3'
+    </select>
+
+   <!-- 编辑策略-->
+    <update id="updateStrategy" parameterType="com.canteen.entity.StstrategyMetering">
+        UPDATE st_strategymetering
+        SET policyName = #{policyname},
+            policyCode = #{policycode},
+            restaurant = #{restaurant},
+            meteringequipment = #{meteringequipment},
+            applicabletime = #{applicabletime},
+            settlementamount = #{settlementamount},
+            remarks = #{remarks}
+        WHERE
+		    id = #{id}
+		    AND del_flag = '0'
+    </update>
+
+    <!-- 新增策略-->
+    <insert id="insertStrategy" parameterType="com.canteen.entity.StstrategyMetering">
+        INSERT INTO st_strategymetering ( policyName, policyCode, restaurant, meteringequipment, applicabletime, settlementamount, remarks, del_flag )
+        VALUES
+	        ( #{policyname}, #{policycode}, #{restaurant}, #{meteringequipment}, #{applicabletime}, #{settlementamount}, #{remarks}, #{delFlag})
+    </insert>
+
+    <!--查询字典表定义-->
+    <select id="dictionaries" resultMap="dictionariesMap">
+        SELECT * FROM sys_parameter
+    </select>
+</mapper>

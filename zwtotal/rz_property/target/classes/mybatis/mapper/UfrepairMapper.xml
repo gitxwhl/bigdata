@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.mapper.UfrepairMapper">
+
+    <!--查询部门导航栏-->
+    <select id="getWycorporateList" resultType="Wycorporate">
+        SELECT
+        id,
+        parent_ids,
+        parent_id,
+        corporatename
+        FROM
+        wy_corporate
+        <if test="id != null">
+            WHERE id = #{id}
+        </if>
+        <if test="parentIds != null and parentIds != ''">
+            WHERE parent_ids = #{parentIds}
+        </if>
+    </select>
+
+
+    <!--报修申请-->
+    <insert id="addUfrepair" parameterType="Ufrepair">
+        INSERT INTO uf_repair (
+            M_GH,M_BXR,M_BXRGH,M_BXDW,M_LXDH,M_WXDZ,M_BXSJ,M_BXNR,M_WXZT,SWID
+        )VALUES (
+            #{mGh},#{mBxr},#{mBxrgh},#{mBxdw},#{mLxdh},#{mWxdz},#{mBxsj},#{mBxnr},'0',#{swid}
+        )
+    </insert>
+
+    <!--报修人查询报修记录-->
+    <select id="selectRecord" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.M_GH,
+            a.M_BXR,
+            a.M_LXDH,
+            a.M_BXDW,
+            a.M_BXSJ,
+            a.M_WXDZ,
+            b.SBBH,
+            b.SBMC,
+            a.M_BXNR,
+            a.M_WXR,
+            a.M_WXSC,
+            a.M_WXSJ,
+            a.M_WCSJ,
+            CASE a.M_WXZT
+            WHEN '0' THEN '处理中'
+            WHEN '1' THEN '处理中'
+            WHEN '2' THEN '已处理'
+            ELSE NULL END M_ZT,
+            CASE a.M_PJZT
+            WHEN '0' THEN '未评论'
+            WHEN '1' THEN '已评论'
+            ELSE '不可评论' END M_PJZT,
+            a.M_PJXJ,
+            a.M_PJNR
+        FROM
+            uf_repair a
+            LEFT JOIN sw_louysb b ON a.SWID = b.ID
+        WHERE
+            a.M_BXRGH = #{mBxrgh}
+            <if test="state != null and state != ''">
+                <if test="state == '0'.toString()">
+                    AND a.M_WXZT IN ( '0', '1' )
+                </if>
+                <if test="state == '1'.toString()">
+                    AND a.M_WXZT IN ( '2' )
+                </if>
+            </if>
+            <if test="num != null and num != ''">
+                <bind name="Num" value="'%' + num + '%'"/>
+                AND a.M_GH LIKE #{Num}
+            </if>
+            <if test="time != null and time != ''">
+                AND STR_TO_DATE(a.M_BXSJ,'%Y-%m-%d %H:%i') = STR_TO_DATE(#{time},'%Y-%m-%d %H:%i')
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--报修人查询报修记录数量-->
+    <select id="selectRecordCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            uf_repair a
+            LEFT JOIN sw_louysb b ON a.SWID = b.ID
+        WHERE
+            a.M_BXRGH = #{mBxrgh}
+            <if test="state != null and state != ''">
+                <if test="state == '0'.toString()">
+                    AND a.M_WXZT IN ( '0', '1' )
+                </if>
+                <if test="state == '1'.toString()">
+                    AND a.M_WXZT IN ( '2' )
+                </if>
+            </if>
+            <if test="num != null and num != ''">
+                <bind name="Num" value="'%' + num + '%'"/>
+                AND a.M_GH LIKE #{Num}
+            </if>
+            <if test="time != null and time != ''">
+                AND STR_TO_DATE(a.M_BXSJ,'%Y-%m-%d %H:%i') = STR_TO_DATE(#{time},'%Y-%m-%d %H:%i')
+            </if>
+    </select>
+
+    <!--管理员维修管理-->
+    <select id="management" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.M_GH,
+            a.M_BXR,
+            a.M_LXDH,
+            a.M_BXDW,
+            a.M_BXSJ,
+            a.M_WXDZ,
+            b.SBBH,
+            b.SBMC,
+            a.M_BXNR,
+            a.M_WXR,
+            a.M_WXLXFS,
+            a.M_WXSC,
+            a.M_WXSJ,
+            a.M_WCSJ,
+            CASE a.M_WXZT
+            WHEN '0' THEN '未派单'
+            WHEN '1' THEN '已派单'
+            WHEN '2' THEN '已处理'
+            ELSE NULL END M_ZT,
+            CASE a.M_PJZT
+            WHEN '0' THEN '未评论'
+            WHEN '1' THEN '已评论'
+            ELSE NULL END M_PJZT,
+            a.M_PJXJ,
+            a.M_PJNR
+        FROM
+            uf_repair a
+            LEFT JOIN sw_louysb b ON a.SWID = b.ID
+        WHERE
+            1 = 1
+            <if test="name != null and name != ''">
+                <bind name="Name" value="'%' + name + '%'"/>
+                AND a.M_BXR like #{Name}
+            </if>
+            <if test="state != null and state != ''">
+                AND a.M_WXZT = #{state}
+            </if>
+            <if test="num != null and num != ''">
+                <bind name="Num" value="'%' + num + '%'"/>
+                AND a.M_GH LIKE #{Num}
+            </if>
+            <if test="time != null and time != ''">
+                AND STR_TO_DATE(a.M_BXSJ,'%Y-%m-%d %H:%i') = STR_TO_DATE(#{time},'%Y-%m-%d %H:%i')
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--管理员维修管理列表数量-->
+    <select id="managementCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            uf_repair a
+            LEFT JOIN sw_louysb b ON a.SWID = b.ID
+        WHERE
+            1 = 1
+            <if test="name != null and name != ''">
+                <bind name="Name" value="'%' + name + '%'"/>
+                AND a.M_BXR like #{Name}
+            </if>
+            <if test="state != null and state != ''">
+                AND a.M_WXZT = #{state}
+            </if>
+            <if test="num != null and num != ''">
+                <bind name="Num" value="'%' + num + '%'"/>
+                AND a.M_GH LIKE #{Num}
+            </if>
+            <if test="time != null and time != ''">
+                AND STR_TO_DATE(a.M_BXSJ,'%Y-%m-%d %H:%i') = STR_TO_DATE(#{time},'%Y-%m-%d %H:%i')
+            </if>
+    </select>
+
+    <!--管理员派单-->
+    <update id="sendOrders" parameterType="Ufrepair">
+        UPDATE uf_repair
+        SET M_WXR = #{mWxr},M_WXLXFS = #{mWxlxfs},M_WXSJ = #{mWxsj},M_WXZT = '1'
+        WHERE M_GH = #{mGh}
+    </update>
+
+    <!--完成维修-->
+    <update id="finishWx" parameterType="Ufrepair">
+        UPDATE uf_repair
+        SET
+            M_WXZT = '2',M_WXSC = #{mWxsc},M_WCSJ = #{mWcsj},M_PJZT = '0'
+        WHERE
+            M_GH = #{mGh}
+    </update>
+
+    <!--报修评论-->
+    <update id="updateRepair" parameterType="Ufrepair">
+        UPDATE uf_repair
+        SET
+            M_PJXJ = #{mPjxj},M_PJZT = '1',M_PJNR = #{mPjnr}
+        WHERE
+            M_GH = #{mGh}
+    </update>
+
+
+    <select id="getCount" resultType="java.lang.Integer">
+        SELECT
+        count( 1 )
+        FROM
+        uf_repair
+        WHERE
+        1 = 1
+        <if test="state == '01'"> <!-- 报修 -->
+            AND M_WXZT in ('0','1','2')
+        </if>
+        <if test="state == '02'"> <!-- 派单 -->
+            AND M_WXZT in ('1','2')
+        </if>
+        <if test="state == '03'"> <!-- 维修 -->
+            AND M_WXZT = '2'
+        </if>
+        <if test="state == '04'"> <!-- 评论 -->
+            AND M_PJZT = '1'
+        </if>
+        <if test="state == '05'"> <!-- 好评 -->
+            AND M_PJZT = '1' AND M_PJXJ = '5'
+        </if>
+        <if test="timeType == 1">  <!-- 本月 -->
+            AND DATE_FORMAT(M_BXSJ,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+        </if>
+        <if test="timeType == 2">  <!-- 本季度 -->
+            AND QUARTER(M_BXSJ) = QUARTER(NOW()) AND YEAR(M_BXSJ)=YEAR(NOW())
+        </if>
+        <if test="timeType == 3">  <!-- 本年 -->
+            AND YEAR(M_BXSJ)=YEAR(NOW())
+        </if>
+        <if test="timeType == 4">  <!-- 上月 -->
+            AND PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'),DATE_FORMAT(M_BXSJ,'%Y%m')) = 1
+        </if>
+        <if test="timeType == 5">  <!-- 上季度 -->
+            AND QUARTER(M_BXSJ) = QUARTER(DATE_SUB(NOW(),INTERVAL 1 QUARTER)) AND YEAR(M_BXSJ)=YEAR(NOW())
+        </if>
+        <if test="timeType == 6">  <!-- 上年 -->
+            AND YEAR(M_BXSJ)=YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR))
+        </if>
+    </select>
+
+    <!--报修评论分析-->
+    <!--按评分分类统计-->
+    <select id="getStatistics" resultType="java.util.LinkedHashMap">
+        SELECT
+            count(CASE M_PJXJ WHEN '1' THEN 1 ELSE NULL END) as 'oneStar',
+            count(CASE M_PJXJ WHEN '2' THEN 1 ELSE NULL END) as 'twoStar',
+            count(CASE M_PJXJ WHEN '3' THEN 1 ELSE NULL END) as 'threeStar',
+            count(CASE M_PJXJ WHEN '4' THEN 1 ELSE NULL END) as 'fourStar',
+            count(CASE M_PJXJ WHEN '5' THEN 1 ELSE NULL END) as 'fiveStar'
+        FROM
+            uf_repair
+        WHERE
+            M_PJZT = '1'
+    </select>
+
+    <!--五星好评中按报修类型分类统计-->
+    <select id="getGood" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.TYPE_CODE,
+            a.TYPE_NAME,
+            b.cnt
+        FROM
+            uf_repair_type a
+            LEFT JOIN ( SELECT M_BXLX, count( 1 ) cnt FROM uf_repair WHERE M_PJZT = '1' AND M_PJXJ = '5' GROUP BY M_BXLX ) b
+            ON a.TYPE_CODE = b.M_BXLX
+    </select>
+
+    <!--按部门统计次数-->
+    <select id="getCountByBm" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.M_BXDW,
+            IFNULL(b.cnt,0) year,
+            IFNULL(c.cnt,0) quarter,
+            IFNULL(d.cnt,0) month
+        FROM
+            ( SELECT M_BXDW FROM uf_repair GROUP BY M_BXDW ) a
+            LEFT JOIN ( SELECT M_BXDW, count(1) cnt FROM uf_repair WHERE YEAR(M_BXSJ) = YEAR(NOW()) GROUP BY M_BXDW ) b ON a.M_BXDW = b.M_BXDW  <!-- 本年 -->
+            LEFT JOIN ( SELECT M_BXDW, count(1) cnt FROM uf_repair WHERE QUARTER(M_BXSJ) = QUARTER(NOW()) AND YEAR(M_BXSJ)=YEAR(NOW()) GROUP BY M_BXDW ) c ON a.M_BXDW = c.M_BXDW   <!-- 本季度 -->
+            LEFT JOIN ( SELECT M_BXDW, count(1) cnt FROM uf_repair WHERE DATE_FORMAT(M_BXSJ,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m') GROUP BY M_BXDW ) d ON a.M_BXDW = d.M_BXDW  <!-- 本月 -->
+    </select>
+
+    <!--获取下拉框数据-->
+    <!--报修设备查询-->
+    <select id="getEquipment" resultType="java.util.LinkedHashMap">
+        SELECT ID,SBMC FROM sw_louysb
+    </select>
+
+    <!--通过id查询设备信息-->
+    <select id="getEquipmentById" resultType="java.util.LinkedHashMap">
+        SELECT SBBH,SBXH,SBDL,SBXL,WEIZ FROM sw_louysb WHERE ID = #{id}
+    </select>
+</mapper>

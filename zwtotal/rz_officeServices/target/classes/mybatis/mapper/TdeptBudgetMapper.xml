@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.officeServices.mapper.TdeptBudgetMapper">
+
+    <!--查询预算列表-->
+    <select id="getBudget" resultType="java.util.LinkedHashMap">
+        SELECT
+            A.ORGID,
+            A.ORGNAME,
+            B.ID,
+            B.MAX_MONEY,
+            ADDED_MONEY,
+            THEYEAR,
+            BEGIN_DATE,
+            END_DATE,
+            DATE_FORMAT( OPERATE_TIME, '%Y-%m-%d %H:%i:%s' ) OPERATE_TIME,
+            CASE IS_PAPER
+            WHEN '0' THEN '办公用品'
+            WHEN '1' THEN '打印纸' END IS_PAPER,
+            B.REMARK
+        FROM
+            t_org A
+            INNER JOIN (
+            SELECT
+                ID,
+                ORGID,
+                ORGNAME,
+                MAX_MONEY,
+                ADDED_MONEY,
+                THEYEAR,
+                IS_PAPER,
+                REMARK,
+                END_DATE,
+                BEGIN_DATE,
+                OPERATE_TIME
+            FROM
+                t_dep_budget
+            WHERE
+                <!-- BEGIN_DATE &lt;= DATE_FORMAT( NOW( ), '%Y-%m-%d' ) AND END_DATE &gt;= DATE_FORMAT( NOW( ), '%Y-%m-%d' ) -->
+                IS_PAPER = #{isPaper}
+            ) B ON A.ORGID = B.ORGID
+        WHERE
+            PID = '0000000000000001' AND A.ORGID = #{orgId}
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--查询预算列表-->
+    <select id="getBudgetCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            t_org A
+            INNER JOIN (
+            SELECT
+                ID,
+                ORGID,
+                ORGNAME,
+                MAX_MONEY,
+                ADDED_MONEY,
+                THEYEAR,
+                IS_PAPER,
+                REMARK,
+                END_DATE,
+                BEGIN_DATE,
+                OPERATE_TIME
+            FROM
+                t_dep_budget
+            WHERE
+                <!--BEGIN_DATE &lt;= DATE_FORMAT( NOW( ), '%Y-%m-%d' ) AND END_DATE &gt;= DATE_FORMAT( NOW( ), '%Y-%m-%d' )-->
+                IS_PAPER = #{isPaper}
+            ) B ON A.ORGID = B.ORGID
+        WHERE
+            PID = '0000000000000001' AND A.ORGID = #{orgId}
+    </select>
+
+    <!--获取已执行的预算-->
+    <select id="getAmountprice" resultType="java.util.LinkedHashMap">
+        SELECT
+            IFNULL( SUM( amountprice ), 0 ) PRICE,
+            demanddepid
+        FROM
+            t_apply_order
+        WHERE
+            typeid = #{typeId}
+            AND STATUS = '11'
+            AND DATE_FORMAT( begindate, '%Y-%m-%d' ) >= #{beginDate}
+            AND DATE_FORMAT( begindate, '%Y-%m-%d' ) &lt;= #{endDate}
+            AND demanddepid = #{demanddepid}
+    </select>
+
+    <!--预算设置-->
+    <insert id="insertBudget" parameterType="TdeptBudget">
+        INSERT INTO t_dep_budget(
+            ID,ORGID,ORGNAME,MAX_MONEY,ADDED_MONEY,THEYEAR,BEGIN_DATE,END_DATE,REMARK,IS_PAPER,OPERATE_TIME
+        )VALUES (
+            #{id},#{orgid},#{orgname},#{maxmoney},#{addedMoney},#{theyear},#{beginDate},#{endDate},#{remark},#{isPaper},#{operateTime}
+        )
+    </insert>
+
+    <!--查询申请信息-->
+    <select id="getBudgetInfo" resultType="java.util.LinkedHashMap">
+        SELECT
+            A.ORGID,
+            A.ORGNAME,
+            B.ID,
+            B.MAX_MONEY,
+            ADDED_MONEY,
+            THEYEAR,
+            BEGIN_DATE,
+            END_DATE,
+            DATE_FORMAT( OPERATE_TIME, '%Y-%m-%d %H:%i:%s' ) OPERATE_TIME,
+            CASE IS_PAPER
+            WHEN '0' THEN '办公用品'
+            WHEN '1' THEN '打印纸' END IS_PAPER,
+            B.REMARK
+        FROM
+            t_org A
+            INNER JOIN (
+            SELECT
+                ID,
+                ORGID,
+                ORGNAME,
+                MAX_MONEY,
+                ADDED_MONEY,
+                THEYEAR,
+                IS_PAPER,
+                REMARK,
+                END_DATE,
+                BEGIN_DATE,
+                OPERATE_TIME
+            FROM
+                t_dep_budget
+            WHERE
+                BEGIN_DATE &lt;= DATE_FORMAT( #{date}, '%Y-%m-%d' ) AND END_DATE &gt;= DATE_FORMAT( #{date}, '%Y-%m-%d' )
+                AND IS_PAPER = #{isPaper}
+            ) B ON A.ORGID = B.ORGID
+        WHERE
+            PID = '0000000000000001'
+            AND A.ORGID = #{orgId}
+    </select>
+
+    <!--获取追加额度-->
+    <select id="getAmount" resultType="java.util.LinkedHashMap">
+        SELECT
+            amountprice,
+            meeting_name isPaper,
+            begindate
+        FROM
+            t_apply_order
+        WHERE
+            orderid = #{orderid}
+    </select>
+
+    <!--修改部门额度-->
+    <update id="updateAmount">
+        UPDATE t_dep_budget
+        SET ADDED_MONEY = IFNULL(ADDED_MONEY,0) + #{money}
+        WHERE
+            ORGID = #{depId}
+            AND BEGIN_DATE &lt;= DATE_FORMAT( #{date}, '%Y-%m-%d' ) AND END_DATE &gt;= DATE_FORMAT( #{date}, '%Y-%m-%d' )
+            AND IS_PAPER = #{isPaper}
+    </update>
+
+    <!--用户查询申请情况-->
+    <select id="getSituation" resultType="java.util.LinkedHashMap">
+        <bind name="BeginPersonId" value="'%' + beginPersonId + '%'"/>
+        SELECT
+            a.orderid,
+            a.`status`,
+            CASE a.`status`
+            WHEN '-1' THEN '已驳回'
+            WHEN '10' THEN '待发放'
+            WHEN '11' THEN '待评价'
+            WHEN '12' THEN '已评价'
+            ELSE '待审批' END state,
+            DATE_FORMAT(a.begindate,'%Y-%m-%d %H:%i:%s') begindate,
+            a.beginpersonname,
+            a.demanddep,
+            a.demanddepid,
+            DATE_FORMAT(a.receiptdate,'%Y-%m-%d') receiptdate,
+            a.attr2,
+            a.remark,
+            a.typeid
+            <if test="typeId == '006'.toString()">
+                ,a.amountprice,
+                a.meeting_name isPaper,
+                a.bhyy
+            </if>
+        FROM
+            t_apply_order a
+        WHERE
+            a.typeid = #{typeId}
+            AND a.beginpersonid LIKE #{BeginPersonId}
+            <if test="depId != null and depId != ''">
+                AND a.demanddepid in (${depId})
+            </if>
+            <if test="status != null and status != ''">
+                <!--<if test="status == '-1'.toString()">
+                    AND a.status = '-1'
+                </if>-->
+                <if test="status == '0'.toString()">
+                    AND a.status not in ('-1','10','11','12')
+                </if>
+                <if test="status == '1'.toString()">
+                    AND a.status in ('10','11','-1','12')
+                </if>
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--用户查询申请情况的数量-->
+    <select id="getSituationCnt" resultType="java.lang.Integer">
+        <bind name="BeginPersonId" value="'%' + beginPersonId + '%'"/>
+        SELECT
+            count(1)
+        FROM
+            t_apply_order a
+        WHERE
+            a.typeid = #{typeId}
+            AND a.beginpersonid LIKE #{BeginPersonId}
+            <if test="depId != null and depId != ''">
+                AND a.demanddepid in (${depId})
+            </if>
+            <if test="status != null and status != ''">
+                <!--<if test="status == '-1'.toString()">
+                    AND a.status = '-1'
+                </if>-->
+                <if test="status == '0'.toString()">
+                    AND a.status not in ('-1','10','11','12')
+                </if>
+                <if test="status == '1'.toString()">
+                    AND a.status in ('10','11','-1','12')
+                </if>
+            </if>
+    </select>
+
+    <select id="getData" resultType="java.lang.Integer">
+        <bind name="BeginPersonId" value="'%' + beginPersonId + '%'"/>
+        SELECT
+            count(1)
+        FROM
+            t_apply_order a
+        WHERE
+        a.typeid = #{typeId}
+        AND a.beginpersonid LIKE #{BeginPersonId}
+        <if test="depId != null and depId != ''">
+            AND a.demanddepid in (${depId})
+        </if>
+        <if test="status != null and status != ''">
+            <!--<if test="status == '-1'.toString()">
+                AND a.status = '-1'
+            </if>-->
+            <if test="status == '0'.toString()">   <!--待审批-->
+                AND a.status not in ('-1','10','11','12')
+            </if>
+            <if test="status == '1'.toString()">   <!--待发放-->
+                AND a.status = '10'
+            </if>
+        </if>
+    </select>
+
+    <!--获取评价列表-->
+    <select id="getPjList" resultType="java.util.LinkedHashMap">
+        <bind name="BeginPersonId" value="'%' + beginPersonId + '%'"/>
+        SELECT
+            a.orderid,
+            CASE a.status
+            WHEN '11' THEN '待评价'
+            WHEN '12' THEN '已评价'
+            END status,
+            DATE_FORMAT(a.begindate,'%Y-%m-%d %H:%i:%s') begindate,
+            a.beginpersonname,
+            a.demanddep,
+            a.demanddepid,
+            DATE_FORMAT(a.receiptdate,'%Y-%m-%d') receiptdate,
+            a.attr2,
+            a.remark,
+            d.deal_user_id,
+            d.deal_user_name,
+            a.typeid
+        FROM
+            t_apply_order a
+            Inner JOIN (
+            SELECT
+            b.*
+            FROM
+            t_apply_order_approvel b
+            INNER JOIN ( SELECT orderid, MAX( step ) step FROM t_apply_order_approvel GROUP BY orderid ) c ON b.orderid = c.orderid
+            AND b.step = c.step
+            ) d ON a.orderid = d.orderid
+        WHERE
+            a.typeid = #{typeId}
+            AND a.beginpersonid LIKE #{BeginPersonId}
+            AND a.status in ('11','12')
+            <if test="depId != null and depId != ''">
+                AND a.demanddepid in (${depId})
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--获取评价列表数量-->
+    <select id="getPjListCnt" resultType="java.lang.Integer">
+        <bind name="BeginPersonId" value="'%' + beginPersonId + '%'"/>
+        SELECT
+            count(1)
+        FROM
+            t_apply_order a
+            Inner JOIN (
+            SELECT
+            b.*
+            FROM
+            t_apply_order_approvel b
+            INNER JOIN ( SELECT orderid, MAX( step ) step FROM t_apply_order_approvel GROUP BY orderid ) c ON b.orderid = c.orderid
+            AND b.step = c.step
+            ) d ON a.orderid = d.orderid
+        WHERE
+            a.typeid = #{typeId}
+            AND a.beginpersonid LIKE #{BeginPersonId}
+            AND a.status in ('11','12')
+            <if test="depId != null and depId != ''">
+                AND a.demanddepid in (${depId})
+            </if>
+            <if test=" status != null and status != ''">
+                AND a.status = #{status}
+            </if>
+    </select>
+
+    <!--查询评价物品明细-->
+    <select id="getPjGoods" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.relateorderid,
+            a.goodid,
+            a.goodno,
+            a.goodname,
+            a.goodamount,
+            a.specs,
+            a.location,
+            a.pictureurl,
+            b.content,
+            IFNULL(b.number,0) number,
+            b.pictureurl pic
+        FROM
+            t_apply_order_good a
+            LEFT JOIN t_evaluate b ON a.relateorderid = b.orderid
+        WHERE
+            a.relateorderid = #{orderId}
+    </select>
+
+    <!--查询物品历史评价-->
+    <select id="getHistory" resultType="java.util.LinkedHashMap">
+        SELECT
+            IFNULL(sum(number),0) sum,
+            count(number) cnt
+        FROM
+            t_evaluate
+        WHERE
+            goodno = #{goodNo}
+    </select>
+
+    <!--用户评价-->
+    <insert id="evaluate" parameterType="Tevaluate">
+        INSERT INTO t_evaluate (
+            content,number,pictureurl,goodno,orderid
+        )VALUES (
+            #{content},#{number},#{pictureUrl},#{goodNo},#{orderId}
+        )
+    </insert>
+
+    <!--修改主表状态-->
+    <update id="updatePjzt">
+        UPDATE t_apply_order SET status = '12' WHERE orderid = #{orderid}
+    </update>
+</mapper>

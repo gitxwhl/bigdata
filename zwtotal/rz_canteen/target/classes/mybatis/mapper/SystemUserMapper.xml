@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.SystemUserMapper">
+            <resultMap id="findSystemUserResult" type="com.canteen.entity.SystemUser">
+              <id column="id"  property="id" />
+              <result property="name" column="login_name"/>
+              <result property="loginPassword" column="login_password"/>
+              <result property="loginDate" column="login_date"/>
+              <result property="name" column="name"/>
+              <result property="phone" column="phone"/>
+              <result property="loginIp" column="login_ip"/>
+              <result property="remarks" column="remarks"/>
+              <result property="del_flag" column="del_flag"/>
+              <result property="email" column="email"/>
+              <result property="photo" column="photo"/>
+              <result property="loginState" column="login_state"/>
+              <result property="officeId" column="office_id"/>
+              <result property="sex" column="sex"/>
+              <result property="bithiDay" column="bithiday"/>
+              <result property="no" column="no"/>
+              <collection property="stbodyprojects" ofType="Stbodyproject">
+                <result property="indexName" column="indexname"/>
+                <result property="state" column="state"/>
+              </collection>
+            </resultMap>
+  <select id="findSystemUser" resultMap="findSystemUserResult">
+            SELECT
+            us.id as id,
+            us.`login_name` as login_name,
+            us.name as name,
+            us.phone as phone,
+            b.indexname as indexname,
+            b.state
+            FROM
+            sys_user us
+            LEFT JOIN st_bodyproject b ON us.id = b.personnel
+            <where>
+                <if test="name != null and name != ''">
+                and us.name=#{name}
+                </if>
+            </where>
+    </select>
+
+
+</mapper>

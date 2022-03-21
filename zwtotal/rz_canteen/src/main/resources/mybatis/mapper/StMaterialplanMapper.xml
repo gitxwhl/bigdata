@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StMaterialplanMapper">
+
+    <!--原料需求查询-->
+    <select id="getMaterialPlan" resultType="StMaterialplan">
+        SELECT
+            a.*
+        FROM
+            st_materialplan a
+            LEFT JOIN st_intelligencemeals b ON a.rowmeal = b.id
+            LEFT JOIN st_mydishes c ON b.varietydishes = c.id
+            LEFT JOIN st_operationrestaurant d ON c.restaurant = d.RestaurantCode
+            WHERE b.del_flag = '0'
+            <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+                AND b.timestamp BETWEEN STR_TO_DATE(#{beginTime},'%Y-%m-%d') and STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+            <if test="mealType != null and mealType != ''">
+                AND c.meals = #{mealType}
+            </if>
+            <if test="restaurant != null and restaurant != ''">
+                AND d.id in (${restaurant})
+            </if>
+        limit #{index},#{pageSize}
+    </select>
+
+    <!--原料需求查询数量-->
+    <select id="getMaterialPlanCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            st_materialplan a
+            LEFT JOIN st_intelligencemeals b ON a.rowmeal = b.id
+            LEFT JOIN st_mydishes c ON b.varietydishes = c.id
+            LEFT JOIN st_operationrestaurant d ON c.restaurant = d.RestaurantCode
+            WHERE b.del_flag = '0'
+            <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+                AND b.timestamp BETWEEN STR_TO_DATE(#{beginTime},'%Y-%m-%d') and STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+            <if test="mealType != null and mealType != ''">
+                AND c.meals = #{mealType}
+            </if>
+            <if test="restaurant != null and restaurant != ''">
+                AND d.id in (${restaurant})
+            </if>
+    </select>
+
+    <!--导出原料需求查询列表-->
+    <select id="exportMaterialPlan" resultType="StMaterialplan">
+        SELECT
+            a.*
+        FROM
+            st_materialplan a
+            LEFT JOIN st_intelligencemeals b ON a.rowmeal = b.id
+            LEFT JOIN st_mydishes c ON b.varietydishes = c.id
+            LEFT JOIN st_operationrestaurant d ON c.restaurant = d.RestaurantCode
+        WHERE b.del_flag = '0'
+            <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+                AND b.timestamp BETWEEN STR_TO_DATE(#{beginTime},'%Y-%m-%d') and STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+            <if test="mealType != null and mealType != ''">
+                AND c.meals = #{mealType}
+            </if>
+            <if test="restaurant != null and restaurant != ''">
+                AND d.id in (${restaurant})
+            </if>
+    </select>
+</mapper>

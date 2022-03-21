@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StquantitypriceMapper">
+    <resultMap id="StquantitypriceMapper" type="com.canteen.entity.Stquantityprice">
+        <result property="id" column="id"/>
+        <result property="dishname" column="dishname"/>
+        <result property="timepice" column="timepice"/>
+        <result property="employeecardprice" column="employeecardprice"/>
+        <result property="temporarycardPrice" column="temporarycardPrice"/>
+        <result property="choosingmeals" column="choosingmeals"/>
+        <result property="settlement" column="settlement"/>
+        <!--<result property="restaurant" column="restaurant"/>-->
+    </resultMap>
+    <!--获取列表养数量-->
+    <select id="getCommodityCnt" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        ( SELECT * FROM st_quantityprice ) a
+        LEFT JOIN ( SELECT * FROM st_operationrestaurant ) d ON d.RestaurantCode = a.restaurant
+        WHERE
+        1=1
+        <if test="dishname != null and dishname != ''">
+            <bind name="Dishname" value="'%'+ dishname + '%'"/>
+            AND a.dishname like #{Dishname}
+        </if>
+        <if test="restaurant != null and restaurant != ''">
+            <!-- AND a.restaurant = #{restaurant} -->
+            AND d.id in (${restaurant})
+        </if>
+
+    </select>
+    <!--获取列表数据-->
+    <select id="getCommodityList" resultMap="StquantitypriceMapper">
+        SELECT
+        a.id,
+        a.dishname,
+        b.referenceprice choosingmeals,
+        c.settlementamount settlement,
+        a.timepice,
+        a.Outtimepice,
+        a.employeecardprice,
+        a.temporarycardPrice,
+        d.RestaurantName restaurant
+        FROM
+        ( SELECT * FROM st_quantityprice ) a
+        LEFT JOIN ( SELECT * FROM st_measurechoicedishes ) b ON b.id = a.choosingmeals
+        LEFT JOIN ( SELECT * FROM st_strategymetering ) c ON c.id = a.settlement
+        LEFT JOIN ( SELECT * FROM st_operationrestaurant ) d ON d.RestaurantCode = a.restaurant
+        WHERE
+        1=1
+        <if test="dishname != null and dishname != ''">
+            <bind name="Dishname" value="'%'+ dishname + '%'"/>
+            AND a.dishname like #{Dishname}
+        </if>
+        <if test="restaurant != null and restaurant != ''">
+
+            AND d.id in (${restaurant})
+        </if>
+        limit #{startIndex},#{pageSize}
+    </select>
+<!--修改列表数据-->
+    <update id="amendPrice">
+      UPDATE st_quantityprice
+          SET
+              timepice = #{timepice},
+              Outtimepice =  #{Outtimepice},
+              employeecardprice =  #{employeecardprice},
+              temporarycardPrice =  #{temporarycardPrice}
+          WHERE
+	          id = #{id}
+    </update>
+
+
+</mapper>

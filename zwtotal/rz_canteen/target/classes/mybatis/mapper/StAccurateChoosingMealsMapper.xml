@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StAccurateChoosingMealsMapper">
+    <resultMap id="StAccuratechoosingmealsMap" type="com.canteen.entity.StAccuratechoosingmeals">
+        <result property="id" column="id"/>
+        <result property="protein" column="protein"/>
+        <result property="fat" column="fat"/>
+        <result property="fattyacids" column="fattyacids"/>
+        <result property="cholesterol" column="cholesterol"/>
+        <result property="carbohydrate" column="carbohydrate"/>
+        <result property="dietaryfiber" column="dietaryfiber"/>
+        <result property="vitamina" column="vitamina"/>
+        <result property="vitamind" column="vitamind"/>
+        <result property="vitamine" column="vitamine"/>
+        <result property="vitamink" column="vitamink"/>
+        <result property="vitaminb1" column="vitaminb1"/>
+        <result property="vitaminb2" column="vitaminb2"/>
+        <result property="vitaminb6" column="vitaminb6"/>
+        <result property="vitamin12" column="vitamin12"/>
+        <result property="vitaminc" column="vitaminc"/>
+        <result property="nicotinicacid" column="nicotinicacid"/>
+        <result property="folicacid" column="folicacid"/>
+        <result property="pantothenicacid" column="pantothenicacid"/>
+        <result property="biotin" column="biotin"/>
+        <result property="choline" column="choline"/>
+        <result property="calcium" column="calcium"/>
+        <result property="phosphorus" column="phosphorus"/>
+        <result property="potassium" column="potassium"/>
+        <result property="sodium" column="sodium"/>
+        <result property="magnesium" column="magnesium"/>
+        <result property="iron" column="iron"/>
+        <result property="zinc" column="zinc"/>
+        <result property="iodine" column="iodine"/>
+        <result property="selenium" column="selenium"/>
+        <result property="copper" column="copper"/>
+        <result property="fluorine" column="fluorine"/>
+        <result property="chromium" column="chromium"/>
+        <result property="manganese" column="manganese"/>
+        <result property="molybdenum" column="molybdenum"/>
+        <result property="restaurant" column="restaurant"/>
+        <result property="platetype" column="platetype"/>
+        <result property="weight" column="weight"/>
+        <result property="energy" column="energy"/>
+        <result property="state" column="state"/>
+    </resultMap>
+
+    <!--查询营养列表-->
+    <select id="getNutritionList" resultMap="StAccuratechoosingmealsMap">
+        <bind name="Protein" value="'%'+ protein + '%'"/>
+        <bind name="Fat" value="'%'+ fat + '%'"/>
+        <bind name="Fattyacids" value="'%'+ fattyacids + '%'"/>
+        <bind name="Cholesterol" value="'%'+ cholesterol + '%'"/>
+        <bind name="Carbohydrate" value="'%'+ carbohydrate + '%'"/>
+        <bind name="Dietaryfiber" value="'%'+ dietaryfiber + '%'"/>
+        <bind name="Vitamina" value="'%'+ vitamina + '%'"/>
+        <bind name="Vitamind" value="'%'+ vitamind + '%'"/>
+        <bind name="Vitamine" value="'%'+ vitamine + '%'"/>
+        <bind name="Vitamink" value="'%'+ vitamink + '%'"/>
+        <bind name="Vitaminb1" value="'%'+ vitaminb1 + '%'"/>
+        <bind name="Vitaminb2" value="'%'+ vitaminb2 + '%'"/>
+        <bind name="Vitaminb6" value="'%'+ vitaminb6 + '%'"/>
+        <bind name="Vitamin12" value="'%'+ vitamin12 + '%'"/>
+        <bind name="Vitaminc" value="'%'+ vitaminc + '%'"/>
+        <bind name="Nicotinicacid" value="'%'+ nicotinicacid + '%'"/>
+        <bind name="Folicacid" value="'%'+ folicacid + '%'"/>
+        <bind name="Pantothenicacid" value="'%'+ pantothenicacid + '%'"/>
+        <bind name="Biotin" value="'%'+ biotin + '%'"/>
+        <bind name="Choline" value="'%'+ choline + '%'"/>
+        <bind name="Calcium" value="'%'+ calcium + '%'"/>
+        <bind name="Phosphorus" value="'%'+ phosphorus + '%'"/>
+        <bind name="Potassium" value="'%'+ potassium + '%'"/>
+        <bind name="Sodium" value="'%'+ sodium + '%'"/>
+        <bind name="Magnesium" value="'%'+ magnesium + '%'"/>
+        <bind name="Iron" value="'%'+ iron + '%'"/>
+        <bind name="Zinc" value="'%'+ zinc + '%'"/>
+        <bind name="Iodine" value="'%'+ iodine + '%'"/>
+        <bind name="Selenium" value="'%'+ selenium + '%'"/>
+        <bind name="Copper" value="'%'+ copper + '%'"/>
+        <bind name="Fluorine" value="'%'+ fluorine + '%'"/>
+        <bind name="Chromium" value="'%'+ chromium + '%'"/>
+        <bind name="Manganese" value="'%'+ manganese + '%'"/>
+        <bind name="Molybdenum" value="'%'+ molybdenum + '%'"/>
+        <!--<bind name="Platetype" value="'%'+ platetype + '%'"/>
+        <bind name="Restaurant" value="'%'+ restaurant + '%'"/>-->
+        <bind name="Weight" value="'%'+ weight + '%'"/>
+        <bind name="Energy" value="'%'+ energy + '%'"/>
+        <bind name="State" value="'%'+ state + '%'"/>
+
+        SELECT
+        a.id,
+        a.protein,
+        a.fat,
+        a.fattyacids,
+        a.cholesterol,
+        a.carbohydrate,
+        a.dietaryfiber,
+        a.vitamina,
+        a.vitamind,
+        a.vitamine,
+        a.vitamink,
+        a.vitaminb1,
+        a.vitaminb2,
+        a.vitaminb6,
+        a.vitamin12,
+        a.vitaminc,
+        a.nicotinicacid,
+        a.folicacid,
+        a.pantothenicacid,
+        a.biotin,
+        a.choline,
+        a.calcium,
+        a.phosphorus,
+        a.potassium,
+        a.sodium,
+        a.magnesium,
+        a.iron,
+        a.zinc,
+        a.iodine,
+        a.selenium,
+        a.copper,
+        a.fluorine,
+        a.chromium,
+        a.manganese,
+        a.molybdenum,
+        b.equipmentname Platetype,
+        d.RestaurantName restaurant,
+        a.weight,
+        a.energy,
+        a.state
+        FROM
+        ( SELECT * FROM st_accuratechoosingmeals ) a
+        LEFT JOIN ( SELECT * FROM st_equipmentmanagement ) b ON a.PlateType = b.id
+        LEFT JOIN ( SELECT * FROM st_operationrestaurant ) d ON d.RestaurantCode = a.restaurant
+
+        WHERE
+        1=1
+        <if test="platetype != null and platetype != ''">
+            AND a.platetype = #{platetype}
+        </if>
+        <if test="restaurant != null and restaurant != ''">
+            AND a.restaurant = #{restaurant}
+        </if>
+        <if test="protein != null and protein != ''">
+            AND a.protein LIKE #{protein}
+        </if>
+        <if test="fat != null and fat != ''">
+            AND a.fat LIKE #{fat}
+        </if>
+        <if test="fattyacids != null and fattyacids != ''">
+            AND a.fattyacids LIKE #{fattyacids}
+        </if>
+        <if test="cholesterol != null and cholesterol != ''">
+            AND a.cholesterol LIKE #{cholesterol}
+        </if>
+        <if test="carbohydrate != null and carbohydrate != ''">
+            AND a.carbohydrate LIKE #{carbohydrate}
+        </if>
+        <if test="dietaryfiber != null and dietaryfiber != ''">
+            AND a.dietaryfiber LIKE #{dietaryfiber}
+        </if>
+        <if test="vitamina != null and vitamina != ''">
+            AND a.vitamina LIKE #{vitamina}
+        </if>
+        <if test="vitamind != null and vitamind != ''">
+            AND a.vitamind LIKE #{vitamind}
+        </if>
+        <if test="vitamine != null and vitamine != ''">
+            AND a.vitamine LIKE #{vitamine}
+        </if>
+        <if test="vitamink != null and vitamink != ''">
+            AND a.vitamink LIKE #{vitamink}
+        </if>
+        <if test="vitaminb1 != null and vitaminb1 != ''">
+            AND a.vitaminb1 LIKE #{vitaminb1}
+        </if>
+        <if test="vitaminb2 != null and vitaminb2 != ''">
+            AND a.vitaminb2 LIKE #{vitaminb2}
+        </if>
+        <if test="vitaminb6 != null and vitaminb6 != ''">
+            AND a.vitaminb6 LIKE #{vitaminb6}
+        </if>
+        <if test="vitamin12 != null and vitamin12 != ''">
+            AND a.vitamin12 LIKE #{vitamin12}
+        </if>
+        <if test="vitaminc != null and vitaminc != ''">
+            AND a.vitaminc LIKE #{vitaminc}
+        </if>
+        <if test="nicotinicacid != null and nicotinicacid != ''">
+            AND a.nicotinicacid LIKE #{nicotinicacid}
+        </if>
+        <if test="folicacid != null and folicacid != ''">
+            AND a.folicacid LIKE #{folicacid}
+        </if>
+        <if test="pantothenicacid != null and pantothenicacid != ''">
+            AND a.pantothenicacid LIKE #{pantothenicacid}
+        </if>
+        <if test="biotin != null and biotin != ''">
+            AND a.biotin LIKE #{biotin}
+        </if>
+        <if test="choline != null and choline != ''">
+            AND a.choline LIKE #{choline}
+        </if>
+        <if test="calcium != null and calcium != ''">
+            AND a.calcium LIKE #{calcium}
+        </if>
+        <if test="phosphorus != null and phosphorus != ''">
+            AND a.phosphorus LIKE #{phosphorus}
+        </if>
+        <if test="potassium != null and potassium != ''">
+            AND a.potassium LIKE #{potassium}
+        </if>
+        <if test="sodium != null and sodium != ''">
+            AND a.sodium LIKE #{sodium}
+        </if>
+        <if test="magnesium != null and magnesium != ''">
+            AND a.magnesium LIKE #{magnesium}
+        </if>
+        <if test="iron != null and iron != ''">
+            AND a.iron LIKE #{iron}
+        </if>
+        <if test="zinc != null and zinc != ''">
+            AND a.zinc LIKE #{zinc}
+        </if>
+        <if test="iodine != null and iodine != ''">
+            AND a.iodine LIKE #{iodine}
+        </if>
+        <if test="selenium != null and selenium != ''">
+            AND a.selenium LIKE #{selenium}
+        </if>
+        <if test="copper != null and copper != ''">
+            AND a.copper LIKE #{copper}
+        </if>
+        <if test="fluorine != null and fluorine != ''">
+            AND a.fluorine LIKE #{fluorine}
+        </if>
+        <if test="chromium != null and chromium != ''">
+            AND a.chromium LIKE #{chromium}
+        </if>
+        <if test="manganese != null and manganese != ''">
+            AND a.manganese LIKE #{manganese}
+        </if>
+        <if test="molybdenum != null and molybdenum != ''">
+            AND a.molybdenum LIKE #{molybdenum}
+        </if>
+        <if test="weight != null and weight != ''">
+            AND a.weight LIKE #{weight}
+        </if>
+        <if test="energy != null and energy != ''">
+            AND a.energy LIKE #{energy}
+        </if>
+        <if test="state != null and state != ''">
+            AND a.state LIKE #{state}
+        </if>
+            limit #{startIndex},#{pageSize}
+    </select>
+
+    <!--获取营养数量-->
+    <select id="getNutritionCnt" resultType="java.lang.Integer">
+        <bind name="Protein" value="'%'+ protein + '%'"/>
+        <bind name="Fat" value="'%'+ fat + '%'"/>
+        <bind name="Fattyacids" value="'%'+ fattyacids + '%'"/>
+        <bind name="Cholesterol" value="'%'+ cholesterol + '%'"/>
+        <bind name="Carbohydrate" value="'%'+ carbohydrate + '%'"/>
+        <bind name="Dietaryfiber" value="'%'+ dietaryfiber + '%'"/>
+        <bind name="Vitamina" value="'%'+ vitamina + '%'"/>
+        <bind name="Vitamind" value="'%'+ vitamind + '%'"/>
+        <bind name="Vitamine" value="'%'+ vitamine + '%'"/>
+        <bind name="Vitamink" value="'%'+ vitamink + '%'"/>
+        <bind name="Vitaminb1" value="'%'+ vitaminb1 + '%'"/>
+        <bind name="Vitaminb2" value="'%'+ vitaminb2 + '%'"/>
+        <bind name="Vitaminb6" value="'%'+ vitaminb6 + '%'"/>
+        <bind name="Vitamin12" value="'%'+ vitamin12 + '%'"/>
+        <bind name="Vitaminc" value="'%'+ vitaminc + '%'"/>
+        <bind name="Nicotinicacid" value="'%'+ nicotinicacid + '%'"/>
+        <bind name="Folicacid" value="'%'+ folicacid + '%'"/>
+        <bind name="Pantothenicacid" value="'%'+ pantothenicacid + '%'"/>
+        <bind name="Biotin" value="'%'+ biotin + '%'"/>
+        <bind name="Choline" value="'%'+ choline + '%'"/>
+        <bind name="Calcium" value="'%'+ calcium + '%'"/>
+        <bind name="Phosphorus" value="'%'+ phosphorus + '%'"/>
+        <bind name="Potassium" value="'%'+ potassium + '%'"/>
+        <bind name="Sodium" value="'%'+ sodium + '%'"/>
+        <bind name="Magnesium" value="'%'+ magnesium + '%'"/>
+        <bind name="Iron" value="'%'+ iron + '%'"/>
+        <bind name="Zinc" value="'%'+ zinc + '%'"/>
+        <bind name="Iodine" value="'%'+ iodine + '%'"/>
+        <bind name="Selenium" value="'%'+ selenium + '%'"/>
+        <bind name="Copper" value="'%'+ copper + '%'"/>
+        <bind name="Fluorine" value="'%'+ fluorine + '%'"/>
+        <bind name="Chromium" value="'%'+ chromium + '%'"/>
+        <bind name="Manganese" value="'%'+ manganese + '%'"/>
+        <bind name="Molybdenum" value="'%'+ molybdenum + '%'"/>
+        <bind name="Weight" value="'%'+ weight + '%'"/>
+        <!--<bind name="Platetype" value="'%'+ platetype + '%'"/>
+        <bind name="Restaurant" value="'%'+ restaurant + '%'"/>-->
+        <bind name="Energy" value="'%'+ energy + '%'"/>
+        <bind name="State" value="'%'+ state + '%'"/>
+
+        SELECT
+              count(1)
+        FROM
+              ( SELECT * FROM st_accuratechoosingmeals ) a
+
+        WHERE
+            1=1
+        <if test="platetype != null and platetype != ''">
+            AND a.platetype = #{platetype}
+        </if>
+        <if test="restaurant != null and restaurant != ''">
+            AND a.restaurant = #{restaurant}
+        </if>
+        <if test="protein != null and protein != ''">
+            AND a.protein LIKE #{protein}
+        </if>
+        <if test="fat != null and fat != ''">
+            AND a.fat LIKE #{fat}
+        </if>
+        <if test="fattyacids != null and fattyacids != ''">
+            AND a.fattyacids LIKE #{fattyacids}
+        </if>
+        <if test="cholesterol != null and cholesterol != ''">
+            AND a.cholesterol LIKE #{cholesterol}
+        </if>
+        <if test="carbohydrate != null and carbohydrate != ''">
+            AND a.carbohydrate LIKE #{carbohydrate}
+        </if>
+        <if test="dietaryfiber != null and dietaryfiber != ''">
+            AND a.dietaryfiber LIKE #{dietaryfiber}
+        </if>
+        <if test="vitamina != null and vitamina != ''">
+            AND a.vitamina LIKE #{vitamina}
+        </if>
+        <if test="vitamind != null and vitamind != ''">
+            AND a.vitamind LIKE #{vitamind}
+        </if>
+        <if test="vitamine != null and vitamine != ''">
+            AND a.vitamine LIKE #{vitamine}
+        </if>
+        <if test="vitamink != null and vitamink != ''">
+            AND a.vitamink LIKE #{vitamink}
+        </if>
+        <if test="vitaminb1 != null and vitaminb1 != ''">
+            AND a.vitaminb1 LIKE #{vitaminb1}
+        </if>
+        <if test="vitaminb2 != null and vitaminb2 != ''">
+            AND a.vitaminb2 LIKE #{vitaminb2}
+        </if>
+        <if test="vitaminb6 != null and vitaminb6 != ''">
+            AND a.vitaminb6 LIKE #{vitaminb6}
+        </if>
+        <if test="vitamin12 != null and vitamin12 != ''">
+            AND a.vitamin12 LIKE #{vitamin12}
+        </if>
+        <if test="vitaminc != null and vitaminc != ''">
+            AND a.vitaminc LIKE #{vitaminc}
+        </if>
+        <if test="nicotinicacid != null and nicotinicacid != ''">
+            AND a.nicotinicacid LIKE #{nicotinicacid}
+        </if>
+        <if test="folicacid != null and folicacid != ''">
+            AND a.folicacid LIKE #{folicacid}
+        </if>
+        <if test="pantothenicacid != null and pantothenicacid != ''">
+            AND a.pantothenicacid LIKE #{pantothenicacid}
+        </if>
+        <if test="biotin != null and biotin != ''">
+            AND a.biotin LIKE #{biotin}
+        </if>
+        <if test="choline != null and choline != ''">
+            AND a.choline LIKE #{choline}
+        </if>
+        <if test="calcium != null and calcium != ''">
+            AND a.calcium LIKE #{calcium}
+        </if>
+        <if test="phosphorus != null and phosphorus != ''">
+            AND a.phosphorus LIKE #{phosphorus}
+        </if>
+        <if test="potassium != null and potassium != ''">
+            AND a.potassium LIKE #{potassium}
+        </if>
+        <if test="sodium != null and sodium != ''">
+            AND a.sodium LIKE #{sodium}
+        </if>
+        <if test="magnesium != null and magnesium != ''">
+            AND a.magnesium LIKE #{magnesium}
+        </if>
+        <if test="iron != null and iron != ''">
+            AND a.iron LIKE #{iron}
+        </if>
+        <if test="zinc != null and zinc != ''">
+            AND a.zinc LIKE #{zinc}
+        </if>
+        <if test="iodine != null and iodine != ''">
+            AND a.iodine LIKE #{iodine}
+        </if>
+        <if test="selenium != null and selenium != ''">
+            AND a.selenium LIKE #{selenium}
+        </if>
+        <if test="copper != null and copper != ''">
+            AND a.copper LIKE #{copper}
+        </if>
+        <if test="fluorine != null and fluorine != ''">
+            AND a.fluorine LIKE #{fluorine}
+        </if>
+        <if test="chromium != null and chromium != ''">
+            AND a.chromium LIKE #{chromium}
+        </if>
+        <if test="manganese != null and manganese != ''">
+            AND a.manganese LIKE #{manganese}
+        </if>
+        <if test="molybdenum != null and molybdenum != ''">
+            AND a.molybdenum LIKE #{molybdenum}
+        </if>
+        <if test="weight != null and weight != ''">
+            AND a.weight LIKE #{weight}
+        </if>
+        <if test="energy != null and energy != ''">
+            AND a.energy LIKE #{energy}
+        </if>
+        <if test="state != null and state != ''">
+            AND a.state LIKE #{state}
+        </if>
+    </select>
+
+    <!--删除营养数据-->
+    <delete id="deleteNutrition" >
+        DELETE FROM st_accuratechoosingmeals
+            WHERE
+            id = #{id}
+    </delete>
+    <!--添加营养-->
+    <insert id="addNutrition" parameterType="com.canteen.entity.StAccuratechoosingmeals">
+ INSERT INTO st_accuratechoosingmeals ( protein,
+                fat,
+                fattyacids,
+                cholesterol,
+                carbohydrate,
+                dietaryfiber,
+                vitamina,
+                vitamind,
+                vitamine,
+                vitamink,
+                vitaminb1,
+                vitaminb2,
+                vitaminb6,
+                vitamin12,
+                vitaminc,
+                nicotinicacid,
+                folicacid,
+                pantothenicacid,
+                biotin,
+                choline,
+                calcium,
+                phosphorus,
+                potassium,
+                sodium,
+                magnesium,
+                iron,
+                zinc,
+                iodine,
+                selenium,
+                copper,
+                fluorine,
+                chromium,
+                manganese,
+                molybdenum,
+                restaurant,
+                platetype,
+                weight,
+                energy,
+                state)
+        VALUES
+	(            #{protein},
+                 #{fat},
+                 #{fattyacids},
+                 #{cholesterol},
+                 #{carbohydrate},
+                 #{dietaryfiber},
+                 #{vitamina},
+                 #{vitamind},
+                 #{vitamine},
+                 #{vitamink},
+                 #{vitaminb1},
+                 #{vitaminb2},
+                 #{vitaminb6},
+                 #{vitamin12},
+                 #{vitaminc},
+                 #{nicotinicacid},
+                 #{folicacid},
+                 #{pantothenicacid},
+                 #{biotin},
+                 #{choline},
+                 #{calcium},
+                 #{phosphorus},
+                 #{potassium},
+                 #{sodium},
+                 #{magnesium},
+                 #{iron},
+                 #{zinc},
+                 #{iodine},
+                 #{selenium},
+                 #{copper},
+                 #{fluorine},
+                 #{chromium},
+                 #{manganese},
+                 #{molybdenum},
+                 #{restaurant},
+                 #{platetype},
+                 #{weight},
+                 #{energy},
+                 #{state})
+    </insert>
+<update id="updateState">
+        UPDATE st_accuratechoosingmeals SET state = #{state} WHERE id = #{id}
+</update>
+
+</mapper>

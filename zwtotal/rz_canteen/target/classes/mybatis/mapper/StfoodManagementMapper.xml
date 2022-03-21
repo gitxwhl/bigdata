@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StfoodManagementMapper">
+
+    <!--生成菜品编号-->
+    <select id="getDishCode" resultType="java.lang.String">
+        SELECT fun_next_gdh('cp')
+    </select>
+
+    <!--查询可用食材-->
+    <select id="getIngredient" resultType="java.util.LinkedHashMap">
+        SELECT id,name FROM st_food_ingredients
+    </select>
+
+    <!--根据食材id查询营养成分-->
+    <select id="getNutritionById" resultType="java.util.LinkedHashMap">
+        SELECT
+            IF(energy is null or energy = '',0,energy) energy,
+            IF(protein is null or protein = '',0,protein) protein,
+            IF(fat is null or fat = '',0,fat) fat,
+            IF(carbohydrate is null or carbohydrate = '',0,carbohydrate) carbohydrate,
+            IF(dietary_fiber is null or dietary_fiber = '',0,dietary_fiber) dietary_fiber,
+            IF(cholesterol is null or cholesterol = '',0,cholesterol) cholesterol,
+            IF(ash_content is null or ash_content = '',0,ash_content) ash_content,
+            IF(calcium is null or calcium = '',0,calcium) calcium,
+            IF(magnesium is null or magnesium = '',0,magnesium) magnesium,
+            IF(copper is null or copper = '',0,copper) copper,
+            IF(phosphorus is null or phosphorus = '',0,phosphorus) phosphorus,
+            IF(iron is null or iron = '',0,iron) iron,
+            IF(manganese is null or manganese = '',0,manganese) manganese,
+            IF(potassium is null or potassium = '',0,potassium) potassium,
+            IF(zinc is null or zinc = '',0,zinc) zinc,
+            IF(iodine is null or iodine = '',0,iodine) iodine,
+            IF(sodium is null or sodium = '',0,sodium) sodium,
+            IF(selenium is null or selenium = '',0,selenium) selenium,
+            IF(vitamin_a is null or vitamin_a = '',0,vitamin_a) vitamin_a,
+            IF(vitamin_e is null or vitamin_e = '',0,vitamin_e) vitamin_e,
+            IF(retinol is null or retinol = '',0,retinol) retinol,
+            IF(vitamin_k is null or vitamin_k = '',0,vitamin_k) vitamin_k,
+            IF(Carotene is null or Carotene = '',0,Carotene) Carotene,
+            IF(vitamin_d is null or vitamin_d = '',0,vitamin_d) vitamin_d,
+            IF(vitamin_b1 is null or vitamin_b1 = '',0,vitamin_b1) vitamin_b1,
+            IF(vitamin_b12 is null or vitamin_b12 = '',0,vitamin_b12) vitamin_b12,
+            IF(pantothenic_acid is null or pantothenic_acid = '',0,pantothenic_acid) pantothenic_acid,
+            IF(vitamin_b2 is null or vitamin_b2 = '',0,vitamin_b2) vitamin_b2,
+            IF(folic_acid is null or folic_acid = '',0,folic_acid) folic_acid,
+            IF(vitamin_c is null or vitamin_c = '',0,vitamin_c) vitamin_c,
+            IF(nicotinic_acid is null or nicotinic_acid = '',0,nicotinic_acid) nicotinic_acid,
+            IF(choline is null or choline = '',0,choline) choline,
+            IF(vitamin_b6 is null or vitamin_b6 = '',0,vitamin_b6) vitamin_b6,
+            IF(biotin is null or biotin = '',0,biotin) biotin
+        FROM
+            st_food_ingredients
+        WHERE
+            id = #{id}
+    </select>
+
+    <!--新增菜品-->
+    <!--添加菜品表-->
+    <insert id="insertFoodInfo" parameterType="StfoodManagement">
+        INSERT INTO st_food_management(
+            dishcode,dishName,dishcategory,referenceprice,company,weight,taste,state,remarks,
+            del_flag,foodpictures,dishescategory,meals,degree,feature,create_time
+        )
+        VALUES (
+            #{dishCode},#{dishName},#{dishCategory},#{referencePrice},#{company},#{weight},#{taste},'0',
+            #{remarks},'0',#{pic},#{dishesCategory},#{meals},#{degree},#{feature},now()
+        )
+    </insert>
+
+    <!-- 添加菜品营养成分 -->
+    <insert id="insertFoodElement" parameterType="StnutritionalComponents">
+        INSERT INTO st_nutritional_components (
+          energy,protein,fat,saturated,cholesterol,carbohydrate,dietaryfiber,vitaminA,vitaminD,vitaminE,vitaminK,vitaminB1,
+          vitaminB2,vitaminB6,vitamin16,vitaminC,nicotinicacid,folicacid,pantothenicacid,biotin,choline,calcium,phosphorus,
+          potassium,sodium,magnesium,iron,zinc,iodine,selenium,copper,fluorine,chromium,manganese,molybdenum,code
+	    )
+        VALUES
+	    (
+	      #{energy},#{protein},#{fat},#{saturated},#{cholesterol},#{carbohydrate},#{dietaryfiber},#{vitamina},#{vitamind},
+	      #{vitamine},#{vitamink},#{vitaminb1},#{vitaminb2},#{vitaminb6},#{vitamin16},#{vitaminc},#{nicotinicacid},#{folicacid},
+	      #{pantothenicacid},#{biotin},#{choline},#{calcium},#{phosphorus},#{potassium},#{sodium},#{magnesium},#{iron},#{zinc},
+	      #{iodine},#{selenium},#{copper},#{fluorine},#{chromium},#{manganese},#{molybdenum},#{code}
+	    )
+    </insert>
+
+    <!--添加菜品和配料的关联数据-->
+    <insert id="insertNutritionDishes" parameterType="java.util.Map">
+        INSERT INTO st_nutrition_dishes (
+            dishCode,ingredientId,weight
+        )VALUES (
+            #{dishCode},#{ingredientId},#{weight}
+        )
+    </insert>
+
+    <!--菜品查询-->
+    <select id="getFood" resultType="java.util.LinkedHashMap">
+        SELECT
+            *
+        FROM
+            (
+            SELECT
+                a.id,
+                a.dishname,
+                a.dishcode,
+                b.varietiesName dishcategory,
+                d.paravalue dishescategory,
+                a.referenceprice,
+                DATE_FORMAT( a.create_time, '%Y-%m-%d' ) creatTime,
+                a.foodpictures,
+                c.paravalue meals,
+                e.paravalue taste
+            FROM
+                st_food_management a
+                LEFT JOIN st_categorydishes b ON a.dishcategory = b.id
+                LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'mealType' ) c ON c.parakey = a.meals
+                LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'dishescategory' ) d ON d.parakey = a.dishescategory
+                LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'taste' ) e ON e.parakey = a.taste
+            WHERE
+                ( a.del_flag = '0' OR a.del_flag IS NULL )
+                <if test="category != null and category != ''">
+                    and a.dishcategory = #{category}
+                </if>
+                <if test="dishesCategory != null and dishesCategory != ''">
+                    and a.dishescategory = #{dishesCategory}
+                </if>
+                <if test="date != null and date != ''">
+                    and DATE_FORMAT( a.create_time, '%Y-%m-%d' ) = DATE_FORMAT( #{date}, '%Y-%m-%d' )
+                </if>
+                <if test="meals != null and meals != ''">
+                    and a.meals = #{meals}
+                </if>
+            ) a
+        WHERE
+            1 = 1
+            <if test="msg != null and msg != ''">
+                <bind name="Msg" value="'%' + msg + '%'"/>
+                and (a.dishname like #{Msg} or a.taste like #{Msg})
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--菜品查询-->
+    <select id="getFoodCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            (
+            SELECT
+                a.id,
+                a.dishname,
+                a.dishcode,
+                b.varietiesName dishcategory,
+                d.paravalue dishescategory,
+                a.referenceprice,
+                DATE_FORMAT( a.create_time, '%Y-%m-%d' ) createTime,
+                a.foodpictures,
+                c.paravalue meals,
+                e.paravalue taste
+            FROM
+                st_food_management a
+                LEFT JOIN st_categorydishes b ON a.dishcategory = b.id
+                LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'mealType' ) c ON c.parakey = a.meals
+                LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'dishescategory' ) d ON d.parakey = a.dishescategory
+                LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'taste' ) e ON e.parakey = a.taste
+            WHERE
+                ( a.del_flag = '0' OR a.del_flag IS NULL )
+                <if test="category != null and category != ''">
+                    and a.dishcategory = #{category}
+                </if>
+                <if test="dishesCategory != null and dishesCategory != ''">
+                    and a.dishescategory = #{dishesCategory}
+                </if>
+                <if test="date != null and date != ''">
+                    and DATE_FORMAT( a.create_time, '%Y-%m-%d' ) = DATE_FORMAT( #{date}, '%Y-%m-%d' )
+                </if>
+                <if test="meals != null and meals != ''">
+                    and a.meals = #{meals}
+                </if>
+            ) a
+        WHERE
+            1 = 1
+            <if test="msg != null and msg != ''">
+                <bind name="Msg" value="'%' + msg + '%'"/>
+                and (a.dishname like #{Msg} or a.taste like #{Msg})
+            </if>
+    </select>
+
+
+    <!--营养成分分析-->
+    <select id="foodAnalyze" resultType="java.util.LinkedHashMap">
+        SELECT
+            *
+        FROM
+            st_nutritional_components
+        WHERE
+            code = #{dishcode}
+    </select>
+
+    <!--查询字典表定义-->
+    <select id="dictionaries" resultType="java.util.LinkedHashMap">
+        SELECT * FROM sys_parameter
+    </select>
+
+    <!--查询菜品类别-->
+    <select id="getType" resultType="java.util.LinkedHashMap">
+        SELECT id,varietiesName FROM st_categorydishes
+    </select>
+
+    <select id="selectType" resultType="java.util.LinkedHashMap">
+        SELECT varietiesname FROM st_categorydishes WHERE id in (${type})
+    </select>
+</mapper>

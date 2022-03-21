@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StShopOrderMapper">
+
+    <select id="getshopOrderCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM st_shop_orders t1
+        LEFT JOIN st_operationrestaurant t3 ON t1.`shopId` = t3.id
+        LEFT JOIN app_t_omsorder t2 ON t1.`order_no`=t2.`order_no`
+        WHERE 1=1
+        <if test="entity.shopId != null and entity.shopId != ''">
+            AND t1.`shopId`=#{entity.shopId}
+        </if>
+        <if test="entity.createDate != null and entity.createDate != ''">
+            AND t2.`create_time`=#{entity.createDate}
+        </if>
+        <if test="entity.status != null  and entity.status != ''">
+            AND t2.`status`=#{entity.status}
+        </if>
+        <if test="entity.userName != null and entity.userName != ''">
+            AND t2.`user_name` = #{entity.userName}
+        </if>
+        <if test="entity.orderNo != null and entity.orderNo != ''">
+            AND t2.`order_no`= #{entity.orderNo}
+        </if>
+    </select>
+
+
+    <select id="getshopOrderList" parameterType="StShopOrder" resultType="com.canteen.entity.StShopOrder">
+         SELECT t2.`order_no` as orderNo,t3.RestaurantName as shopName ,t2.`phone`,
+            CAST(t2.`create_time`   AS   CHAR(20)) AS createDate,
+            t2.user_name as userName ,t2.status,t2.prices
+          FROM st_shop_orders t1
+          LEFT JOIN st_operationrestaurant t3 ON t1.`shopId` = t3.id
+          LEFT JOIN app_t_omsorder t2 ON t1.`order_no`=t2.`order_no`
+          WHERE  1=1
+            <if test="entity.shopId != null and entity.shopId != ''">
+                AND t1.`shopId`=#{entity.shopId}
+            </if>
+            <if test="entity.createDate != null and entity.createDate != ''">
+              AND t2.`create_time`= #{entity.createDate}
+            </if>
+            <if test="entity.status != null  and entity.status != ''">
+              AND t2.`status`=#{entity.status}
+            </if>
+            <if test="entity.userName != null and entity.userName != ''">
+                AND t2.`user_name` = #{entity.userName}
+            </if>
+            <if test="entity.orderNo != null and entity.orderNo != ''">
+                AND t2.`order_no`= #{entity.orderNo}
+            </if>
+          LIMIT #{entity.pageNum},#{entity.pageSize}
+    </select>
+
+    <select id="getOrderDetail" resultType="java.util.Map">
+
+      SELECT t1.`create_time`,t1.`prices`,t1.`user_name`,t1.`phone`,
+        t2.quantity,t2.`prices`,
+        t3.`branchname`,t4.`typename`
+       FROM app_t_omsorder t1
+      LEFT JOIN app_t_omsorder_detail t2 ON t1.`order_no` = t2.`order_id`
+      LEFT JOIN st_goodcommodity t3 ON t2.`product_id` = t3.`id`
+      LEFT JOIN goodtypetree t4 ON t3.no = t4.`id`
+      where t1.order_no = #{orderId}
+    </select>
+</mapper>

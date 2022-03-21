@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StCabinetMapper">
+
+    <!--餐柜管理列表-->
+    <select id="getCabinet" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.id,
+            a.number,
+            a.name,
+            a.addr,
+            e.paravalue state,
+            c.name reservepersonnel,
+            b.telephone,
+            b.picktime,
+            a.launchtime,
+            d.name shelf,
+            a.mode,
+            a.details,
+            a.orderNo
+        FROM
+            st_cabinet a
+            LEFT JOIN st_ordermanagement b ON a.orderNo = b.ordernumber
+            LEFT JOIN sys_user c ON c.id = b.reservepersonnel
+            LEFT JOIN st_personnel d ON d.id = a.shelf
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'sideboardState') e ON e.parakey = a.state
+            LEFT JOIN st_operationrestaurant f ON b.restaurant = f.RestaurantCode
+        WHERE
+            1 = 1
+            <if test="number != null and number != ''">
+                <bind name="Number" value="'%' + number + '%'"/>
+                AND a.number like #{Number}
+            </if>
+            <if test="name != null and name != ''">
+                <bind name="Name" value="'%' + name + '%'"/>
+                AND a.name like #{Name}
+            </if>
+            <if test="state != null and state != ''">
+                AND a.state = #{state}
+            </if>
+            <if test="restaurant != null and restaurant != ''">
+                AND f.id in (${restaurant})
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--餐柜管理列表数量-->
+    <select id="getCabinetCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            st_cabinet a
+            LEFT JOIN st_ordermanagement b ON a.orderNo = b.ordernumber
+            LEFT JOIN sys_user c ON c.id = b.reservepersonnel
+            LEFT JOIN st_personnel d ON d.id = a.shelf
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'sideboardState') e ON e.parakey = a.state
+            LEFT JOIN st_operationrestaurant f ON b.restaurant = f.RestaurantCode
+        WHERE
+            1 = 1
+            <if test="number != null and number != ''">
+                <bind name="Number" value="'%' + number + '%'"/>
+                AND a.number like #{Number}
+            </if>
+            <if test="name != null and name != ''">
+                <bind name="Name" value="'%' + name + '%'"/>
+                AND a.name like #{Name}
+            </if>
+            <if test="state != null and state != ''">
+                AND a.state = #{state}
+            </if>
+            <if test="restaurant != null and restaurant != ''">
+                AND f.id in (${restaurant})
+            </if>
+    </select>
+
+    <!--餐柜上货,更换订单-->
+    <update id="addOrder" parameterType="StCabinet">
+        UPDATE
+            st_cabinet
+        SET
+            state = '2',launchtime = #{launchTime},shelf = #{shelf},orderNo = #{orderNo},details = #{details}
+        WHERE
+            id = #{id}
+    </update>
+
+    <!--清空餐柜-->
+    <update id="emptyCabinet" parameterType="StCabinet">
+        UPDATE
+            st_cabinet
+        SET
+            state = '1',launchtime = '',shelf = '',orderNo = '',details = ''
+    </update>
+
+    <!--查询上架人员-->
+    <select id="getPerson" resultType="java.util.LinkedHashMap">
+        SELECT
+            id,
+            name
+        FROM
+            st_personnel
+    </select>
+
+    <!--查询空餐柜-->
+    <select id="getEmptyCabinet" resultType="java.util.LinkedHashMap">
+        SELECT
+            id,
+            name text
+        FROM
+            st_cabinet
+        WHERE
+            state = '1'
+    </select>
+
+    <!--查询非空餐柜-->
+    <select id="getNoEmptyCabinet" resultType="java.util.LinkedHashMap">
+        SELECT
+            id,
+            name,
+            orderNo
+        FROM
+            st_cabinet
+        WHERE
+            state = '2'
+    </select>
+
+    <!--查询餐柜订单-->
+    <select id="getCabinOrder" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.orderNum
+        FROM
+            st_ordering a
+            LEFT JOIN st_ordermanagement b ON a.orderNum = b.ordernumber
+        WHERE
+            a.state = '0'
+            AND a.addr = '3'
+    </select>
+
+    <!--通过餐柜id查询订单号-->
+    <select id="getOrderNumById" resultType="java.lang.String">
+        SELECT orderNo FROM st_cabinet WHERE id = #{id}
+    </select>
+</mapper>

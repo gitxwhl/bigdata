@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StmeteringsystemsettingsMapper">
+  <resultMap id="StmeteringsystemsettingsResultMap" type="com.canteen.entity.Stmeteringsystemsettings">
+    <id column="id"  property="id" />
+    <result column="Dishtime"  property="dishTime" />
+    <result column="platedetectiontime"  property="platedetectionTime" />
+    <result column="warningweight"  property="warningWeight" />
+    <result column="synchronizationtime"  property="synchronizationTime" />
+    <result column="state"  property="state" />
+    <collection property="operationreStaurants" ofType="StOperationrestaurant">
+      <id column="id" property="id"/>
+      <id column="RestaurantName" property="restaurantName"/>
+      <id column="parent_ids" property="parentIds"/>
+      <id column="RestaurantCode" property="restaurantCode"/>
+    </collection>
+  </resultMap>
+  <sql id="sql_where">
+    <if test="platedetectionTime != null and platedetectionTime != ''">
+      AND me.platedetectiontime = #{platedetectionTime}
+    </if>
+    <if test="Dishtime != null and Dishtime != ''">
+      AND me.dishTime = #{Dishtime}
+    </if>
+    <if test="warningWeight  != null and warningWeight  != ''">
+      AND me.warningweight  = #{warningWeight}
+    </if>
+    <if test="restaurant  != null and restaurant  != ''">
+      AND op.id  in (${restaurant})
+    </if>
+  </sql>
+
+  <!--<select id="getStmeteringsystemsettingsList"  resultMap="StmeteringsystemsettingsResultMap">
+    SELECT
+      me.Dishtime,
+      me.platedetectiontime,
+      me.warningweight,
+      op.RestaurantName,
+      me.synchronizationtime,
+      me.state
+    FROM
+      st_meteringsystemsettings me
+      LEFT JOIN st_operationrestaurant op ON me.operationrestaurant = op.RestaurantCode
+    where me.del_flag = '0'
+    <include refid="sql_where"/>
+    LIMIT #{start},#{size}
+  </select>-->
+
+  <select id="getStmeteringsystemsettingsList"  resultType="Stmeteringsystemsettings">
+    SELECT
+    me.id,
+    me.Dishtime,
+    me.platedetectiontime,
+    me.warningweight,
+    op.RestaurantName operationrestaurant,
+    DATE_FORMAT(me.synchronizationtime,'%Y/%m/%d') synchronizationtime,
+    CASE WHEN me.state = '1' THEN '启用' ELSE '停用' END AS state,
+    me.state delFlag
+    FROM
+    st_meteringsystemsettings me
+    LEFT JOIN st_operationrestaurant op ON me.operationrestaurant = op.RestaurantCode
+    where me.del_flag = '0'
+    <include refid="sql_where"/>
+    LIMIT #{start},#{size}
+  </select>
+
+  <select id="getStmeteringsystemsettingsCount" resultType="java.lang.Integer">
+    SELECT
+    count(*)
+    FROM
+    st_meteringsystemsettings me
+    LEFT JOIN st_operationrestaurant op
+    ON me.operationrestaurant = op.RestaurantCode
+    where me.del_flag = '0'
+    <include refid="sql_where"/>
+  </select>
+
+  <update id="deleteById" parameterType="Stmeteringsystemsettings">
+        UPDATE st_meteringsystemsettings SET del_flag = '1' WHERE id = #{id}
+  </update>
+
+  <insert id="addStmetering" parameterType="Stmeteringsystemsettings">
+        INSERT INTO st_meteringsystemsettings(
+            Dishtime,platedetectiontime,warningweight,synchronizationtime,state,operationrestaurant,del_flag
+        )VALUES (
+            #{dishTime},#{platedetectionTime},#{warningWeight},#{synchronizationTime},#{state},#{operationreStaurant},
+            #{delFlag}
+        )
+  </insert>
+</mapper>

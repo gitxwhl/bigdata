@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.mapper.WyaccidentMapper">
+  <resultMap id="BaseResultMap" type="com.property.entity.Wyaccident">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="event" jdbcType="VARCHAR" property="event" />
+    <result column="loss" jdbcType="VARCHAR" property="loss" />
+    <result column="timestamp" jdbcType="VARCHAR" property="timestamp" />
+    <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="involved" jdbcType="VARCHAR" property="involved" />
+    <result column="reporter" jdbcType="VARCHAR" property="reporter" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+  </resultMap>
+
+  <!--添加事故记录-->
+  <insert id="addAccident" parameterType="Wyaccident">
+        INSERT INTO wy_accident (
+            event,loss,timestamp,place,involved,reporter
+        )VALUES (
+            #{event},#{loss},#{timestamp},#{place},#{involved},#{reporter}
+        )
+  </insert>
+
+  <!--查询事故记录-->
+  <select id="getAccident" resultType="Wyaccident">
+        SELECT
+            a.id,
+            a.event,
+            a.loss,
+            a.timestamp,
+            a.place,
+            a.involved,
+            b.name reporter
+        FROM
+            wy_accident a
+            LEFT JOIN wy_person b ON a.reporter = b.id
+        WHERE
+            1 = 1
+            <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+                AND STR_TO_DATE(a.timestamp,'%Y-%m-%d') between STR_TO_DATE(#{beginTime},'%Y-%m-%d') and STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+            limit #{index},#{pageSize}
+  </select>
+
+  <!--查询事故记录数量-->
+  <select id="getAccidentCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            wy_accident a
+            LEFT JOIN wy_person b ON a.reporter = b.id
+        WHERE
+            1 = 1
+            <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+              AND STR_TO_DATE(a.timestamp,'%Y-%m-%d') between STR_TO_DATE(#{beginTime},'%Y-%m-%d') and STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+  </select>
+
+  <!--通过人员id查询人员-->
+  <select id="getPersonById" resultType="java.util.LinkedHashMap">
+        SELECT name FROM wy_person WHERE id in (${ids})
+  </select>
+</mapper>

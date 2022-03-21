@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.mapper.WyequipmentstrategyMapper">
+  <resultMap id="BaseResultMap" type="com.property.entity.Wyequipmentstrategy">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="policyname" jdbcType="VARCHAR" property="policyname" />
+    <result column="policy" jdbcType="VARCHAR" property="policy" />
+    <result column="planningtime" jdbcType="VARCHAR" property="planningtime" />
+    <result column="planendtime" jdbcType="VARCHAR" property="planendtime" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="resources" jdbcType="VARCHAR" property="resources" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="delflag" jdbcType="VARCHAR" property="delflag"/>
+  </resultMap>
+  <!--    获取总数量-->
+  <select id="getEquipmentStrategyCnt" resultType="java.lang.Integer">
+    select count(id) from wy_equipmentstrategy
+    where
+    delflag = '0'
+    <if test="policyname != null and policyname != ''">
+      AND policyname like "%"#{policyname}"%"
+    </if>
+    <if test="policy != null and policy != '' and policy != 0">
+      AND policy = #{policy}
+    </if>
+    <if test="planningtime != null and planningtime != ''">
+      AND planningtime = #{planningtime}
+    </if>
+    <if test="company != null and company != ''">
+      AND company = #{company}
+    </if>
+  </select>
+
+  <!--    查询维保策略-->
+  <select id="getEquipmentStrategy" resultType="java.util.Map">
+    select  a.id,
+            a.policyname,
+            b.paravalue policy,
+            a.planningtime,
+            a.planendtime,
+            a.content,
+            a.resources
+    from (select * from wy_equipmentstrategy) a
+    left join (select * from sys_parameter where paraname = 'policy') b on a.policy = b.parakey
+    where
+    delflag = '0'
+    <if test="policyname != null and policyname != ''">
+      AND a.policyname like "%"#{policyname}"%"
+    </if>
+    <if test="policy != null and policy != '' and policy != 0">
+      AND a.policy = #{policy}
+    </if>
+    <if test="planningtime != null and planningtime != ''">
+      AND a.planningtime = #{planningtime}
+    </if>
+    <if test="company != null and company != ''">
+      AND a.company = #{company}
+    </if>
+  </select>
+
+  <!--    添加维保策略-->
+  <insert id="insertEquipmentStrategy">
+    insert into wy_equipmentstrategy(policyname,policy,planningtime,planendtime,content,resources,company,delflag,policyid)
+    values (#{policyname},#{policy},#{planningtime},#{planendtime},#{content},#{resources},#{company},#{delflag},#{policyid})
+  </insert>
+  <!-- 生成维保工单-->
+  <insert id="insertMainOrder">
+    insert into wy_maintainorder(workno,state,generationtime)
+    values (#{workno},'1',now())
+  </insert>
+
+  <!--    查询修改维保策略-->
+  <select id="getEquipmentStrategyById" resultType="java.util.Map">
+    select  a.id,
+            a.policyname,
+            b.paravalue policy,
+            a.planningtime,
+            a.planendtime,
+            a.content,
+            a.resources
+    from (select * from wy_equipmentstrategy) a
+    left join (select * from sys_parameter where paraname = 'policy') b on a.policy = b.parakey
+    where a.id = #{id}
+  </select>
+  <!--    修改维保策略-->
+  <update id="updateEquipmentStrategy" parameterType="com.property.entity.Wyequipmentstrategy">
+	UPDATE wy_equipmentstrategy
+	SET policyname = #{policyname}, policy =#{policy},
+	    planningtime = #{planningtime},planendtime = #{planendtime}, content = #{content},
+	    resources = #{resources}, company = #{company}
+	WHERE
+	    id = #{id}
+  </update>
+
+  <!--    删除维保策略-->
+  <update id="deleteEquipmentStrategy">
+    update wy_equipmentstrategy
+    set delflag = '1'
+    where id = #{id}
+  </update>
+
+  <!--    获取策略分类下拉框-->
+  <select id="getPolicy"  resultType="java.util.Map">
+    select parakey id,paravalue text from sys_parameter
+    where paraname = 'policy'
+	union
+	select 0 as id,'全部' as text from sys_parameter
+	order by id
+  </select>
+</mapper>

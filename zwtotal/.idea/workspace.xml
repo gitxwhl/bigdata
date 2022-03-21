@@ -1,0 +1,1393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="98473d4e-f987-44f5-97e8-dc2e998565a5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/junitgenerator-prj-settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cglib_cglib_3_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_druid_1_1_16.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_easyexcel_2_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson_1_2_31.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_beust_jcommander_1_48.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_5_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_10_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jsqlparser_jsqlparser_0_9_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_pagehelper_pagehelper_5_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_virtuald_curvesapi_1_04.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_18_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_zxing_core_3_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_zxing_javase_3_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_zxing_javase_3_2_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jsch_0_1_55.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_istack_istack_commons_runtime_3_0_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_xml_fastinfoset_FastInfoset_1_2_16.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_3_4_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_8_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_fileupload_commons_fileupload_1_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_httpclient_commons_httpclient_3_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_micrometer_micrometer_core_1_3_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_core_2_6_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_schema_2_6_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_spi_2_6_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_spring_web_2_6_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_swagger2_2_6_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_swagger_common_2_6_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_springfox_springfox_swagger_ui_2_6_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_swagger_swagger_annotations_1_5_22.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_swagger_swagger_models_1_5_10.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_activation_jakarta_activation_api_1_2_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_annotation_jakarta_annotation_api_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_validation_jakarta_validation_api_2_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_xml_bind_jakarta_xml_bind_api_2_3_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_30.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_10_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_10_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_1_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_ezmorph_ezmorph_1_0_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_json_lib_json_lib_jdk15_2_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_collections4_4_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_12_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_12_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_3_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_ooxml_3_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_ooxml_schemas_3_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_29.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_9_0_29.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_jasper_9_0_29.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_9_0_29.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_annotations_api_9_0_29.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_xmlbeans_xmlbeans_2_6_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_3_13_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jdt_ecj_3_18_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ehcache_ehcache_3_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_runtime_2_3_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_txw2_2_3_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_2_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hdrhistogram_HdrHistogram_2_1_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_validator_hibernate_validator_6_0_18_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_4_1_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_params_5_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_vintage_junit_vintage_engine_5_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jvnet_staxex_stax_ex_1_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_latencyutils_LatencyUtils_2_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mapstruct_mapstruct_1_0_0_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_3_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_junit_jupiter_3_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_generator_mybatis_generator_core_1_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_4_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_1_3_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_typehandlers_jsr310_1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_autoconfigure_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_starter_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_2_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_4_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_projectlombok_lombok_1_16_18.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_29.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_29.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_actuator_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_actuator_autoconfigure_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_devtools_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_actuator_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_validation_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_plugin_spring_plugin_core_1_2_0_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_plugin_spring_plugin_metadata_1_2_0_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_2_10_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_5_2_2_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_6_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_25.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__stax_stax_api_1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rz_canteen/canteen.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rz_common/common.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rz_officeServices/rz_officeServices.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rz_property/rz_property.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zwtotal.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/bootstrap/CanteenApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/bootstrap/CanteenApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/bootstrap/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/bootstrap/config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/AppTApplyCanteenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/AppTApplyCanteenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/CommonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StCabinetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StCabinetController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StGoodcommodityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StGoodcommodityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StMyfoodController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StMyfoodController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StOperationrestaurantController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StOperationrestaurantController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StfoodManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StfoodManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/AppTApplyCanteen.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/AppTApplyCanteen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/AppTFlowdetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/AppTFlowdetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StGoodcommodity.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StGoodcommodity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StOperationrestaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StOperationrestaurant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StnutritionalComponents.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StnutritionalComponents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/vo/AppTApplyCanteenVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/vo/AppTApplyCanteenVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/AppTApplyCanteenMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/AppTApplyCanteenMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/AppTFlowdetailMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/AppTFlowdetailMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StApplyCanteenMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StApplyCanteenMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StCommonMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StCommonMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StGoodcommodityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StGoodcommodityMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StOperationrestaurantMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StOperationrestaurantMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StfoodManagementMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StfoodManagementMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/IAppTApplyCanteenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/IAppTApplyCanteenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/ICommonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/ICommonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/StGoodcommodityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/StGoodcommodityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/StOperationrestaurantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/StOperationrestaurantService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/AppTApplyCanteenServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/AppTApplyCanteenServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/AppTFlowdetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/AppTFlowdetailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/CommonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/CommonServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StApplyCanteenServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StApplyCanteenServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StCategorydishesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StCategorydishesServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StGoodcommodityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StGoodcommodityServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StIntelligenceMealServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StIntelligenceMealServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StOperationrestaurantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StOperationrestaurantServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/utils/PageBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/utils/PageBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/AppTApplyCanteenMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/AppTApplyCanteenMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StCommonMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StCommonMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StGoodcommodityMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StGoodcommodityMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StIntelligenceMealMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StIntelligenceMealMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StOperationrestaurantMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StOperationrestaurantMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_common/src/main/java/com/util/CommonConstant.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_common/src/main/java/com/util/DateUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_common/src/main/java/com/util/ExcelDataType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_common/src/main/java/com/util/ExcelException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_common/src/main/java/com/util/ExcelUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_common/src/main/java/com/util/FileUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_common/src/main/java/com/util/Result.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_common/src/main/java/com/util/UUIDUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_officeServices/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_officeServices/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_officeServices/src/main/java/com/officeServices/service/impl/TstockServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_officeServices/src/main/java/com/officeServices/service/impl/TstockServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_officeServices/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_officeServices/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/src/main/java/com/property/service/impl/WyspaceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/src/main/java/com/property/service/impl/WyspaceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/src/main/java/com/property/utils/ExportExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/src/main/java/com/property/utils/ExportExcel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Ufrepair.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Ufrepair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wycleaningplan.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wycleaningplan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyequipment.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyequipment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyequipmentinspection.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyequipmentinspection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyequipmentstrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyequipmentstrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyinspectionplan.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyinspectionplan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wymaintainorder.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wymaintainorder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyperson.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyperson.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyrankplan.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyrankplan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyspace.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wyspace.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wytoolsconsumables.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/entity/Wytoolsconsumables.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/UfrepairMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/UfrepairMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WydutyrecordMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WydutyrecordMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyequipmentMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyequipmentMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyequipmentinspectionMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyequipmentinspectionMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyequipmentstrategyMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyequipmentstrategyMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyirrigationmanagementMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyirrigationmanagementMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WymaintainorderMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WymaintainorderMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WypersonMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WypersonMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyspaceMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyspaceMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyspacemanagementMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyspacemanagementMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WytoolsconsumablesMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WytoolsconsumablesMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyworkorganizationMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/com/property/mapper/WyworkorganizationMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/UfrepairMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/UfrepairMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyaccidentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyaccidentMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WydutyrecordMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WydutyrecordMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyequipmentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyequipmentMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyequipmentinspectionMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyequipmentinspectionMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyequipmentstrategyMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyequipmentstrategyMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyirrigationmanagementMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyirrigationmanagementMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WymaintainorderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WymaintainorderMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WypersonMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WypersonMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyspaceMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyspaceMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyspacemanagementMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyspacemanagementMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WytoolsconsumablesMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WytoolsconsumablesMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyworkorganizationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/classes/mybatis/mapper/WyworkorganizationMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/rz_property-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/rz_property-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rz_property/target/rz_property-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/rz_property/target/rz_property-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/views/canteen/foodcatemanage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/views/canteen/foodcatemanage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/views/canteen/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/views/canteen/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/views/canteen/onlinedishesmanagement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/views/canteen/onlinedishesmanagement.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/views/canteen/placeeat.vue" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/views/canteen/placeeat.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/views/canteen/productmanagement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/views/canteen/productmanagement.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/views/service/budgetsetting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/views/service/budgetsetting.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/views/service/stationery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/views/service/stationery.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/src/views/service/stockquery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/src/views/service/stockquery.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/前端代码/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/前端代码/vue.config.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="83" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StfoodManagementController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>sql_smwhere</find>
+      <find>商品类别</find>
+      <find>count</find>
+      <find>pageSize</find>
+      <find>pageNum</find>
+      <find>shelf</find>
+      <find>getStGoodcommodityPageMap</find>
+      <find>getStCategorydishesPage</find>
+      <find>StOperationrestaurant</find>
+      <find>isshelf</find>
+      <find>getStOperationList</find>
+      <find>StFlowdetail</find>
+      <find>flowStatus</find>
+      <find>UUID</find>
+      <find>3</find>
+      <find>applyRemoteDining</find>
+      <find>findDeparmentId</find>
+      <find>person</find>
+      <find>apply_restaurant_id</find>
+      <find>approvelRemoteDining</find>
+      <find>StfoodManagement.</find>
+      <find>insertFood</find>
+      <find>供应</find>
+      <find>HSSFWorkbook</find>
+      <find>poi</find>
+      <find>导出</find>
+      <find>dictionaries</find>
+      <find>StfoodManagement.d</find>
+      <find>StfoodManagement.do</find>
+      <find>selectByProperty</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/rz_common/src/main/java/com/util/ExcelException.java" />
+        <option value="$PROJECT_DIR$/rz_common/src/main/java/com/util/Result.java" />
+        <option value="$PROJECT_DIR$/rz_common/src/main/java/com/util/UUIDUtil.java" />
+        <option value="$PROJECT_DIR$/rz_common/src/main/java/com/util/ExcelUtil.java" />
+        <option value="$PROJECT_DIR$/rz_common/src/main/java/com/util/DateUtil.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/pom.xml" />
+        <option value="$PROJECT_DIR$/rz_officeServices/src/main/java/com/officeServices/bootstrap/OfficeServicesApplication.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/util/Result.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StIntelligenceMealMapper.xml" />
+        <option value="$PROJECT_DIR$/前端代码/src/router/index.js" />
+        <option value="$PROJECT_DIR$/前端代码/src/api/index.js" />
+        <option value="$PROJECT_DIR$/前端代码/src/views/service/stockquery.vue" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/StGoodcommodityService.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StMyfoodController.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/UserMapper.xml" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StGoodcommodity.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StCommonMapper.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/ICommonService.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/CommonServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/CommonController.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/AppTFlowdetailServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/AppTFlowdetailMapper.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/AppTApplyCanteen.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/AppTFlowdetail.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/AppTFlowdetailMapper.xml" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/AppTApplyCanteenMapper.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/utils/PageBean.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StGoodcommodityController.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StGoodcommodityServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StGoodcommodityMapper.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StGoodcommodityMapper.xml" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/StOperationrestaurantService.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StOperationrestaurantServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StOperationrestaurant.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StOperationrestaurantController.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StOperationrestaurantMapper.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StOperationrestaurantMapper.xml" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/AppTApplyCanteenController.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/IAppTApplyCanteenService.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/AppTApplyCanteenServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StCommonMapper.xml" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/vo/AppTApplyCanteenVO.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/AppTApplyCanteenMapper.xml" />
+        <option value="$PROJECT_DIR$/rz_officeServices/src/main/resources/application-dev.yml" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StnutritionalComponents.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StfoodManagementMapper.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StfoodManagementController.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StIntelligenceMealServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rz_property/src/main/java/com/property/utils/ExportExcel.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/bootstrap/CanteenApplication.java" />
+        <option value="$PROJECT_DIR$/rz_canteen/src/main/resources/application-dev.yml" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$PROJECT_DIR$/../../../devinstall/apache-maven-3.5.3" />
+        <option name="userSettingsFile" value="D:\devinstall\apache-maven-3.5.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="zwtotal" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="zwtotal" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-494" />
+    <option name="y" value="268" />
+    <option name="width" value="1890" />
+    <option name="height" value="960" />
+  </component>
+  <component name="ProjectId" id="26gqiNN2V80D8Nj5XJh8Lo6m1Gt" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="zwtotal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zwtotal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zwtotal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zwtotal" type="462c0819:PsiDirectoryNode" />
+              <item name="rz_canteen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zwtotal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zwtotal" type="462c0819:PsiDirectoryNode" />
+              <item name="rz_canteen" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zwtotal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zwtotal" type="462c0819:PsiDirectoryNode" />
+              <item name="rz_canteen" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zwtotal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zwtotal" type="462c0819:PsiDirectoryNode" />
+              <item name="rz_canteen" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zwtotal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zwtotal" type="462c0819:PsiDirectoryNode" />
+              <item name="rz_canteen" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zwtotal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zwtotal" type="462c0819:PsiDirectoryNode" />
+              <item name="rz_canteen" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="canteen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zwtotal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zwtotal" type="462c0819:PsiDirectoryNode" />
+              <item name="rz_canteen" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="canteen" type="462c0819:PsiDirectoryNode" />
+              <item name="bootstrap" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="MyBatisLogPluginindexNum" value="83" />
+    <property name="MyBatisLogPluginparameters" value="Parameters:" />
+    <property name="MyBatisLogPluginpreparing" value="Preparing:" />
+    <property name="MyBatisLogPluginrunning" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="editor.config.ad.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../fknr2021hd/sg-rc-platform/pom.xml" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.util" />
+      <recent name="com.canteen.entity" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\2020.11.20\zwtotal\rz_canteen\src\main\resources\mybatis\mapper" />
+      <recent name="E:\2020.11.20\zwtotal\rz_canteen\src\main\java\com\canteen" />
+      <recent name="E:\2020.11.20\zwtotal\rz_officeServices\src\main\resources\static" />
+      <recent name="E:\2020.11.20\zwtotal\rz_common\src\main\java\com\util" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.CanteenApplication">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CanteenApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="canteen" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.canteen.bootstrap.CanteenApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OfficeServicesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="rz_officeServices" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.officeServices.bootstrap.OfficeServicesApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PropertyApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="rz_property" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.property.bootstrap.PropertyApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\张盼\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="98473d4e-f987-44f5-97e8-dc2e998565a5" name="Default Changelist" comment="" />
+      <created>1605884374022</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605884374022</updated>
+      <workItem from="1605884375693" duration="2195000" />
+      <workItem from="1605887349609" duration="319000" />
+      <workItem from="1606095014893" duration="13082000" />
+      <workItem from="1606124676829" duration="2485000" />
+      <workItem from="1606130528933" duration="8040000" />
+      <workItem from="1606181305852" duration="20282000" />
+      <workItem from="1606228108495" duration="2248000" />
+      <workItem from="1606231951342" duration="4849000" />
+      <workItem from="1606237141396" duration="2597000" />
+      <workItem from="1606267480457" duration="23561000" />
+      <workItem from="1606306392630" duration="7059000" />
+      <workItem from="1606363284098" duration="7725000" />
+      <workItem from="1606377975391" duration="5215000" />
+      <workItem from="1606394919362" duration="4592000" />
+      <workItem from="1606439578515" duration="7576000" />
+      <workItem from="1606465779337" duration="372000" />
+      <workItem from="1606468225908" duration="626000" />
+      <workItem from="1606473105305" duration="2130000" />
+      <workItem from="1606491169915" duration="1401000" />
+      <workItem from="1606529009793" duration="10245000" />
+      <workItem from="1606700526427" duration="350000" />
+      <workItem from="1606700998715" duration="73000" />
+      <workItem from="1606703006868" duration="183000" />
+      <workItem from="1606704131771" duration="496000" />
+      <workItem from="1606707102516" duration="316000" />
+      <workItem from="1606745891704" duration="5348000" />
+      <workItem from="1606785822237" duration="17002000" />
+      <workItem from="1606811048195" duration="2353000" />
+      <workItem from="1606813623177" duration="1776000" />
+      <workItem from="1606827842985" duration="12192000" />
+      <workItem from="1606872766026" duration="19086000" />
+      <workItem from="1606958501532" duration="14166000" />
+      <workItem from="1607044722031" duration="9629000" />
+      <workItem from="1607091074297" duration="3759000" />
+      <workItem from="1607142970138" duration="1433000" />
+      <workItem from="1607144548501" duration="81000" />
+      <workItem from="1607144773790" duration="17592000" />
+      <workItem from="1607261846944" duration="1585000" />
+      <workItem from="1607304019699" duration="3157000" />
+      <workItem from="1607310366243" duration="6097000" />
+      <workItem from="1607330144266" duration="1123000" />
+      <workItem from="1607334168381" duration="2060000" />
+      <workItem from="1607340573156" duration="4240000" />
+      <workItem from="1607347277637" duration="9508000" />
+      <workItem from="1607390494906" duration="12343000" />
+      <workItem from="1607476936024" duration="22338000" />
+      <workItem from="1607522190900" duration="2954000" />
+      <workItem from="1607563310898" duration="7293000" />
+      <workItem from="1607580910263" duration="14486000" />
+      <workItem from="1607598921975" duration="1826000" />
+      <workItem from="1607649146762" duration="21799000" />
+      <workItem from="1607736213760" duration="12846000" />
+      <workItem from="1607824867924" duration="19162000" />
+      <workItem from="1607908584316" duration="8207000" />
+      <workItem from="1607926230184" duration="1651000" />
+      <workItem from="1607927993211" duration="106000" />
+      <workItem from="1607930177150" duration="9005000" />
+      <workItem from="1608085032817" duration="104000" />
+      <workItem from="1608085183763" duration="51000" />
+      <workItem from="1608085818777" duration="3000" />
+      <workItem from="1608086703065" duration="88000" />
+      <workItem from="1608086853628" duration="144000" />
+      <workItem from="1608088134353" duration="2119000" />
+      <workItem from="1608131397864" duration="2627000" />
+      <workItem from="1608172487745" duration="839000" />
+      <workItem from="1608202881317" duration="3379000" />
+      <workItem from="1608255393190" duration="2444000" />
+      <workItem from="1608520065359" duration="2105000" />
+      <workItem from="1608532456094" duration="3744000" />
+      <workItem from="1608544399849" duration="1065000" />
+      <workItem from="1608690102910" duration="1859000" />
+      <workItem from="1647855704160" duration="1321000" />
+      <workItem from="1647857078522" duration="289000" />
+    </task>
+    <task id="LOCAL-00001" summary="商品添加">
+      <created>1606196674800</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1606196674800</updated>
+    </task>
+    <task id="LOCAL-00002" summary="商品商上下架，查询，保存，导出">
+      <created>1606273030131</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1606273030131</updated>
+    </task>
+    <task id="LOCAL-00003" summary="商品导入，入库">
+      <created>1606370110667</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1606370110668</updated>
+    </task>
+    <task id="LOCAL-00004" summary="工具类">
+      <created>1606370863428</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606370863428</updated>
+    </task>
+    <task id="LOCAL-00005" summary="工具类1">
+      <created>1606370980702</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1606370980702</updated>
+    </task>
+    <task id="LOCAL-00006" summary="实体类">
+      <created>1606371131815</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1606371131815</updated>
+    </task>
+    <task id="LOCAL-00007" summary="pom">
+      <created>1606371878129</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1606371878129</updated>
+    </task>
+    <task id="LOCAL-00008" summary="pom">
+      <created>1606372302895</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1606372302895</updated>
+    </task>
+    <task id="LOCAL-00009" summary="类结构调整">
+      <created>1606372611861</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1606372611861</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="414791000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8709122" visible="true" weight="0.30490404" />
+      <window_info id="Structure" order="1" sideWeight="0.12908778" side_tool="true" weight="0.20202559" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Web" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" weight="0.32962137" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27060133" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.92537314" weight="0.10244989" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.93070364" weight="0.22494432" />
+      <window_info anchor="bottom" id="Spring" order="7" sideWeight="0.4989339" weight="0.32962137" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4989339" weight="0.7572383" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.07462686" side_tool="true" visible="true" weight="0.10244989" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.92963755" weight="0.18708241" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" sideWeight="0.4989339" weight="0.32962137" />
+      <window_info anchor="bottom" id="Database Changes" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="14" sideWeight="0.9248401" weight="0.55679286" />
+      <window_info anchor="bottom" id="MyBatis Log" order="15" sideWeight="0.891258" weight="0.19933185" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" sideWeight="0.4987745" weight="0.16684435" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" visible="true" weight="0.015991472" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" weight="0.32995737" />
+      <window_info anchor="right" id="Coverage" order="10" sideWeight="0.5012255" side_tool="true" weight="0.20895523" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="商品添加" />
+    <MESSAGE value="商品商上下架，查询，保存，导出" />
+    <MESSAGE value="商品导入，入库" />
+    <MESSAGE value="工具类" />
+    <MESSAGE value="工具类1" />
+    <MESSAGE value="实体类" />
+    <MESSAGE value="pom" />
+    <MESSAGE value="类结构调整" />
+    <option name="LAST_COMMIT_MESSAGE" value="类结构调整" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_officeServices/src/main/java/com/officeServices/service/impl/TstockServiceImpl.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StGoodcommodityController.java</url>
+          <line>156</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StGoodcommodityServiceImpl.java</url>
+          <line>255</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/AppTApplyCanteenController.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/AppTApplyCanteenServiceImpl.java</url>
+          <line>279</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/AppTApplyCanteenController.java</url>
+          <line>125</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/AppTApplyCanteenServiceImpl.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StfoodManagementServiceImpl.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StMyfoodController.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StCategorydishesController.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/zwtotal$OfficeServicesApplication.ic" NAME="OfficeServicesApplication Coverage Results" MODIFIED="1606183462078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/前端代码/src/views/canteen/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2040" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/前端代码/src/views/canteen/productmanagement.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="34" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/前端代码/src/views/canteen/placeeat.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2640" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/前端代码/src/views/canteen/onlinedishesmanagement.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-660" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StOperationrestaurantController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="36" column="40" selection-start-line="36" selection-start-column="40" selection-end-line="36" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/utils/PageBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1008#1009#0" expanded="true" />
+            <element signature="e#1052#1053#0" expanded="true" />
+            <element signature="e#1320#1321#0" expanded="true" />
+            <element signature="e#1358#1359#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/ICommonService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/CommonServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="103" column="30" selection-start-line="103" selection-start-column="30" selection-end-line="103" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StCommonMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StCommonMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="156" column="14" lean-forward="true" selection-start-line="156" selection-start-column="14" selection-end-line="156" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/vo/RemoteDiningListVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_officeServices/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2320">
+          <caret line="116" column="37" selection-start-line="116" selection-start-column="37" selection-end-line="116" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/vo/AppTApplyCanteenVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2040">
+          <caret line="102" column="36" selection-start-line="102" selection-start-column="19" selection-end-line="102" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/AppTApplyCanteenMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1840">
+          <caret line="100" column="25" selection-start-line="100" selection-start-column="25" selection-end-line="100" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/AppTFlowdetail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="65" column="7" lean-forward="true" selection-start-line="65" selection-start-column="7" selection-end-line="65" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/IAppTApplyCanteenService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/AppTFlowdetailMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/AppTApplyCanteenMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1580">
+          <caret line="79" column="17" selection-start-line="79" selection-start-column="17" selection-end-line="79" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/AppTApplyCanteenServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="607">
+          <caret line="237" column="13" selection-start-line="237" selection-start-column="13" selection-end-line="237" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_officeServices/src/main/resources/application-test.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_officeServices/src/main/resources/application-dev.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="48" column="32" lean-forward="true" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_officeServices/src/main/java/com/officeServices/bootstrap/OfficeServicesApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1233#1234#0" expanded="true" />
+            <element signature="e#1309#1310#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/bo/FoodManagement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/entity/StnutritionalComponents.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-760">
+          <caret line="9" column="36" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StfoodManagementMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1080">
+          <caret line="54" column="22" lean-forward="true" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/StfoodManagementService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StfoodManagementServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="57" column="65" selection-start-line="57" selection-start-column="65" selection-end-line="57" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StfoodManagementMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="20" column="14" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_property/src/main/java/com/property/service/WySpacemanagementListService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="13" column="32" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/AppTApplyCanteenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="38" column="14" lean-forward="true" selection-start-line="38" selection-start-column="14" selection-end-line="38" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StFoodtraceabilityController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StIntelligenceMealServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="362" column="16" lean-forward="true" selection-start-line="362" selection-start-column="16" selection-end-line="362" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/utils/ExportExcelPlus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="42" column="20" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StGoodcommodityController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="167" column="85" selection-start-line="167" selection-start-column="85" selection-end-line="167" selection-end-column="85" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/StGoodcommodityService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="23" column="7" lean-forward="true" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StGoodcommodityServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="84" column="69" selection-start-line="84" selection-start-column="69" selection-end-line="84" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/mapper/StGoodcommodityMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="21" column="48" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/resources/mybatis/mapper/StGoodcommodityMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-592">
+          <caret line="70" column="4" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/utils/ExportExcel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_property/src/main/java/com/property/utils/ExportExcel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-520">
+          <caret line="16" column="21" lean-forward="true" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/impl/StSupplierServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="104" column="32" selection-start-line="104" selection-start-column="18" selection-end-line="104" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/service/StSupplierService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StSupplierController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-502">
+          <caret line="47" column="32" lean-forward="true" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StCabinetController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StCategorydishesController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/CommonController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="44" column="38" lean-forward="true" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2287#2288#0" expanded="true" />
+            <element signature="e#2373#2374#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StAccurateChoosingMealsController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StMyfoodController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="958">
+          <caret line="92" column="39" lean-forward="true" selection-start-line="92" selection-start-column="39" selection-end-line="92" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/resources/application-dev.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/bootstrap/CanteenApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="23" column="3" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1405#1406#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rz_canteen/src/main/java/com/canteen/controller/StfoodManagementController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>canteen</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

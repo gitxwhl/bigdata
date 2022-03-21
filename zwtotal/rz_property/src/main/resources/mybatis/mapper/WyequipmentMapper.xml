@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.mapper.WyequipmentMapper">
+    <resultMap id="BaseResultMap" type="com.property.entity.Wyequipment">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+        <result column="parameter" jdbcType="VARCHAR" property="parameter"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="manufacturer" jdbcType="VARCHAR" property="manufacturer"/>
+        <result column="production" jdbcType="DATE" property="production"/>
+        <result column="period" jdbcType="VARCHAR" property="period"/>
+        <result column="servicelife" jdbcType="VARCHAR" property="servicelife"/>
+    </resultMap>
+    <!--    获取总数量-->
+    <select id="getTotalSize" resultType="java.lang.Integer">
+        select count(id) from wy_equipment
+        where
+        del_flag = '0'
+            <if test="company != null and company != ''">
+                AND company = #{company}
+            </if>
+            <if test="name != null and name != ''">
+                AND name like "%"#{name}"%"
+                or code = #{name}
+            </if>
+
+    </select>
+    <!--获取设备台账信息-->
+    <select id="selectEquipment" resultType="java.util.Map">
+        select * from wy_equipment
+        where
+        del_flag = '0'
+        <if test="company != null and company != ''">
+            AND company = #{company}
+        </if>
+        <if test="name != null and name != ''">
+            AND name like "%"#{name}"%"
+            or code = #{name}
+        </if>
+    </select>
+
+    <!--    添加设备台账信息-->
+    <insert id="insertEquipment">
+        insert into wy_equipment (code,name,model,parameter,status,location,manufacturer,production,period,servicelife,company)
+        values (#{code},#{name},#{model},#{parameter},#{status},#{location},#{manufacturer},#{production},#{period},#{servicelife},#{company})
+    </insert>
+<!--<查询修改设备信息：存在安全风险方法隐藏-->
+<!--    <select id="selectEquipmentById" resultType="java.util.Map">-->
+<!--        select * from wy_equipment-->
+<!--        where id = #{id}-->
+<!--    </select>-->
+    <!--修改设备-->
+    <update id="updateEquipment" parameterType="com.property.entity.Wyequipment">
+        UPDATE wy_equipment
+        SET name = #{name},
+            code = #{code},
+            model = #{model},
+            parameter = #{parameter},
+            status = #{status},
+            location = #{location},
+            manufacturer = #{manufacturer},
+            production = #{production},
+            period = #{period},
+            servicelife = #{servicelife},
+            company = #{company}
+        WHERE
+	        id = #{id}
+    </update>
+
+    <!--    删除设备台账-->
+    <update id="deleteEquipment">
+        update wy_equipment set del_flag = 1
+        where id = #{id}
+    </update>
+    <!--查询历史维护信息基本信息-->
+    <select id="getWyEquipmentCnt" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        ( SELECT * FROM wy_equipment) a
+        LEFT JOIN ( SELECT * FROM wy_maintainorder) b ON a.id = b.workid
+        LEFT JOIN ( SELECT * FROM wy_equipmentstrategy) c ON b.id = c.policyid
+        WHERE
+        1=1
+        <if test="name != null and name != ''">
+            <bind name="Name" value="'%'+ name + '%'"/>
+            AND a.name like #{Name}
+        </if>
+        <if test="code != null and code != ''">
+            <bind name="Code" value="'%'+ code + '%'"/>
+            AND a.code like #{Code}
+        </if>
+        <if test="department != null and department != ''">
+            <bind name="Department" value="'%'+ department + '%'"/>
+            AND a.department in #{Department}
+        </if>
+    </select>
+    <!--查询列表数据-->
+    <select id="getWyEquipmentList" resultType="java.util.LinkedHashMap">
+        SELECT
+        a.id,
+        a.name,
+        a.code,
+        a.model,
+        a.parameter,
+        a.status,
+        a.location,
+        a.manufacturer,
+        a.production,
+        a.period,
+        a.servicelife,
+        a.period,
+        a.company,
+        a.del_flag
+        FROM
+        ( SELECT * FROM wy_equipment) a
+        WHERE
+        1=1
+        <if test="name != null and name != ''">
+            <bind name="Name" value=" name "/>
+            AND a.name like #{Name} OR a.code like #{Name} OR  a.Department like #{Name}
+        </if>
+        AND del_flag = 0
+    </select>
+    <!--查询列表数量-->
+    <select id="getWyEquipmentCnt1" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        ( SELECT * FROM  wy_equipment) a
+        LEFT JOIN ( SELECT * FROM  wy_maintainorder) b ON a.id = b.workid
+        LEFT JOIN ( SELECT * FROM  wy_equipmentstrategy) c ON b.id = c.policyid
+        WHERE
+        1=1
+        <if test="id != null and id != ''">
+            <bind name="Id" value=" id "/>
+            AND a.id = #{Id}
+        </if>
+        AND del_flag = 0
+    </select>
+    <!--查询列表数据-->
+    <select id="getWyEquipmentList1" resultType="java.util.LinkedHashMap">
+        SELECT
+        b.id,
+        b.workno,
+        d.paravalue workstate,
+        b.personnel,
+        b.receiving,
+        b.defectidentification,
+        b.completiontime,
+        b.operationrecord,
+        b.workid,
+        c.policyname,
+        c.policy
+        FROM
+        (SELECT * FROM wy_equipment) a
+        LEFT JOIN (	SELECT * FROM wy_maintainorder) b ON a.id = b.workid
+        LEFT JOIN (	SELECT * FROM wy_equipmentstrategy) c ON b.id = c.policyid
+        LEFT JOIN (select * from sys_parameter where paraname = 'workstate') d on b.workstate = d.parakey
+        WHERE
+        1=1
+        <if test="id != null and id != ''">
+            <bind name="Id" value="+id "/>
+            AND a.id = #{Id}
+        </if>
+        limit #{startIndex},#{pageSize}
+    </select>
+
+<!--    生成二维码:存在安全风险方法隐藏-->
+<!--    <select id="getCode" resultType="java.util.Map">-->
+<!--        select * from-->
+<!--        wy_equipment-->
+<!--        where id = #{id}-->
+<!--    </select>-->
+</mapper>

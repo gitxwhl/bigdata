@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StMydishesMapper">
+    <resultMap id="StMydishesResultMap" type="com.canteen.entity.StMydishes">
+    <id column="id"  property="id" />
+    <result property="name" column="name"/>
+    <result property="category" column="category"/>
+    <result property="referenceprice" column="referenceprice"/>
+    <result property="weight" column="weight"/>
+    <result property="remarks" column="remarks"/>
+    <result property="restaurant" column="restaurant"/>
+    <result property="meals" column="meals"/>
+    <result property="dishescategory" column="dishescategory"/>
+    <result property="energy" column="energy"/>
+    <result property="foodpictures" column="foodpictures"/>
+    <result property="score" column="score"/>
+    <result property="taste" column="taste"/>
+    <result property="online" column="online"/>
+    <result property="dishcode" column="dishcode"/>
+    <result property="classtype" column="classtype"/>
+</resultMap>
+
+    <resultMap id="OnlineSupermarketMap" type="com.canteen.entity.bo.OnlineSupermarketBo">
+        <id column="id"  property="id" />
+        <result property="name" column="name"/>
+        <result property="category" column="category"/>
+        <result property="referenceprice" column="referenceprice"/>
+        <result property="weight" column="weight"/>
+        <result property="remarks" column="remarks"/>
+        <result property="restaurant" column="restaurant"/>
+        <result property="meals" column="meals"/>
+        <result property="dishescategory" column="dishescategory"/>
+        <result property="energy" column="energy"/>
+        <result property="foodpictures" column="foodpictures"/>
+        <result property="score" column="score"/>
+        <result property="taste" column="taste"/>
+        <result property="online" column="online"/>
+        <result property="dishcode" column="dishcode"/>
+        <result property="classtype" column="classtype"/>
+        <result property="foodNumber" column="foodNumber"/>
+        <result property="categoryNames" column="categoryNames"/>
+    </resultMap>
+
+
+    <!--查询菜品-->
+    <select id="getOnlineMydishesPage" resultMap="OnlineSupermarketMap">
+
+        SELECTb
+            .id,
+            b.name,
+            b.dishcode,
+            b.category,
+			b.remarks,
+            b.referenceprice,
+            b.foodpictures,
+			b.weight,
+			IFNULL(f.ava_stock  ,0) as foodNumber,
+			group_concat(c.varietiesname) as categoryNames
+        FROM
+             st_mydishes  b
+            LEFT  JOIN  st_intelligencemeals  a  ON a.varietydishes = b.id
+            LEFT JOIN st_categorydishes c  ON find_in_set(c.id, b.category)
+            LEFT JOIN st_operationrestaurant e ON b.restaurant = e.RestaurantCode
+			left join  st_mydishstock  f on  b.id = f.dis_id
+        WHERE
+            ( a.del_flag = '0' or a.del_flag is null )
+        <if test="name != null and name != ''">
+            and (  b.name like CONCAT('%',#{name},'%')
+            or c.varietiesname like CONCAT('%',#{name},'%')
+            or b.taste like CONCAT('%',#{name},'%'))
+        </if>
+        <if test="id != null and id != ''">
+            and   e.id = #{id}
+        </if>
+        <if test="dishescategory != null and dishescategory != ''">
+            and   b.dishescategory = #{dishescategory}
+        </if>
+
+        GROUP BY  b.id
+        limit #{start},#{pageSize}
+
+    </select>
+
+    <select id="getOnlineMydishesCount"  resultType="java.lang.Integer">
+     select count(1) from (
+        SELECT
+          COUNT(b.id)
+        FROM
+        st_mydishes  b
+        LEFT  JOIN  st_intelligencemeals  a  ON a.varietydishes = b.id
+        LEFT JOIN st_categorydishes c  ON find_in_set(c.id, b.category)
+        LEFT JOIN st_operationrestaurant e ON b.restaurant = e.RestaurantCode
+        left join  st_mydishstock  f on  b.id = f.dis_id
+        WHERE
+        ( a.del_flag = '0' or a.del_flag is null )
+        <if test="name != null and name != ''">
+            and (  b.name like CONCAT('%',#{name},'%')
+            or c.varietiesname like CONCAT('%',#{name},'%')
+            or b.taste like CONCAT('%',#{name},'%'))
+        </if>
+        <if test="id != null and id != ''">
+            and   e.id = #{id}
+        </if>
+        <if test="dishescategory != null and dishescategory != ''">
+            and   b.dishescategory = #{dishescategory}
+        </if>
+        GROUP BY  b.id ) as  countst
+
+    </select>
+</mapper>

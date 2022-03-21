@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StOnlinemanagementMapper">
+    <!--线上菜品管理列表-->
+    <select id="getOnlineList" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.id,
+            c.RestaurantName restaurant,
+            a.timestamp,
+            d.paravalue mealType,
+            b.id dishcode,
+            b.name,
+            e.paravalue dishescategory,
+            b.taste,
+            b.referenceprice,
+            b.weight,
+            b.energy,
+            f.id onlineId,
+            f.isreserve,
+            f.isdistribution
+        FROM
+            st_intelligencemeals a
+            LEFT JOIN st_mydishes b ON a.varietydishes = b.id
+            LEFT JOIN st_operationrestaurant c ON b.restaurant = c.RestaurantCode
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'mealtype') d ON b.meals = d.parakey
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'dishescategory') e ON b.dishescategory = e.parakey
+            LEFT JOIN st_onlinemanagement f ON f.id = b.online
+        WHERE
+            (a.del_flag is null OR a.del_flag != '1')
+            <if test="date != null and date != ''">
+                AND a.timestamp = STR_TO_DATE(#{date},'%Y-%m-%d')
+            </if>
+            <if test="mealType != null and mealType != ''">
+                AND b.meals = #{mealType}
+            </if>
+            <if test="restaurant != null and restaurant != ''">
+                AND c.id in (${restaurant})
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--线上菜品管理数量-->
+    <select id="getOnlineCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            st_intelligencemeals a
+            LEFT JOIN st_mydishes b ON a.varietydishes = b.id
+            LEFT JOIN st_operationrestaurant c ON b.restaurant = c.RestaurantCode
+        WHERE
+            (a.del_flag is null OR a.del_flag != '1')
+            <if test="date != null and date != ''">
+                AND a.timestamp = STR_TO_DATE(#{date},'%Y-%m-%d')
+            </if>
+            <if test="mealType != null and mealType != ''">
+                AND b.meals = #{mealType}
+            </if>
+            <if test="restaurant != null and restaurant != ''">
+                AND c.id in (${restaurant})
+            </if>
+    </select>
+
+    <!--是否支持线上预订-->
+    <update id="updateReserve" parameterType="StOnlinemanagement">
+        UPDATE st_onlinemanagement SET isreserve = #{isReserve} WHERE id = #{id}
+    </update>
+
+    <!--是否支持配送-->
+    <update id="updateDistribution" parameterType="StOnlinemanagement">
+        UPDATE st_onlinemanagement SET isdistribution = #{isDistribution} WHERE id = #{id}
+    </update>
+
+</mapper>

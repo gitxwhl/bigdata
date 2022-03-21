@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.officeServices.mapper.DepartmentMapper">
+
+    <!--查询部门信息-->
+    <select id="getDepartment" resultType="Department">
+        SELECT id,parent_id,name FROM department
+    </select>
+
+    <!--通过id查询父级-->
+    <select id="getParentId" resultType="java.lang.String">
+        SELECT parent_id FROM department WHERE id = #{id}
+    </select>
+
+    <!--查询下级部门id-->
+    <select id="getLowerId" resultType="java.lang.String">
+        SELECT id FROM department WHERE parent_id = #{id}
+    </select>
+
+    <!--查询部门等级-->
+    <select id="getLevel" resultType="java.lang.String">
+        SELECT level FROM department WHERE id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,152 @@
+.el-card__body {
+    padding: 0px;
+}
+body{
+    padding: 0;
+    margin: 0;
+}
+.el-popper{
+    margin-top:0!important;
+    border:1px solid rgb(52,57,82);
+}
+.el-popper li{
+   /*background-color:black;*/
+   /*color: black;*/
+   /*border: none;*/
+}
+.el-popper ul{
+    padding:0;
+ }
+.el-popper li:hover{
+    /*background:rgb(6,72,138);*/
+ }
+ .el-select-dropdown__list{
+     overflow: hidden;
+ }
+ .el-select-dropdown__item{
+     font-size: 14px;
+ }
+ .el-select-dropdown__item.selected{
+     background: black;
+     color: white;
+ }
+ .selectoption .el-select-dropdown__item{
+    background: white!important;
+    color: black!important;
+}
+ .el-select-dropdown__item.hover, .el-select-dropdown__item:hover{
+     background-color: black;
+ }
+ .el-popper[x-placement^=bottom] .popper__arrow {
+     display:none;
+ }
+ .el-input__inner:focus{
+     border:1px solid white!important;
+ }
+ .el-textarea__inner:focus{
+    border:1px solid white!important;
+}
+.el-pagination{
+    height: 40px!important;
+    padding: 2px 5px;
+}
+.el-pagination__total{
+    margin-top:2px;
+    font-size: 14px!important;
+    vertical-align:middle!important;
+
+}
+.el-input__inner{
+    background: transparent;
+    /*color: white;*/
+    /*width: 150px;*/
+}
+.el-input__inner,.el-input__icon{
+    font-size: 13px!important;
+}
+.el-icon-arrow-left,.el-icon-arrow-right,.number,.el-pagination__jump{
+    font-size: 12px!important;
+}
+.el-pagination__total,.el-pagination__jump{
+    color:white;
+}
+.is-in-pagination .el-input__inner{
+    height: 28px!important;
+}
+.has-gutter tr th:nth-child(1) .cell{
+    padding-left:10px!important;
+}
+.el-select-dropdown__empty{
+    background-color:black;
+    color: white;
+    font-size: 14px!important;
+}
+.selectoption .el-select-dropdown__empty{
+    background-color:white;
+    color: black;
+    font-size: 14px!important;
+}
+.el-table{
+    height:700px!important;
+}
+.el-table::before{
+    height:1px!important;
+}
+.el-table td .cell{
+    font-size: 13px;
+    height: 36px;
+    line-height:36px!important;
+    padding: 0px;
+    font-weight: 400;
+}
+.el-table th .cell{
+    font-size: 13px;
+    line-height:36px!important;
+    padding: 0px;
+    font-weight: 400;
+}
+.el-table tr{
+    height: 38px!important;
+}
+.el-table tr .cell{
+    padding: 0px;
+}
+.el-table__row{
+    height: 38px!important;
+}
+.el-checkbox__inner{
+    width: 14px;
+    height:14px;
+    border-radius: 2px;
+}
+.el-tree-node__content{
+    height: 26px;
+}
+.el-tree-node__expand-icon{
+    font-size: 13px;
+}
+.el-form-item__content{
+    line-height: 0px!important;
+}
+/* .is-current{
+    color:red;
+} */
+tbody .el-table-column--selection{
+    padding-left:10px!important;
+    height: 36px!important;
+    line-height: 36px!important;
+}
+.clearfix::after {
+	content:'';
+	display:block;
+	clear:both;
+	height:0;
+	visibility:hidden;
+}
+.clearfix {
+	*zoom:1;
+}
+.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+    /* background-color: white!important; */
+    color: skyblue;
+}

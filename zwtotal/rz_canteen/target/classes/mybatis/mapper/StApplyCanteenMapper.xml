@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StApplyCanteenMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.canteen.entity.bo.StApplyCanteen">
+		<id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="user_id" property="userId"  jdbcType="VARCHAR"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+		<result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+		<result column="dept_id" property="deptId" jdbcType="VARCHAR"/>
+		<result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+		<result column="apply_org_id" property="applyOrgId" jdbcType="VARCHAR"/>
+		<result column="apply_org_name" property="applyOrgName" jdbcType="VARCHAR"/>
+		<result column="reception_person_id" property="receptionPersonId" jdbcType="VARCHAR"/>
+		<result column="reception_person_name" property="receptionPersonName" jdbcType="VARCHAR"/>
+		<result column="reception_person_phone" property="receptionPersonPhone" jdbcType="VARCHAR"/>
+		<result column="start_time" property="startTime"   jdbcType="VARCHAR"/>
+		<result column="end_time" property="endTime"   jdbcType="VARCHAR"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="c_time" property="cTime"   jdbcType="VARCHAR"/>
+		<result column="staus" property="staus" jdbcType="VARCHAR"/>
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<select id="selectById" parameterType="java.lang.String" resultType="com.canteen.entity.bo.StApplyCanteen" >
+		select id,user_id,user_name,org_id,org_name,dept_id,dept_name,apply_org_id,apply_org_name,reception_person_id,
+		reception_person_name,reception_person_id,reception_person_name,start_time,end_time,remark,c_time,staus
+		from app_t_apply_canteen
+		where id=#{id}
+	</select>
+	<insert id="insert" parameterType="com.canteen.entity.bo.StApplyCanteen">
+		INSERT into
+		app_t_apply_canteen (id,user_id,user_name,org_id,org_name,dept_id,dept_name,apply_org_id,apply_org_name,reception_person_id,
+		reception_person_name,start_time,end_time,remark,c_time,staus,user_phone,reception_person_phone)
+		values (#{id},#{userId},#{userName},#{orgId},#{orgName},#{deptId},#{deptName},#{applyOrgId},#{applyOrgName},#{receptionPersonId},
+		#{receptionPersonName},#{startTime},#{endTime},#{remark},#{cTime},#{staus},#{userPhone},#{receptionPersonPhone})
+	</insert>
+
+	<update id="approvelRemoteDining">
+		UPDATE app_t_flowdetail SET AuditStatus= #{status}, AuditTime=#{now}
+		<if test="remark!=null">
+			,AuditRemark= #{remark}
+		</if>
+		<if test="remark!=null">
+			,reason= #{reason}
+		</if>
+		WHERE ID=#{flowId} AND AuditUserID=#{userId}
+	</update>
+
+	<select id="createRepairId"  resultType="java.util.Map">
+     select nextval('seq_test') as SN
+    </select>
+	<select id="getApprovelPerson" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT USER_ID,USER_NAME,DEPT_ID,DEPT_NAME,PAR_DEPT,PAR_DEPT_ID FROM t_user WHERE roleid like '%yd_admin%' and PAR_DEPT_ID = (SELECT PAR_DEPT_ID FROM t_user where USER_ID= #{userId})
+    </select>
+	<select id="getRemoteDiningList" resultType="java.util.Map">
+		SELECT a.id,a.user_name,DATE_FORMAT(a.c_time,'%Y-%m-%d %H:%i:%s') c_time,
+		a.reception_person_name,a.apply_org_name,	a.staus,	a.org_id,a.org_name,c.DEPT_ID,c.DEPT_NAME,
+		DATE_FORMAT(a.start_time,'%Y-%m-%d %H:%i:%s') start_time, DATE_FORMAT(a.end_time,'%Y-%m-%d %H:%i:%s') end_time,
+		b.Title,b.ApproStatus FROM app_t_apply_canteen a LEFT JOIN
+		app_t_flow b ON a.id = b.FlowNo
+		LEFT JOIN t_user c on a.user_id = c.USER_ID
+		WHERE a.user_id =#{remoteDiningListVO.userId} AND b.ApproStatus=
+		#{remoteDiningListVO.status}
+		<if test="remoteDiningListVO.flowId!=null">
+			AND a.id = #{remoteDiningListVO.flowId}
+		</if>
+		order by a.c_time desc
+	</select>
+
+	<select id="getRemoteDiningListCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM app_t_apply_canteen  FROM app_t_apply_canteen a LEFT JOIN
+		app_t_flow b ON a.id = b.FlowNo
+		LEFT JOIN t_user c on a.user_id = c.USER_ID
+		WHERE a.user_id =#{remoteDiningListVO.userId} AND b.ApproStatus=
+		#{remoteDiningListVO.status}
+		<if test="remoteDiningListVO.flowId!=null">
+			AND a.id = #{remoteDiningListVO.flowId}
+		</if>
+
+
+	</select>
+
+
+
+
+	<select id="getRemoteDiningApprovelList" resultType="java.util.Map">
+  SELECT
+	c.flowstatus,
+	c.ID,
+	c.FlowNo,
+	c.AuditUserID,
+	c.AuditUserName,
+	c.AuditStatus,
+	b.id AS id2,
+	b.user_name,
+	b.user_id,
+	b.org_id,
+	b.org_name,
+	b.dept_id,
+	b.dept_name,
+	b.staus,
+	DATE_FORMAT( b.c_time, '%Y-%m-%d %H:%i:%s' ) c_time,
+	b.reception_person_name,
+	b.apply_org_name,
+	DATE_FORMAT( b.start_time, '%Y-%m-%d %H:%i:%s' ) start_time,
+	DATE_FORMAT( b.end_time, '%Y-%m-%d %H:%i:%s' ) end_time
+FROM
+	(
+	SELECT
+		a.flowstatus,
+		a.ID,
+		a.FlowNo,
+		a.AuditUserID,
+		a.AuditUserName,
+		a.AuditStatus
+	FROM
+		app_t_flowdetail a
+	WHERE
+		a.AuditUserID = #{remoteDiningListVO.userId}
+		AND a.AuditStatus =  #{remoteDiningListVO.status}
+	AND concat( a.flowstatus, a.FlowNo ) IN ( SELECT concat( staus, id ) FROM app_t_apply_canteen )) c
+	LEFT JOIN app_t_apply_canteen b ON c.FlowNo = b.id
+	ORDER BY c_time desc
+    </select>
+
+
+
+
+
+
+
+
+	<select id="getCompanyList" resultType="java.util.Map">
+        SELECT ORGID,ORGNAME,PID FROM t_org WHERE PID='0000000000000000'
+    </select>
+
+
+	<select id="getRestaurantList" resultType="java.util.Map" parameterType="java.util.HashMap">
+        SELECT id,name,org_id,org_name FROM app_t_restaurant WHERE org_id=#{org_id}
+    </select>
+
+	<select id="getNextDeptInfo" resultType="java.util.Map">
+        SELECT DISTINCT A.ORGID,A.ORGNAME,A.REMARK,A.PID,IF(B.ORGID IS NULL,0,1) HASCHILD FROM t_org A LEFT JOIN
+        (SELECT ORGID,ORGNAME,REMARK,PID,DEL_FLAG FROM t_org WHERE DEL_FLAG='0') B ON A.ORGID=B.PID
+        WHERE A.PID =#{deptId} AND A.DEL_FLAG='0'
+    </select>
+	<select id="getPersonList" resultType="java.util.Map">
+        SELECT USER_ID,LOGIN_CODE,USER_NAME,DEPT_ID,DEPT_NAME,PAR_DEPT,PAR_DEPT_ID,PHONE,OFFICE_TEL,EMAIL,SEX FROM t_user WHERE DEPT_ID= #{deptId}
+    </select>
+	<select id="getRemoteDiningDetail" resultType="java.util.Map">
+    SELECT 	a.id,
+	a.user_id,
+	a.user_name,
+	a.user_phone,
+	a.org_id,
+	a.org_name,
+	a.dept_id,
+	a.dept_name,
+	a.apply_org_name,
+	a.reception_person_id,
+	a.reception_person_name,
+	a.reception_person_phone,
+	a.apply_restaurant_id,
+	a.apply_restaurant_name,
+	DATE_FORMAT(a.start_time,'%Y-%m-%d %H:%i:%s') start_time,
+	DATE_FORMAT(a.end_time,'%Y-%m-%d %H:%i:%s') end_time,
+	DATE_FORMAT( a.c_time, '%Y-%m-%d %H:%i:%s' ) c_time ,
+	a.remark,
+	a.staus,
+	b.Title,
+	b.BusType,
+	b.ApproStatus,
+	c.ID flowdetailid
+         FROM app_t_apply_canteen a LEFT JOIN app_t_flow b ON a.id = b.FlowNo
+				 LEFT JOIN app_t_flowdetail c ON concat(a.staus,a.id) =concat(c.flowstatus,c.FlowNo)
+         where a.id=#{flowId} 	ORDER BY c_time
+    </select>
+	<select id="getFlowDetail" resultType="java.util.Map">
+     SELECT a.ID,a.FlowNo,a.AuditUserID,a.AuditUserName,a.reason,b.DEPT_ID,b.DEPT_NAME,b.PAR_DEPT, DATE_FORMAT( a.AuditTime, '%Y-%m-%d %H:%i:%s' ) AuditTime,a.AuditStatus,a.flowstatus
+       FROM app_t_flowdetail a LEFT JOIN t_user b on a.AuditUserID= b.USER_ID where a.FlowNo =#{flowId} order by flowstatus
+
+    </select>
+	<select id="getRemoteDiningApprovelTGList" resultType="java.util.Map">
+         SELECT
+	c.flowstatus,
+	c.ID,
+	c.FlowNo,
+	c.AuditUserID,
+	c.AuditUserName,
+	c.AuditStatus,
+	b.id AS id2,
+	b.user_name,
+	b.user_id,
+	b.org_id,
+	b.org_name,
+	b.dept_id,
+	b.dept_name,
+	b.staus,
+	DATE_FORMAT( b.c_time, '%Y-%m-%d %H:%i:%s' ) c_time,
+	b.reception_person_name,
+	b.apply_org_name,
+	DATE_FORMAT( b.start_time, '%Y-%m-%d %H:%i:%s' ) start_time,
+	DATE_FORMAT( b.end_time, '%Y-%m-%d %H:%i:%s' ) end_time
+FROM
+	(
+	SELECT
+		a.flowstatus,
+		a.ID,
+		a.FlowNo,
+		a.AuditUserID,
+		a.AuditUserName,
+		a.AuditStatus
+	FROM
+		app_t_flowdetail a
+	WHERE
+		a.AuditUserID = #{remoteDiningListVO.userId}
+		AND a.AuditStatus =  #{remoteDiningListVO.status}
+	) c
+	LEFT JOIN app_t_apply_canteen b ON c.FlowNo = b.id 	ORDER BY c_time desc
+    </select>
+
+	<select id="getRemoteDiningApprovelCount" resultType="java.lang.Integer">
+
+   SELECT
+	COUNT(*)
+FROM
+	(
+	SELECT
+		a.flowstatus,
+		a.ID,
+		a.FlowNo,
+		a.AuditUserID,
+		a.AuditUserName,
+		a.AuditStatus
+	FROM
+		app_t_flowdetail a
+	WHERE
+		a.AuditUserID = #{remoteDiningListVO.userId}
+		AND a.AuditStatus =  #{remoteDiningListVO.status}
+	) c
+	LEFT JOIN app_t_apply_canteen b ON c.FlowNo = b.id 	ORDER BY c_time desc
+	</select>
+
+
+
+
+
+
+	<select id="getApplyResList" resultType="java.util.Map">
+
+		select  id,name,org_id,org_name from app_t_restaurant
+	</select>
+
+
+
+
+
+
+	<update id="updateStatus" parameterType="java.lang.String">
+		update app_t_apply_canteen set staus=#{staus} where id =#{id}
+	</update>
+</mapper>

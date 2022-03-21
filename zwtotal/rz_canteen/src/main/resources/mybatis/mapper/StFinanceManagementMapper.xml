@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StFinanceManagementMapper">
+
+    <!--就餐结算明细列表-->
+    <select id="detailList" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.scheduled,
+            d.paravalue mealType,
+            e.no,
+            e.name,
+            c.name dishname,
+            c.category,
+            c.taste,
+            b.dishNum
+        FROM
+            st_ordermanagement a
+            LEFT JOIN st_order_dishes b ON a.ordernumber = b.orderNo
+            LEFT JOIN st_mydishes c ON b.dishId = c.id
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'mealtype') d ON a.dictionary = d.parakey
+            LEFT JOIN sys_user e ON a.reservepersonnel = e.id
+            LEFT JOIN st_operationrestaurant f ON a.restaurant = f.RestaurantCode
+        WHERE
+            1 = 1
+            <if test="restaurant != null and restaurant != ''">
+                AND	f.id in (${restaurant})
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND STR_TO_DATE(a.scheduled,'%Y-%m-%d') BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d')
+                and STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--就餐结算明细列表数量-->
+    <select id="detailListCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            st_ordermanagement a
+            LEFT JOIN st_order_dishes b ON a.ordernumber = b.orderNo
+            LEFT JOIN st_mydishes c ON b.dishId = c.id
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'mealtype') d ON a.dictionary = d.parakey
+            LEFT JOIN sys_user e ON a.reservepersonnel = e.id
+            LEFT JOIN st_operationrestaurant f ON a.restaurant = f.RestaurantCode
+        WHERE
+            1 = 1
+            <if test="restaurant != null and restaurant != ''">
+                AND	f.id in (${restaurant})
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND STR_TO_DATE(a.scheduled,'%Y-%m-%d') BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d')
+                AND STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+    </select>
+
+    <!--线上销量top5-->
+    <select id="onlineTopFive" resultType="java.util.LinkedHashMap">
+        SELECT
+            c.NAME,
+            SUM( b.dishNum ) num,
+            SUM( b.dishNum ) * c.referenceprice price
+        FROM
+            st_ordermanagement a
+            LEFT JOIN st_order_dishes b ON a.ordernumber = b.orderNo
+            LEFT JOIN st_mydishes c ON b.dishId = c.id
+            LEFT JOIN st_operationrestaurant d ON a.restaurant = d.RestaurantCode
+        WHERE
+            c.dishescategory = #{dishesCategory}
+            <if test="restaurant != null and restaurant != ''">
+                AND	d.id in (${restaurant})
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND STR_TO_DATE(a.scheduled,'%Y-%m-%d') BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d')
+                AND STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+        GROUP BY
+            c.NAME
+        ORDER BY
+            num DESC
+            LIMIT 5
+    </select>
+
+    <!-- ===============================================食堂经营成本分析============================================= -->
+    <!--食堂经营成本分析列表查询-->
+    <select id="costList" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.scheduled,
+            d.paravalue mealtype
+        FROM
+            st_ordermanagement a
+            LEFT JOIN st_operationrestaurant b ON a.restaurant = b.RestaurantCode
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'mealtype') d ON a.dictionary = d.parakey
+        WHERE
+            1 = 1
+            <if test="restaurant != null and restaurant != ''">
+                AND b.id in (${restaurant})
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND STR_TO_DATE(a.scheduled,'%Y-%m-%d') BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d')
+                AND STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+        GROUP BY
+            a.scheduled,
+            a.dictionary
+            <if test="page != null and page != ''">
+                limit #{index},#{pageSize}
+            </if>
+    </select>
+
+    <!--食堂经营成本分析列表数量-->
+    <select id="costListCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+        (SELECT
+            count(1)
+        FROM
+            st_ordermanagement a
+            LEFT JOIN st_operationrestaurant b ON a.restaurant = b.RestaurantCode
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'mealtype') d ON a.dictionary = d.parakey
+        WHERE
+            1 = 1
+            <if test="restaurant != null and restaurant != ''">
+                AND b.id in (${restaurant})
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND STR_TO_DATE(a.scheduled,'%Y-%m-%d') BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d')
+                AND STR_TO_DATE(#{endTime},'%Y-%m-%d')
+            </if>
+        GROUP BY
+            a.scheduled,
+            a.dictionary) e
+    </select>
+
+    <!--通过时间和餐别查询线上订单号-->
+    <select id="getOrderNo" resultType="java.util.LinkedHashMap">
+        SELECT
+            ordernumber
+        FROM
+            st_ordermanagement a
+            LEFT JOIN st_operationrestaurant b ON a.restaurant = b.RestaurantCode
+            LEFT JOIN ( SELECT * FROM sys_parameter WHERE paraname = 'mealtype' ) c ON a.dictionary = c.parakey
+        WHERE
+            STR_TO_DATE( a.scheduled, '%Y-%m-%d' ) = STR_TO_DATE( #{date}, '%Y-%m-%d' )
+            AND c.paravalue = #{mealType}
+            <if test="restaurant != null and restaurant != ''">
+                AND b.id in (${restaurant})
+            </if>
+    </select>
+
+    <!--通过订单号查询销售信息-->
+    <select id="getSaleInfo" resultType="java.util.LinkedHashMap">
+        SELECT
+            b.dishcode,
+            b.NAME,
+            c.paravalue dishescategory,
+            b.taste,
+            b.category,
+            sum(a.dishNum) dishNum,
+            b.referenceprice
+        FROM
+            st_order_dishes a
+            LEFT JOIN st_mydishes b ON a.dishId = b.id
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'dishescategory') c ON b.dishescategory = c.parakey
+        WHERE
+            a.orderNo IN ( ${orderNo} )
+            GROUP BY b.dishcode
+    </select>
+</mapper>

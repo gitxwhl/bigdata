@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StproposalMapper">
+
+    <resultMap id="findStpersonnelResult" type="com.canteen.entity.Stproposal">
+        <id column="id"  property="id" />
+        <result property="weight" column="weight"/>
+        <result property="energyTotal" column="energytotal"/>
+        <result property="breakFast" column="breakfast"/>
+        <result property="lunch" column="lunch"/>
+        <result property="dinner" column="dinner"/>
+        <result property="staple" column="staple"/>
+        <result property="vegeTables" column="vegetables"/>
+        <result property="meat" column="meat"/>
+        <result property="fruits" column="fruits"/>
+        <result property="milk" column="milk"/>
+        <result property="other" column="other"/>
+        <result property="proposed" column="proposed"/>
+    </resultMap>
+
+
+    <select id="findStproposal" resultMap="findStpersonnelResult">
+        select
+        weight,
+        energytotal,
+        breakfast,
+        lunch,
+        dinner,
+        staple,
+        vegetables,
+        meat,
+        fruits,
+        milk,
+        other,
+        proposed
+        from st_proposal
+    </select>
+
+
+
+    <update id="updateStproposal">
+        update st_proposal
+        <set>
+            <if test="weight!=null and weight!=''">weight=#{weight},</if>
+            <if test="energyTotal!=null and energyTotal!=''">energytotal=#{energyTotal},</if>
+            <if test="breakFast!=null and breakFast!=''">breakfast=#{breakFast},</if>
+            <if test="lunch!=null and lunch!=''">lunch=#{lunch},</if>
+            <if test="dinner!=null and dinner!=''">dinner=#{dinner},</if>
+            <if test="staple!=null and staple!=''">staple=#{staple},</if>
+            <if test="vegeTables!=null and vegeTables!=''">vegetables=#{vegeTables},</if>
+            <if test="meat!=null and meat!=''">meat=#{meat},</if>
+            <if test="fruits!=null and fruits!=''">fruits=#{fruits},</if>
+            <if test="other!=null and other!=''">other=#{other},</if>
+            <if test="milk!=null and milk!=''">milk=#{milk},</if>
+            <if test="proposed!=null and proposed!=''">proposed=#{proposed}</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+</mapper>

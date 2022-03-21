@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StMenuPlanningMapper">
+
+    <!--菜单计划查询-->
+    <select id="getMenus" resultType="StMenuPlanning">
+        SELECT
+            a.id,
+            b.paravalue meals,
+            c.RestaurantName restaurant,
+            DATE_FORMAT(a.orderbegintime,'%Y.%m.%d %H:%i') orderbegintime,
+            DATE_FORMAT(a.orderendtime,'%Y.%m.%d %H:%i') orderendtime,
+            DATE_FORMAT(a.RefundTime,'%Y.%m.%d %H:%i') RefundTime,
+            DATE_FORMAT(a.mealdate,'%Y.%m.%d') mealdate,
+            state
+        FROM
+            st_menuplanning a
+            LEFT JOIN ( SELECT parakey, paravalue FROM sys_parameter WHERE paraname = 'mealtype' ) b ON a.meals = b.parakey
+            LEFT JOIN st_operationrestaurant c ON a.restaurant = c.RestaurantCode
+            WHERE 1 = 1
+            <if test="mealDate != null and mealDate != ''">
+                AND STR_TO_DATE(a.mealdate,'%Y-%m-%d') = STR_TO_DATE(#{mealDate},'%Y-%m-%d')
+            </if>
+            <if test="meals != null and meals != ''">
+                AND a.meals = #{meals}
+            </if>
+            <if test="orderBeginTime != null and orderBeginTime != ''">
+                AND a.orderbegintime >= STR_TO_DATE(#{orderBeginTime},'%Y-%m-%d %H:%i')
+            </if>
+            <if test="orderEndTime != null and orderEndTime != ''">
+                AND a.orderendtime &lt;= STR_TO_DATE( #{orderEndTime},'%Y-%m-%d %H:%i' )
+            </if>
+            <if test="refundTime != null and refundTime != ''">
+                AND STR_TO_DATE(a.RefundTime,'%Y-%m-%d %H:%i') = STR_TO_DATE(#{refundTime},'%Y-%m-%d %H:%i')
+            </if>
+            <if test="restaurant != null and restaurant != ''">
+                AND c.id in (${restaurant})
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--菜单计划查询数量-->
+    <select id="getMenusCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            st_menuplanning a
+            LEFT JOIN ( SELECT parakey, paravalue FROM sys_parameter WHERE paraname = 'mealtype' ) b ON a.meals = b.parakey
+            LEFT JOIN st_operationrestaurant c ON a.restaurant = c.RestaurantCode
+            WHERE 1 = 1
+            <if test="mealDate != null and mealDate != ''">
+                AND STR_TO_DATE(a.mealdate,'%Y-%m-%d') = STR_TO_DATE(#{mealDate},'%Y-%m-%d')
+            </if>
+            <if test="meals != null and meals != ''">
+                AND a.meals = #{meals}
+            </if>
+            <if test="orderBeginTime != null and orderBeginTime != ''">
+                AND a.orderbegintime  >= STR_TO_DATE(#{orderBeginTime},'%Y-%m-%d %H:%i')
+            </if>
+            <if test="orderEndTime != null and orderEndTime != ''">
+                AND a.orderendtime &lt;= STR_TO_DATE( #{orderEndTime},'%Y-%m-%d %H:%i' )
+            </if>
+            <if test="refundTime != null and refundTime != ''">
+                AND STR_TO_DATE(a.RefundTime,'%Y-%m-%d %H:%i') = STR_TO_DATE(#{refundTime},'%Y-%m-%d %H:%i')
+            </if>
+            <if test="restaurant != null and restaurant != ''">
+                AND c.id in (${restaurant})
+            </if>
+    </select>
+
+    <resultMap id="getDishes" type="java.util.LinkedHashMap">
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <!--查询时间段里的菜品-->
+    <select id="getDishes" resultMap="getDishes">
+        SELECT
+	        b.name
+        FROM
+	        st_intelligencemeals a
+            LEFT JOIN st_mydishes b ON a.varietydishes = b.id
+            LEFT JOIN ( SELECT parakey, paravalue FROM sys_parameter WHERE paraname = 'mealtype' ) c ON b.meals = c.parakey
+            LEFT JOIN st_operationrestaurant d ON b.restaurant = d.RestaurantCode
+        WHERE
+            (a.del_flag = '0' or a.del_flag is null)
+            AND a.TIMESTAMP BETWEEN STR_TO_DATE(#{beginTime},'%Y.%m.%d %H:%i') AND STR_TO_DATE(#{endTime},'%Y.%m.%d %H:%i')
+            AND c.paravalue = #{mealType}
+            AND d.RestaurantName = #{restaurant}
+    </select>
+
+    <!--编辑订餐及退餐时间-->
+    <update id="updateMenuPlan" parameterType="StMenuPlanning">
+        UPDATE st_menuplanning
+        SET orderbegintime = #{orderBeginTime},orderendtime = #{orderEndTime},RefundTime = #{refundTime}
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>

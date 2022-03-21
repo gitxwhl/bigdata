@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canteen.mapper.StOrderManagementMapper">
+
+    <!--订单查询-->
+    <select id="getOrder" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.id,
+            a.ordernumber,
+            b.name reservepersonnel,
+            a.telephone,
+            f.RestaurantName restaurant,
+            DATE_FORMAT(a.ordertime,'%Y-%m-%d %H:%i:%s') ordertime,
+            a.scheduled,
+            d.paravalue dictionary,
+            a.costtotal,
+            a.picktime,
+            e.paravalue deduction,
+            g.launchtime,
+            c.name shelf,
+            g.name cabinet,
+            a.state
+        FROM
+            st_ordermanagement a
+            LEFT JOIN sys_user b ON a.reservepersonnel = b.id
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'mealtype') d ON a.dictionary = d.parakey
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'deduction') e ON a.deduction = e.parakey
+            LEFT JOIN st_operationrestaurant f ON a.restaurant = f.RestaurantCode
+            LEFT JOIN st_cabinet g ON g.orderNo = a.ordernumber
+            LEFT JOIN st_personnel c ON g.shelf = c.id
+            <if test="dishName != null and dishName != ''">
+                <bind name="DishName" value="'%' + dishName + '%'"/>
+                LEFT JOIN
+                    (SELECT
+                        a.orderNo,
+                        count( 1 ) cnt
+                    FROM
+                        st_order_dishes a
+                        LEFT JOIN st_mydishes b ON a.dishId = b.id
+                    WHERE
+                        b.NAME LIKE #{DishName}
+                    GROUP BY
+                        a.orderNo) i ON i.orderNo = a.ordernumber
+            </if>
+        WHERE
+            1 = 1
+            <if test="restaurant != null and restaurant != ''">
+                AND f.id in (${restaurant})
+            </if>
+            <if test="orderNum != null and orderNum != ''">
+                <bind name="OrderNum" value="'%' + orderNum + '%'"/>
+                AND a.ordernumber like #{OrderNum}
+            </if>
+            <if test="reservePerson != null and reservePerson != ''">
+                <bind name="ReservePerson" value="'%' + reservePerson + '%'"/>
+                AND b.name like #{ReservePerson}
+            </if>
+            <if test="scheduled != null and scheduled != ''">
+                AND STR_TO_DATE(a.scheduled,'%Y-%m-%d') = STR_TO_DATE(#{scheduled},'%Y-%m-%d')
+            </if>
+            <if test="mealType != null and mealType != ''">
+                AND a.dictionary = #{mealType}
+            </if>
+            <if test="deduction != null and deduction != ''">
+                AND a.deduction = #{deduction}
+            </if>
+            <if test="dishName != null and dishName != ''">
+                AND i.cnt > 0
+            </if>
+            limit #{index},#{pageSize}
+    </select>
+
+    <!--订单数量-->
+    <select id="getOrderCnt" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            st_ordermanagement a
+            LEFT JOIN sys_user b ON a.reservepersonnel = b.id
+            LEFT JOIN st_operationrestaurant f ON a.restaurant = f.RestaurantCode
+            <if test="dishName != null and dishName != ''">
+                <bind name="DishName" value="'%' + dishName + '%'"/>
+                LEFT JOIN
+                    (SELECT
+                        a.orderNo,
+                        count( 1 ) cnt
+                    FROM
+                        st_order_dishes a
+                        LEFT JOIN st_mydishes b ON a.dishId = b.id
+                    WHERE
+                        b.NAME LIKE #{DishName}
+                    GROUP BY
+                        a.orderNo) i ON i.orderNo = a.ordernumber
+            </if>
+        WHERE
+            1 = 1
+            <if test="restaurant != null and restaurant != ''">
+                AND f.id in (${restaurant})
+            </if>
+            <if test="orderNum != null and orderNum != ''">
+                <bind name="OrderNum" value="'%' + orderNum + '%'"/>
+                AND a.ordernumber like #{OrderNum}
+            </if>
+            <if test="reservePerson != null and reservePerson != ''">
+                <bind name="ReservePerson" value="'%' + reservePerson + '%'"/>
+                AND b.name like #{ReservePerson}
+            </if>
+            <if test="scheduled != null and scheduled != ''">
+                AND STR_TO_DATE(a.scheduled,'%Y-%m-%d') = STR_TO_DATE(#{scheduled},'%Y-%m-%d')
+            </if>
+            <if test="mealType != null and mealType != ''">
+                AND a.dictionary = #{mealType}
+            </if>
+            <if test="deduction != null and deduction != ''">
+                AND a.deduction = #{deduction}
+            </if>
+            <if test="dishName != null and dishName != ''">
+                AND i.cnt > 0
+            </if>
+    </select>
+
+    <!--通过订单号查询订单详情-->
+    <select id="getOrderByNo" resultType="java.util.LinkedHashMap">
+        SELECT
+            a.id,
+            a.ordernumber,
+            b.name reservepersonnel,
+            a.telephone,
+            f.RestaurantName restaurant,
+            DATE_FORMAT(a.ordertime,'%Y-%m-%d %H:%i:%s') ordertime,
+            a.scheduled,
+            d.paravalue dictionary,
+            a.costtotal,
+            a.picktime,
+            e.paravalue deduction,
+            g.launchtime,
+            c.name shelf,
+            g.name cabinet,
+            a.state
+        FROM
+            st_ordermanagement a
+            LEFT JOIN sys_user b ON a.reservepersonnel = b.id
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'mealtype') d ON a.dictionary = d.parakey
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'deduction') e ON a.deduction = e.parakey
+            LEFT JOIN st_operationrestaurant f ON a.restaurant = f.RestaurantCode
+            LEFT JOIN st_cabinet g ON g.orderNo = a.ordernumber
+            LEFT JOIN st_personnel c ON g.shelf = c.id
+        WHERE
+            a.ordernumber = #{number}
+    </select>
+
+    <!--通过订单号查询菜品信息-->
+    <select id="getDishByNo" resultType="java.util.LinkedHashMap">
+        SELECT
+            b.id,
+            b.name,
+            d.paravalue dishescategory,
+            b.weight,
+            c.energy,
+            a.dishNum,
+            b.referenceprice
+        FROM
+            st_order_dishes a
+            LEFT JOIN st_mydishes b ON a.dishId = b.id
+            LEFT JOIN st_nutritional_components c ON c.CODE = b.dishcode
+            LEFT JOIN (SELECT * FROM sys_parameter WHERE paraname = 'dishescategory') d ON b.dishescategory = d.parakey
+        WHERE
+            a.orderNo = #{orderNo}
+    </select>
+
+
+</mapper>

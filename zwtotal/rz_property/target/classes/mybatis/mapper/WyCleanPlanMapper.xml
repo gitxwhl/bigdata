@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.mapper.WyCleanPlanMapper">
+<!--    查询保洁计划总数-->
+    <select id="getPlanSize" resultType="java.lang.Integer">
+       select count(distinct a.id)
+       from
+       wy_cleaningplan a
+       LEFT JOIN
+       wy_cleaningcontent b
+        ON
+        a.id = b.cid
+        where
+        a.del_flag = '0'
+           <if test="company != null and company != ''">
+               and a.company = #{company}
+           </if>
+           <if test="planname != null and planname != ''">
+               and a.planname like "%"#{planname}"%"
+           </if>
+           <if test="plantype != null and plantype != ''">
+               and a.plantype = #{plantype}
+           </if>
+           <if test="cleaningarea != null and cleaningarea != ''">
+               and b.cleaningarea = #{cleaningarea}
+           </if>
+           <if test="cycle != null and cycle != ''">
+               and b.cycle = #{cycle}
+           </if>
+    </select>
+
+<!--    查询保洁计划-->
+    <select id="selectCleanPlan" resultType="java.util.Map">
+        select distinct a.id,a.planname,a.plantype,a.cleaningtime
+        from
+        wy_cleaningplan a
+        LEFT JOIN
+        wy_cleaningcontent b
+        ON
+        a.id = b.cid
+        where
+        a.del_flag = '0'
+            <if test="company != null and company != ''">
+                and a.company = #{company}
+            </if>
+            <if test="planname != null and planname != ''">
+                and a.planname like "%"#{planname}"%"
+            </if>
+            <if test="plantype != null and plantype != ''">
+                and a.plantype = #{plantype}
+            </if>
+            <if test="cleaningarea != null and cleaningarea != ''">
+                and b.cleaningarea = #{cleaningarea}
+            </if>
+            <if test="cycle != null and cycle != ''">
+                and b.cycle = #{cycle}
+            </if>
+        limit #{startIndex},#{pageSize}
+    </select>
+<!--    查询对应保洁计划下的保洁内容-->
+    <select id="selectCleanContent" resultType="java.util.Map">
+       select
+       cleaningarea,
+    cycle,standards,products,remarks
+    from
+    wy_cleaningcontent
+    where
+    jud_flag = '1' and
+    cid = #{id}
+    </select>
+
+<!--    删除保洁计划-->
+    <update id="deleteCleanPlan">
+        update wy_cleaningplan
+        set del_flag = 1
+        where id = #{id}
+    </update>
+
+<!--    修改根据id返回保洁计划-->
+    <select id="updateCleanPlan" resultType="java.util.Map">
+        select
+        id,plantype,planname,cleaningtime
+        from
+        wy_cleaningplan
+        where
+        id = #{id}
+    </select>
+
+<!--    修改根据id返回保洁内容-->
+    <select id="updateContent" resultType="java.util.Map">
+        select
+        id,cleaningarea,cycle,contentrange,standards
+        from
+        wy_cleaningcontent
+        where
+        jud_flag = '1' and
+        cid = #{id}
+    </select>
+
+<!--    修改根据id返回保洁方案-->
+
+    <select id="updateProgram" resultType="java.util.Map">
+        select
+        id,cleaningarea,personnel,remarks
+        from
+        wy_cleaningcontent
+        where
+        jud_flag = '2' and
+        cid = #{id}
+    </select>
+
+<!--    修改保洁计划-->
+    <update id="alterPlan">
+        update wy_cleaningplan
+        set
+        plantype = #{plantype},
+        planname = #{planname},
+        cleaningtime = #{cleaningtime}
+        where id = #{id}
+    </update>
+
+<!--    修改保洁内容-->
+    <update id="alterContent">
+        update
+        wy_cleaningcontent
+        set
+        cleaningarea = #{cleaningarea},
+        cycle = #{cycle},
+        contentrange = #{contentrange},
+        standards = #{standards}
+        where id = #{id}
+    </update>
+
+<!--    修改保洁方案-->
+    <update id="alterProgram">
+        update
+        wy_cleaningcontent
+         set
+        cleaningarea = #{cleaningarea},
+        personnel = #{personnel},
+        remarks = #{remarks}
+        where id = #{id}
+    </update>
+
+<!--    新增保洁计划-->
+    <insert id="insertPlan" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
+        insert into
+        wy_cleaningplan
+        (plantype,planname,cleaningtime)
+        values (#{plantype},#{planname},#{cleaningtime})
+    </insert>
+
+<!--    新增保洁内容-->
+    <insert id="insertContent">
+        insert into
+        wy_cleaningcontent
+        (cid,standards,contentrange,cleaningarea,cycle)
+        values (#{id},#{standards},#{contentrange},#{cleaningarea},#{cycle})
+    </insert>
+
+<!--    新增保洁方案-->
+
+    <insert id="insertProgram">
+        insert into
+        wy_cleaningcontent
+        (cid,cleaningarea,personnel,remarks)
+        values (#{id},#{cleaningarea},#{personnel},#{remarks})
+    </insert>
+
+</mapper>
