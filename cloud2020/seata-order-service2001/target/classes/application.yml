@@ -1,0 +1,72 @@
+server:
+  port: 2001
+
+spring:
+  application:
+    name: seata-order-service
+  cloud:
+    alibaba:
+      seata:
+        # 自定义事务组名称需要与seata-server中的对应
+        tx-service-group: fsp_tx_group
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    # 当前数据源操作类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    # mysql驱动类
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_order?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: zpproot
+
+
+
+feign:
+  hystrix:
+    enabled: false
+
+
+
+#ribbon:
+#  ConnectTimeout: 5000 # 连接超时时间(ms)
+#  ReadTimeout: 5000 # 通信超时时间(ms)
+
+
+
+#hystrix:
+#  shareSecurityContext: true
+#  command:
+#    default:
+#      circuitBreaker:
+#        sleepWindowInMilliseconds: 100000
+#        forceClosed: true
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 600000
+
+
+
+
+
+
+
+
+
+
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+
+
+
+
+
+
+

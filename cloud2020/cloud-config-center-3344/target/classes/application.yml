@@ -1,0 +1,45 @@
+server:
+  port: 3344
+
+spring:
+  application:
+    name: cloud-config-center     #注册进Eureka服务器的微服务名
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/gitxwhl/myJavaproject.git #GitHub上面的git仓库名字
+          ####搜索目录
+          search-paths:
+            - myJavaproject
+       ####读取分支
+      label: master
+
+
+#uri: https://github.com/gitxwhl/myJavaproject.git
+
+eureka:
+  client:
+    register-with-eureka: false     #false表示不向注册中心注册自己。
+    fetch-registry: false     #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    service-url:
+      #集群指向其它eureka  即互相注册，相互守望
+      defaultZone: http://eureka7001.com:7001/eureka/
+#    instance:
+#      #注册中心显示服务的名称
+#      instance-id: cloudconfigcenter3344
+
+#rabbitmq相关配置
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+
+##rabbitmq相关配置,暴露bus刷新配置的端点
+management:
+  endpoints: #暴露bus刷新配置的端点
+    web:
+      exposure:
+        include: 'bus-refresh'
+
