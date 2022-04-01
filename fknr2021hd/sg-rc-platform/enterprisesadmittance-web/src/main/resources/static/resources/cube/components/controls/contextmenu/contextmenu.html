@@ -1,8 +1,0 @@
-<div class="cube" data-bind='attr:{"class": "contextmenu popover "+popoverDirection()}, 
-	style:{display: isShowMenu() == true ? "block" : "none",zIndex: zIndex(),left:left(),right:right(),top:top(),bottom:bottom()}, 
-	event:{mouseout: function(data,event){mouseout($element,event)}}'>
-	<menu params="menuItems:  contextMenuItems,
-					isList: true,
-					isHorizontalChildren:true,
-			onSelectItemChanged: ctxItemChanged" style="padding-left:0" ></menu>
-</div>
