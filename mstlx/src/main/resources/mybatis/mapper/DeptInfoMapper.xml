@@ -17,4 +17,5 @@
         (dept_name,sort) VALUES(#{deptName},#{sort});
     </insert>
 
+
 </mapper>
