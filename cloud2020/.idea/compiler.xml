@@ -26,6 +26,7 @@
         <module name="cloud-api-common" />
         <module name="cloud-provider-payment8004" />
         <module name="cloud-provider-payment8001" />
+        <module name="cloud-consumerconsul-payment80" />
         <module name="cloud-consumer-hystrix-dashboard9001" />
         <module name="cloudalibaba-provider-payment9002" />
         <module name="cloudalibaba-provider-payment9001" />
