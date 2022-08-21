@@ -3,11 +3,12 @@ import com.mstdemo.mst.bean.DeptInfo;
 import com.mstdemo.mst.bean.Permission;
 import com.mstdemo.mst.service.DeptInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-@RestController
+@Controller
 @RequestMapping("/test")
 public class TestController {
     @Autowired
@@ -30,5 +31,31 @@ public class TestController {
         List<Permission> permissions = deptInfoService.findPermission();
         return permissions;
     }
+
+    /**
+     * 页面跳转转发
+     */
+//    @RequestMapping(value= "/test01/{name}",method = RequestMethod.GET)
+//    @ResponseBody
+//    public String test(@PathVariable() String name){
+//            return "forword: www.baidu.com";
+//    }
+//
+//    @RequestMapping(value= "/test02/{name}",method = RequestMethod.GET)
+//    public void test(@PathVariable() String name, HttpServletRequest request, HttpServletResponse response) throws Exception{
+//        request.getRequestDispatcher("www.baidu.com").forward(request,response);
+//    }
+
+
+
+
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index() {
+        return "test";
+    }
+
+
+
+
 
 }
