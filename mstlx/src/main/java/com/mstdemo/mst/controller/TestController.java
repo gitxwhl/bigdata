@@ -5,13 +5,17 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.mstdemo.mst.bean.DeptInfo;
 import com.mstdemo.mst.bean.Permission;
+import com.mstdemo.mst.exception.CommonResult;
 import com.mstdemo.mst.service.DeptInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.nio.channels.Channel;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +23,7 @@ import java.util.Properties;
 
 @Controller
 @RequestMapping("/test")
+@Validated
 public class TestController {
     @Autowired
     private DeptInfoService deptInfoService;
@@ -30,9 +35,32 @@ public class TestController {
      * @return
      */
     @RequestMapping("/add")
-    public int add(@RequestBody DeptInfo deptInfo) {
-        return deptInfoService.addDept(deptInfo);
+    @ResponseBody
+    public CommonResult add(@RequestBody @Valid DeptInfo deptInfo) {
+        int su = deptInfoService.addDept(deptInfo);
+        CommonResult commonResult;
+        if(su>0){
+            commonResult = new CommonResult(200,"添加成功");
+        }else {
+            commonResult = new CommonResult(500,"添加失败");
+        }
+        return commonResult;
     }
+
+    /**
+     * 入参不是用对象绑定，验证非空
+     */
+    @RequestMapping("/getDeptInfoById")
+    @ResponseBody
+    public CommonResult getDeptInfoById( @NotBlank(message = "部门名称不能为空")  @RequestParam("deptName") String deptName) {
+        List<DeptInfo> list= deptInfoService.getDeptInfoById(deptName);
+        CommonResult commonResult = new CommonResult(200,"查询成功",list);
+        return commonResult;
+    }
+
+
+
+
 
     /**
      * 递归调用

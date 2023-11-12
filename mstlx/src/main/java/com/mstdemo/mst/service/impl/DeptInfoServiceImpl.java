@@ -28,6 +28,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 
     /**
      * 返回添加返回id
+     *
      * @param deptInfo
      * @return
      */
@@ -41,26 +42,29 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 
     /**
      * 递归调用
+     *
      * @return
      */
     @Override
-    public List<Permission> findPermission(){
+    public List<Permission> findPermission() {
         Permission parent = new Permission();
         parent.setId("0");
         queryChildPermissions(parent);
         return parent.getChildren();
     }
+
     /**
-     *递归
+     * 递归
      * 自己调用自己
      * 方法一定要存在跳出逻辑
      * 方法调用时，参数之间应该有规律
+     *
      * @param parent
      * @return
      */
-    public void queryChildPermissions(Permission parent){
+    public void queryChildPermissions(Permission parent) {
         List<Permission> childPermissions = deptInfoMapper.findPermission(parent.getId());
-        for (Permission permission:childPermissions){
+        for (Permission permission : childPermissions) {
             queryChildPermissions(permission);
         }
         parent.setChildren(childPermissions);
@@ -68,63 +72,63 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 
     /**
      * 处理时间循环遍历出现数组越界
+     *
      * @param
      * @param
      */
-    public static void getTime(String starttime, String endtime){
-       int starttimey = Integer.valueOf(starttime.substring(0,4));
-       int starttimem = Integer.valueOf(starttime.substring(5));
-       int endtimey = Integer.valueOf(endtime.substring(0,4));
-       int endtimem = Integer.valueOf(endtime.substring(5));
-       int l = 0;
-       String xAxis [] = new String[10000];
-       for (int i=0;starttimey <= endtimey;i++){
-           if(starttimey == endtimey && starttimem <= endtimem){
-               if(starttimem < 10){
-                   xAxis[l] = starttimey + "-0" + starttimem;
-                   starttimem = starttimem+1;
-                   System.out.println(xAxis[l]);
-                   l= l+1;
-               }else if(starttimem < 13 && starttimem >= 10){
+    public static void getTime(String starttime, String endtime) {
+        int starttimey = Integer.valueOf(starttime.substring(0, 4));
+        int starttimem = Integer.valueOf(starttime.substring(5));
+        int endtimey = Integer.valueOf(endtime.substring(0, 4));
+        int endtimem = Integer.valueOf(endtime.substring(5));
+        int l = 0;
+        String xAxis[] = new String[10000];
+        for (int i = 0; starttimey <= endtimey; i++) {
+            if (starttimey == endtimey && starttimem <= endtimem) {
+                if (starttimem < 10) {
+                    xAxis[l] = starttimey + "-0" + starttimem;
+                    starttimem = starttimem + 1;
+                    System.out.println(xAxis[l]);
+                    l = l + 1;
+                } else if (starttimem < 13 && starttimem >= 10) {
 
-                   xAxis[l] = starttimey + "-" + starttimem;
-                   starttimem = starttimem+1;
-                   System.out.println(xAxis[l]);
-                   l= l+1;
-               }
-           }
+                    xAxis[l] = starttimey + "-" + starttimem;
+                    starttimem = starttimem + 1;
+                    System.out.println(xAxis[l]);
+                    l = l + 1;
+                }
+            }
 
-           if(starttimey < endtimey)
-            {
-               if(starttimem < 10){
-                   xAxis[l] = starttimey + "-0" + starttimem;
-                   starttimem = starttimem+1;
-                   System.out.println(xAxis[l]);
-                   l= l+1;
-               }else if(starttimem < 13 && starttimem >= 10){
-                   xAxis[l] = starttimey + "-" + starttimem;
-                   starttimem = starttimem+1;
-                   System.out.println(xAxis[l]);
-                   l= l+1;
-               }else {
-                   starttimey= starttimey+1;
-                   starttimem = starttimem-12;
-               }
-           }
-       }
+            if (starttimey < endtimey) {
+                if (starttimem < 10) {
+                    xAxis[l] = starttimey + "-0" + starttimem;
+                    starttimem = starttimem + 1;
+                    System.out.println(xAxis[l]);
+                    l = l + 1;
+                } else if (starttimem < 13 && starttimem >= 10) {
+                    xAxis[l] = starttimey + "-" + starttimem;
+                    starttimem = starttimem + 1;
+                    System.out.println(xAxis[l]);
+                    l = l + 1;
+                } else {
+                    starttimey = starttimey + 1;
+                    starttimem = starttimem - 12;
+                }
+            }
+        }
     }
 
     /**
      * 解压缩
-     * @param
-     * tagetFileName 压缩包所在的路径
-     * parent 指定解压的目录
+     *
+     * @param tagetFileName 压缩包所在的路径
+     *                      parent 指定解压的目录
      */
-    public static void decompression(String tagetFileName,String parent){
+    public static void decompression(String tagetFileName, String parent) {
         try {
             //构造解压的输入流
-            ZipInputStream zIn =  new ZipInputStream(new FileInputStream(tagetFileName));
-            InputStream ffff= StreamZipUtil.unzipStream(zIn);
+            ZipInputStream zIn = new ZipInputStream(new FileInputStream(tagetFileName));
+            InputStream ffff = StreamZipUtil.unzipStream(zIn);
 
 
             //目录取出来并且是一个文件处理
@@ -149,7 +153,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 //
 //
 //            }
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
 
         } catch (IOException e) {
@@ -158,8 +162,10 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 
 
     }
+
     /**
      * 压缩
+     *
      * @param
      */
     /*public static void compress(String tagetFileName,String parent){
@@ -178,14 +184,10 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 
 
     }*/
-
-
-
-    public static byte[] getBytes(InputStream is) throws IOException
-    {
+    public static byte[] getBytes(InputStream is) throws IOException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream();) {
             byte[] buffer = new byte[1024];
-            for (int len = 0; (len = is.read(buffer)) != -1;) {
+            for (int len = 0; (len = is.read(buffer)) != -1; ) {
                 os.write(buffer, 0, len);
             }
             os.flush();
@@ -196,6 +198,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 
     /**
      * 将数据导成excle并放到服务器
+     *
      * @param
      */
     @Override
@@ -233,7 +236,8 @@ public class DeptInfoServiceImpl implements DeptInfoService {
         HSSFCellStyle style2 = wb.createCellStyle();
         HSSFRow row = sheet.createRow(0);
         row.setHeight((short) 500);// 设定行的高度
-        HSSFCell cell = row.createCell(0);;
+        HSSFCell cell = row.createCell(0);
+        ;
         cell.setCellStyle(style);
         cell.setCellStyle(style2);
 
@@ -245,16 +249,16 @@ public class DeptInfoServiceImpl implements DeptInfoService {
         cell = row.createCell(2);
         cell.setCellStyle(style2);
 
-        List<userInfo> userList= deptInfoMapper.findUserInfo();
+        List<userInfo> userList = deptInfoMapper.findUserInfo();
 
-        for (int j = 0; j <= userList.size()-1 ; j++) {
+        for (int j = 0; j <= userList.size() - 1; j++) {
             userInfo userInfo = userList.get(j);
 //            OmsTradeOrder omstradeorder = JSONObject.parseObject(innerOrder.getSendManifestData(), OmsTradeOrder.class);
             int i = 0;
-            row = sheet.createRow(j+1);
+            row = sheet.createRow(j + 1);
             cell = row.createCell(i);
             cell.setCellStyle(style2);
-            cell.setCellValue(j+1);
+            cell.setCellValue(j + 1);
 
             cell = row.createCell(++i);
             cell.setCellStyle(style2);
@@ -325,38 +329,25 @@ public class DeptInfoServiceImpl implements DeptInfoService {
     }
 
 
-
-
-
-
-
-
     /**
      * 将数据导成excle并放到服务器 xslx
+     *
      * @param
      */
     @Override
     public void exlxlsx() {
 
-        XSSFWorkbook wb=new XSSFWorkbook();
-
-
-
-
-
-
-
+        XSSFWorkbook wb = new XSSFWorkbook();
 
 
     }
 
 
-
     public static void fpexls() {
-        int count=100; //每次导入的数目
-        int Lastindex=count;
-        userInfo user=new userInfo();
-        List<String> sharList=new ArrayList<>();
+        int count = 100; //每次导入的数目
+        int Lastindex = count;
+        userInfo user = new userInfo();
+        List<String> sharList = new ArrayList<>();
         sharList.add("AA");
         sharList.add("BB");
         sharList.add("CC");
@@ -404,14 +395,6 @@ public class DeptInfoServiceImpl implements DeptInfoService {
     }
 
 
-
-
-
-
-
-
-
-
     public ChannelSftp connect(String host, int port, String username,
                                String password) {
         ChannelSftp sftp = null;
@@ -446,7 +429,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
         /*int count=100; //每次导入的数目
         int Lastindex=count;*/
 //        userInfo user=new userInfo();
-        List<String> sharList=new ArrayList<>();
+        List<String> sharList = new ArrayList<>();
         sharList.add("AA");
         sharList.add("BB");
         sharList.add("CC");
@@ -474,6 +457,13 @@ public class DeptInfoServiceImpl implements DeptInfoService {
             //List  结合分批导入
 //            dao.insertList(sharList.subList(i, i + insertLength));
         }
+    }
+
+
+
+    @Override
+    public List<DeptInfo> getDeptInfoById(String deptName) {
+        return deptInfoMapper.getDeptInfoById(deptName);
     }
 
 
@@ -513,17 +503,6 @@ public class DeptInfoServiceImpl implements DeptInfoService {
             System.out.println(sharList.subList(i, i + insertLength));
         }
     }*/
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
