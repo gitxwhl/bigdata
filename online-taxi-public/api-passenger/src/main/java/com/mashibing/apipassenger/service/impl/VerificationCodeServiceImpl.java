@@ -4,14 +4,20 @@ import com.mashibing.apipassenger.remote.ServiceverifiCationcodeClint;
 import com.mashibing.apipassenger.service.VerificationCodeService;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.response.NumberCodeResponse;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class VerificationCodeServiceImpl implements VerificationCodeService {
         @Autowired
        private ServiceverifiCationcodeClint serviceverifiCationcodeClint;
+//       乘客验证码前缀
+        private String  verificationCodePrefix="passenge-verification-code-";
+        @Autowired
+        private StringRedisTemplate stringRedisTemplate;
 
     /**
      * 获取验证码
@@ -19,21 +25,19 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
      * @return
      */
     @Override
-    public String getVerificationCode(String passengerPhone) {
+    public ResponseResult getVerificationCode(String passengerPhone) {
         //调用验证码服务，获取验证
-        System.out.println("调用验证码服务，获取验证");
         ResponseResult<NumberCodeResponse> numCode = serviceverifiCationcodeClint.getNumberCode(5);
-
         int code= numCode.getData().getNumberCode();
-        System.out.println("remote name code--------------------->>" + code);
-        //存入redis
+        //添加乘客手机号前缀
+        String key = verificationCodePrefix + passengerPhone;
+        //存入redis  key，value,过期时间
+        stringRedisTemplate.opsForValue().set(key,code+"",2, TimeUnit.MINUTES);
+        //通过短信服务商，将对应的验证码发送到手机上，阿里短信服务，腾讯短信通，华信，容联
 
 
 
-        //返回值
-        JSONObject json =  new JSONObject();
-        json.put("code",1);
-        json.put("message","success");
-        return json.toString();
+
+        return ResponseResult.success();
     }
 }
