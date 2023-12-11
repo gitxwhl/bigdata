@@ -3,6 +3,7 @@ package com.mashibing.apipassenger.service.impl;
 import com.mashibing.apipassenger.remote.ServiceverifiCationcodeClint;
 import com.mashibing.apipassenger.service.VerificationCodeService;
 import com.mashibing.internalcommon.dto.ResponseResult;
+import com.mashibing.internalcommon.dto.TokenResponse;
 import com.mashibing.internalcommon.response.NumberCodeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -20,7 +21,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         private StringRedisTemplate stringRedisTemplate;
 
     /**
-     * 获取验证码
+     * 生成验证码
      * @param
      * @return
      */
@@ -39,5 +40,32 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
 
         return ResponseResult.success();
+    }
+
+
+    /**
+     * 校验验证码
+     * @param passengerPhone   手机号
+     * @param verificationCode  验证码
+     * @return
+     */
+    @Override
+    public ResponseResult verificationCodeCheck(String passengerPhone, String verificationCode) {
+        //根据手机号从redis里面获取验证码
+
+
+        //如果验证码相等，用户存在，登录成功
+
+
+        //如果验证码不相等，用户不存在，添加用户
+
+
+        //颁发token
+
+
+        //相应
+        TokenResponse tokenResponse=new TokenResponse();
+        tokenResponse.setToken("token velue");
+        return ResponseResult.success(tokenResponse);
     }
 }

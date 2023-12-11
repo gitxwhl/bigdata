@@ -16,11 +16,22 @@ public class ResponseResult<T> {
     private String message;
     private T data;
 
+
+    /**
+     * 无参返回成功
+     * @param <T>
+     * @return
+     */
+    public static <T> ResponseResult success(){
+        return new ResponseResult().setCode(CommonStatusEnum.SUCESS.getCode()).setMessage(CommonStatusEnum.SUCESS.getValue());
+    }
+
+
     /**
      * 成功的相应方法
      * 自定义的泛型方法
      */
-    public static <T> ResponseResult sucess(T data){
+    public static <T> ResponseResult success(T data){
     return new ResponseResult().setCode(CommonStatusEnum.SUCESS.getCode()).setMessage(CommonStatusEnum.SUCESS.getValue()).setData(data);
     }
     /**

@@ -4,9 +4,7 @@ import com.mashibing.apipassenger.request.VerificationDTO;
 import com.mashibing.apipassenger.service.VerificationCodeService;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class VerificationCodeController {
@@ -18,9 +16,17 @@ public class VerificationCodeController {
      * @param verificationDTO
      * @return
      */
-    @RequestMapping("/verification-code")
+    @GetMapping("/verification-code")
     public ResponseResult verificationCode(@RequestBody VerificationDTO verificationDTO){
         return verificationCodeService.getVerificationCode(verificationDTO.getPassengerPhone());
+    }
+    /**
+     * 校验验证
+     */
+    @PostMapping("/verification-code-check")
+    public ResponseResult verificationCodeCheck(@RequestBody VerificationDTO verificationDTO){
+    return verificationCodeService.verificationCodeCheck(verificationDTO.getPassengerPhone(),verificationDTO.getVerificationCode());
+
     }
 
 

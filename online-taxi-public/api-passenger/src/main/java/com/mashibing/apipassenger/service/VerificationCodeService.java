@@ -10,10 +10,10 @@ public interface VerificationCodeService {
      * @return
      */
      ResponseResult getVerificationCode(String code);
-
-
-
-
+    /**
+    校验验证码
+     */
+    ResponseResult verificationCodeCheck(String passengerPhone,String verificationCode);
 
 
 }
