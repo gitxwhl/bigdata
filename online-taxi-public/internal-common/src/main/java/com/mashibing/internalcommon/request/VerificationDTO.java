@@ -1,4 +1,4 @@
-package com.mashibing.apipassenger.request;
+package com.mashibing.internalcommon.request;
 
 import lombok.Data;
 
@@ -8,6 +8,4 @@ public class VerificationDTO {
     private String passengerPhone;
     //验证码
     private String verificationCode;
-
-
 }
