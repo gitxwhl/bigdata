@@ -7,6 +7,7 @@ import com.mashibing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +33,20 @@ public class UserServiceImpl implements UserService {
         //判断用户是否存在
         List<PassengerUser> PassengerUserlist = passengerUserMapper.selectByMap(map);
         System.out.println(PassengerUserlist.size()==0 ? "无记录" : PassengerUserlist.get(0).getPassengerName());
-
+        String passengerName = PassengerUserlist.size()==0 ? "无记录" : PassengerUserlist.get(0).getPassengerName();
         //不存在，插入用户信息
-
-
-
-        return null;
+        if(PassengerUserlist.size()==0){
+            PassengerUser passengerUser =new PassengerUser();
+            passengerUser.setPassengerName("张三");
+            passengerUser.setPassengerPhone("17796901108");
+            passengerUser.setPassengerGender((byte)0);
+            LocalDateTime now = LocalDateTime.now();
+            passengerUser.setGmtCreate(now.toString());
+            passengerUser.setGmtModified(now.toString());
+            passengerUser.setState((byte)0);
+            //添加用户
+            passengerUserMapper.insert(passengerUser);
+        }
+        return ResponseResult.success();
     }
 }
