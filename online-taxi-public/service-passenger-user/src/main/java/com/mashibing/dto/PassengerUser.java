@@ -4,7 +4,7 @@ import lombok.Data;
 @Data
 public class PassengerUser {
 
-  private long id;
+  private Long id;
   //创建时间
   private String gmtCreate;
 //  修改时间
