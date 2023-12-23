@@ -16,6 +16,7 @@ public class TestController {
      * 需要token
      * @return
      */
+    @RequestMapping("/authTest")
     public ResponseResult authTest(){
 
         return ResponseResult.success("auth success");
@@ -25,6 +26,7 @@ public class TestController {
      * 没有token正常返回
      * @return
      */
+    @RequestMapping("/noauthTest")
     public ResponseResult noauthTest(){
 
         return ResponseResult.success("noauth  test");
