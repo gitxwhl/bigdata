@@ -1,0 +1,97 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.baomidou.mybatisplus.core.mapper;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import org.apache.ibatis.annotations.Param;
+
+public interface BaseMapper<T> extends Mapper<T> {
+   //插入一条记录
+    int insert(T entity);
+   //根据id删除
+    int deleteById(Serializable id);
+  //根据id删除
+    int deleteById(T entity);
+   //根据map集合删除：columnMap 条件
+  //@Param   columnMap    表字段map对象
+    int deleteByMap(@Param("cm") Map<String, Object> columnMap);
+//根据entity条件,删除记录
+  //@Param   queryWrapper    实体对象封装操作类（可以为null，里面的entity  用于生成where语句）
+    int delete(@Param("ew") Wrapper<T> queryWrapper);
+//删除（根据id或者实体批量删除）
+//@param dilist主键id列表，或者实体列表（不能为null  以及empty）
+    int deleteBatchIds(@Param("coll") Collection<?> idList);
+//根据id进行修改
+    int updateById(@Param("et") T entity);
+//根据  whereEntity条件，更新记录
+//@param   entity   实体对象（条件可以为null）
+//@param  updateWrapper    实体对象封装操作类（可以为null，里面的  entiry  用于生成where 语句）
+    int update(@Param("et") T entity, @Param("ew") Wrapper<T> updateWrapper);
+//根据id查询
+//id  主键
+    T selectById(Serializable id);
+//查询（根据id，批量查询）
+idlist   主键id列表（不能为null  以及empty）
+根据多个id查询多条数据
+    List<T> selectBatchIds(@Param("coll") Collection<? extends Serializable> idList);
+//根据  cloumnMap 条件查询
+//根据map集合来查询符合条件的数据
+    List<T> selectByMap(@Param("cm") Map<String, Object> columnMap);
+//根据entity条件，查询一条记录
+//查询一条记录，例如： qw.last("limit" 1) 限制取一条记录，注意：多条数据会报异常
+@param   queryWrapper   实体对象封装操作类，（可以为null）
+    default T selectOne(@Param("ew") Wrapper<T> queryWrapper) {
+        List<T> ts = this.selectList(queryWrapper);
+        if (CollectionUtils.isNotEmpty(ts)) {
+            if (ts.size() != 1) {
+                throw ExceptionUtils.mpe("One record is expected, but the query result is multiple records", new Object[0]);
+            } else {
+                return ts.get(0);
+            }
+        } else {
+            return null;
+        }
+    }
+// 根据wrapper 条件，判断是否存在记录
+// queryWrapper    实体对象封装操作类
+判断符合条件的数据是否存在
+    default boolean exists(Wrapper<T> queryWrapper) {
+        Long count = this.selectCount(queryWrapper);
+        return null != count && count > 0L;
+    }
+//根据queryWrapper条件   查询符合条件的总数
+    Long selectCount(@Param("ew") Wrapper<T> queryWrapper);
+//根据   entity 条件，查询全部记录 list集合
+ @param   queryWrapper   实体对象封装操作类（可以为null）
+    List<T> selectList(@Param("ew") Wrapper<T> queryWrapper);
+//根据条件，查询符合条件的数据，以map集合返回
+@param  queryWrapper    实体对象封装操作类可以为null
+    List<Map<String, Object>> selectMaps(@Param("ew") Wrapper<T> queryWrapper);
+//查询object   对象，
+//根据queryWrapper   查询全部记录
+//只返回第一个字段的值
+@param  queryWrapper    实体对象封装操作类可以为null
+    List<Object> selectObjs(@Param("ew") Wrapper<T> queryWrapper);
+//根据  entity 条件，查询全部记录（并翻页）
+//@ param   page   分页查询条件（可以为   rowbounds.default）
+//@param  queryWrapper    实体对象封装操作类，（可以为null）
+查询出来的分页数据是一个实体类对象
+    <P extends IPage<T>> P selectPage(P page, @Param("ew") Wrapper<T> queryWrapper);
+
+根据 queryWrapper 条件，查询全部数据并翻页
+page  是分页条件
+实体对象封装操作类
+
+查询出来返回一个map集合
+    <P extends IPage<Map<String, Object>>> P selectMapsPage(P page, @Param("ew") Wrapper<T> queryWrapper);
+}
