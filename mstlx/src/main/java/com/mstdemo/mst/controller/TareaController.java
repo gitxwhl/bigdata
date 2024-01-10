@@ -14,10 +14,16 @@ public class TareaController {
     private TareaService tareaService;
 
 
-    @PostMapping("findTrea")
+    @PostMapping("/findTrea")
     public CommonResult findTrea(){
         return new  CommonResult(200,"查询成功",tareaService.findTare());
     }
+    @PostMapping("/findTeraMap")
+    public CommonResult findTeraMap(){
+        return new CommonResult(200,"查询成功",tareaService.findTareaMap());
+    }
+
+
 
 
 

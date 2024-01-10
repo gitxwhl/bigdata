@@ -4,10 +4,15 @@ package com.mstdemo.mst.service.impl;
 import com.mstdemo.mst.bean.Tarea;
 import com.mstdemo.mst.mapper.TareaMapper;
 import com.mstdemo.mst.service.TareaService;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class TareaServiceImpl implements TareaService {
     @Autowired
@@ -18,7 +23,7 @@ public class TareaServiceImpl implements TareaService {
      * 递归查询地区级联
      */
 
-    public List<Tarea> findTarea(){
+   /* public List<Tarea> findTarea(){
         //查询所有父级菜单
         List<Tarea> areaParentList = tareaMapper.findParentTarea();
         for (Tarea area :areaParentList){
@@ -30,7 +35,7 @@ public class TareaServiceImpl implements TareaService {
 
         }
         return null;
-    }
+    }*/
 
 
     /**
@@ -64,6 +69,35 @@ public class TareaServiceImpl implements TareaService {
         parentTarea.setChildList(childList);
     }
 
+    /**
+     * 方法二: map的方式方式实现
+     */
+
+    @Override
+    public List<Tarea> findTareaMap(){
+        List<Tarea> tareaList=new ArrayList<>();
+        //获取所有的地区数据
+        List<Tarea> tareas =  tareaMapper.findTateaAll();
+        //将地区的code和每一个地区数据关联
+        Map<String,Tarea> map=new HashMap<>();
+        for(Tarea are : tareas){
+            map.put(are.getCode(),are);
+        }
+
+        //获取所有的父级放入集合
+        for(Tarea are :tareas){
+            Tarea child = are;
+            if(child.getParentCode()==null){
+                tareaList.add(child);
+            }else {
+                //根据code获取所有的子集
+              Tarea tareaparent  = map.get(child.getParentCode());
+                //组合子集和父级的关系
+                tareaparent.getChildList().add(child);
+            }
+        }
+        return tareaList;
+    }
 
 
 
