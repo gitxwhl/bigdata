@@ -1,4 +1,4 @@
-package com.msb;
+package com.msb.utils;
 
 import io.minio.MinioClient;
 import org.apache.commons.io.IOUtils;
