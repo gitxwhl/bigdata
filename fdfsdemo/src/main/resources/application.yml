@@ -1,0 +1,16 @@
+
+
+minio:
+  endpoint: http://192.168.56.10:9000
+  accesskey: zpp
+  secretKey: 12345678
+  bucketName: testtuling
+spring:
+  thymeleaf:
+    cache: false
+    servlet:
+      multipart:
+        max-request-size: 100MB
+        max-file-size: 100MB
+server:
+  port: 8080
