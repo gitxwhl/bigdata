@@ -138,23 +138,15 @@ public class FileController {
         }
         //组合新的文件名
         String newFileName = nameUid+sufix;
-
         //创建sun公司提供的jersey包中的client对象
         Client client = Client.create();
         WebResource resource =  client.resource(FILESERVER+ newFileName);
 //        保存文件将文件保存到另一个服务器
-        try {
-            resource.put(String.class,headPhoto.getBytes());
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-
-        }
-
-
+        resource.put(String.class,headPhoto.getBytes());
         //上传成功返回文件名和文件的类型返回给浏览器
         map.put("message","文件上传成功");
-        map.put("newFileName",FILESERVER+newFileName);
-        map.put("sufix",sufix);
+        map.put("newFileName",newFileName);
+        map.put("filetype",headPhoto.getContentType());
         return map;
     }
 

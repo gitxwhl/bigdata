@@ -52,10 +52,10 @@
                         // // 本地图片回显
                         // $("#headImg").attr("src","/ssm01_war/upload/"+result.newFileName);
                         // 分布式图片回显
-                        $("#headImg").attr("src",result.newFileName);
+                        $("#headImg").attr("src","http://192.168.56.1:8080/upload/" + result.newFileName);
                         // // 将文件类型和文件名放入form表单
-                        // $("#photoInput").val(result.newFileName)
-                        // $("#filetypeInput").val(result.filetype)
+                        $("#photoInput").val(result.newFileName)
+                        $("#filetypeInput").val(result.filetype)
                     },
                     xhr: function() {
                         var xhr = new XMLHttpRequest();

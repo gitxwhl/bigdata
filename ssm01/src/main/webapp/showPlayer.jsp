@@ -33,7 +33,7 @@
                             '        <td>'+e.password+'</td>\n' +
                             '        <td>'+e.nickname+'</td>\n' +
                             '        <td>\n' +
-                            '            <img src="http://192.168.8.109:8090/upload/'+e.photo+'" alt="" src>\n' +
+                            '            <img src="http://192.168.56.1:8080/upload/'+e.photo+'" alt="" src>\n' +
                             '        </td>\n' +
                             '        <td>\n' +
                             '            <a href="fileDownload.do?photo='+e.photo+'&filetype='+e.filetype+'">下载</a>\n' +
