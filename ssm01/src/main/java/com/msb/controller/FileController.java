@@ -150,7 +150,24 @@ public class FileController {
         return map;
     }
 
-
+    /**
+     * 文件下载
+     */
+    @RequestMapping("fileDownload.do")
+    public void fileDownload(String photo,String filetype,HttpServletResponse response) throws Exception {
+        //获取文件名，文件类型  可以从数据库获得
+        //设置响应头
+        //告诉浏览器将数据保存到磁盘上，不在浏览器上直接解析
+        response.setHeader("Content-Disposition","attachment;filename=" + photo);
+        //告诉浏览器下载文件类型
+        response.setContentType(filetype);
+        //获取一个文件输入流
+        InputStream inputStream = new URL(FILESERVER+photo).openStream();
+        //获取一个指向浏览器的输出流
+        ServletOutputStream outputStream = response.getOutputStream();
+        //向浏览器响应文件即可
+        IOUtils.copy(inputStream, outputStream);
+    }
 
 
 
