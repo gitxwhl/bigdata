@@ -2,11 +2,9 @@ package com.msb.controller;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -23,33 +21,43 @@ import java.util.UUID;
 public class FileController {
     // 文件存储位置
     private final static String FILESERVER="http://127.0.0.1:8080/upload/";
-    /*@RequestMapping("/upload")
+    @RequestMapping("/uploads")
+    /**
+     * 跨服务器 多文件同步上传，即和表单数据一块上传
+     * 文件和前端绑定不一致使用@RequestPart注解
+     */
     @ResponseBody
-    public Map<String,String> upload(String name,
+    public Map<String,String> uploads(String name,
                                      String password,
                                      String nickname,
                                      @RequestPart("photo") MultipartFile photo,
                                      @RequestPart("photos") MultipartFile[] photos, HttpServletRequest req) throws IOException {
         Map<String,String> map=new HashMap<>();
-        // 获取文件名
-        String originalFilename = photo.getOriginalFilename();
-        // 避免文件名冲突,使用UUID替换文件名
-        String uuid = UUID.randomUUID().toString();
-        // 获取拓展名
-        String extendsName = originalFilename.substring(originalFilename.lastIndexOf("."));
-        // 新的文件名
-        String newFileName=uuid.concat(extendsName);
-        // 创建 sun公司提供的jersey包中的client对象
-        Client client=Client.create();
-        WebResource resource = client.resource(FILESERVER + newFileName);
-        //  文件保存到另一个服务器上去了
-        resource.put(String.class, photo.getBytes());
-        // 上传成功之后,把文件的名字和文件的类型返回给浏览器
-        map.put("message", "上传成功");
-        map.put("newFileName",FILESERVER+newFileName);
-        map.put("filetype", photo.getContentType());
+        //遍历photos接收图片的数组
+        if(photos !=null && photos.length>0){
+            for (int i=0;i < photos.length;i++){
+                MultipartFile  multipartFile = photos[i];
+                // 获取文件名
+                String originalFilename = multipartFile.getOriginalFilename();
+                // 避免文件名冲突,使用UUID替换文件名
+                String uuid = UUID.randomUUID().toString();
+                // 获取拓展名
+                String extendsName = originalFilename.substring(originalFilename.lastIndexOf("."));
+                // 新的文件名
+                String newFileName=uuid.concat(extendsName);
+                // 创建 sun公司提供的jersey包中的client对象
+                Client client=Client.create();
+                WebResource resource = client.resource(FILESERVER + newFileName);
+                //  文件保存到另一个服务器上去了
+                resource.put(String.class, multipartFile.getBytes());
+                // 上传成功之后,把文件的名字和文件的类型返回给浏览器
+                map.put("message", "上传成功");
+                map.put("newFileName",FILESERVER+newFileName);
+                map.put("filetype", multipartFile.getContentType());
+            }
+        }
         return map;
-    }*/
+    }
 
     /**
      * 项目相对路径：单文件上传
