@@ -21,11 +21,11 @@ import java.util.UUID;
 public class FileController {
     // 文件存储位置
     private final static String FILESERVER="http://127.0.0.1:8080/upload/";
-    @RequestMapping("/uploads")
     /**
      * 跨服务器 多文件同步上传，即和表单数据一块上传
      * 文件和前端绑定不一致使用@RequestPart注解
      */
+    @RequestMapping("/uploads")
     @ResponseBody
     public Map<String,String> uploads(String name,
                                      String password,
@@ -58,6 +58,65 @@ public class FileController {
         }
         return map;
     }
+
+    /**
+     * 相对路径即项目所在服务器多文件同步上传，即和表单数据和文件一块上传
+     * 文件和前端绑定不一致使用@RequestPart注解
+     */
+    @RequestMapping("/uploadsXdlj")
+    @ResponseBody
+    public Map<String,String> uploadsXdlj(String name,
+                                      String password,
+                                      String nickname,
+                                      @RequestPart("photo") MultipartFile photo,
+                                      @RequestPart("photos") MultipartFile[] photos, HttpServletRequest req) throws IOException {
+        Map<String,String> map=new HashMap<>();
+        //遍历photos接收图片的数组
+        if(photos !=null && photos.length>0){
+            for (int i=0;i < photos.length;i++){
+                MultipartFile  multipartFile = photos[i];
+                //获取当前项目的相对路径
+                //指定文件存储目录
+                //        File dir=new File("d:/images");
+                //        指定文件存储目录为我们项目部署环境下upload目录
+                String realPath = req.getServletContext().getRealPath("/upload");
+                File dir = new File(realPath);
+
+                //如果目录不存在创建目录
+                if(!dir.exists()){
+                    dir.mkdir();
+                }
+                // 获取文件名
+                String originalFilename = multipartFile.getOriginalFilename();
+                // 避免文件名冲突,使用UUID替换文件名
+                String uuid = UUID.randomUUID().toString();
+                // 获取文件类型
+                String extendsName = originalFilename.substring(originalFilename.lastIndexOf("."));
+                System.out.println(extendsName);
+               //校验文件类型
+                if(!extendsName.equals(".jpg")){
+                    map.put("message","文件类型错误");
+                    return map;
+                }
+                // 新的文件名
+                String newFileName=uuid.concat(extendsName);
+                //指定文件存储位置
+                System.out.println(dir);
+                File file = new File(dir,newFileName);
+                //保存文件
+                multipartFile.transferTo(file);
+                // 上传成功之后,把文件的名字和文件的类型返回给浏览器
+                map.put("message", "上传成功");
+                map.put("newFileName",realPath + newFileName);
+                map.put("filetype", multipartFile.getContentType());
+            }
+        }
+        return map;
+    }
+
+
+
+
 
     /**
      * 项目相对路径：单文件上传
