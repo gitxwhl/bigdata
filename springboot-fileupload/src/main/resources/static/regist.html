@@ -36,7 +36,7 @@
                 $.ajax({
                     type:"post",
                     data:formData,
-                    url:"file/upload",
+                    url:"file/uploadone",
                     processData:false,
                     contentType:false,
                     success:function(result){
@@ -44,7 +44,7 @@
                         alert(result.message)
                         console.log(result.newFileName)
                         // 图片回显
-                        $("#headImg").attr("src",result.newFileName);
+                        $("#headImg").attr("src", "/upload/"+ result.newFileName);
                     },
                     xhr: function() {
                         var xhr = new XMLHttpRequest();
