@@ -43,6 +43,10 @@ public class FileController {
                 String uuid = UUID.randomUUID().toString();
                 // 获取拓展名
                 String extendsName = originalFilename.substring(originalFilename.lastIndexOf("."));
+                //文件类型校验
+                if(!extendsName.equals(".jpg")){
+                    map.put("message","文件类型错误");
+                }
                 // 新的文件名
                 String newFileName=uuid.concat(extendsName);
                 // 创建 sun公司提供的jersey包中的client对象
