@@ -15,3 +15,6 @@ spring:
     username: root
     password: zpproot
 
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
