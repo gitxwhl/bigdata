@@ -45,6 +45,8 @@
                         console.log(result.newFileName)
                         // 图片回显
                         $("#headImg").attr("src", "/upload/"+ result.newFileName);
+                        $("#download").attr();
+
                     },
                     xhr: function() {
                         var xhr = new XMLHttpRequest();
@@ -79,6 +81,7 @@
         <div></div>
     </div>
     <a id="uploadFile" href="javascript:void(0)">立即上传</a>
+    <a  href="file/fileDownloadLocal.do">下载</a>
     </p>
     <p><input type="submit" value="注册"></p>
 </form>

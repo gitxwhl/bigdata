@@ -1,3 +1,5 @@
+server:
+  port: 8090
 spring:
   servlet:
     multipart:
@@ -5,5 +7,11 @@ spring:
       max-file-size: 10MB
 #      多个文件不超过100mb
       max-request-size: 100MB
-server:
-  port: 8090
+  # 配置数据源信息
+  datasource:
+    # 配置连接数据库的各个信息
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/msb_springmvc?serverTimezone=GMT%2B8&characterEncoding=utf-8&userSSL=false
+    username: root
+    password: zpproot
+

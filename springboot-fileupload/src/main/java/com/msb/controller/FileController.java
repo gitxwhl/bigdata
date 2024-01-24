@@ -2,12 +2,18 @@ package com.msb.controller;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -137,6 +143,7 @@ public class FileController {
 //        File dir=new File("d:/images");
 //        指定文件存储目录为我们项目部署环境下upload目录
         String realPath = req.getServletContext().getRealPath("/upload");
+        System.out.println(realPath);
         File dir = new File(realPath);
         System.out.println(realPath);
         //如果不存在创建目录
@@ -207,7 +214,49 @@ public class FileController {
         map.put("filetype",headPhoto.getContentType());
         return map;
     }
+    /**
+     * 跨服务器文件下载
+     */
+    @RequestMapping("fileDownload.do")
+    public void fileDownload(String id, HttpServletResponse response) throws Exception {
+        //根据id获取文件名，文件类型  可以从数据库获得
+        String photo ="9fe2fe1d-9b93-4d2f-9b03-bc2278710cff.jpg";
+        String filetype="image/jpeg";
+        //设置响应头
+        //告诉浏览器将数据保存到磁盘上，不在浏览器上直接解析
+        response.setHeader("Content-Disposition","attachment;filename=" + photo);
+        //告诉浏览器下载文件类型
+        response.setContentType(filetype);
+        //获取一个文件输入流
+        InputStream inputStream = new URL(FILESERVER+photo).openStream();
+        //获取一个指向浏览器的输出流
+        ServletOutputStream outputStream = response.getOutputStream();
+        //向浏览器响应文件即可
+        IOUtils.copy(inputStream, outputStream);
+    }
 
+    /**
+     * 所在部署服务器文件下载
+     * @param id
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("fileDownloadLocal.do")
+    public void fileDownloadLocal(String id,String photo, HttpServletResponse response,HttpServletRequest req) throws Exception {
+        //根据id获取文件名，文件类型  可以从数据库获得
+        String filetype="image/jpeg";
+        //设置响应头
+        //告诉浏览器将数据保存到磁盘上，不在浏览器上直接解析
+        response.setHeader("Content-Disposition","attachment;filename=" + photo);
+        //告诉浏览器下载文件类型
+        response.setContentType(filetype);
+        //获取一个文件输入流
+        InputStream inputStream = new URL("http://localhost:8090/upload/" + photo).openStream();
+        //获取一个指向浏览器的输出流
+        ServletOutputStream outputStream = response.getOutputStream();
+        //向浏览器响应文件即可
+        IOUtils.copy(inputStream, outputStream);
+    }
 
 
 
