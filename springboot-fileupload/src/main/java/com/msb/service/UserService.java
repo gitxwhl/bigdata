@@ -1,10 +1,7 @@
 package com.msb.service;
-
 import com.msb.pojo.User;
-
-import java.util.List;
-
+import com.msb.util.PageBean;
 public interface UserService {
-
-    List<User> findUser();
+    //分页查询
+    PageBean<User> findUser(User user,Integer pageNum,Integer pageSize);
 }

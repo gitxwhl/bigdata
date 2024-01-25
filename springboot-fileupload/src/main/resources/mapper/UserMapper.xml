@@ -9,5 +9,7 @@
             ( SELECT paravalue FROM sys_parameter p WHERE u.gsType = p.parakey AND paratype = 'company' ) AS gsType
         FROM
             sys_user u
+        WHERE u.name=#{user.name}
+            limit #{start},#{pageSize}
     </select>
 </mapper>
