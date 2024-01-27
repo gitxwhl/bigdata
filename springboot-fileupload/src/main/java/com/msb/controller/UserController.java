@@ -5,10 +5,7 @@ import com.msb.service.UserService;
 import com.msb.util.PageBean;
 import com.msb.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -47,39 +45,44 @@ public class UserController {
         try {
             PageBean<User> pageBean = userService.findUser(user,pageNum, pageSize);
             //工作簿对象
-            Workbook workbook = new XSSFWorkbook();
+            Workbook workbook = new XSSFWorkbook(
+                    Objects.requireNonNull(this.getClass().getClassLoader()
+                            .getResourceAsStream("excle/ygb.xlsx")));
             //sheet页
-            Sheet sheet = workbook.createSheet("一月");
-            //表头
-            String[] titles = {"员工编号", "姓名", "性别", "年龄", "职位", "部门编号"};
-            //创建一行
-            Row row = sheet.createRow(0);
-            for (int i = 0; i < titles.length; i++) {
-                //创建一列
-                Cell cell = row.createCell(i);
-                //将员工的标题设置进去
-                cell.setCellValue(titles[i]);
+            Sheet sheet = workbook.getSheetAt(0);
+            //获取第二行的样式
+            Row row1 = sheet.getRow(2);
+            CellStyle [] cellStyles = new CellStyle[row1.getLastCellNum()];
+            for (int i=0;i < cellStyles.length;i++){
+                cellStyles[i] = row1.getCell(i).getCellStyle();
             }
+
             List<User> users = pageBean.getList();
             for (int i = 0; i < users.size(); i++) {
-                row = sheet.createRow(i + 1);
+                row1 = sheet.createRow(i + 1);
                 User use = users.get(i);
 
-                Cell useNamecell = row.createCell(0);
+                Cell useNamecell = row1.createCell(0);
                 useNamecell.setCellValue(use.getName());
+                useNamecell.setCellStyle(cellStyles[0]);
 
-                Cell Celltype = row.createCell(1);
-                Celltype.setCellValue(use.getGsType());
+                Cell cellType = row1.createCell(1);
+                cellType.setCellValue(use.getGsType());
+                cellType.setCellStyle(cellStyles[1]);
 
-
-                Cell cellLoginName = row.createCell(2);
+                Cell cellLoginName = row1.createCell(2);
                 cellLoginName.setCellValue(use.getLoginName());
+                cellLoginName.setCellStyle(cellStyles[2]);
 
-                Cell cellPassword = row.createCell(3);
+
+                Cell cellPassword = row1.createCell(3);
                 cellPassword.setCellValue(use.getLoginPassword());
+                cellPassword.setCellStyle(cellStyles[3]);
 
-                Cell cellSex = row.createCell(4);
+                Cell cellSex = row1.createCell(4);
                 cellSex.setCellValue(use.getSex());
+                cellSex.setCellStyle(cellStyles[4]);
+
 
             }
             String fileName = URLEncoder.encode("员工表.xlsx", "UTF-8");
