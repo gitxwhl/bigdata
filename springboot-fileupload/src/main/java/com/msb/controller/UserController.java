@@ -1,7 +1,7 @@
 package com.msb.controller;
-
 import com.msb.pojo.User;
 import com.msb.service.UserService;
+import com.msb.util.ExportExcelUtil;
 import com.msb.util.PageBean;
 import com.msb.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
@@ -9,12 +9,12 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-
 @Slf4j
 @RestController
 @RequestMapping("/UserController.do")
@@ -95,6 +95,21 @@ public class UserController {
         }
 
     }
-
-
+    /**
+     * 工具类导出
+     */
+    @RequestMapping("/export")
+    public void export(User user,HttpServletResponse response) throws Exception {
+        ExportExcelUtil<User> exportExcelUtil =new ExportExcelUtil();
+        user.setName("李四");
+        PageBean<User> pageBean  = userService.findUser(user,1,5);
+        List<User> userList = pageBean.getList();
+        Map<String,Object> params=new HashMap<>();
+        params.put("objs",userList);
+        params.put("path", "excle/ygb.xlsx");
+        params.put("response",response);
+        params.put("rowIndex",2);
+        //导出
+        exportExcelUtil.exportExcel(params);
+    }
 }

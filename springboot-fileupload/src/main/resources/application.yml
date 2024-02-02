@@ -14,17 +14,12 @@ spring:
     url: jdbc:mysql://localhost:3306/msb_springmvc?serverTimezone=GMT%2B8&characterEncoding=utf-8&userSSL=false
     username: root
     password: zpproot
-
-
 mybatis:
   mapperLocations: classpath:mapper/*.xml
-
-
 logging:
   level:
     com:
       msb:
         mapper: debug
-
 configuration:
   logImpl: org.apache.ibatis.logging.stdout.StdOutImpl # 设置日志实现类为标准输出

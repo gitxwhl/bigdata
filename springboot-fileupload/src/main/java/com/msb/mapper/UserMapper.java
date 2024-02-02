@@ -14,5 +14,4 @@ public interface UserMapper {
     //查询总的记录数
     @Select("select count(*) from sys_user")
     int getcount(User user);
-
 }

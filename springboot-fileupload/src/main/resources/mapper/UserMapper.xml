@@ -5,8 +5,12 @@
 <mapper namespace="com.msb.mapper.UserMapper">
     <select id="findUser" resultType="com.msb.pojo.User">
         SELECT
+            login_name loginName,
+            login_password loginPassword,
+            login_date loginDate,
             `name`,
-            ( SELECT paravalue FROM sys_parameter p WHERE u.gsType = p.parakey AND paratype = 'company' ) AS gsType
+            ( SELECT paravalue FROM sys_parameter p WHERE u.gsType = p.parakey AND paratype = 'company') AS gsType,
+            phone
         FROM
             sys_user u
         WHERE u.name=#{user.name}
