@@ -11,6 +11,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+
+
     /**
      * 分页查询数据
      * @return
@@ -34,4 +36,7 @@ public class UserServiceImpl implements UserService {
         }
         return page;
     }
+
+
+
 }

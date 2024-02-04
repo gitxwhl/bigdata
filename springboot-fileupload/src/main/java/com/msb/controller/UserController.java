@@ -1,20 +1,20 @@
 package com.msb.controller;
+import com.msb.pojo.Employee;
 import com.msb.pojo.User;
+import com.msb.service.EmployeeService;
 import com.msb.service.UserService;
-import com.msb.util.ExportExcelUtil;
-import com.msb.util.PageBean;
-import com.msb.util.ResponseResult;
+import com.msb.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+
 @Slf4j
 @RestController
 @RequestMapping("/UserController.do")
@@ -22,6 +22,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmployeeService employeeService;
 
     @RequestMapping("/findUser")
     private ResponseResult findUser(
@@ -96,7 +98,7 @@ public class UserController {
 
     }
     /**
-     * 工具类导出
+     * 亮 工具类导出
      */
     @RequestMapping("/export")
     public void export(User user,HttpServletResponse response) throws Exception {
@@ -111,5 +113,54 @@ public class UserController {
         params.put("rowIndex",2);
         //导出
         exportExcelUtil.exportExcel(params);
+    }
+
+    /**
+     * 亮 导入excle
+     */
+    @RequestMapping("/importEmployee")
+    public ResponseResult<Employee> importEmployee(MultipartFile file) throws IOException {
+        //读取excle
+        Workbook workbook =new XSSFWorkbook(file.getInputStream());
+        //获取工作簿
+        Sheet sheet = workbook.getSheetAt(0);
+        //获取最后一行
+        int lastRowNum= sheet.getLastRowNum();
+        //封装List<Employee>
+        List<Employee> emps=new ArrayList<>();
+        //编列所有的行
+        for (int i=2;i <= lastRowNum;i++){
+            //获取当前行
+            Row row = sheet.getRow(i);
+            //获取最后一个单元格
+            int lastCellNum = row.getLastCellNum();
+
+
+            //创建对象数组,将遍历出来的列数据放入Employee对象中
+            Object [] objs= new Object[lastCellNum];
+            //遍历当前行的每一列
+            for (int j=0; j< lastCellNum;j++){
+                //获取当前列
+                Cell cell = row.getCell(j);
+                //获取当前列单元格
+                Object value = ExcelUtils.getValue(cell);
+                objs[j]=value;
+            }
+            Employee employee=new Employee();
+            employee.setEmpno((String) objs[0]);
+            employee.setName((String) objs[1]);
+            employee.setSex((String) objs[2]);
+            if(objs[3]!=null && objs[3] !=""){
+                employee.setAge(((Double)objs[3]).intValue());
+            }
+            employee.setJob((String) objs[4]);
+            if(objs[5] !=null && objs[5] != ""){
+                employee.setDeptmentId(((Double) objs[5]).intValue());
+            }
+            emps.add(employee);
+        }
+        //插入数据库
+       int result = employeeService.inserts(emps);
+        return ResponseResult.success(result);
     }
 }
