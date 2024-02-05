@@ -4,18 +4,11 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
-import cn.afterturn.easypoi.excel.entity.params.ExcelExportEntity;
-import com.mashibing.easypoi_boot.pojo.Card;
-import com.mashibing.easypoi_boot.pojo.Emp;
-import com.mashibing.easypoi_boot.pojo.Order;
-import com.mashibing.easypoi_boot.pojo.User;
-import org.apache.poi.ss.formula.functions.T;
+import com.mashibing.easypoi_boot.pojo.*;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,6 +62,59 @@ public  class EasypoiBootApplicationTests {
         List<Emp> empList = ExcelImportUtil.importExcel(new FileInputStream("D:\\mb\\user.xlsx"), Emp.class, params);
         empList.forEach(System.out::println);
     }
+
+
+
+
+
+    //    ==========================================多sheet页的导入============================================
+
+    /**
+     *接收Excle文件导入的多个sheet
+     * @param filePath 文件路径
+     * @param sheetIndex sheet页下标
+     * @param titleRows  标题行数
+     * @param headerRows 表头行数
+     * @param pojoClass excle实体
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> importMultSheet(String filePath,int sheetIndex,Integer titleRows,Integer headerRows,Class<T> pojoClass){
+        //导入相关参数
+        ImportParams params  = new ImportParams();
+        //设置参数下标
+        params.setStartSheetIndex(sheetIndex);
+        params.setHeadRows(headerRows);
+        params.setTitleRows(titleRows);
+
+        //表头必须包含的字段，不包含，就报错
+        params.setImportFields(new String[]{"用户ID"});
+
+        //
+        List<T> list=null;
+        try {
+           list= ExcelImportUtil.importExcel(new FileInputStream(filePath), pojoClass, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    //测试导入多个sheet页
+    @Test
+    public void testImportMultiSheet(){
+        String exclepath="D:\\mb\\login.xlsx";
+        //拿到第一页数据遍历
+        List<LoginUsr> loginUsrList = importMultSheet(exclepath, 0, 1, 1, LoginUsr.class);
+        loginUsrList.forEach(System.out::println);
+        //拿到第二页数据遍历
+        System.out.println("第二页数据");
+        List<LoginUrl> loginLoginUrlList = importMultSheet(exclepath, 1, 1, 1, LoginUrl.class);
+        loginLoginUrlList.forEach(System.out::println);
+    }
+
+
+
 
 
 
