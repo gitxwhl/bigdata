@@ -5,7 +5,6 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.mashibing.internalcommon.constent.TokenResult;
-
 import java.util.*;
 
 public class JwtUtils {

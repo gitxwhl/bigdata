@@ -1,8 +1,6 @@
 package com.mashibing.controller;
-
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.response.NumberCodeResponse;
-import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +23,8 @@ public class NumberCodeController {
         JSONObject data =new JSONObject();
         data.put("numberCode",123456);
         json.put("data",(int)resultInt);*/
-        return ResponseResult.sucess(response);
+
+        return ResponseResult.success(response);
     }
 
 

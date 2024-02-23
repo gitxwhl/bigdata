@@ -8,7 +8,7 @@ public class RedisPrefixUtils {
     //       乘客验证码前缀
     private static final String  verificationCodePrefix="passenge-verification-code-";
     //tooken前缀
-    private static final String to0kenPreFix="tooken-";
+    private static final String tookenPreFix="tooken-";
 
 
     /**
@@ -26,7 +26,7 @@ public class RedisPrefixUtils {
      * @return
      */
     public static String getGenraTooken(String passengerPhone,String identiy){
-        return to0kenPreFix + passengerPhone + "-" + identiy;
+        return tookenPreFix + passengerPhone + "-" + identiy;
     }
 
 

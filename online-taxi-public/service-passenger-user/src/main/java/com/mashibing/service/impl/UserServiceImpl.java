@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         if(PassengerUserlist.size()==0){
             PassengerUser passengerUser =new PassengerUser();
             passengerUser.setPassengerName("张三");
-            passengerUser.setPassengerPhone("17796901108");
+            passengerUser.setPassengerPhone(passengerPhone);
             passengerUser.setPassengerGender((byte)0);
             LocalDateTime now = LocalDateTime.now();
             passengerUser.setGmtCreate(now.toString());
