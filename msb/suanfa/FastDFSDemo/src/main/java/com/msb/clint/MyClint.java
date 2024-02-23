@@ -42,12 +42,19 @@ public class MyClint {
             is.close();
         }catch (IOException e) {
             e.printStackTrace();
-        }*/
-
-
-
+        }
+        */
     }
 
+
+    /**
+     *
+     * 获取原数据信息
+     */
+    /*public static void getFileInfo(){
+        FastDFSClient.getMetaDate(,);
+
+    }*/
 
 
 

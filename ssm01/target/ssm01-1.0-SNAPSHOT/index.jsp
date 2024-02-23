@@ -39,20 +39,23 @@
                 $.ajax({
                     type:"post",
                     data:formData,
-                    url:"fileUpload01",
+                    url:"fileUpload02",
                     processData:false,
                     contentType:false,
                     success:function(result){
-                        console.log(result)
-                        alert()
+                        console.log(result.newFileName)
                         // 接收后台响应的信息
-                        alert(result.message)
-                        console.log("/ssm01_war/upload/"+result.newFileName)
-                        // // 图片回显
-                        $("#headImg").attr("src","/ssm01_war/upload/"+result.newFileName);
+                        // alert(result.message)
+                        // 本地回显路径
+                        // console.log("/ssm01_war/upload/"+result.newFileName)
+
+                        // // 本地图片回显
+                        // $("#headImg").attr("src","/ssm01_war/upload/"+result.newFileName);
+                        // 分布式图片回显
+                        $("#headImg").attr("src","http://192.168.56.1:8080/upload/" + result.newFileName);
                         // // 将文件类型和文件名放入form表单
-                        // $("#photoInput").val(result.newFileName)
-                        // $("#filetypeInput").val(result.filetype)
+                        $("#photoInput").val(result.newFileName)
+                        $("#filetypeInput").val(result.filetype)
                     },
                     xhr: function() {
                         var xhr = new XMLHttpRequest();

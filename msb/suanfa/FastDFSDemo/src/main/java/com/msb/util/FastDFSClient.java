@@ -166,6 +166,12 @@ public class FastDFSClient {
         }
     }
 
+    /**
+     * 获取原数据信息
+     * @param groupName
+     * @param remoteFileName
+     * @return
+     */
     public static NameValuePair[] getMetaDate(String groupName, String remoteFileName){
         try{
             NameValuePair[] nvp = storageClient.get_metadata(groupName, remoteFileName);

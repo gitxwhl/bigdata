@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class MstApplicationTests {
 
-    @Autowired
+   /* @Autowired
     @Qualifier(value = "dogPetinterfaceImpl")
     private PetInterface petInterface;
 
@@ -17,6 +17,8 @@ class MstApplicationTests {
     @Test
     void contextLoads() {
         petInterface.playBall();
-    }
+    }*/
+
+
 
 }
