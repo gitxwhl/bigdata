@@ -8,7 +8,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import sun.tools.jar.CommandLine;
 
 import java.sql.SQLOutput;
@@ -17,9 +19,13 @@ import java.util.List;
 
 //@ServletComponentScan(basePackages = "com.mstdemo.mst.config.*")
 
+/**
+ * @author dell
+ */
 @SpringBootApplication
 @MapperScan(value = "com.mstdemo.mst.mapper")
-public class MstApplication implements ApplicationRunner, CommandLineRunner {
+//@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+public class MstApplication implements ApplicationRunner ,CommandLineRunner {
     @Autowired
     private DeptInfoService deptInfoService;
 

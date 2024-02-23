@@ -1,26 +1,14 @@
 package com.mstdemo.mst.service.impl;
 
-import com.jcraft.jsch.*;
 import com.mstdemo.mst.bean.DeptInfo;
 import com.mstdemo.mst.bean.Permission;
-import com.mstdemo.mst.bean.userInfo;
 import com.mstdemo.mst.mapper.DeptInfoMapper;
 import com.mstdemo.mst.service.DeptInfoService;
-import com.mstdemo.mst.util.SFTPUtil;
-import com.mstdemo.mst.util.StreamZipUtil;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.zip.*;
-
-
 @Service
 public class DeptInfoServiceImpl implements DeptInfoService {
     @Autowired
@@ -51,6 +39,16 @@ public class DeptInfoServiceImpl implements DeptInfoService {
         parent.setId("0");
         queryChildPermissions(parent);
         return parent.getChildren();
+    }
+
+    @Override
+    public void exl() {
+
+    }
+
+    @Override
+    public void exlxlsx() {
+
     }
 
     /**
@@ -124,7 +122,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
      * @param tagetFileName 压缩包所在的路径
      *                      parent 指定解压的目录
      */
-    public static void decompression(String tagetFileName, String parent) {
+   /* public static void decompression(String tagetFileName, String parent) {
         try {
             //构造解压的输入流
             ZipInputStream zIn = new ZipInputStream(new FileInputStream(tagetFileName));
@@ -161,7 +159,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
         }
 
 
-    }
+    }*/
 
     /**
      * 压缩
@@ -201,7 +199,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
      *
      * @param
      */
-    @Override
+    /*@Override
     public void exl() {
         // 创建Excel的工作书册 Workbook,对应到一个excel文档
         HSSFWorkbook wb = new HSSFWorkbook();
@@ -303,9 +301,9 @@ public class DeptInfoServiceImpl implements DeptInfoService {
             CheckedOutputStream csum = new CheckedOutputStream(f, new Adler32());
             // 用于将数据压缩成Zip文件格式
             ZipOutputStream zos = new ZipOutputStream(csum);
-            /**
+            *//**
              * 添加excel表格数据
-             */
+             *//*
             zos.putNextEntry(new ZipEntry("file.xls"));
             int bytesRead = 0;
             while ((bytesRead = in.read()) != -1) {
@@ -326,7 +324,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     /**
@@ -334,7 +332,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
      *
      * @param
      */
-    @Override
+    /*@Override
     public void exlxlsx() {
 
         XSSFWorkbook wb = new XSSFWorkbook();
@@ -367,7 +365,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
         if (insertLength > 0) {
             System.out.println(sharList.subList(i, i + insertLength));
         }
-    }
+    }*/
 
 
     public static void main(String[] args) {
@@ -390,12 +388,12 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 
 
         //批量导入
-        fpexls();
+//        fpexls();
 
     }
 
 
-    public ChannelSftp connect(String host, int port, String username,
+   /* public ChannelSftp connect(String host, int port, String username,
                                String password) {
         ChannelSftp sftp = null;
         try {
@@ -418,7 +416,7 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 
         }
         return sftp;
-    }
+    }*/
 
 
     /**

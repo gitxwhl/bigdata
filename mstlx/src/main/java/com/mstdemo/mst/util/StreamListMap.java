@@ -25,7 +25,7 @@ public class StreamListMap {
          * 这种方式如果map出现重复的key值的话，需要加(a,b)->b，否则报错
          * @param args
          */
-        Map<String,Student> collect1  = list.stream().collect(Collectors.toMap(Student::getId, Function.identity(),(a,b)->b));
+        Map<String,Student> collect1  = list.stream().collect(Collectors.toMap(Student::getSid, Function.identity(),(a,b)->b));
         System.out.println(collect1);
 
         /**

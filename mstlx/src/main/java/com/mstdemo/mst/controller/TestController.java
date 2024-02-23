@@ -1,8 +1,8 @@
 package com.mstdemo.mst.controller;
 
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
+//import com.jcraft.jsch.ChannelSftp;
+//import com.jcraft.jsch.JSch;
+//import com.jcraft.jsch.Session;
 import com.mstdemo.mst.bean.DeptInfo;
 import com.mstdemo.mst.bean.Permission;
 import com.mstdemo.mst.exception.CommonResult;
