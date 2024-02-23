@@ -1,20 +1,20 @@
 package com.mashibing.apipassenger.service.impl;
-
 import com.mashibing.apipassenger.remote.ServicePassengerUserClint;
 import com.mashibing.apipassenger.remote.ServiceverifiCationcodeClint;
 import com.mashibing.apipassenger.service.VerificationCodeService;
 import com.mashibing.internalcommon.constent.CommonStatusEnum;
 import com.mashibing.internalcommon.constent.ConstentIdentity;
+import com.mashibing.internalcommon.constent.TookenConstent;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.dto.TokenResponse;
 import com.mashibing.internalcommon.request.VerificationDTO;
 import com.mashibing.internalcommon.response.NumberCodeResponse;
 import com.mashibing.internalcommon.util.JwtUtils;
+import com.mashibing.internalcommon.util.RedisPrefixUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -23,10 +23,6 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
        private ServicePassengerUserClint servicePassengerUserClint;
         @Autowired
        private ServiceverifiCationcodeClint serviceverifiCationcodeClint;
-//       乘客验证码前缀
-        private String  verificationCodePrefix="passenge-verification-code-";
-        //tooken前缀
-        private String to0kenPreFix="tooken-";
         @Autowired
         private StringRedisTemplate stringRedisTemplate;
 
@@ -41,7 +37,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         ResponseResult<NumberCodeResponse> numCode = serviceverifiCationcodeClint.getNumberCode(5);
         int code= numCode.getData().getNumberCode();
         //添加乘客手机号前缀
-        String key = getkeyByphone(passengerPhone);
+        String key = RedisPrefixUtils.getkeyByphone(passengerPhone);
         //存入redis  key，value,过期时间
         stringRedisTemplate.opsForValue().set(key,code+"",2, TimeUnit.MINUTES);
         //通过短信服务商，将对应的验证码发送到手机上，阿里短信服务，腾讯短信通，华信，容联
@@ -59,20 +55,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     /**
      *生成key
      */
-    public String getkeyByphone(String passengerPhone){
-        return verificationCodePrefix + passengerPhone;
-    }
 
-
-    /**
-     * tooken存入redis
-     * @param passengerPhone
-     * @param identiy
-     * @return
-     */
-    public String getGenraTooken(String passengerPhone,String identiy){
-        return to0kenPreFix + passengerPhone + "-" + identiy;
-    }
 
 
 
@@ -87,7 +70,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     public ResponseResult verificationCodeCheck(String passengerPhone, String verificationCode) {
         //根据手机号从redis里面获取验证码
         //获取key
-        String rediskey = getkeyByphone(passengerPhone);
+        String rediskey = RedisPrefixUtils.getkeyByphone(passengerPhone);
         //根据key获取value
         String code = stringRedisTemplate.opsForValue().get(rediskey);
         //如果验证码为空
@@ -103,21 +86,19 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         verificationDTO.setPassengerPhone(passengerPhone);
         servicePassengerUserClint.loginOrRegister(verificationDTO);
         //颁发token
-        String token = JwtUtils.generatorToken(passengerPhone, ConstentIdentity.PASSENGER_IDENTITY);
-        //将token存入redis
-        String tookenKey = getGenraTooken(passengerPhone,ConstentIdentity.PASSENGER_IDENTITY);
-        stringRedisTemplate.opsForValue().set(tookenKey,token,30,TimeUnit.DAYS);
+        String accessToken = JwtUtils.generatorToken(passengerPhone, ConstentIdentity.PASSENGER_IDENTITY,TookenConstent.ACCESS_TOOKEN_TYPE);
+        String refreshToken = JwtUtils.generatorToken(passengerPhone, ConstentIdentity.PASSENGER_IDENTITY, TookenConstent.REFRESH_TOOKEN_TYPE);
 
-
-
-
-
-
-
+       //将token存入redis
+        String accessTookenKey = RedisPrefixUtils.getGenraTooken(passengerPhone,ConstentIdentity.PASSENGER_IDENTITY,TookenConstent.ACCESS_TOOKEN_TYPE);
+        stringRedisTemplate.opsForValue().set(accessTookenKey,accessToken,30,TimeUnit.DAYS);
+        String refreshtookenKey = RedisPrefixUtils.getGenraTooken(passengerPhone,ConstentIdentity.PASSENGER_IDENTITY,TookenConstent.REFRESH_TOOKEN_TYPE);
+        stringRedisTemplate.opsForValue().set(refreshtookenKey,refreshToken,31,TimeUnit.DAYS);
 
         //响应
         TokenResponse tokenResponse=new TokenResponse();
-        tokenResponse.setToken(token);
+        tokenResponse.setAccessToken(accessToken);
+        tokenResponse.setRefreshToken(refreshToken);
         return ResponseResult.success(tokenResponse);
     }
 }

@@ -5,6 +5,8 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.mashibing.internalcommon.constent.TokenResult;
+import com.mashibing.internalcommon.constent.TookenConstent;
+
 import java.util.*;
 
 public class JwtUtils {
@@ -16,12 +18,16 @@ public class JwtUtils {
     //1代表乘客   2代表司机
     private static final String JWT_KEY_IDENTITY="identity";
 
+    //token类型
+    private static final String TOOKEN_TYPE="tookeType";
+
 
     //生成token
-    public static String generatorToken(String passengerPhone,String identity){
+    public static String generatorToken(String passengerPhone,String identity,String tookenType){
         Map<String,String> map =new HashMap<>();
         map.put(JWT_KEY_PHONE,passengerPhone);
         map.put(JWT_KEY_IDENTITY,identity);
+        map.put(TOOKEN_TYPE, tookenType);
         //token 过期时间  当前时间加一天
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE,1);
@@ -56,7 +62,7 @@ public class JwtUtils {
 
     public static void main(String[] args) {
         //生成tooken
-       String s = generatorToken("15252125537","1");
+       String s = generatorToken("15252125537","1", TookenConstent.ACCESS_TOOKEN_TYPE);
         System.out.println("生成的token：" + s);
         //解析tooken
         TokenResult parseToken  =  parseToken(s);

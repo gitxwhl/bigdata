@@ -25,8 +25,8 @@ public class RedisPrefixUtils {
      * @param identiy
      * @return
      */
-    public static String getGenraTooken(String passengerPhone,String identiy){
-        return tookenPreFix + passengerPhone + "-" + identiy;
+    public static String getGenraTooken(String passengerPhone,String identiy,String tokenType){
+        return tookenPreFix + passengerPhone + "-" + identiy + "-" + tokenType;
     }
 
 
