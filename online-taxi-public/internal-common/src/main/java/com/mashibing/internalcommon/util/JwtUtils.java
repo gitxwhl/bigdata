@@ -3,6 +3,9 @@ package com.mashibing.internalcommon.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.mashibing.internalcommon.constent.TokenResult;
 import com.mashibing.internalcommon.constent.TookenConstent;
@@ -21,6 +24,8 @@ public class JwtUtils {
     //token类型
     private static final String TOOKEN_TYPE="tookeType";
 
+    private static final String JWT_TOOKEN_TIME ="tookenTime";
+
 
     //生成token
     public static String generatorToken(String passengerPhone,String identity,String tookenType){
@@ -29,9 +34,11 @@ public class JwtUtils {
         map.put(JWT_KEY_IDENTITY,identity);
         map.put(TOOKEN_TYPE, tookenType);
         //token 过期时间  当前时间加一天
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE,1);
-        Date date = calendar.getTime();
+        Date date = calendar.getTime();*/
+        //防止每次生成的tooken一样
+        map.put(JWT_TOOKEN_TIME, Calendar.getInstance().getTime().toString());
          JWTCreator.Builder builder = JWT.create();
         //整合map  map取出k，v的值逐个放到
         map.forEach((k,v)->{
@@ -56,6 +63,21 @@ public class JwtUtils {
         return tokenResult;
     }
 
+    /**
+     * 校验tooken，判断tooken是否异常
+     * @param tooken
+     */
+    public static TokenResult checkTooken(String tooken){
+        TokenResult  resulttooken=null;
+        try {
+            //解析tooken
+              resulttooken =  JwtUtils.parseToken(tooken);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resulttooken;
+
+    }
 
 
 

@@ -52,13 +52,6 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     }
 
 
-    /**
-     *生成key
-     */
-
-
-
-
 
     /**
      * 校验验证码
@@ -92,9 +85,10 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
        //将token存入redis
         String accessTookenKey = RedisPrefixUtils.getGenraTooken(passengerPhone,ConstentIdentity.PASSENGER_IDENTITY,TookenConstent.ACCESS_TOOKEN_TYPE);
         stringRedisTemplate.opsForValue().set(accessTookenKey,accessToken,30,TimeUnit.DAYS);
+//        stringRedisTemplate.opsForValue().set(accessTookenKey,accessToken,10,TimeUnit.SECONDS);
         String refreshtookenKey = RedisPrefixUtils.getGenraTooken(passengerPhone,ConstentIdentity.PASSENGER_IDENTITY,TookenConstent.REFRESH_TOOKEN_TYPE);
         stringRedisTemplate.opsForValue().set(refreshtookenKey,refreshToken,31,TimeUnit.DAYS);
-
+//        stringRedisTemplate.opsForValue().set(refreshtookenKey,refreshToken,50,TimeUnit.SECONDS);
         //响应
         TokenResponse tokenResponse=new TokenResponse();
         tokenResponse.setAccessToken(accessToken);

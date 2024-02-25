@@ -20,7 +20,7 @@ public class RedisPrefixUtils {
 
 
     /**
-     * tooken存入redis
+     * 生成tooken 的key
      * @param passengerPhone
      * @param identiy
      * @return

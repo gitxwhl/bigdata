@@ -8,8 +8,10 @@ import lombok.Getter;
  * 固定的对象用枚举,枚举类要写在最前面
  */
 public enum CommonStatusEnum {
-
+    //1000--1099
     VERIFICATION_CODE_ERREO(1009,"验证码错误"),
+    //1000--1099
+    TOOKEN_ERROR(1099,"tooken错误"),
     SUCESS(1,"sucess"),
     FAIL(0,"fail");
     @Getter
