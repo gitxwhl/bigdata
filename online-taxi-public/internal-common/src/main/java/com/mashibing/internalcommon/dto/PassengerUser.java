@@ -1,4 +1,4 @@
-package com.mashibing.dto;
+package com.mashibing.internalcommon.dto;
 import lombok.Data;
 
 @Data
@@ -17,6 +17,8 @@ public class PassengerUser {
   private long passengerGender;
 //  乘客状态
   private long state;
+//照片url地址
+  private String passengerFileUrl;
 
 
 }

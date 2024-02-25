@@ -1,6 +1,6 @@
 package com.mashibing.service.impl;
 
-import com.mashibing.dto.PassengerUser;
+import com.mashibing.internalcommon.dto.PassengerUser;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.mapper.PassengerUserMapper;
 import com.mashibing.service.UserService;

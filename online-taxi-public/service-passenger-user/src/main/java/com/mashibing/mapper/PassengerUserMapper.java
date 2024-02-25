@@ -1,7 +1,7 @@
 package com.mashibing.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.mashibing.dto.PassengerUser;
+import com.mashibing.internalcommon.dto.PassengerUser;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
