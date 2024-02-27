@@ -1,5 +1,6 @@
 package com.mashibing.service.impl;
 
+import com.mashibing.internalcommon.constent.CommonStatusEnum;
 import com.mashibing.internalcommon.dto.PassengerUser;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.mapper.PassengerUserMapper;
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
 
     /**
-     * 根据手机号查询用户信息
+     * 根据手机号查询用户信息,如果有该用户不做任何操作，如果没有注册用户信息
      */
     @Override
     public ResponseResult loginOrRegister(String passengerPhone) {
@@ -48,5 +49,23 @@ public class UserServiceImpl implements UserService {
             passengerUserMapper.insert(passengerUser);
         }
         return ResponseResult.success();
+    }
+
+    /**
+     * 根据手机号获取用户信息
+     * @param phone
+     * @return
+     */
+    @Override
+    public ResponseResult getUserbyphone(String phone) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("passenger_phone",phone);
+        List<PassengerUser> userList = passengerUserMapper.selectByMap(map);
+        if(userList.size()==0){
+          return   ResponseResult.fail(CommonStatusEnum.USER_NOT_EXISTS.getCode(), CommonStatusEnum.USER_NOT_EXISTS.getValue());
+        }else {
+            PassengerUser passengerUser   = userList.get(0);
+            return ResponseResult.success(passengerUser);
+        }
     }
 }
