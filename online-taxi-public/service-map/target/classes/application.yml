@@ -3,3 +3,12 @@ server:
 
 key:
   amap: 578501bd3919a5efed282790f0f6c5a2
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: service-map
+
