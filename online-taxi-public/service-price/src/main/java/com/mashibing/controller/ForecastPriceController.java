@@ -19,6 +19,7 @@ public class ForecastPriceController {
      * @param forecastPriceDto
      * @return
      */
+    @RequestMapping("findForecastPrice")
     public ResponseResult FindForecastPrice(@RequestBody ForecastPriceDto forecastPriceDto){
         return forecastPriceService.ForecastPrice(forecastPriceDto);
     }
