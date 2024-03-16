@@ -14,6 +14,8 @@ public enum CommonStatusEnum {
     TOOKEN_ERROR(1199,"tooken错误"),
     //用户提示：1200-1299
     USER_NOT_EXISTS(1200,"当前用户不存在"),
+    //1300-1399
+    PRICE_RULE_EMPTY(1300,"计价规则不存在"),
     SUCESS(1,"sucess"),
     FAIL(0,"fail");
     @Getter
