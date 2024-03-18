@@ -13,9 +13,9 @@ public class PriceRule {
     //起步里程
     private Integer startMile;
     //一公里多少钱
-    private String unitPricePerMile;
+    private Double unitPricePerMile;
     //一分钟多少钱
-    private String unitPricePerMinute;
+    private Double unitPricePerMinute;
 
 
 
