@@ -7,3 +7,9 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 target/
+online-taxi-public/api-passenger/target
+online-taxi-public/internal-common/target
+online-taxi-public/service-map/target
+online-taxi-public/service-passenger-user/target
+online-taxi-public/service-price/target
+online-taxi-public/service-verificationcode/target

@@ -15,6 +15,9 @@ public class AmapConfigConstents {
 
     public static final String DURATION="duration";
 
+    //地区字典url
+    public static final String DISTRICT_URL ="https://restapi.amap.com/v3/config/district";
+
 
 
 }

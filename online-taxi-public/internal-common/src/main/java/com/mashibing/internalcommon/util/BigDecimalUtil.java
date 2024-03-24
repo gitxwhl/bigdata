@@ -25,7 +25,7 @@ public class BigDecimalUtil {
         }
         BigDecimal b1=new BigDecimal(v1);
         BigDecimal b2= new BigDecimal(v2);
-        return b1.divide(b2).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        return b1.divide(b2,2,BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     /**

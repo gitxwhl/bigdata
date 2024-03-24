@@ -98,12 +98,12 @@ public class ForecastPriceServiceImpl implements ForecastPriceService {
         return priceAll ;
     }
 
-    public static void main(String[] args) {
-        PriceRule priceRule=new PriceRule();
-        priceRule.setUnitPricePerMile(1.8);
-        priceRule.setUnitPricePerMinute(0.5);
-        priceRule.setStartFare(10.0);
-        priceRule.setStartMile(3);
-        System.out.println(getPrice(6500,1800,priceRule));
-    }
+//    public static void main(String[] args) {
+//        PriceRule priceRule=new PriceRule();
+//        priceRule.setUnitPricePerMile(1.8);
+//        priceRule.setUnitPricePerMinute(0.5);
+//        priceRule.setStartFare(10.0);
+//        priceRule.setStartMile(3);
+//        System.out.println(getPrice(6500,1800,priceRule));
+//    }
 }
