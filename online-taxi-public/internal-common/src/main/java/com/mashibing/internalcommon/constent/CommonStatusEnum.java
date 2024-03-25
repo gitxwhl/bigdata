@@ -16,6 +16,8 @@ public enum CommonStatusEnum {
     USER_NOT_EXISTS(1200,"当前用户不存在"),
     //1300-1399
     PRICE_RULE_EMPTY(1300,"计价规则不存在"),
+    //1400-1499
+    DISTRICT_ERROR(1400,"获取地图信息失败"),
     SUCESS(1,"sucess"),
     FAIL(0,"fail");
     @Getter
