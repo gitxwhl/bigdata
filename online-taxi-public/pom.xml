@@ -17,6 +17,7 @@
         <module>service-passenger-user</module>
         <module>service-price</module>
         <module>service-map</module>
+        <module>service-drive-user</module>
 
     </modules>
     <packaging>pom</packaging>
