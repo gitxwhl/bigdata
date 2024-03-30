@@ -18,6 +18,7 @@
         <module>service-price</module>
         <module>service-map</module>
         <module>service-drive-user</module>
+        <module>api-boos</module>
 
     </modules>
     <packaging>pom</packaging>
