@@ -24,11 +24,11 @@ use-expressions：表示使用Spring的EL表达式
  4、always-use-default-target default-target-url 登录成功后跳转的页面
  -->
         <!---认证信息 -->
-<!--        <security:form-login login-page="/login.jsp"-->
-<!--                             login-processing-url="/login"-->
-<!--                             always-use-default-target="true"-->
-<!--                             default-target-url="/home.jsp"-->
-<!--        />-->
+        <security:form-login login-page="/login.jsp"
+                             login-processing-url="/login"
+                             always-use-default-target="true"
+                             default-target-url="/home.jsp"
+        />
 <!--    <security:csrf disabled="true"/>-->
     </security:http>
     <!-- 认证用户信息 -->
