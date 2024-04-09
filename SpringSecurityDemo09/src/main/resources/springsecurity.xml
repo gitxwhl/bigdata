@@ -6,6 +6,10 @@
          http://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/security
          http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- 向容器中注入了一个 实现动态加密 BCryptPasswordEncoder -->
+    <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="bCryptPasswordEncoder" />
+
     <!-- SpringSecurity配置文件 -->
     <!--
 auto-config:表示自动加载SpringSecurity的配置文件
@@ -33,7 +37,10 @@ use-expressions：表示使用Spring的EL表达式
     </security:http>
     <!-- 认证用户信息 -->
     <security:authentication-manager>
-        <security:authentication-provider user-service-ref="userServiceImpl"/>
+        <security:authentication-provider user-service-ref="userServiceImpl">
+<!--            关联动态加密-->
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
+        </security:authentication-provider>
 <!--        <security:authentication-provider>-->
 <!--            <security:user-service>-->
 <!--                 设置一个账号 zhangsan 密码123 {noop} 表示不加密 具有的角色是  ROLE_USER-->
@@ -41,5 +48,7 @@ use-expressions：表示使用Spring的EL表达式
 <!--                <security:user name="lisi" authorities="ROLE_USER" password="{noop}123456"></security:user>-->
 <!--            </security:user-service>-->
 <!--        </security:authentication-provider>-->
+
+
     </security:authentication-manager>
 </beans>

@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +33,23 @@ public class UserServiceImpl implements UserService {
             // 表示账号存在
             UserDetails userDetails = new User(
                     sysUser.getUserName() // 账号
-                    ,"{noop}" + sysUser.getPassword() // 密码
+                    , sysUser.getPassword() // 密码
                     ,list
                     );
             return userDetails;
         }
         // 返回null 表示账号不存在
         return null;
+    }
+
+    public static void main(String[] args) {
+        //注册时候加密可以使用这个，然后，获取加密过后的数据之后入库
+        BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+        String password="admin";
+        System.out.println("encoder.encode(password) ="+encoder.encode(password));
+        System.out.println("encoder.encode(password) ="+encoder.encode(password));
+        System.out.println("encoder.encode(password) ="+encoder.encode(password));
+        System.out.println("encoder.encode(password) ="+encoder.encode(password));
+
     }
 }
