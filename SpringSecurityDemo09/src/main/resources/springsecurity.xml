@@ -33,6 +33,8 @@ use-expressions：表示使用Spring的EL表达式
                              always-use-default-target="true"
                              default-target-url="/home.jsp"
         />
+<!--        开启记住我功能   data-source-ref连接数据源存储用户名密码   token-validity-seconds 过期时间  记住我 持久化sql在JdbcTokenRepositoryImpl 中 -->
+        <security:remember-me data-source-ref="dataSource" token-validity-seconds="1" remember-me-parameter="remember-me"/>
 <!--    <security:csrf disabled="true"/>-->
     </security:http>
     <!-- 认证用户信息 -->
