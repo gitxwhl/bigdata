@@ -34,6 +34,14 @@ public class UserServiceImpl implements UserService {
             UserDetails userDetails = new User(
                     sysUser.getUserName() // 账号
                     , sysUser.getPassword() // 密码
+//                    是否开启
+                    ,true
+//                    是否过期
+                    ,true
+//                    是否过期
+                    ,true
+//                    是否锁定
+                    ,true
                     ,list
                     );
             return userDetails;
