@@ -18,6 +18,7 @@
         密码:<input type="password" name="password"><br>
         <security:csrfInput/>
        <input type="submit" value="登录">
+     <input type="checkbox" name="remember-me" value="true"> 记住我 <br>
      </form>
 </body>
 </html>
