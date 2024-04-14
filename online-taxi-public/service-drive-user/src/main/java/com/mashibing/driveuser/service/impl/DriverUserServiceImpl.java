@@ -1,13 +1,12 @@
 package com.mashibing.driveuser.service.impl;
 
 import com.mashibing.driveuser.mapper.DriverUserMapper;
-import com.mashibing.driveuser.pojo.DriverUser;
 import com.mashibing.driveuser.service.DriverUserService;
+import com.mashibing.internalcommon.dto.DriverUser;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -40,8 +39,14 @@ public class DriverUserServiceImpl implements DriverUserService {
     }
 
 
-
-
+    //根据id修改司机信息
+    @Override
+    public ResponseResult updateUser(DriverUser driverUser) {
+        LocalDateTime now = LocalDateTime.now();
+        driverUser.setGmtModified(now);
+        driverUserMapper.updateById(driverUser);
+        return ResponseResult.success();
+    }
 
 
 }
