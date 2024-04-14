@@ -7,11 +7,12 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 target/
-/api-passenger/target
-/internal-common/target
-/service-map/target
-/service-passenger-user/target
-/service-price/target
-/service-verificationcode/target
-/api-boos/target
+/api-passenger/target/
+/internal-common/target/
+/service-map/target/
+/service-passenger-user/target/
+/service-price/target/
+/service-verificationcode/target/
+/api-boos/target/
+/api-drive/target/
 /.idea/

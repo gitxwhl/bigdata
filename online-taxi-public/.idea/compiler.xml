@@ -11,6 +11,7 @@
         <module name="api-boos" />
         <module name="service-drive-user" />
         <module name="service-verificationcode" />
+        <module name="api-drive" />
         <module name="service-price" />
         <module name="service-map" />
         <module name="service-passenger-user" />
@@ -20,6 +21,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-boos" options="-parameters" />
+      <module name="api-drive" options="-parameters" />
       <module name="api-passenger" options="-parameters" />
       <module name="internal-common" options="-parameters" />
       <module name="service-drive-user" options="-parameters" />
