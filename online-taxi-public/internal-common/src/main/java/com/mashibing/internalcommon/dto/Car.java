@@ -1,5 +1,6 @@
 package com.mashibing.internalcommon.dto;
 import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

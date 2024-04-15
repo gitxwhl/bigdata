@@ -2,6 +2,7 @@ package com.mashibing.driveuser.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mashibing.internalcommon.dto.Car;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.mashibing.internalcommon.dto.Car;
  * @author 晁鹏飞
  * @since 2024-04-15
  */
+@Repository
 public interface CarMapper extends BaseMapper<Car> {
 
 }
