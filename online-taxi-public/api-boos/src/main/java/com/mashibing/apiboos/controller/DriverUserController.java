@@ -1,5 +1,6 @@
 package com.mashibing.apiboos.controller;
 import com.mashibing.apiboos.service.DriverUserService;
+import com.mashibing.internalcommon.dto.DriverCarBindingRelationship;
 import com.mashibing.internalcommon.dto.DriverUser;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,21 @@ public class DriverUserController {
     @PutMapping("/driver-user")
     public ResponseResult updateDriverUser(@RequestBody DriverUser driverUser){
         return driverUserService.updateDriverUser(driverUser);
+    }
+
+    /**
+     * 司机车辆绑定
+     */
+    @PostMapping("/bind")
+    public ResponseResult bind(@RequestBody DriverCarBindingRelationship driverCarBindingRelationship){
+        return driverUserService.bind(driverCarBindingRelationship);
+    }
+    /**
+     * 司机车辆解绑
+     */
+    @PostMapping("/unbind")
+    public ResponseResult unbind(@RequestBody DriverCarBindingRelationship driverCarBindingRelationship){
+        return driverUserService.unbind(driverCarBindingRelationship);
     }
 
 }
