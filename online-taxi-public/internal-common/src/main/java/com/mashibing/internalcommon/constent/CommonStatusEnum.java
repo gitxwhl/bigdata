@@ -18,6 +18,15 @@ public enum CommonStatusEnum {
     PRICE_RULE_EMPTY(1300,"计价规则不存在"),
     //1400-1499
     DISTRICT_ERROR(1400,"获取地图信息失败"),
+//    1500-1599  司机车辆
+    DRIVER_CAR_BIND_NOT_EXISTS(1500,"司机车辆绑定关系不存在"),
+    DRIVER_BIND_NOT_EXISTS(1501,"司机不存在"),
+    DRIVER_CAR_BIND_EXISTS(1502,"司机车辆绑定关系已存在，请勿重复绑定"),
+    DRIVER_BIND_EXISTS(1502,"司机已经绑定，请勿重复绑定"),
+    CAR_BIND_EXISTS(1502,"车辆已经绑定，请勿重复绑定"),
+
+
+
     SUCESS(1,"sucess"),
     FAIL(0,"fail");
     @Getter
