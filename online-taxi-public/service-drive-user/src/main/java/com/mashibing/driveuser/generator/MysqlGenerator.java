@@ -13,7 +13,7 @@ public class MysqlGenerator {
                 "root","zpproot")
                 .globalConfig(builder -> {
                     //设置输出的目录
-                    builder.author("晁鹏飞").fileOverride().outputDir("D:\\github\\bigdata\\online-taxi-public\\service-drive-user\\src\\main\\java");
+                    builder.author("111").fileOverride().outputDir("D:\\github\\bigdata\\online-taxi-public\\service-drive-user\\src\\main\\java");
                 })
                 .packageConfig(builder -> {
                     //设置包的属性  parent 当前类MysqlGenerator所在的父包，
@@ -23,7 +23,7 @@ public class MysqlGenerator {
                 //生成策略
                 .strategyConfig(builder -> {
                     //生成的表名
-                    builder.addInclude("car")
+                    builder.addInclude("driver_car_binding_relationship")
                     //过滤表的前缀或者后缀
 //                    .addTablePrefix()
 //                    .addTableSuffix()
