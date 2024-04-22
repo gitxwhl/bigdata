@@ -2,14 +2,12 @@ package com.mashibing.driveuser.controller;
 import com.mashibing.driveuser.service.DriverUserService;
 import com.mashibing.internalcommon.dto.DriverUser;
 import com.mashibing.internalcommon.dto.ResponseResult;
+import com.mashibing.internalcommon.response.DriverUserExistsResposonse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class DriverServiceController {
+public class UserController {
     @Autowired
     private DriverUserService driverUserService;
 
@@ -41,6 +39,25 @@ public class DriverServiceController {
         return driverUserService.updateUser(driverUser);
     }
 
+    /**
+     * 根据手机号查询用户是否存在
+     */
+    @GetMapping("/check-driver/{driverPhone}")
+    public ResponseResult<DriverUser> getDriverUserbyPhone(@PathVariable("driverPhone") String driverPhone){
+        ResponseResult<DriverUser> driverUserbyPhone = driverUserService.getDriverUserbyPhone(driverPhone);
+        DriverUser driverUserDb = driverUserbyPhone.getData();
+        DriverUserExistsResposonse resposonse=new DriverUserExistsResposonse();
+        int isExists=1;
+        if(driverUserDb==null){
+            isExists=0;
+            resposonse.setDriverPhone(driverPhone);
+            resposonse.setIsExists(isExists);
+        }else {
+            resposonse.setDriverPhone(driverPhone);
+            resposonse.setIsExists(isExists);
+        }
+        return ResponseResult.success(resposonse);
+    }
 
 
 

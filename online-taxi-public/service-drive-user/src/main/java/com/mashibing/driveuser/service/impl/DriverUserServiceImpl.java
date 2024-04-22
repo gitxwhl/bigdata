@@ -2,6 +2,8 @@ package com.mashibing.driveuser.service.impl;
 
 import com.mashibing.driveuser.mapper.DriverUserMapper;
 import com.mashibing.driveuser.service.DriverUserService;
+import com.mashibing.internalcommon.constent.CommonStatusEnum;
+import com.mashibing.internalcommon.constent.DriverCarConstans;
 import com.mashibing.internalcommon.dto.DriverUser;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,23 @@ public class DriverUserServiceImpl implements DriverUserService {
         driverUserMapper.updateById(driverUser);
         return ResponseResult.success();
     }
+
+    //查询用户是否存在
+    @Override
+    public ResponseResult<DriverUser> getDriverUserbyPhone(String driverPhone) {
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("driver_phone",driverPhone);
+        map.put("state", DriverCarConstans.DRIVER_STATE_VALID);
+        List<DriverUser> driverUsersList = driverUserMapper.selectByMap(map);
+        if(driverUsersList.isEmpty()){
+            return ResponseResult.fail(CommonStatusEnum.DRIVER_BIND_NOT_EXISTS.getCode(),CommonStatusEnum.DRIVER_BIND_NOT_EXISTS.getValue());
+        }
+        DriverUser driveUser = driverUsersList.get(0);
+        return ResponseResult.success(driveUser);
+    }
+
+
 
 
 }

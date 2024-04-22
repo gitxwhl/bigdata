@@ -14,4 +14,9 @@ public interface DriverUserService {
 
      //修改司机信息
      ResponseResult updateUser(DriverUser driverUser);
+
+
+     //查询用户是否存在
+     ResponseResult<DriverUser> getDriverUserbyPhone(String driverPhone);
+
 }

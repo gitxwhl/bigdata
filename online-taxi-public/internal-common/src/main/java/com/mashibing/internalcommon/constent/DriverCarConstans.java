@@ -6,4 +6,9 @@ public class DriverCarConstans {
     //解绑
     public static Integer DRIVER_CAR_UNBIND=2;
 
+    //司机状态：1：有效
+    public static Integer DRIVER_STATE_VALID=1;
+    //司机状态：0:无效
+    public static Integer DRIVER_STATE_INVLD=0;
+
 }
