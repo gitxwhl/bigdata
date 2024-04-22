@@ -1,5 +1,6 @@
 package com.mashibing.driveuser.controller;
 import com.mashibing.driveuser.service.DriverUserService;
+import com.mashibing.internalcommon.constent.DriverCarConstans;
 import com.mashibing.internalcommon.dto.DriverUser;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.response.DriverUserExistsResposonse;
@@ -43,13 +44,13 @@ public class UserController {
      * 根据手机号查询用户是否存在
      */
     @GetMapping("/check-driver/{driverPhone}")
-    public ResponseResult<DriverUser> getDriverUserbyPhone(@PathVariable("driverPhone") String driverPhone){
+    public ResponseResult<DriverUserExistsResposonse> getDriverUserbyPhone(@PathVariable("driverPhone") String driverPhone){
         ResponseResult<DriverUser> driverUserbyPhone = driverUserService.getDriverUserbyPhone(driverPhone);
         DriverUser driverUserDb = driverUserbyPhone.getData();
         DriverUserExistsResposonse resposonse=new DriverUserExistsResposonse();
-        int isExists=1;
+        int isExists=DriverCarConstans.EXISTS;
         if(driverUserDb==null){
-            isExists=0;
+            isExists= DriverCarConstans.NOT_EXISTS;
             resposonse.setDriverPhone(driverPhone);
             resposonse.setIsExists(isExists);
         }else {

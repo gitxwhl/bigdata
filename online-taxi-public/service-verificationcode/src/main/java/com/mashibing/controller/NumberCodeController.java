@@ -1,14 +1,15 @@
 package com.mashibing.controller;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.response.NumberCodeResponse;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class NumberCodeController {
-    @RequestMapping("/numberCode/{size}")
-    public ResponseResult getNumberCode(@PathVariable("size") int size){
+    @GetMapping("/numberCode/{size}")
+    public ResponseResult<NumberCodeResponse> getNumberCode(@PathVariable("size") int size){
         //随机生成验证码:random随机生成的是0.xxxxxx  乘9之后如果首位不是0的话是整数.xxxxxx
         //如果是0的话需要加1保证整数为不为0，然后再乘以10整数次方往后移动小数点，输入的值和想要的
         //位数相差1，所以size需要减1
