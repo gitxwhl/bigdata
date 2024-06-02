@@ -33,6 +33,7 @@ public class SysRoleController {
         List<SysRole> list = sysRoleService.list();
         return   Result.ok(list);
     }
+    @ApiOperation("service 分页 条件角色查询")
     @GetMapping("{page}/{limit}")
     public Result pageQueryRole(@PathVariable Long page,
                                 @PathVariable Long limit,
@@ -42,7 +43,6 @@ public class SysRoleController {
 
         //创建page对象，传分页相关参数
         Page<SysRole> pageParam = new Page<>(page,limit);
-
         //封装，判断条件是否为空，不为空进行封装
         String roleName = sysRoleQueryVo.getRoleName();
         LambdaQueryWrapper<SysRole> lambdaQueryWrapper =new LambdaQueryWrapper<>();
@@ -53,6 +53,62 @@ public class SysRoleController {
         IPage<SysRole> pageModel = sysRoleService.page(pageParam, lambdaQueryWrapper);
         return Result.ok(pageModel);
     }
+
+
+
+    @ApiOperation("添加角色")
+    @PostMapping ("save")
+    public Result save(@RequestBody SysRole role){
+        //调用service方法
+        boolean is_success = sysRoleService.save(role);
+        if(is_success){
+           return Result.ok(is_success);
+        }else {
+           return Result.fail(is_success);
+        }
+    }
+    @ApiOperation("修改角色")
+    @PutMapping ("update")
+    public Result update(@RequestBody SysRole role){
+        boolean is_success = sysRoleService.updateById(role);
+        if(is_success){
+            return Result.ok(is_success);
+        }else {
+            return Result.fail(is_success);
+        }
+    }
+    @ApiOperation("查询角色-根据id查询")
+    @GetMapping("get/{id}")
+    public Result updateById(@PathVariable("id") Long id){
+        SysRole sysRole = sysRoleService.getById(id);
+        return Result.ok(sysRole);
+    }
+    @ApiOperation("删除角色")
+    @DeleteMapping("remove/{id}")
+    public Result remove(@PathVariable("id")Long id){
+        boolean is_success = sysRoleService.removeById(id);
+        if(is_success){
+            return Result.ok(is_success);
+        }else {
+            return Result.fail(is_success);
+        }
+    }
+    @ApiOperation("批量删除角色")
+    @PostMapping("batchRemove")
+    // 前端数组 [1,2,3]
+    public Result batchRemove(@RequestBody List<Long> idList){
+        boolean is_success = sysRoleService.removeByIds(idList);
+        if(is_success){
+            return Result.ok(is_success);
+        }else {
+            return Result.fail(is_success);
+        }
+    }
+
+
+
+
+
 
 
 
