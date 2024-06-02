@@ -2,6 +2,7 @@ package com.atguigu.controller;
 
 
 import atguigu.model.system.SysRole;
+import com.atguigu.common.config.exception.GuiguException;
 import com.atguigu.common.result.Result;
 import com.atguigu.service.SysRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -60,6 +61,11 @@ public class SysRoleController {
     @PostMapping ("save")
     public Result save(@RequestBody SysRole role){
         //调用service方法
+        try {
+        int i= 10/0;
+        }catch (Exception e){
+            throw new GuiguException(2001,"出现自定义异常");
+        }
         boolean is_success = sysRoleService.save(role);
         if(is_success){
            return Result.ok(is_success);
