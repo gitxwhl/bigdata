@@ -1,8 +1,8 @@
-package com.atguigu.service.impl;
+package com.atguigu.auth.service.impl;
 
 import atguigu.model.system.SysRole;
-import com.atguigu.mapper.SysRoleMapper;
-import com.atguigu.service.SysRoleService;
+import com.atguigu.auth.mapper.SysRoleMapper;
+import com.atguigu.auth.service.SysRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

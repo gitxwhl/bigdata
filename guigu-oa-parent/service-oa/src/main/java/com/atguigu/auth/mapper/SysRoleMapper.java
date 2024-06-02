@@ -1,4 +1,4 @@
-package com.atguigu.mapper;
+package com.atguigu.auth.mapper;
 
 import atguigu.model.system.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

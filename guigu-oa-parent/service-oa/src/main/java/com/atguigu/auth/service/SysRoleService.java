@@ -1,4 +1,4 @@
-package com.atguigu.service;
+package com.atguigu.auth.service;
 
 import atguigu.model.system.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;

@@ -1,10 +1,11 @@
-package com.atguigu.controller;
+package com.atguigu.auth.controller;
 
 
 import atguigu.model.system.SysRole;
+import com.atguigu.auth.service.SysRoleService;
 import com.atguigu.common.config.exception.GuiguException;
 import com.atguigu.common.result.Result;
-import com.atguigu.service.SysRoleService;
+import com.atguigu.vo.system.SysRoleQueryVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,8 +14,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import com.atguigu.vo.system.SysRoleQueryVo;
+
 @Api(tags = "角色管理接口")
 @RestController
 @RequestMapping("/admin/system/sysRole")
