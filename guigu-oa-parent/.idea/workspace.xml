@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d84d3a99-9b36-4c58-a3ba-349fff8a9900" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../DesignPattern/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringSecurityDemo09/SpringSecurityDemo09.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/common-util/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/common-util/src/main/java/com/atguigu/common/result/Result.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/common-util/src/main/java/com/atguigu/common/result/ResultCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/service-util/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/base/BaseEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/process/Process.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/process/ProcessRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/process/ProcessTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/process/ProcessType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/system/SysDept.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/system/SysLoginLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/system/SysMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/system/SysOperLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/system/SysPost.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/system/SysRole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/system/SysRoleMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/system/SysUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/system/SysUserRole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/atguigu/model/wechat/Menu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/src/main/java/com/atguigu/ServiceAuthApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/src/main/java/com/atguigu/controller/SysRoleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/src/main/java/com/atguigu/mapper/SysRoleMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/src/main/java/com/atguigu/service/SysRoleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/src/main/java/com/atguigu/service/impl/SysRoleServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/src/test/java/com/atguigu/auth/TestMapDemo1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-oa/src/test/java/com/atguigu/auth/TestMpDemo2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/项目.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-taxi-public/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../online-taxi-public/service-drive-user/src/main/java/com/mashibing/driveuser/remote/ServiceMapClint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mybatis-plus/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../mybatis-plus/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/api-drive/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/api-drive/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/api-drive/src/main/java/com/mashibing/apidrive/service/impl/VerificationcodeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/api-drive/src/main/java/com/mashibing/apidrive/service/impl/VerificationcodeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/api-passenger/src/main/java/com/mashibing/apipassenger/service/impl/VerificationCodeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/api-passenger/src/main/java/com/mashibing/apipassenger/service/impl/VerificationCodeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/internal-common/src/main/java/com/mashibing/internalcommon/constent/ConstentIdentity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/internal-common/src/main/java/com/mashibing/internalcommon/constent/ConstentIdentity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/internal-common/src/main/java/com/mashibing/internalcommon/util/RedisPrefixUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/internal-common/src/main/java/com/mashibing/internalcommon/util/RedisPrefixUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/internal-common/target/internal-common-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/internal-common/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/internal-common/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/internal-common/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/internal-common/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/internal-common/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/service-drive-user/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/service-drive-user/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/service-drive-user/src/main/java/com/mashibing/driveuser/ServiceDriveUserApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/service-drive-user/src/main/java/com/mashibing/driveuser/ServiceDriveUserApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/service-drive-user/src/main/java/com/mashibing/driveuser/service/impl/CarServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/service-drive-user/src/main/java/com/mashibing/driveuser/service/impl/CarServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/controller/TerminalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/controller/TerminalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/remote/ServiceClint.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/remote/ServiceClint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/remote/TerminalClint.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/remote/TerminalClint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/service/TerminalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/service/TerminalService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/service/impl/TerminalServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/service-map/src/main/java/com/mashibing/service/impl/TerminalServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../online-taxi-public/service-map/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../online-taxi-public/service-map/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../springboot-fileupload/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../springboot-fileupload/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../springboot-fileupload/src/main/resources/static/regist.html" beforeDir="false" afterPath="$PROJECT_DIR$/../springboot-fileupload/src/main/resources/static/regist.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssm01/src/main/java/com/msb/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ssm01/src/main/java/com/msb/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssm01/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../ssm01/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssm01/target/classes/com/msb/controller/FileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ssm01/target/classes/com/msb/controller/FileController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssm01/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../ssm01/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssm01/target/ssm01-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/../ssm01/target/ssm01-1.0-SNAPSHOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssm01/target/ssm01-1.0-SNAPSHOT/WEB-INF/classes/com/msb/controller/FileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ssm01/target/ssm01-1.0-SNAPSHOT/WEB-INF/classes/com/msb/controller/FileController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssm01/target/ssm01-1.0-SNAPSHOT/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../ssm01/target/ssm01-1.0-SNAPSHOT/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssm01/target/surefire-reports/TEST-com.msb.test.TestUUID.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssm01/target/surefire-reports/TEST-com.msb.test.TestUUID.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssm01/target/surefire-reports/com.msb.test.TestUUID.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ssm01/target/surefire-reports/com.msb.test.TestUUID.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tuling/src/main/java/com/tling/quartz/TestJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tuling/src/main/java/com/tling/quartz/TestJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tuling/src/main/resources/spring-quartz.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../tuling/src/main/resources/spring-quartz.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tuling/target/classes/com/tling/quartz/TestJob.class" beforeDir="false" afterPath="$PROJECT_DIR$/../tuling/target/classes/com/tling/quartz/TestJob.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$PROJECT_DIR$/../../../devinstall/apache-maven-3.3.9" />
+        <option name="userSettingsFile" value="D:\devinstall\apache-maven-3.3.9\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2hFsKSqUJtzNfCyuNpPlpfyq19e" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/common/common-util/src/main/java/com/atguigu/common/result" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.49520382" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\github\bigdata\guigu-oa-parent\common\common-util\src\main\java\com\atguigu\common\result" />
+      <recent name="D:\github\bigdata\guigu-oa-parent\service-oa\src\main\java\com\atguigu\controller" />
+      <recent name="D:\github\bigdata\guigu-oa-parent\service-oa\src\test\java\com\atguigu\auth" />
+      <recent name="D:\github\bigdata\guigu-oa-parent\service-oa\src\main\resources" />
+      <recent name="D:\github\bigdata\guigu-oa-parent\service-oa\src\main\java\com\atguigu" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ServiceAuthApplication">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestMapDemo1.getAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service-oa" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.atguigu.auth.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.atguigu.auth" />
+      <option name="MAIN_CLASS_NAME" value="com.atguigu.auth.TestMapDemo1" />
+      <option name="METHOD_NAME" value="getAll" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestMpDemo2.getAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service-oa" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.atguigu.auth.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.atguigu.auth" />
+      <option name="MAIN_CLASS_NAME" value="com.atguigu.auth.TestMpDemo2" />
+      <option name="METHOD_NAME" value="getAll" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServiceAuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="service-oa" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.ServiceAuthApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TestMpDemo2.getAll" />
+        <item itemvalue="JUnit.TestMapDemo1.getAll" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d84d3a99-9b36-4c58-a3ba-349fff8a9900" name="Default Changelist" comment="" />
+      <created>1717201096873</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717201096873</updated>
+      <workItem from="1717201098232" duration="4761000" />
+      <workItem from="1717222501123" duration="536000" />
+      <workItem from="1717223098152" duration="2798000" />
+      <workItem from="1717229427606" duration="9921000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
