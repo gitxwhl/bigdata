@@ -13,7 +13,14 @@ public class GlobalExceptionHandle {
     @ResponseBody
     public Result errot(Exception e){
         e.printStackTrace();
-        return Result.fail().message("执行了全异常处理。。。。。。。");
+        return Result.fail().message("执行了全局异常处理。。。。。。。");
+    }
+    //特定异常处理：如果有特定的异常执行全局特定的异常，否则，执行全局的异常
+    @ExceptionHandler(ArithmeticException.class)
+    @ResponseBody
+    public Result error(ArithmeticException e){
+        e.printStackTrace();
+        return Result.fail().message("执行了特定异常处理。。。。。。。");
     }
 
 
