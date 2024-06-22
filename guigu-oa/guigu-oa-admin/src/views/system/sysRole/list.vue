@@ -115,6 +115,24 @@ export default {
         this.total = response.data.total
         })
     },
+    // 根据id删除数据   如果点击确定，将执行then方法，如果点击取消，将执行catch方法，点取消什么都不需要做，
+    // 所以catch不需要写任何代码,只需要写then方法即可
+    removeDataById(id) {
+      // debugger
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => { // promise
+        // 点击确定，远程调用ajax return 表示调用成功之后会执行下一个then方法
+        return api.removeById(id)
+      }).then((response) => {
+        // 刷新页面
+        this.fetchData(this.page)
+        // 提示信息
+        this.$message.success(response.message || '删除成功')
+      })
+    },
 
 
 
