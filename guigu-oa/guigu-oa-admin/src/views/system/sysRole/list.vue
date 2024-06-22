@@ -21,6 +21,8 @@
     <!-- 工具条 -->
     <div class="tools-div">
       <el-button type="success" icon="el-icon-plus" size="mini" @click="add">添 加</el-button>
+      <el-button type="danger" icon="el-icon-delete" size="mini" @click="batchRemove" :disabled="isDisabled">批量删除</el-button>
+<!--      <el-button class="btn-add" size="mini" @click="batchRemove()" >批量删除</el-button>-->
     </div>
     <el-table
       v-loading="listLoading"
@@ -28,8 +30,10 @@
       stripe
       border
       style="width: 100%;margin-top: 10px;"
-      @selection-change="handleSelectionChange">
 
+      @selection-change="handleSelectionChange">
+<!--  @selection-change="handleSelectionChange">    事件中的方法表示 取到选择的值，传到方法中去,方法中可以得到传的每一行的内容-->
+<!--      表示多选框-->
       <el-table-column type="selection"/>
 
       <el-table-column
@@ -183,9 +187,40 @@ export default {
           this.fetchData()
         }
       )
+    },
+    //批量删除
+    // 选择复选框，把复选框所在的内容传递
+    handleSelectionChange(selection){
+      this.selections=selection
+      console.log(selection)
+    },
+    // 批量删除
+    batchRemove() {
+      //判断
+      if(this.selections.length == 0){
+        this.$message.warning('请选择要删除的数据')
+        return;
+      }
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => { // promise
+        // 点击确定，远程调用ajax return 表示调用成功之后会执行下一个then方法
+        var idList=[]
+        //选择复选框数据在数组里  this.selections
+        this.selections.forEach(item => {
+          var id=item.id
+          idList.push(id)
+        })
+        return api.batchRemove(idList);
+      }).then(response => {
+        // 提示信息
+        this.$message.success(response.message || '删除成功')
+        // 刷新页面
+        this.fetchData()
+      })
     }
-
-
 
 
   }

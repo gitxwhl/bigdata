@@ -12,7 +12,7 @@ export default {
       params: searchObj
     })
   },
-// 删除
+  /* 删除 */
   removeById(id) {
     return request({
       url: `${api_name}/remove/${id}`,
@@ -20,7 +20,7 @@ export default {
     })
   },
 
-  //角色添加
+  /* 角色添加 */
   saveRole(role) {
     return request({
       url: `${api_name}/save`,
@@ -35,7 +35,7 @@ export default {
       method: 'get'
     })
   },
-  //修改
+  /* 修改 */
   updateById(role) {
     return request({
       url: `${api_name}/update`,
@@ -43,6 +43,13 @@ export default {
       data: role
     })
   },
-
+  /* 批量删除 */
+  batchRemove(idList) {
+    return request({
+      url: `${api_name}/batchRemove`,
+      method: 'post',
+      data: idList
+    })
+  }
 
 }
