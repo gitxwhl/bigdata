@@ -133,7 +133,35 @@ export default {
         this.$message.success(response.message || '删除成功')
       })
     },
+    // 点击添加弹出框
+    add(){
+      this.dialogVisible = true
+    },
 
+    saveOrUpdate(){
+      //根据id 判断是添加还是修改
+      console.log(this.sysRole.id)
+      if(this.sysRole.id){
+        this.update()
+      }else{
+        console.log(this.sysRole.id)
+        this.save()
+      }
+    },
+    save(){ //添加
+      api.saveRole(this.sysRole).then(response =>{
+        //提示
+        this.$message.success(response.message || '添加成功')
+        //关闭弹窗
+        this.dialogVisible = false
+        //刷新页面
+        this.fetchData()
+      })
+
+    },
+    update(){ //修改
+
+    }
 
 
 

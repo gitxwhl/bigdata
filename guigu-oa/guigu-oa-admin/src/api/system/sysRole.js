@@ -20,7 +20,14 @@ export default {
     })
   },
 
-
+  //角色添加
+  saveRole(role) {
+    return request({
+      url: `${api_name}/save`,
+      method: 'post',
+      data: role
+    })
+  },
 
 
 }
