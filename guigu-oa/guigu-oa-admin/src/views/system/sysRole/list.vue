@@ -102,8 +102,21 @@ export default {
     this.fetchData()
   },
   methods: { // 操作方法
-
-
+    //点击修改，弹出框，根据id查询数据显示
+    edit(id) {
+      //弹出框
+      this.dialogVisible = true
+      //根据id查询
+      this.fetchDataById(id)
+    },
+    //根据id查询
+    fetchDataById(id){
+      api.getById(id)
+        .then(response => {
+          console.log(response)
+          this.sysRole = response.data
+        })
+    },
     // 条件分页查询
     fetchData(current = 1) {
       this.page = current
@@ -160,7 +173,16 @@ export default {
 
     },
     update(){ //修改
-
+      api.updateById(this.sysRole).then(
+        response => {
+          //提示
+          this.$message.success(response.message || '修改成功')
+          //关闭弹窗
+          this.dialogVisible = false
+          //刷新页面
+          this.fetchData()
+        }
+      )
     }
 
 

@@ -28,6 +28,21 @@ export default {
       data: role
     })
   },
+  // 根据id查询
+  getById(id) {
+    return request({
+      url: `${api_name}/get/${id}`,
+      method: 'get'
+    })
+  },
+  //修改
+  updateById(role) {
+    return request({
+      url: `${api_name}/update`,
+      method: 'put',
+      data: role
+    })
+  },
 
 
 }
