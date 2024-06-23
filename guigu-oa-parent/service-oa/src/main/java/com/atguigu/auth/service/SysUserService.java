@@ -2,6 +2,7 @@ package com.atguigu.auth.service;
 
 
 import atguigu.model.system.SysUser;
+import com.atguigu.common.result.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -14,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysUserService extends IService<SysUser> {
 
+    Result updateStatus(Long id, Integer status);
 }

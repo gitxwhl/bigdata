@@ -125,7 +125,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("分配用户角色")
-    @PostMapping("/doAssginRoleVo")
+    @PostMapping("/doAssign")
     public Result doAssginRoleVo(@RequestBody AssginRoleVo assginRoleVo){
         sysRoleService.doAssginRoleVo(assginRoleVo);
         return Result.ok();

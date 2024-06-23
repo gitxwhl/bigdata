@@ -23,7 +23,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     public Map<String, Object> getRolesByUserId(Long userId) {
       //查询所有的角色，返回list集合
-        List<SysRole> listAllRole = this.list();
+        List<SysRole> allRolesList = this.list();
         //根据用户id到用户角色关系表中查询所有角色id
         LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysUserRole::getUserId,userId);
@@ -32,10 +32,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         List<Long> roleIds = sysUserRoles.stream().map(sysUserRole -> sysUserRole.getRoleId()).collect(Collectors.toList());
         //根据查询所有的角色id，找到对应信息
         //根据角色id到所有角色list集合中比较
-        List<SysRole> sysRoleList = new ArrayList<>();
-        listAllRole.forEach(sysRole -> {
+        List<SysRole> assginRoleList = new ArrayList<>();
+        allRolesList.forEach(sysRole -> {
             if(roleIds.contains(sysRole.getId())) {
-                sysRoleList.add(sysRole);
+                assginRoleList.add(sysRole);
             }else {
             }
         });
@@ -43,9 +43,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         //把得到的两部分数据封装到map集合中
         Map<String, Object> map = new HashMap<>();
         //所有角色list集合
-        map.put("listAllRole",listAllRole);
+        map.put("allRolesList",allRolesList);
         //当前用户角色list集合
-        map.put("sysRoleList",sysRoleList);
+        map.put("assginRoleList",assginRoleList);
         return map;
     }
 
