@@ -2,10 +2,11 @@ package com.atguigu.auth.controller;
 
 
 import atguigu.model.system.SysRole;
+import atguigu.vo.system.AssginRoleVo;
+import atguigu.vo.system.SysRoleQueryVo;
 import com.atguigu.auth.service.SysRoleService;
 import com.atguigu.common.config.exception.GuiguException;
 import com.atguigu.common.result.Result;
-import com.atguigu.vo.system.SysRoleQueryVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -16,6 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "角色管理接口")
 @RestController
@@ -54,6 +56,7 @@ public class SysRoleController {
         }
         //调用方法实现查询
         IPage<SysRole> pageModel = sysRoleService.page(pageParam, lambdaQueryWrapper);
+//        pageModel.getRecords()
         return Result.ok(pageModel);
     }
 
@@ -63,11 +66,11 @@ public class SysRoleController {
     @PostMapping ("save")
     public Result save(@RequestBody SysRole role){
         //调用service方法
-        try {
-        int i= 10/0;
-        }catch (Exception e){
-            throw new GuiguException(2001,"出现自定义异常");
-        }
+//        try {
+//        int i= 10/0;
+//        }catch (Exception e){
+//            throw new GuiguException(2001,"出现自定义异常");
+//        }
         boolean is_success = sysRoleService.save(role);
         if(is_success){
            return Result.ok(is_success);
@@ -114,10 +117,19 @@ public class SysRoleController {
     }
 
 
+    @ApiOperation("根据用户id获取用户当前角色，获取所有角色")
+    @GetMapping("toAssign/{userId}")
+    public Result getRolesByUserId(@PathVariable Long userId){
+        Map<String,Object> map = sysRoleService.getRolesByUserId(userId);
+        return Result.ok(map);
+    }
 
-
-
-
+    @ApiOperation("分配用户角色")
+    @PostMapping("/doAssginRoleVo")
+    public Result doAssginRoleVo(@RequestBody AssginRoleVo assginRoleVo){
+        sysRoleService.doAssginRoleVo(assginRoleVo);
+        return Result.ok();
+    }
 
 
 }

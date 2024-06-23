@@ -1,10 +1,10 @@
-package com.atguigu.vo.system;
+package atguigu.vo.system;
 
 import lombok.Data;
 
 @Data
 public class SysPostQueryVo {
-	
+
 	//@ApiModelProperty(value = "岗位编码")
 	private String postCode;
 

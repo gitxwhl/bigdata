@@ -1,4 +1,4 @@
-package com.atguigu.vo.system;
+package atguigu.vo.system;
 
 
 /**
