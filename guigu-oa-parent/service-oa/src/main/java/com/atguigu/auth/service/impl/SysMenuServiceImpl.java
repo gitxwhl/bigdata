@@ -4,6 +4,7 @@ import atguigu.model.system.SysMenu;
 import com.atguigu.auth.service.SysMenuService;
 import com.atguigu.auth.mapper.SysMenuMapper;
 import com.atguigu.auth.utils.MenuHelper;
+import com.atguigu.common.config.exception.GuiguException;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -91,6 +92,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
             }
         }
         return sysMenuEndList;
+    }
+    //删除菜单
+    @Override
+    public void removeMenuById(Long id) {
+        //根据id查询如果有记录不删除，否则删除
+        LambdaUpdateWrapper<SysMenu> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysMenu::getParentId,id);
+        int count = this.count(wrapper);
+        if(count>0){
+            throw new GuiguException(201,"菜单下面有子菜单，不能删除");
+        }
+        this.removeById(id);
     }
 
     //递归
