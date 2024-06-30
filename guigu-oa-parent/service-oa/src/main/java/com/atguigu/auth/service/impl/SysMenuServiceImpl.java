@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -129,14 +130,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
         sysMenuList.stream().forEach(item->{
             if(menuList.contains(item.getId())){
                 item.setSelect(true);
+            }else {
+                item.setSelect(false);
             }
-            item.setSelect(false);
         });
         //返回菜单列表
         List<SysMenu> sysMenus = MenuHelper.buildTree(sysMenuList);
         return sysMenus;
     }
-
+    @Transactional
     @Override
     public void doAssign(AssginMenuVo assignMenuVo) {
         //根据角色id删除角色菜单关系表已经分配的菜单
