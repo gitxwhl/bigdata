@@ -54,7 +54,46 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
+  {
+    // 路径第一层
+    path: '/system',
+    component: Layout,
+    meta: {
+      title: '系统管理',
+      icon: 'el-icon-s-tools'
+    },
+    alwaysShow: true,
+    children: [
+      {
+        name: 'sysUser',
+        path: 'sysUser',
+        component: () => import('@/views/system/sysUser/list'),
+        meta: {
+          title: '用户管理',
+          icon: 'el-icon-s-custom'
+        },
+      },
+      {
+        // 路径第二层
+        path: 'sysRole',
+        component: () => import('@/views/system/sysRole/list'),
+        meta: {
+          title: '角色管理',
+          icon: 'el-icon-s-help'
+        }
+      },
+      {
+        name: 'sysMenu',
+        path: 'sysMenu',
+        component: () => import('@/views/system/sysMenu/list'),
+        meta: {
+          title: '菜单管理',
+          icon: 'el-icon-s-unfold'
+        },
+      }
 
+    ]
+  },
   {
     path: '/example',
     component: Layout,
