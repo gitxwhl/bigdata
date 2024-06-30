@@ -1,6 +1,7 @@
 package com.atguigu.auth.controller;
 
 import atguigu.model.system.SysMenu;
+import atguigu.vo.system.AssginMenuVo;
 import com.atguigu.auth.service.SysMenuService;
 import com.atguigu.common.result.Result;
 import io.swagger.annotations.Api;
@@ -17,6 +18,31 @@ public class SysMenuController {
 
     @Autowired
     private SysMenuService sysMenuService;
+
+
+    /**
+     * 查询所有菜单，和当前角色分配菜单
+     * @return
+     */
+    @ApiOperation(value = "查询所有菜单，和当前角色分配菜单")
+    @GetMapping("toAssign/{roleId}")
+    public Result toAssign(@PathVariable Long roleId) {
+        List<SysMenu> list = sysMenuService.findMenuByRoleId(roleId);
+        return Result.ok(list);
+    }
+
+    /**
+     * 分配菜单
+     * @return
+     */
+    @ApiOperation(value = "分配菜单")
+    @PostMapping("doAssign")
+    public Result doAssign(@RequestBody AssginMenuVo assignMenuVo) {
+        sysMenuService.doAssign(assignMenuVo);
+        return Result.ok();
+    }
+
+
 
     @ApiOperation(value = "获取菜单")
     @GetMapping("findNodes")
