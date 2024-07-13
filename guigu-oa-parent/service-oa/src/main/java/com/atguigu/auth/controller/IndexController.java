@@ -86,23 +86,23 @@ public class IndexController {
     @GetMapping("info")
     public Result info(HttpServletRequest request) {
         //从请求头获取用户信息（获取请求头token
-        String header = request.getHeader("header");
+        String header = request.getHeader("token");
         // 从token中获取用户id或者名称
-        Long userId = 2L;
-//        Long userId = JwtHelper.getUserId(header);
+//        Long userId = 2L;
+        Long userId = JwtHelper.getUserId(header);
         //根据用户id或者名称查询数据库，获取用户信息
         SysUser sysUser = sysUserService.getById(userId);
         //根据用户id获取用户可以操作菜单列表
         //查询数据库动态构建路由结构，进行显示
         List<RouterVo> RouterList = sysMenuService.findUserMenuListByUserId(userId);
-
-
         //根据用户id获取用户可以操作按钮列表
         List<String> paramList = sysMenuService.findUserPermsByUserId(userId);
 
 
         HashMap<String, Object> map = new HashMap<>();
-
+        map.put("roles","[admin]");
+        map.put("name",sysUser.getName());
+        map.put("avatar","https://oss.aliyuncs.com/aliyun_id_photo_bucket/default_handsome.jpg");
 
         //  返回用户可以操作的菜单
         map.put("routers", RouterList);
@@ -110,6 +110,37 @@ public class IndexController {
         map.put("buttons", paramList);
         return Result.ok(map);
     }
+
+//成功代码
+//    @GetMapping("info")
+//    public Result info(HttpServletRequest request) {
+//        //1 从请求头获取用户信息（获取请求头token字符串）
+//        String token = request.getHeader("token");
+//
+//        //2 从token字符串获取用户id 或者 用户名称
+//        Long userId = JwtHelper.getUserId(token);
+//
+//        //3 根据用户id查询数据库，把用户信息获取出来
+//        SysUser sysUser = sysUserService.getById(userId);
+//
+//        //4 根据用户id获取用户可以操作菜单列表
+//        //查询数据库动态构建路由结构，进行显示
+//        List<RouterVo> routerList = sysMenuService.findUserMenuListByUserId(userId);
+//
+//        //5 根据用户id获取用户可以操作按钮列表
+//        List<String> permsList = sysMenuService.findUserPermsByUserId(userId);
+//
+//        //6 返回相应的数据
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("roles","[admin]");
+//        map.put("name",sysUser.getName());
+//        map.put("avatar","https://oss.aliyuncs.com/aliyun_id_photo_bucket/default_handsome.jpg");
+//        //返回用户可以操作菜单
+//        map.put("routers",routerList);
+//        //返回用户可以操作按钮
+//        map.put("buttons",permsList);
+//        return Result.ok(map);
+//    }
 
 
     /**
