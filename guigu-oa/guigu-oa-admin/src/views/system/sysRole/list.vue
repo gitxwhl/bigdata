@@ -20,7 +20,8 @@
     <!-- 表格 -->
     <!-- 工具条 -->
     <div class="tools-div">
-      <el-button type="success" icon="el-icon-plus" size="mini" @click="add">添 加</el-button>
+<!--      <el-button type="success" icon="el-icon-plus" size="mini" @click="add">添 加</el-button>-->
+      <el-button type="success" icon="el-icon-plus" size="mini" @click="add" :disabled="$hasBP('bnt.sysRole.add')  === false">添 加</el-button>
       <el-button type="danger" icon="el-icon-delete" size="mini" @click="batchRemove" :disabled="isDisabled">批量删除</el-button>
 <!--      <el-button class="btn-add" size="mini" @click="batchRemove()" >批量删除</el-button>-->
     </div>
@@ -52,6 +53,7 @@
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="edit(scope.row.id)" title="修改"/>
           <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeDataById(scope.row.id)" title="删除"/>
+          <el-button type="warning" icon="el-icon-baseball" size="mini" @click="showAssignAuth(scope.row)" title="分配权限"/>
         </template>
       </el-table-column>
     </el-table>
@@ -86,7 +88,7 @@
 
 <script>
 /* 引入定义接口的js文件 */
-import api from '@/api/system/sysRole.js'
+import api from '@/api/system/sysRole'
 import th from 'element-ui/src/locale/lang/th'
 export default {
   // vue 代码结构
@@ -106,6 +108,23 @@ export default {
     this.fetchData()
   },
   methods: { // 操作方法
+// 条件分页查询
+    fetchData(current = 1) {
+      this.page = current
+      api.getPageList(this.page, this.limit, this.searchObj)
+        .then(response => {
+          console.log(response.data.records)
+          console.log(response.data.total)
+          this.list = response.data.records
+          this.total = response.data.total
+        })
+    },
+
+    // 点击分配权限调用，方法通过路由跳转新页面，跳转到分配菜单的页面
+    showAssignAuth(row) {
+      this.$router.push('/system/assignAuth?id='+row.id+'&roleName='+row.roleName);
+    },
+
     //点击修改，弹出框，根据id查询数据显示
     edit(id) {
       //弹出框
@@ -121,17 +140,7 @@ export default {
           this.sysRole = response.data
         })
     },
-    // 条件分页查询
-    fetchData(current = 1) {
-      this.page = current
-      api.getPageList(this.page, this.limit, this.searchObj)
-        .then(response => {
-          console.log(response.data.records)
-          console.log(response.data.total)
-        this.list = response.data.records
-        this.total = response.data.total
-        })
-    },
+
     // 根据id删除数据   如果点击确定，将执行then方法，如果点击取消，将执行catch方法，点取消什么都不需要做，
     // 所以catch不需要写任何代码,只需要写then方法即可
     removeDataById(id) {
