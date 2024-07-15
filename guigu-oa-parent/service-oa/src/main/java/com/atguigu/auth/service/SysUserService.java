@@ -16,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface SysUserService extends IService<SysUser> {
 
     Result updateStatus(Long id, Integer status);
+
+    SysUser getByUsername(String username);
 }
