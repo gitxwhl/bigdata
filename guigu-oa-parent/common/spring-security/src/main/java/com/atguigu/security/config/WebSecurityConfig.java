@@ -6,8 +6,10 @@ import com.atguigu.security.filter.TokenLoginFiler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity //@EnableWebSecurity是开启SpringSecurity的默认行为
+@EnableGlobalMethodSecurity(prePostEnabled = true)//开启基于方法的安全机制，可以在方法上加注解@PreAuthorize，也就是说在web层controller 启用注解机制安全确认
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //根据用户名称获取用户信息
     @Autowired
@@ -25,6 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomMd5PasswordEncoder customMd5PasswordEncoder;
+    @Autowired
+    private RedisTemplate redisTemplate;
+
 
     //得到AuthenticationManager对象
     @Bean
@@ -48,8 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 //TokenAuthenticationFilter放到UsernamePasswordAuthenticationFilter的前面，这样做就是为了除了登录的时候去查询数据库外，其他时候都用token进行认证。
-                .addFilterBefore(new TokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilter(new TokenLoginFiler(authenticationManager()));
+                .addFilterBefore(new TokenAuthenticationFilter(redisTemplate), UsernamePasswordAuthenticationFilter.class)
+                .addFilter(new TokenLoginFiler(authenticationManager(),redisTemplate));
 
         //禁用session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
